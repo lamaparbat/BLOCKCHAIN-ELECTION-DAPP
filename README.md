@@ -1,6 +1,22 @@
-# BLOCKCHAIN WEB 3.O
+# BLOCKCHAIN VOTING SYSTEM (WEB 3.O)
 
-## Step by Step Process
+## Introduction
+
+
+## Features
+
+
+## Advantages of decentralized voting system
+
+
+## Disadvantages of decentralized voting system
+
+
+## Conclusion
+
+
+
+## System Building Process
  i) Frontend [React JS, Bootstrap, Vite]
    1. Create two folder name a). Client.    b).Smart_Contract
       - Open these 2 folder in your favourite code editor.
