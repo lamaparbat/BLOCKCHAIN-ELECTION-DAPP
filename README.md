@@ -1,7 +1,11 @@
 # BLOCKCHAIN VOTING SYSTEM (WEB 3.O)
 
 ## Introduction
+Before diving into the agenda, lets know what is blockchain. In general, Blockchain is a system of recording information in a way that makes it difficult or impossible to change, hack, or cheat the system. It is a decentralized, distributed and public digital ledger that is used to record transactions across many computers so that the record cannot be altered retroactively without the alteration of all subsequent blocks and the consensus of the network.
 
+The purpose of the blockchain is to share information amongst all parties that access it via an application. Access to this ledger in terms of reading and writing may be unrestricted ('permissionless'), or restricted ('permissioned').
+
+Blockchain technology was developed to address these problems, and it now provides decentralized nodes for electronic voting. Electronic voting systems are created using blockchain technology primarily because to the benefits of end-to-end verification.
 
 ## Features
 
