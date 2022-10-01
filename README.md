@@ -23,7 +23,7 @@ Blockchain technology was developed to address these problems, and it now provid
 
 
 
-## System Building Process
+## Step by Step project making guidrlines
  i) Frontend [React JS, Bootstrap, Vite]
    1. Create two folder name a). Client.    b).Smart_Contract
       - Open these 2 folder in your favourite code editor.
