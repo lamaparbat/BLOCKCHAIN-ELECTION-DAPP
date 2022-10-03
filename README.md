@@ -12,6 +12,7 @@ Blockchain technology was developed to address these problems, and it now provid
 2. Realtime voting updates & counts
 3. Data Visualization
 4. Web 3.0
+5. Smart Contract
 
 ## Advantages of decentralized voting system
 
