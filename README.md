@@ -1,5 +1,5 @@
 # BLOCKCHAIN VOTING SYSTEM (WEB 3.O)
-![image](https://user-images.githubusercontent.com/64581460/193853383-32b8f648-e7ba-4af2-b17f-0f528d63a7e4.png)
+![image](https://user-images.githubusercontent.com/64581460/193861193-89f5f31e-b67b-4ebb-8afa-a0ef8b1a8a19.png)
 
 ## Introduction
 Before diving into the agenda, lets know what is blockchain. In general, Blockchain is a system of recording information in a way that makes it difficult or impossible to change, hack, or cheat the system. It is a decentralized, distributed and public digital ledger that is used to record transactions across many computers so that the record cannot be altered retroactively without the alteration of all subsequent blocks and the consensus of the network.
