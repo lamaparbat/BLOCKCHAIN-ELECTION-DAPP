@@ -15,8 +15,15 @@ Blockchain technology was developed to address these problems, and it now provid
 4. Web 3.0
 5. Smart Contract
 
-## Advantages of decentralized voting system
+## Problems with traditional voting system.
+1. First and foremost, privacy and unfairity risk
+2. Large amount of manpower (Myadi police) required & cost aswell.
+3. Citizen outside the country cannot vote their favourite ones.
+4. Voter might be stand on the queue for long time and very difficulty for the old age citizens
+5. Voting result might takes long time to publish
 
+## Advantages of decentralized voting system
+-> All above traditional voting system drawbacks can overcome with blockchain technology.
 
 ## Disadvantages of decentralized voting system
 
