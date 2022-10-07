@@ -34,7 +34,7 @@ Blockchain technology was developed to address these problems, and it now provid
    ### Frontend setup
    1. Download and install NodeJS [Link: https://nodejs.org/en/download/]
    2. Donwload and install VSCode [Link: https://code.visualstudio.com/download]
-   3. Open the vscode and create a folder of any name you like.
+   3. Open the vscode and create a folder for frontend.
    4. Go inside the recently created folder and init the react project using your fav react-installer like CRA || Vite
       - ``` cd folder_name ```
       - ``` npm i vite@latest ``` [init react project]
@@ -42,10 +42,12 @@ Blockchain technology was developed to address these problems, and it now provid
       - ``` npm run dev ``` [run the react project]
       
    ### Blockchain [Smart contract] setup
-   5. Go back to the main folder [cd ..]
-      Open your fav browser
-        - ``` npm i truffle --globally ```
+   5. Go back to the main folder [cd ..] & create a folder for smartcontract.
+     i). Open your favourite browser and 
         - Download and install gnache [Link: https://trufflesuite.com/ganache/]
+     
+     ii). Open smartcontract folder in vscode terminal and  
+        - ``` npm i truffle --globally ```
         - ``` truffle init ``` [initialize the localhost blockchain environment using truffle ]
-        
+     
      
