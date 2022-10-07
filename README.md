@@ -47,7 +47,7 @@ Blockchain technology was developed to address these problems, and it now provid
         - Download and install gnache [Link: https://trufflesuite.com/ganache/]
      
      ii). Open smartcontract folder in vscode terminal and  
-        - ``` npm i truffle --globally ```
-        - ``` truffle init ``` [initialize the localhost blockchain environment using truffle ]
+        - ` npm i truffle --globally `
+        - ` truffle init ` [initialize the localhost blockchain environment using truffle ]
      
      
