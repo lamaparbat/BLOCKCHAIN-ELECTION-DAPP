@@ -34,11 +34,11 @@ Blockchain technology was developed to address these problems, and it now provid
 2. Donwload and install VSCode [Link: https://code.visualstudio.com/download]
 3. Open the vscode and create a folder of any name you like.
 4. Go inside the recently created folder and init the react project using your fav react-installer like CRA || Vite
-   - `cd folder_name`
-   - `npm i vite@latest` [init react project]
-   - `npm i web3`
-   - `npm i truffle --globally`
-   - `npm run dev` [run the react project]
+   - ``` cd folder_name ```
+   - ``` npm i vite@latest ``` [init react project]
+   - ``` npm i web3 ```
+   - ``` npm i truffle --globally ```
+   - ``` npm run dev ``` [run the react project]
 5. Go back to the main folder [cd ..]
    - Open your fav browser
      - Download and install gnache [Link: https://trufflesuite.com/ganache/]
