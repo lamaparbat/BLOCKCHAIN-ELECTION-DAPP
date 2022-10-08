@@ -26,7 +26,6 @@ Blockchain technology was developed to address these problems, and it now provid
 
 ## Disadvantages of decentralized voting system
 
-
 ## Conclusion
 
 ## Step by Step project making guidelines
@@ -49,5 +48,4 @@ Blockchain technology was developed to address these problems, and it now provid
      ii). Open smartcontract folder in vscode terminal and  
         - ` npm i truffle --globally `
         - ` truffle init ` [initialize the localhost blockchain environment using truffle ]
-     
-     
+        - ` `
