@@ -49,3 +49,7 @@ Blockchain technology was developed to address these problems, and it now provid
         - ` npm i truffle --globally `
         - ` truffle init ` [initialize the localhost blockchain environment using truffle ]
         - ` `
+        
+
+
+Author: Parbat Lama
