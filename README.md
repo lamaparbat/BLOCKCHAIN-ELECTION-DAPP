@@ -7,12 +7,13 @@ The purpose of the blockchain is to share information amongst all parties that a
 
 Blockchain technology was developed to address these problems, and it now provides decentralized nodes for electronic voting. Electronic voting systems are created using blockchain technology primarily because to the benefits of end-to-end verification.
 
-## Features
+## System Features
 - User centered Design
 - Realtime voting updates & counts
 - Data Visualization
 - Web 3.0
 - Smart Contract
+- 
 
 ## Problems with traditional voting system.
 - First and foremost, privacy and unfairity risk
