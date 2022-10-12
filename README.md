@@ -26,8 +26,10 @@ Blockchain technology was developed to address these problems, and it now provid
 -> All above traditional voting system drawbacks can overcome with blockchain technology.
 
 ## Disadvantages of decentralized voting system
+- 
 
 ## Conclusion
+-
 
 ## Step by Step project making guidelines
 
