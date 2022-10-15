@@ -1,4 +1,4 @@
-# BLOCKCHAIN E-VOTING SYSTEM (WEB 3.O)
+# BLOCKCHAIN DIGITAL-VOTING SYSTEM (WEB 3.O)
 
 ## Introduction
 Before diving into the agenda, lets know what is blockchain. In general, Blockchain is a system of recording information in a way that makes it difficult or impossible to change, hack, or cheat the system. It is a decentralized, distributed and public digital ledger that is used to record transactions across many computers so that the record cannot be altered retroactively without the alteration of all subsequent blocks and the consensus of the network.
