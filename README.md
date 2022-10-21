@@ -51,9 +51,8 @@ Blockchain technology was developed to address these problems, and it now provid
      
      ii). Open smartcontract folder in vscode terminal and  
         - ` npm i truffle --globally `
-        - ` truffle init ` [initialize the localhost blockchain environment using truffle ]
-        - ` `
-        
+        - ` truffle init ` [initialize the localhost blockchain environment using truffle ]`
+        - ``
 
 
 Author: Parbat Lama
