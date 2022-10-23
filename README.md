@@ -52,7 +52,12 @@ Blockchain technology was developed to address these problems, and it now provid
      ii). Open smartcontract folder in vscode terminal and  
         - ` npm i truffle --globally `
         - ` truffle init ` [initialize the localhost blockchain environment using truffle ]`
-        - ``
+        - Write smart contract using solidity
+        - ` truffle compile`
+        - ` truffle migrate` [will generate build file in json format]
+        - Copy the "abi" array & address from the generated .json from from /build folder and paste on constant file of your client side app.
+        
+        <img width="1440" alt="Screen Shot 2022-10-23 at 07 57 12" src="https://user-images.githubusercontent.com/64581460/197369805-9f106691-5b26-44c0-8930-0a9d87d28f14.png">
 
 
 Author: Parbat Lama
