@@ -70,19 +70,19 @@ contract Ballot {
         // vote duplicacy validation
         if(stringsEquals(_ballot_type, "Mayor")){
             for (uint256 i = 0; i < mayorBallots.length; i++) {
-                if(mayorBallots[i].voter_id != _voter_id && mayorBallots[i].candidate_id != _candidate_id){
+                if(mayorBallots[i].voter_id == _voter_id && mayorBallots[i].candidate_id == _candidate_id){
                     return false;
                 }
             }
         }else if(stringsEquals(_ballot_type, "Deputy Mayor")){
             for (uint256 i = 0; i < deputyBallots.length; i++) {
-                if( deputyBallots[i].voter_id != _voter_id && deputyBallots[i].candidate_id != _candidate_id){
+                if( deputyBallots[i].voter_id == _voter_id && deputyBallots[i].candidate_id == _candidate_id){
                     return false;
                 }
             }
         }else if(stringsEquals(_ballot_type, "Local Election")){
             for (uint256 i = 0; i < wardBallots.length; i++) {
-                if( wardBallots[i].voter_id != _voter_id && wardBallots[i].candidate_id != _candidate_id){
+                if( wardBallots[i].voter_id == _voter_id && wardBallots[i].candidate_id == _candidate_id){
                     return false;
                 }
             }
@@ -91,7 +91,7 @@ contract Ballot {
         // vote limit count
         for (uint256 i = 0; i < voters.length; i++) {
             if(voters[i].citizenship_number == _voter_id){
-                require( voters[i].limitCount <= 3, "You cannot vote more than 3 distinct parties.");
+                require( voters[i].limitCount < 3, "You cannot vote more than 3 distinct parties.");
             }
         }
 
@@ -99,14 +99,14 @@ contract Ballot {
         for (uint256 i = 0; i < voters.length; i++) {
             if (voters[i].citizenship_number == _voter_id) {
                 voters[i].limitCount = voters[i].limitCount + 1;
-                break;
+                return false;
             }
         }
 
         for (uint256 i = 0; i < candidates.length; i++) {
             if (candidates[i].citizenship_number == _candidate_id) {
                 candidates[i].totalVotes = candidates[i].totalVotes + 1;
-                break;
+               return false;
             }
         }
 
