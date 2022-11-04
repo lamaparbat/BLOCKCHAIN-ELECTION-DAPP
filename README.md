@@ -32,7 +32,7 @@ Blockchain technology was developed to address these problems, and it now provid
 ## Conclusion
 -
 
-## Step by Step project making guidelines
+## Documentation 🚀🚀 [Installation guide]
 
    ### Frontend setup
    1. Download and install NodeJS [Link: https://nodejs.org/en/download/]
