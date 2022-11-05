@@ -1,40 +1,9 @@
 // SPDX-License-Identifier:MIT
 pragma solidity ^0.8.0;
 
-contract Ballot {
-    string[] private Parties = [
-        "NEPALI CONGRESS",
-        "EMALAY",
-        "MAOIST",
-        "NEPAL SOCIALIST PARTY",
-        "RASTRIYA PRAJATANTRA PARTY",
-        "PEOPLE'S PROGRESSIVE PARTY",
-        "LOKTANTRIK SAMAJWADI PARTY NEPAL",
-        "INDEPENDENT"
-    ];
+import "./Constants.sol";
 
-    string[] private ElectionType = [
-        "Federal Parliament",
-        "Province wise Election",
-        "Local Election"
-    ];
-
-    string[] private DistrictLevelPosition = [
-        "Mayor",
-        "Deputy Mayor",
-        "Ward Chairperson"
-    ];
-
-    string[] private Provinces = [
-        "Eastern Province",
-        "Madhesh Pradesh",
-        "Bagmati Pradesh",
-        "Gandaki Pradesh",
-        "Lumbini Pradesh",
-        "Karnali Pradesh",
-        "Sudur Pashchim Pradesh"
-    ];
-
+contract Ballot is Constants{
     struct CandidateDetails {
         uint256 citizenship_number;
         uint256 totalVotes;
