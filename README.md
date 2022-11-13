@@ -38,6 +38,10 @@ Blockchain technology was developed to address these problems, and it now provid
 ## Conclusion
 -
 
+## Functional Decomposition Diagram
+![FDD](https://user-images.githubusercontent.com/64581460/201529832-34d33fde-4dd4-4467-a182-dc286865a9ee.png)
+
+
 ## Documentation 🚀🚀 [Installation guide]
 
    ### Frontend setup
