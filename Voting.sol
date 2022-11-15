@@ -22,8 +22,14 @@ contract Ballot is Constants{
     }
 
     struct BallotDetails {
-        uint256 candidate_id;
         uint256 voter_id;
+        uint256 candidate_id;
+    }
+
+    struct WinnerDetails{
+        uint256 mayorWinnerId;
+        uint256 deputyWinnerId;
+        uint256 wardWinnerId;
     }
 
     BallotDetails[] mayorBallots;
@@ -31,28 +37,25 @@ contract Ballot is Constants{
     BallotDetails[] wardBallots;
     CandidateDetails[] candidates;
     VoterDetails[] voters;
-    CandidateDetails[] winnerDetails;
 
-    function vote(uint256 _voter_id, uint256 _candidate_id, string memory _ballot_type) public payable returns(bool) {
-        require(_voter_id != 0 && _candidate_id != 0 && bytes(_ballot_type).length > 0, "Some parameter are missing" );
-
+    function vote(uint256 _voter_id, uint256 _candidate_id,string memory _election_type, string memory _position) public payable {
         // vote duplicacy validation
-        if(stringsEquals(_ballot_type, "Mayor")){
+        if(DistrictLevelPositionDict[_position] == 1101 && mayorBallots.length > 0){
             for (uint256 i = 0; i < mayorBallots.length; i++) {
                 if(mayorBallots[i].voter_id == _voter_id && mayorBallots[i].candidate_id == _candidate_id){
-                    return false;
+                    return;
                 }
             }
-        }else if(stringsEquals(_ballot_type, "Deputy Mayor")){
+        }else if(DistrictLevelPositionDict[_position] == 1102 && deputyBallots.length > 0){
             for (uint256 i = 0; i < deputyBallots.length; i++) {
                 if( deputyBallots[i].voter_id == _voter_id && deputyBallots[i].candidate_id == _candidate_id){
-                    return false;
+                    return;
                 }
             }
-        }else if(stringsEquals(_ballot_type, "Local Election")){
+        }else if(DistrictLevelPositionDict[_position] == 1103 && wardBallots.length > 0){
             for (uint256 i = 0; i < wardBallots.length; i++) {
                 if( wardBallots[i].voter_id == _voter_id && wardBallots[i].candidate_id == _candidate_id){
-                    return false;
+                    return;
                 }
             }
         }
@@ -60,7 +63,9 @@ contract Ballot is Constants{
         // vote limit count
         for (uint256 i = 0; i < voters.length; i++) {
             if(voters[i].citizenship_number == _voter_id){
-                require( voters[i].limitCount < 3, "You cannot vote more than 3 distinct parties.");
+                if( voters[i].limitCount >= 3){
+                    return;
+                }
             }
         }
 
@@ -68,29 +73,27 @@ contract Ballot is Constants{
         for (uint256 i = 0; i < voters.length; i++) {
             if (voters[i].citizenship_number == _voter_id) {
                 voters[i].limitCount = voters[i].limitCount + 1;
-                return false;
+                break;
             }
         }
 
         for (uint256 i = 0; i < candidates.length; i++) {
             if (candidates[i].citizenship_number == _candidate_id) {
                 candidates[i].totalVotes = candidates[i].totalVotes + 1;
-               return false;
+                break;
             }
         }
 
         // store votes
         BallotDetails memory details = BallotDetails(_voter_id, _candidate_id);
         
-        if(stringsEquals(_ballot_type, "Mayor")){
+        if(DistrictLevelPositionDict[_position] == DistrictLevelPositionDict["Mayor"]){ 
             mayorBallots.push(details);
-        }else if(stringsEquals(_ballot_type, "Deputy Mayor")){
+        }else if(DistrictLevelPositionDict[_position] == DistrictLevelPositionDict["Deputy Mayor"]){
             deputyBallots.push(details);
         }else{
             wardBallots.push(details);
         }
-
-        return true;
     }
 
     function addCandidate(
@@ -189,24 +192,8 @@ contract Ballot is Constants{
         return Provinces;
     }
 
-    // string comparision.      [Helper function]
-    function stringsEquals(string memory s1, string memory s2)
-        public
-        pure
-        returns (bool)
-    {
-        bytes memory b1 = bytes(s1);
-        bytes memory b2 = bytes(s2);
-        uint256 l1 = b1.length;
-        if (l1 != b2.length) return false;
-        for (uint256 i = 0; i < l1; i++) {
-            if (b1[i] != b2[i]) return false;
-        }
-        return true;
-    }
-
     // filter highest vote         [Helper function]
-    function getHighestVoterDetails(string memory _position)
+    function getWinnerId(string memory _position)
         public
         view
         returns (uint256)
@@ -215,7 +202,7 @@ contract Ballot is Constants{
         uint256 tempVoteCount = 0;
         // mayor winner
         for (uint256 i = 0; i < candidates.length; i++) {
-            if (stringsEquals(candidates[i].position, _position)) {
+            if (DistrictLevelPositionDict[candidates[i].position] == DistrictLevelPositionDict[_position]) { 
                 if (candidates[i].totalVotes > tempVoteCount) {
                     winnerId = candidates[i].citizenship_number;
                     tempVoteCount = candidates[i].totalVotes;
@@ -226,14 +213,59 @@ contract Ballot is Constants{
         return winnerId;
     }
 
-    function getWinners(string memory _electionType) public returns (CandidateDetails[] memory){
-        if (stringsEquals(_electionType, "Local Election")) {
-            winnerDetails.push(getCandidateDetails(getHighestVoterDetails("Mayor")));
-            winnerDetails.push(getCandidateDetails(getHighestVoterDetails("Deputy Mayor")));
-            winnerDetails.push(getCandidateDetails(getHighestVoterDetails("Ward Chairperson")));
-            return winnerDetails;
+    function getWinners(string memory _electionType) public view returns (WinnerDetails memory){
+        if(ElectionTypeDict[_electionType] == 3303){
+            return WinnerDetails(getWinnerId("Mayor"),getWinnerId("Deputy Mayor"),getWinnerId("Ward Chairperson"));
+        }else{
+            return WinnerDetails(0,0,0);
         }
-
-        return winnerDetails;
     }
 }
+
+
+// 11,parbat,a@gmail.com,NEPALI CONGRESS,Local Election,Mayor
+// 12,hari,b@gmail.com,EMALAY,Local Election,Mayor
+// 13,gopal,g@gmail.com,MAOIST,Local Election,Mayor
+
+// 14,krishna,a@gmail.com,NEPALI CONGRESS,Local Election,Deputy Mayor
+// 15,suman,b@gmail.com,EMALAY,Local Election,Deputy Mayor
+// 16,gautam,g@gmail.com,MAOIST,Local Election,Deputy Mayor
+
+// 17,imran,a@gmail.com,NEPALI CONGRESS,Local Election,Ward Chairperson
+// 18,khan,b@gmail.com,EMALAY,Local Election,Ward Chairperson
+// 19,juma,g@gmail.com,MAOIST,Local Election,Ward Chairperson
+
+// 21,karma,k@gmail.com
+// 22,jamal,j@gmail.com
+// 23,jira,i@gmail.com
+// 24,mira,mi@gmail.com
+// 25,lioom,li@gmail.com
+// 26,zoomal,z@gmail.com
+
+
+// ******* voters vote ******
+
+// 21,11,Local Election,Mayor
+// 21,15,Local Election,Deputy Mayor
+// 21,17,Local Election,Ward Chairperson
+
+
+// 22,13,Local Election,Mayor
+// 22,14,Local Election,Deputy Mayor
+// 22,15,Local Election,Ward Chairperson
+
+// 23,12,Local Election,Mayor
+// 23,15,Local Election,Deputy Mayor
+// 23,17,Local Election,Ward Chairperson
+
+// 24,12,Local Election,Mayor
+// 24,17,Local Election,Deputy Mayor
+// 24,16,Local Election,Ward Chairperson
+
+// 25,12,Local Election,Mayor
+// 25,14,Local Election,Deputy Mayor
+// 25,18,Local Election,Ward Chairperson
+
+// 26,13,Local Election,Mayor
+// 26,16,Local Election,Deputy Mayor
+// 26,19,Local Election,Ward Chairperson
