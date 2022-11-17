@@ -19,7 +19,6 @@ Blockchain technology was developed to address these problems, and it now provid
 - Data Visualization
 - Web 3.0
 - Smart Contract
-- 
 
 ## Problems with traditional voting system.
 - First and foremost, privacy and unfairity risk
@@ -33,10 +32,9 @@ Blockchain technology was developed to address these problems, and it now provid
 
 ## Disadvantages of decentralized voting system
 - The reason blockchain is a highly secure system is the ledger is public. All past transactions can be seen by anyone who works the system, and they can’t be changed because everyone will notice. That doesn’t work in a voting system where secret ballot is mandated. Every transaction is identifiable.
--
+
 
 ## Conclusion
--
 
 ## Functional Decomposition Diagram
 ![FDD](https://user-images.githubusercontent.com/64581460/201529832-34d33fde-4dd4-4467-a182-dc286865a9ee.png)
