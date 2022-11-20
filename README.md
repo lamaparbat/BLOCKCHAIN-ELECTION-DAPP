@@ -48,7 +48,7 @@ Blockchain technology was developed to address these problems, and it now provid
    3. Open the vscode and create a folder for frontend.
    4. Go inside the recently created folder and init the react project using your fav react-installer like CRA || Vite
       - ``` cd folder_name ```
-      - ``` npm i vite@latest ``` [init react project]
+      - ``` npx create-next-app app_name --typescript ``` [init next project]
       - ``` npm i web3 ```
       - ``` npm run dev ``` [run the react project]
       
