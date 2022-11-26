@@ -52,7 +52,7 @@ const Navbar: React.FC = (): ReactElement => {
    </div>
    <div className='flex justify-center'>
     <div className='navbar__bottom lg:w-[1100px] w-full max-[1100px]:px-5  flex items-center justify-between pt-2'>
-     <Image src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" />
+     <Image className='cursor-pointer' src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
      <div className='center__content text-center text-red-700 -ml-[15px]'>
       <h3 className='max-[500px]:text-[22px]'>{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Election Commission Nepal' : 'निर्वाचन आयोग नेपाल'}</h3>
       <h5 >{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Kantipath, Kathmandu' : 'कान्तिपथ, काठमाण्डौ'}</h5>

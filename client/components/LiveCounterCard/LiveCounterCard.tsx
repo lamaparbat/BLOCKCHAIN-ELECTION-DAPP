@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { FaRegDotCircle } from 'react-icons/fa';
 import AnimatedAvatar from '../AnimatedAvatar';
 import CandidateCard from './CandidateCard';
 import { BTM_BORDER_STYLE } from '../../constants';
@@ -13,7 +14,8 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data }): React
    <div className='card__body pt-3 pb-2'>
     <div className='card__body__hot px-4 mb-3 flex'>
      <AnimatedAvatar />
-     <div className='details pt-3 pl-3'>
+     <div className='details pt-2 pl-3 mx-3'>
+      <FaRegDotCircle className='animate-ping text-danger absolute ml-[200px] mt-2' />
       <span className='text-xl'>{data[0].candidateName}</span>
       <h1 id='count'>{data[0].count}</h1>
      </div>
