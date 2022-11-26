@@ -1,13 +1,22 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import { setDetails } from '../../redux/candidateReducer';
 import Avatar from '../Avatar';
 import { CandidateCardStruct } from '../../interfaces/index';
 import FilterIcon from '../FilterIcon';
 
+
 const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
  const { details, border, ishighlighted } = props;
 
+ // redux dispatcher
+ const dispatch = useDispatch();
+ const router = useRouter();
+
  const openDetails = (details) => {
-  console.log(details)
+  dispatch(setDetails(details));
+  router.push("/candidate/details");
  }
 
  return (

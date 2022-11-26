@@ -31,7 +31,6 @@ const Navbar: React.FC = (): ReactElement => {
  // on language select
  const onLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
   const val: LanguageStruct | undefined = _.find(LANGUAGES, { value: e.target.value });
-  console.log(val)
   setSelectedLanguage(val ?? selectedLanguage);
  };
 
