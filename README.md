@@ -1,7 +1,9 @@
 # BLOCKCHAIN DIGITAL-VOTING SYSTEM (WEB 3.O)
 ![a](https://user-images.githubusercontent.com/64581460/200334222-dff3cce2-5398-4607-b174-141566b1e648.jpeg)
 
-<img width="1440" alt="Screen Shot 2022-11-26 at 16 33 49" src="https://user-images.githubusercontent.com/64581460/204084973-c634dc5f-46ce-4fe6-9784-f48e5c7f9471.png">
+## HOT Candidate Live Vote Count
+<img width="1439" alt="Screen Shot 2022-11-26 at 21 50 14" src="https://user-images.githubusercontent.com/64581460/204097944-8558b266-514f-4720-a8b5-61c26376a42e.png">
+
 
 ## Workflow overview
 
