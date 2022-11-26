@@ -27,7 +27,7 @@
 }
 
 .animatedBorder {
-  --border-size: 0.1rem;
+  --border-size: 0.099rem;
   border: var(--border-size) solid transparent;
 
   /* Paint an image in the border */
