@@ -8,10 +8,9 @@
   font-family: 'Space Mono', monospace;
 }
 
-
-
-
-
+span, p {
+  color: rgb(71 85 105);
+}
 
 
 /* animated border styling */

@@ -21,7 +21,7 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
 
  return (
   <div
-   className={`card__candidates py-1 pe-4 pb-2 rounded-1 cursor-pointer ${border} ${ishighlighted && 'bg-green-200 drop-shadow-md'}`}
+   className={`card__candidates py-1 pe-4 pb-2 rounded-1 cursor-pointer ${border} ${ishighlighted && 'bg-slate-50 drop-shadow-md'}`}
    onClick={() => openDetails(details)}
   >
    <div className='ml-4 mt-1 d-flex items-center justify-between'>

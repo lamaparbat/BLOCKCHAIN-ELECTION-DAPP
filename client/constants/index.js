@@ -91,11 +91,14 @@ const VOTES = {
  }]
 }
 
+// custom style
 const BTM_BORDER_STYLE = "border-r-0 border-l-0 border-b-2 border-slate-100";
+const responsive = "lg:w-[1100px] w-full max-[1100px]:px-5 ";
 
 export {
  LANGUAGES,
  BTM_BORDER_STYLE,
  PARTIES,
- VOTES
+ VOTES,
+ responsive
 };
