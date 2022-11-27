@@ -2,9 +2,10 @@ import React, { ReactElement, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { AiOutlineMail, AiOutlineSearch } from 'react-icons/ai';
+import { FaChevronDown } from 'react-icons/fa';
 import _ from 'lodash';
 import Avatar from './Avatar';
-import { LANGUAGES } from '../constants/index';
+import { LANGUAGES, responsive } from '../constants/index';
 import { LanguageStruct } from '../interfaces';
 
 const Navbar: React.FC = (): ReactElement => {
@@ -14,10 +15,6 @@ const Navbar: React.FC = (): ReactElement => {
  // open new page
  const navigate = (path: string) => {
   path !== "mail" ? route.push(path) : window.open("https://gmail.com/", "_blank");
- }
-
- // switch language
- const changeLanguage = () => {
  }
 
  // open search modal form
@@ -51,13 +48,23 @@ const Navbar: React.FC = (): ReactElement => {
     </div>
    </div>
    <div className='flex justify-center'>
-    <div className='navbar__bottom lg:w-[1100px] w-full max-[1100px]:px-5  flex items-center justify-between pt-2'>
+    <div className={`navbar__bottom ${responsive} flex items-center justify-between pt-2`}>
      <Image className='cursor-pointer' src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
      <div className='center__content text-center text-red-700 -ml-[15px]'>
       <h3 className='max-[500px]:text-[22px]'>{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Election Commission Nepal' : 'निर्वाचन आयोग नेपाल'}</h3>
       <h5 >{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Kantipath, Kathmandu' : 'कान्तिपथ, काठमाण्डौ'}</h5>
      </div>
      <Image src='/images/flag.png' height={40} width={50} alt="nepal-flag" />
+    </div>
+   </div>
+   <div className='flex justify-center items-center bg-blue-900 mt-3'>
+    <div className={`sub__navbar py-[10px] ${responsive} text-slate-200 text-sm font-medium flex justify-between items-center px-3`}>
+     <div>Home</div>
+     <div>About Us &nbsp; <FaChevronDown /></div>
+     <div>Electoral Framework &nbsp; <FaChevronDown /></div>
+     <div>Voter Education &nbsp; <FaChevronDown /></div>
+     <div>Political Party &nbsp; <FaChevronDown /></div>
+     <div>Election Result &nbsp; <FaChevronDown /></div>
     </div>
    </div>
   </div>
