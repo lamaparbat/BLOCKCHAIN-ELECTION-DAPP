@@ -4,7 +4,8 @@
 ## HOT Candidate Live Vote Count
 <img width="1440" alt="Screen Shot 2022-11-27 at 22 27 26" src="https://user-images.githubusercontent.com/64581460/204148574-10d794e3-091b-423e-befa-32b5a76981e6.png">
 
-
+## Mobile view navigation bar
+<img width="504" alt="Screen Shot 2022-11-29 at 23 00 25" src="https://user-images.githubusercontent.com/64581460/204597431-916d25b3-165b-4248-b874-5c2495c63ae2.png">
 
 ## Workflow overview
 
