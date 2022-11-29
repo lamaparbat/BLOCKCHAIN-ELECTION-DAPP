@@ -2,14 +2,18 @@ import React, { ReactElement, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { AiOutlineMail, AiOutlineSearch } from 'react-icons/ai';
-import { FaChevronDown } from 'react-icons/fa';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import _ from 'lodash';
 import Avatar from './Avatar';
-import { LANGUAGES, responsive } from '../constants/index';
+import { LANGUAGES, responsive, sub_navbar_style, sub_navbar_items_style } from '../constants/index';
 import { LanguageStruct } from '../interfaces';
+import Dropdown from './Dropdown';
 
 const Navbar: React.FC = (): ReactElement => {
  const [selectedLanguage, setSelectedLanguage] = useState({ label: 'english', value: 'ENGLISH' });
+ const [openModal, setOpenModal] = useState(false);
+ const [openVerticalNavbar, setOpenVerticalNavbar] = useState(false);
+
  const route = useRouter();
 
  // open new page
@@ -31,6 +35,10 @@ const Navbar: React.FC = (): ReactElement => {
   setSelectedLanguage(val ?? selectedLanguage);
  };
 
+ const aboutItems = ["Constitutional Provision", "Privacy Policy", "Former Election Commissioners"]
+ const electoralItems = ["Electoral Framework Overview", "Election Related Laws", "Election Legislation"]
+ const voterItems = ["Resource material", "Videos", "Voter Roll", "Register to vote", "FAQs on Voter Registration"]
+ const politicalItems = ["Party Registration Guide", "Register Party Form"]
  return (
   <div className='navbar__container'>
    <div className='navbar__top py-2 w-full flex justify-end bg-slate-100 px-2'>
@@ -52,19 +60,36 @@ const Navbar: React.FC = (): ReactElement => {
      <Image className='cursor-pointer' src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
      <div className='center__content text-center text-red-700 -ml-[15px]'>
       <h3 className='max-[500px]:text-[22px]'>{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Election Commission Nepal' : 'निर्वाचन आयोग नेपाल'}</h3>
-      <h5 >{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Kantipath, Kathmandu' : 'कान्तिपथ, काठमाण्डौ'}</h5>
+      <h6 >{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Kantipath, Kathmandu' : 'कान्तिपथ, काठमाण्डौ'}</h6>
      </div>
      <Image src='/images/flag.png' height={40} width={50} alt="nepal-flag" />
     </div>
    </div>
-   <div className='flex justify-center items-center bg-blue-900 mt-3'>
-    <div className={`sub__navbar py-[10px] ${responsive} text-slate-200 text-sm font-medium flex justify-between items-center px-3`}>
+   <div className='py-[12px] flex justify-center items-center bg-blue-900'>
+    <div
+     className={`${sub_navbar_style} ${responsive} min-[800px]:hidden max-[800px]:flex relative`}
+     onClick={() => setOpenVerticalNavbar(!openVerticalNavbar)}
+    >
+     <GiHamburgerMenu className='text-white text-lg cursor-pointer' />
+    </div>
+
+    <div className={`${sub_navbar_style} ${responsive} max-[800px]:hidden`}>
      <div>Home</div>
-     <div>About Us &nbsp; <FaChevronDown /></div>
-     <div>Electoral Framework &nbsp; <FaChevronDown /></div>
-     <div>Voter Education &nbsp; <FaChevronDown /></div>
-     <div>Political Party &nbsp; <FaChevronDown /></div>
-     <div>Election Result &nbsp; <FaChevronDown /></div>
+     <div><Dropdown title="About us" items={aboutItems} /></div>
+     <div><Dropdown title="Electoral Framework" items={electoralItems} /></div>
+     <div><Dropdown title="Voter Education" items={voterItems} /></div>
+     <div><Dropdown title="Political Party" items={politicalItems} /></div>
+     <div>Election Result</div>
+    </div>
+   </div>
+   <div className={`absolute h-full w-full bg-white flex z-40 ${openVerticalNavbar ? 'block' : 'hidden'}`}>
+    <div className={`py-3 ${sub_navbar_style} w-[240px] h-[350px] bg-blue-800 flex-col justify-around absolute rounded-b-[5px]`}>
+     <div className={sub_navbar_items_style}>Home</div>
+     <div className={sub_navbar_items_style}><Dropdown title="About us" items={aboutItems} /></div>
+     <div className={sub_navbar_items_style}><Dropdown title="Electoral Framework" items={electoralItems} /></div>
+     <div className={sub_navbar_items_style}><Dropdown title="Voter Education" items={voterItems} /></div>
+     <div className={sub_navbar_items_style}><Dropdown title="Political Party" items={politicalItems} /></div>
+     <div className={sub_navbar_items_style}>Election Result</div>
     </div>
    </div>
   </div>

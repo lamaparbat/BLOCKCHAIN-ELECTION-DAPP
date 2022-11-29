@@ -94,11 +94,15 @@ const VOTES = {
 // custom style
 const BTM_BORDER_STYLE = "border-r-0 border-l-0 border-b-2 border-slate-100";
 const responsive = "lg:w-[1100px] w-full max-[1100px]:px-5 ";
+const sub_navbar_style = "sub__navbar text-slate-200 text-sm font-medium flex justify-between items-center px-3";
+const sub_navbar_items_style = "text-start w-full pl-4";
 
 export {
  LANGUAGES,
  BTM_BORDER_STYLE,
  PARTIES,
  VOTES,
- responsive
+ responsive,
+ sub_navbar_style,
+ sub_navbar_items_style
 };
