@@ -2,7 +2,8 @@
 ![a](https://user-images.githubusercontent.com/64581460/200334222-dff3cce2-5398-4607-b174-141566b1e648.jpeg)
 
 ## HOT Candidate Live Vote Count
-<img width="1439" alt="Screen Shot 2022-11-26 at 21 50 14" src="https://user-images.githubusercontent.com/64581460/204097944-8558b266-514f-4720-a8b5-61c26376a42e.png">
+<img width="1440" alt="Screen Shot 2022-11-27 at 22 27 26" src="https://user-images.githubusercontent.com/64581460/204148574-10d794e3-091b-423e-befa-32b5a76981e6.png">
+
 
 
 ## Workflow overview
