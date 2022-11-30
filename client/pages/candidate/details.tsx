@@ -29,10 +29,10 @@ const Details: React.FC = (): React.ReactElement => {
  }
  return (
   <div className='mb-[50px]'>
-   <Navbar /><br /><br /><br />
+   <Navbar /><br />
    <div className='w-full flex justify-center'>
     <div className={`${responsive} flex justify-start rounded-1`}>
-     <BreadCrumb />
+     <BreadCrumb routes={["Candidate", "Details"]} />
     </div>
    </div><br />
    <div className='w-full flex justify-center'>

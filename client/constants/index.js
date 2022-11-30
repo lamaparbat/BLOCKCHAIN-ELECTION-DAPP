@@ -97,6 +97,17 @@ const responsive = "lg:w-[1100px] w-full max-[1100px]:px-5 ";
 const sub_navbar_style = "sub__navbar text-slate-200 text-sm font-medium flex justify-between items-center px-3";
 const sub_navbar_items_style = "text-start w-full pl-4 hover:text-red-500";
 
+
+const aboutItems = ["Constitutional Provision", "Privacy Policy", "Former Election Commissioners"]
+const electoralItems = ["Electoral Framework Overview", "Election Related Laws", "Election Legislation"]
+const voterItems = ["Resource material", "Voter Eligibility", "Voter Roll", "Voter Registration", "FAQs on Voter Registration"]
+const politicalItems = ["Party Registration Guide", "Register Party Form"]
+const electionResultTypes = ["Federal Parliament Election", "Province Election", "Local Election"];
+const sub_navbar_items = {
+ aboutItems, electoralItems, voterItems, politicalItems, electionResultTypes
+}
+
+
 export {
  LANGUAGES,
  BTM_BORDER_STYLE,
@@ -104,5 +115,6 @@ export {
  VOTES,
  responsive,
  sub_navbar_style,
- sub_navbar_items_style
+ sub_navbar_items_style,
+ sub_navbar_items
 };

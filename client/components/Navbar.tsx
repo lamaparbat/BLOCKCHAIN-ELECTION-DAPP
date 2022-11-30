@@ -5,13 +5,12 @@ import { AiOutlineMail, AiOutlineSearch } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import _ from 'lodash';
 import Avatar from './Avatar';
-import { LANGUAGES, responsive, sub_navbar_style, sub_navbar_items_style } from '../constants/index';
+import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style } from '../constants/index';
 import { LanguageStruct } from '../interfaces';
 import Dropdown from './Dropdown';
 
 const Navbar: React.FC = (): ReactElement => {
  const [selectedLanguage, setSelectedLanguage] = useState({ label: 'english', value: 'ENGLISH' });
- const [openModal, setOpenModal] = useState(false);
  const [openVerticalNavbar, setOpenVerticalNavbar] = useState(false);
 
  const route = useRouter();
@@ -35,10 +34,6 @@ const Navbar: React.FC = (): ReactElement => {
   setSelectedLanguage(val ?? selectedLanguage);
  };
 
- const aboutItems = ["Constitutional Provision", "Privacy Policy", "Former Election Commissioners"]
- const electoralItems = ["Electoral Framework Overview", "Election Related Laws", "Election Legislation"]
- const voterItems = ["Resource material", "Videos", "Voter Roll", "Register to vote", "FAQs on Voter Registration"]
- const politicalItems = ["Party Registration Guide", "Register Party Form"]
  return (
   <div className='navbar__container'>
    <div className='navbar__top py-2 w-full flex justify-end bg-slate-100 px-2'>
@@ -74,22 +69,22 @@ const Navbar: React.FC = (): ReactElement => {
     </div>
 
     <div className={`${sub_navbar_style} ${responsive} max-[800px]:hidden text-slate-200`}>
-     <div>Home</div>
-     <div><Dropdown title="About us" items={aboutItems} /></div>
-     <div><Dropdown title="Electoral Framework" items={electoralItems} /></div>
-     <div><Dropdown title="Voter Education" items={voterItems} /></div>
-     <div><Dropdown title="Political Party" items={politicalItems} /></div>
-     <div>Election Result</div>
+     <div onClick={() => navigate("/")}>Home</div>
+     <div><Dropdown title="About us" items={sub_navbar_items.aboutItems} /></div>
+     <div><Dropdown title="Electoral Framework" items={sub_navbar_items.electoralItems} /></div>
+     <div><Dropdown title="Voter Education" items={sub_navbar_items.voterItems} /></div>
+     <div><Dropdown title="Political Party" items={sub_navbar_items.politicalItems} /></div>
+     <div><Dropdown title="Election Result" items={sub_navbar_items.electionResultTypes} /></div>
     </div>
    </div>
    <div className={`absolute h-full w-full flex z-40 lg:hidden ${openVerticalNavbar ? 'block' : 'hidden'}`}>
     <div className={`py-3 ${sub_navbar_style} w-[240px] h-[350px] bg-blue-800 flex-col justify-around absolute rounded-b-[5px]`}>
-     <div className={sub_navbar_items_style}>Home</div>
-     <div className={sub_navbar_items_style}><Dropdown title="About us" items={aboutItems} /></div>
-     <div className={sub_navbar_items_style}><Dropdown title="Electoral Framework" items={electoralItems} /></div>
-     <div className={sub_navbar_items_style}><Dropdown title="Voter Education" items={voterItems} /></div>
-     <div className={sub_navbar_items_style}><Dropdown title="Political Party" items={politicalItems} /></div>
-     <div className={sub_navbar_items_style}>Election Result</div>
+     <div className={sub_navbar_items_style} onClick={() => navigate("/")}>Home</div>
+     <div className={sub_navbar_items_style}><Dropdown title="About us" items={sub_navbar_items.aboutItems} /></div>
+     <div className={sub_navbar_items_style}><Dropdown title="Electoral Framework" items={sub_navbar_items.electoralItems} /></div>
+     <div className={sub_navbar_items_style}><Dropdown title="Voter Education" items={sub_navbar_items.voterItems} /></div>
+     <div className={sub_navbar_items_style}><Dropdown title="Political Party" items={sub_navbar_items.politicalItems} /></div>
+     <div className={sub_navbar_items_style}><Dropdown title="Election Result" items={sub_navbar_items.electionResultTypes} /></div>
     </div>
    </div>
   </div>
