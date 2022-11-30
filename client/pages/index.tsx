@@ -16,7 +16,7 @@ export default function Home() {
       <Navbar />
       <div className='px-4 py-3 flex justify-center mt-1'>
         <div>
-          <div className='lg:w-[1100px] w-full max-[1100px]:px-1'>
+          <div className='lg:w-[1100px] w-full lg:px-2 max-[1100px]:px-1'>
             <div className='flex items-center'>
               <span className='text-2xl font-bold text-black'>Hot Seats</span>
               <GoPrimitiveDot className='text-4xl ml-5 mr-1 text-danger' />

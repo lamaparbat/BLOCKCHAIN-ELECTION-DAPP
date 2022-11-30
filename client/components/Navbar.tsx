@@ -59,8 +59,8 @@ const Navbar: React.FC = (): ReactElement => {
     <div className={`navbar__bottom ${responsive} flex items-center justify-between pt-2`}>
      <Image className='cursor-pointer' src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
      <div className='center__content text-center text-red-700 -ml-[15px]'>
-      <h3 className='max-[500px]:text-[22px]'>{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Election Commission Nepal' : 'निर्वाचन आयोग नेपाल'}</h3>
-      <h6 >{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Kantipath, Kathmandu' : 'कान्तिपथ, काठमाण्डौ'}</h6>
+      <h3 className='max-[1100px]:text-[23px]'>{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Election Commission Nepal' : 'निर्वाचन आयोग नेपाल'}</h3>
+      <h6 className='max-[1100px]:text-md'>{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Kantipath, Kathmandu' : 'कान्तिपथ, काठमाण्डौ'}</h6>
      </div>
      <Image src='/images/flag.png' height={40} width={50} alt="nepal-flag" />
     </div>
@@ -73,7 +73,7 @@ const Navbar: React.FC = (): ReactElement => {
      <GiHamburgerMenu className='text-white text-lg cursor-pointer' />
     </div>
 
-    <div className={`${sub_navbar_style} ${responsive} max-[800px]:hidden`}>
+    <div className={`${sub_navbar_style} ${responsive} max-[800px]:hidden text-slate-200`}>
      <div>Home</div>
      <div><Dropdown title="About us" items={aboutItems} /></div>
      <div><Dropdown title="Electoral Framework" items={electoralItems} /></div>
@@ -82,7 +82,7 @@ const Navbar: React.FC = (): ReactElement => {
      <div>Election Result</div>
     </div>
    </div>
-   <div className={`absolute h-full w-full bg-white flex z-40 ${openVerticalNavbar ? 'block' : 'hidden'}`}>
+   <div className={`absolute h-full w-full flex z-40 lg:hidden ${openVerticalNavbar ? 'block' : 'hidden'}`}>
     <div className={`py-3 ${sub_navbar_style} w-[240px] h-[350px] bg-blue-800 flex-col justify-around absolute rounded-b-[5px]`}>
      <div className={sub_navbar_items_style}>Home</div>
      <div className={sub_navbar_items_style}><Dropdown title="About us" items={aboutItems} /></div>

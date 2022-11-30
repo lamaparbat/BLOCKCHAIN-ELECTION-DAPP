@@ -19,7 +19,7 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data }): React
       <div className='flex items-center'>
        <span className='text-xl me-4'>{data[0].candidateName}</span>
        {
-        false ? <TickCircleIcon /> : <FaRegDotCircle className='animate-ping text-danger absolute ml-[200px]' />
+        false ? <TickCircleIcon /> : <FaRegDotCircle className='animate-ping text-danger absolute lg:ml-[200px] max-[1100px]:ml-[100px]' />
        }
       </div>
       <h1 id='count'>{data[0].count}</h1>
