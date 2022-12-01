@@ -1,8 +1,6 @@
 
 
-const getPathRouter = () => {
+export const getPathRouter = () => {
 
 
 };
-
-export const getPathRouter;
