@@ -98,11 +98,28 @@ const sub_navbar_style = "sub__navbar text-slate-200 text-sm font-medium flex ju
 const sub_navbar_items_style = "text-start w-full pl-4 hover:text-red-500";
 
 
-const aboutItems = ["Constitutional Provision", "Privacy Policy", "Former Election Commissioners"]
-const electoralItems = ["Electoral Framework Overview", "Election Related Laws", "Election Legislation"]
-const voterItems = ["Resource material", "Voter Eligibility", "Voter Roll", "Voter Registration", "FAQs on Voter Registration"]
-const politicalItems = ["Party Registration Guide", "Register Party Form"]
-const electionResultTypes = ["Federal Parliament Election", "Province Election", "Local Election"];
+const aboutItems = [
+ { label: "Constitutional Provision", value: '/about/constitutional-provision' },
+ { label: 'Privacy Policy', value: '/about/privacy-policy' },
+ { label: 'Former Election Commissioners', value: '/about/voter-registration' }]
+const electoralItems = [
+ { label: "Electoral Framework Overview", value: '/electoral-framework/overview' },
+ { label: 'Election Related Laws', value: '/electoral-framework/laws' },
+ { label: 'Election Legislation', value: '/electoral-framework/legislation' }]
+const politicalItems = [
+ { label: "Party Registration Guide", value: '/political/party-registration-guide' },
+ { label: 'Register Party Form', value: '/political/party-registration-form' }]
+const electionResultTypes = [
+ { label: "Federal Parliament Election", value: '/election-result/parliament' },
+ { label: 'Province Election', value: '/election-result/province' },
+ { label: 'Local Election', value: '/election-result/local' }]
+const voterItems = [
+ { label: "Resource material", value: '/voter-education/resource-material' },
+ { label: 'Voter Eligibility', value: '/voter-education/voter-eligibility' },
+ { label: 'Voter Roll', value: '/voter-education/voter-roll' },
+ { label: 'Voter Registration', value: '/voter-education/voter-registration' },
+ { label: 'FAQs on Voter Registration', value: '/voter-education/voter-faqs' }]
+
 const sub_navbar_items = {
  aboutItems, electoralItems, voterItems, politicalItems, electionResultTypes
 }
