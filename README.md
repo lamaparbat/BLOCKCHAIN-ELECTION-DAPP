@@ -4,6 +4,10 @@
 ## HOT Candidate Live Vote Count
 <img width="1440" alt="Screen Shot 2022-11-27 at 22 27 26" src="https://user-images.githubusercontent.com/64581460/204148574-10d794e3-091b-423e-befa-32b5a76981e6.png">
 
+## Voter Poll Card List UI
+<img width="1440" alt="Screen Shot 2022-12-01 at 22 52 21" src="https://user-images.githubusercontent.com/64581460/205115733-39bc2869-52b7-442f-b047-9469dfa6491a.png">
+
+
 ## Mobile view navigation bar
 ![Screen Shot 2022-11-30 at 21 47 45](https://user-images.githubusercontent.com/64581460/204847780-624cdc5b-3a61-411a-aa44-d314db1eb463.png)
 
