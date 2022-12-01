@@ -114,7 +114,6 @@ const electionResultTypes = [
  { label: 'Province Election', value: '/election-result/province' },
  { label: 'Local Election', value: '/election-result/local' }]
 const voterItems = [
- { label: "Resource material", value: '/voter-education/resource-material' },
  { label: 'Voter Eligibility', value: '/voter-education/voter-eligibility' },
  { label: 'Voter Roll', value: '/voter-education/voter-roll' },
  { label: 'Voter Registration', value: '/voter-education/voter-registration' },

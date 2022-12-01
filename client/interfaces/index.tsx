@@ -12,12 +12,25 @@ interface LanguageStruct {
  value: string
 };
 
-interface CandidateDetails {
- party: string,
- candidateName: string,
- profile: string,
- count: number
+interface UserDetails {
+ citizenship: string,
+ name: string,
+ dob: string,
+ profileSrc: string
+ education: string,
+ district: string,
+ address: string,
+ contact: string,
+ email: string
 }
+
+interface CandidateDetails extends UserDetails {
+ party: string,
+ votes: number
+}
+
+interface VoterDetails extends UserDetails { };
+
 interface LiveCounterCardStruct {
  type: string,
  data: Array<CandidateDetails>
@@ -29,9 +42,15 @@ interface CandidateCardStruct {
  ishighlighted: boolean
 }
 
+interface UserCardStruct {
+ details: VoterDetails | CandidateDetails,
+ type: string
+}
+
 export type {
  AvatarProps,
  LanguageStruct,
  LiveCounterCardStruct,
- CandidateCardStruct
+ CandidateCardStruct,
+ UserCardStruct
 };
