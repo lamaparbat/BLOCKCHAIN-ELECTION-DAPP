@@ -10,7 +10,7 @@ const Details: React.FC = (): React.ReactElement => {
  // get selected candidate details from redux store
  const selectedCandidate = useSelector((state) => state);
  const { candidateReducer }: any | undefined = selectedCandidate;
- const { party, candidateName, profile, count }: any | undefined = candidateReducer.details;
+ const { party, name, profile, votes }: any | undefined = candidateReducer.details;
 
  // custom field
  const FieldRow = ({ title1, title1Val, title2, title2Val }) => {

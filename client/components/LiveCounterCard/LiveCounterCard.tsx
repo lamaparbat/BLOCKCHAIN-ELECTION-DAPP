@@ -17,12 +17,12 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data }): React
      <AnimatedAvatar />
      <div className='details pt-2 pl-3 mx-3'>
       <div className='flex items-center'>
-       <span className='text-xl me-4'>{data[0].candidateName}</span>
+       <span className='text-xl me-4'>{data[0].name}</span>
        {
         false ? <TickCircleIcon /> : <FaRegDotCircle className='animate-ping text-danger absolute lg:ml-[200px] max-[1100px]:ml-[100px]' />
        }
       </div>
-      <h1 id='count'>{data[0].count}</h1>
+      <h1 id='count'>{data[0].votes}</h1>
      </div>
     </div>
     <div className='candidate_row px-3'>
