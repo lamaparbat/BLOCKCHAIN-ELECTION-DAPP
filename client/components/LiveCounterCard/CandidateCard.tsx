@@ -28,14 +28,14 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
     <div className='d-flex items-center'>
      <Avatar className='avatar' src="/images/parbat.png" alt="profile" size='md' border={2} />
      <div className='px-3'>
-      <h6 className='text-[16px]'>{details.candidateName}</h6>
+      <h6 className='text-[16px]'>{details.name}</h6>
       <div className='d-flex items-center -mt-[5px]'>
        <FilterIcon party={details.party} />
        <span className='mx-2 text-sm text-slate-600'>{details.party}</span>
       </div>
      </div>
     </div>
-    <h5 className='ml-[5px]' id='count'>{details.count}</h5>
+    <h5 className='ml-[5px]' id='count'>{details.votes}</h5>
    </div>
   </div>
  )
