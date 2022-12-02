@@ -38,7 +38,7 @@ const Details: React.FC = (): React.ReactElement => {
    <div className='w-full flex justify-center'>
     <div className={`${responsive} flex justify-between rounded-1 flex-wrap`}>
      <div className='bg-slate-100 w-[550px] h-[375px] mb-3 flex justify-center items-center overflow-hidden rounded-2 border-2 border-slate-300'>
-      {true ? <img src={'/images/parbat.png'} alt={candidateName} height="100%" width="100%" /> : <FaUserCircle className='text-3xl text-slate-500' />}
+      {true ? <img src={'/images/parbat.png'} alt={name} height="100%" width="100%" /> : <FaUserCircle className='text-3xl text-slate-500' />}
      </div>
      <div className='details w-[500px]'>
       <FieldRow title1="Candidate Name" title1Val="Sher Bahadur Deuba" title2="Date of birth (DOB)" title2Val="15th Augus, 1912" />
