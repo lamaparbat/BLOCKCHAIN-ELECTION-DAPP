@@ -13,81 +13,81 @@ const PARTIES = [
 const VOTES = {
  "Province 1": [{
   party: "Nepal Congress",
-  candidateName: "Sher Bahadur Deuba",
-  count: 13861,
+  name: "Sher Bahadur Deuba",
+  votes: 13861,
  }, {
   party: "Emaly",
-  candidateName: "K.P Sharma Oli",
-  count: 15861,
+  name: "K.P Sharma Oli",
+  votes: 15861,
  }, {
   party: "Maoist",
-  candidateName: "Prachandey",
-  count: 12861,
+  name: "Prachandey",
+  votes: 12861,
  }],
  "Province 2": [{
   party: "Nepal Congress",
-  candidateName: "Balendra Shah",
-  count: 32861,
+  name: "Balendra Shah",
+  votes: 32861,
  }, {
   party: "Emaly",
-  candidateName: "Sunita Dangol",
-  count: 19861,
+  name: "Sunita Dangol",
+  votes: 19861,
  }, {
   party: "Maoist",
-  candidateName: "Prem Ale Magar",
-  count: 18861,
+  name: "Prem Ale Magar",
+  votes: 18861,
  }],
  "Province 3": [{
   party: "Nepal Congress",
-  candidateName: "Gagan kumar Thapa",
-  count: 22861,
+  name: "Gagan kumar Thapa",
+  votes: 22861,
  }, {
   party: "Emaly",
-  candidateName: "Srijana Jhakri",
-  count: 14861,
+  name: "Srijana Jhakri",
+  votes: 14861,
  }, {
   party: "Maoist",
-  candidateName: "Madhav kumar Nepal",
-  count: 19861,
+  name: "Madhav kumar Nepal",
+  votes: 19861,
  }],
  "Province 4": [{
   party: "Nepal Congress",
-  candidateName: "Gagan kumar Thapa",
-  count: 54861,
+  name: "Gagan kumar Thapa",
+  votes: 54861,
  }, {
   party: "Emaly",
-  candidateName: "Srijana Jhakri",
-  count: 66861,
+  name: "Srijana Jhakri",
+  votes: 66861,
  }, {
   party: "Maoist",
-  candidateName: "Madhav kumar Nepal",
-  count: 33861,
+  name: "Madhav kumar Nepal",
+  votes: 33861,
  }],
  "Province 5": [{
   party: "Nepal Congress",
-  candidateName: "Gagan kumar Thapa",
-  count: 54861,
+  name: "Gagan kumar Thapa",
+  votes: 54861,
  }, {
   party: "Emaly",
-  candidateName: "Srijana Jhakri",
-  count: 99861,
+  name: "Srijana Jhakri",
+  votes: 99861,
  }, {
   party: "Maoist",
-  candidateName: "Madhav kumar Nepal",
-  count: 65861,
+  name: "Madhav kumar Nepal",
+  votes: 65861,
  }],
  "Province 6": [{
   party: "Nepal Congress",
-  candidateName: "Gagan kumar Thapa",
-  count: 13861,
+  name: "Gagan kumar Thapa",
+  votes: 13861,
  }, {
   party: "Emaly",
-  candidateName: "Srijana Jhakri",
-  count: 11861,
+  name: "Srijana Jhakri",
+  votes: 11861,
  }, {
   party: "Maoist",
-  candidateName: "Madhav kumar Nepal",
-  count: 32861,
+  name: "Madhav kumar Nepal",
+  votes: 32861,
  }]
 }
 
