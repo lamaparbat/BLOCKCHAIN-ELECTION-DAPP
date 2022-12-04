@@ -1,4 +1,4 @@
-# Blockchain E-Voting SYSTEM (WEB 3.O)
+# Blockchain e-voting system (WEB 3.O)
 ![a](https://user-images.githubusercontent.com/64581460/200334222-dff3cce2-5398-4607-b174-141566b1e648.jpeg)
 
 ## HOT Candidate Live Vote Count
