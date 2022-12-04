@@ -10,6 +10,109 @@ const PARTIES = [
  "Swatantra"
 ]
 
+const PROVINCE = [
+ { label: "Province 1", value: "province1" },
+ { label: "Madhesh Province", value: "province2" },
+ { label: "Bagmati Province", value: "province3" },
+ { label: "Gandaki Province", value: "province4" },
+ { label: "Lumbini Province", value: "province5" },
+ { label: "Karnali Province", value: "province6" },
+ { label: "Sudurpashchim Province", value: "province7" },
+]
+
+const DISTRICT = {
+ province1: [
+  { label: "Bhojpur", value: "Bhojpur" },
+  { label: "Dhankuta", value: "Dhankuta" },
+  { label: "Ilam", value: "Ilam" },
+  { label: "Jhapa", value: "Jhapa" },
+  { label: "Khotang", value: "Khotang" },
+  { label: "Morang", value: "Morang" },
+  { label: "Okhaldhunga", value: "Okhaldhunga" },
+  { label: "Panchthar", value: "Panchthar" },
+  { label: "Sankhuwasabha", value: "Sankhuwasabha" },
+  { label: "Solukhumbu", value: "Solukhumbu" },
+  { label: "Taplejung", value: "Taplejung" },
+  { label: "Terhathum", value: "Terhathum" },
+  { label: "Udayapur", value: "Udayapur" },
+ ],
+ province2: [
+  { label: "Parsa", value: "Parsa" },
+  { label: "Dhanusha", value: "Dhanusha" },
+  { label: "Bara", value: "Bara" },
+  { label: "Saptari", value: "Saptari" },
+  { label: "Rautahat", value: "Rautahat" },
+  { label: "Sarlahi", value: "Sarlahi" },
+  { label: "Siraha", value: "Siraha" },
+  { label: "Mahottari", value: "Mahottari" }
+ ],
+ province3: [
+  { label: "Bhaktapur", value: "Bhaktapur" },
+  { label: "Chitwan", value: "Chitwan" },
+  { label: "Dhading", value: "Dhading" },
+  { label: "Dolakha", value: "Dolakha" },
+  { label: "Kathmandu", value: "Kathmandu" },
+  { label: "Kavrepalanchok", value: "Kavrepalanchok" },
+  { label: "Lalitpur", value: "Lalitpur" },
+  { label: "Rasuwa", value: "Rasuwa" },
+  { label: "Sindhuli", value: "Sindhuli" },
+  { label: "Sindhupalchok", value: "Sindhupalchok" },
+  { label: "Ramechhap", value: "Ramechhap" },
+  { label: "Nuwakot", value: "Nuwakot" },
+
+ ],
+ province4: [
+  { label: "Baglung", value: "Baglung" },
+  { label: "Gorkha", value: "Gorkha" },
+  { label: "Kaski", value: "Kaski" },
+  { label: "Lamjung", value: "Lamjung" },
+  { label: "Manang", value: "Manang" },
+  { label: "Mustang", value: "Mustang" },
+  { label: "Myagdi", value: "Myagdi" },
+  { label: "Nawalpur", value: "Nawalpur" },
+  { label: "Parbat", value: "Parbat" },
+  { label: "Syangja", value: "Syangja" },
+  { label: "Tanahun", value: "Tanahun" }
+ ],
+ province5: [
+  { label: "Arghakhanchi", value: "Arghakhanchi" },
+  { label: "Banke", value: "Banke" },
+  { label: "Bardiya", value: "Bardiya" },
+  { label: "Dang", value: "Dang" },
+  { label: "Eastern Rukum", value: "Eastern Rukum" },
+  { label: "Gulmi", value: "Gulmi" },
+  { label: "Kapilvastu", value: "Tanahun" },
+  { label: "Parasi", value: "Parasi" },
+  { label: "Palpa", value: "Palpa" },
+  { label: "Pyuthan", value: "Pyuthan" },
+  { label: "Rolpa", value: "Rolpa" },
+  { label: "Rupandehi", value: "Rupandehi" }
+ ],
+ province6: [
+  { label: "Dolpa", value: "Dolpa" },
+  { label: "Mugu", value: "Mugu" },
+  { label: "Humla", value: "Humla" },
+  { label: "Jumla", value: "Jumla" },
+  { label: "Kalikot", value: "Kalikot" },
+  { label: "Dailekh", value: "Dailekh" },
+  { label: "Jajarkot", value: "Jajarkot" },
+  { label: "Rukum", value: "Rukum" },
+  { label: "Salyan", value: "Salyan" },
+  { label: "Surkhet", value: "Surkhet" }
+ ],
+ province7: [
+  { label: "Achham", value: "Achham" },
+  { label: "Baitadi", value: "Baitadi" },
+  { label: "Bajhang", value: "Jumla" },
+  { label: "Bajura", value: "Bajura" },
+  { label: "Dadeldhura", value: "Dadeldhura" },
+  { label: "Darchula", value: "Darchula" },
+  { label: "Doti", value: "Doti" },
+  { label: "Kailali", value: "Kailali" },
+  { label: "Kanchanpur", value: "Kanchanpur" }
+ ]
+}
+
 const VOTES = {
  "Province 1": [{
   party: "Nepal Congress",
@@ -126,11 +229,8 @@ const sub_navbar_items = {
 
 export {
  LANGUAGES,
- BTM_BORDER_STYLE,
- PARTIES,
- VOTES,
- responsive,
- sub_navbar_style,
- sub_navbar_items_style,
- sub_navbar_items
+ PARTIES, VOTES,
+ responsive, BTM_BORDER_STYLE,
+ sub_navbar_style, sub_navbar_items_style, sub_navbar_items,
+ PROVINCE, DISTRICT
 };

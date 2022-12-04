@@ -3,6 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.overrideInputStyle {
+  font-size: 15px !important;
+}
+
+
 #count {
   font-family: 'Anek Devanagari', sans-serif;
   font-family: 'Space Mono', monospace;
@@ -17,6 +23,10 @@ span, p {
   display: flex;
   align-items: center;
   cursor: pointer;
+}
+
+.user__card .col2 div {
+  margin-bottom: 5px;
 }
 
 /* 
