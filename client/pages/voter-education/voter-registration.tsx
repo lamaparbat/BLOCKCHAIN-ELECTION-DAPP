@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Select from 'react-select'
 import BreadCrumb from '../../components/BreadCrumb';
 import Navbar from '../../components/Navbar';
-import { responsive, PROVINCE, DISTRICT } from '../../constants';
+import { responsive, PROVINCE, DISTRICT, WARD_NO } from '../../constants';
 
 const VoterRegistration = () => {
  const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
@@ -91,7 +91,7 @@ const VoterRegistration = () => {
       <div>
        <span>Ward Number</span>
        <Select
-        options={DISTRICT[selectedProvince.value]}
+        options={WARD_NO}
         className="w-[220px] mt-1"
         placeholder={<div>Select Ward</div>}
         onChange={(item: any) => {
