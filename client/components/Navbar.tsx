@@ -50,7 +50,6 @@ const Navbar: React.FC = (): ReactElement => {
      <div className='flex justify-between items-center cursor-pointer hover:opacity-60' onClick={openProfile}>
       <Avatar className='avatar' src="/images/parbat.png" alt="profile" size='sm' border={1} />
       <span className='mx-2'>Parbat Lama</span>
-      <button onClick={() => goto("/voter-education/voter-eligibility")}>test</button>
      </div>
     </div>
    </div>
