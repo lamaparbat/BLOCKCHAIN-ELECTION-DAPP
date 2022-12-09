@@ -1,22 +1,13 @@
-const cluster = require("cluster");
-const totalCpus = require("os").cpus().length;
+const cluster = require("node:cluster");
+const totalCpus = require("node:os").cpus();
 
-if (cluster.isMaster) {
+if (cluster.isPrimary) {
  console.log(`Master node:${process.pid} is running.`);
 
  // fork worker nodes
- for (let i = 1; i <= totalCpus; i++) {
-  cluster.fork();
- }
+ for (let i = 1; i <= totalCpus.length; i++) cluster.fork();
 
- // listenting to the worker node deaths
- cluster.on("exit", (worker: any, code: any, signal: any) => {
-  console.log(`Worker node:${worker.process.pid} died.`);
+ // listenting on worker node deaths
+ cluster.on("exit", (worker: any, code: any, signal: any) => cluster.fork());
 
-  // fork another worker node
-  cluster.fork();
- });
-
-} else {
- require("./app");
-}
+} else require("./app");
