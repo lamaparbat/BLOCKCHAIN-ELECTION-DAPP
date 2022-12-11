@@ -60,32 +60,4 @@ Blockchain technology was developed to address these problems, and it now provid
 ![FDD](https://user-images.githubusercontent.com/64581460/201529832-34d33fde-4dd4-4467-a182-dc286865a9ee.png)
 
 
-## Documentation 🚀🚀 [Installation guide]
-
-   ### Frontend setup
-   1. Download and install NodeJS [Link: https://nodejs.org/en/download/]
-   2. Donwload and install VSCode [Link: https://code.visualstudio.com/download]
-   3. Open the vscode and create a folder for frontend.
-   4. Go inside the recently created folder and init the react project using your fav react-installer like CRA || Vite
-      - ``` cd folder_name ```
-      - ``` npx create-next-app app_name --typescript ``` [init next project]
-      - ``` npm i web3 ```
-      - ``` npm run dev ``` [run the react project]
-      
-   ### Blockchain [Smart contract] setup
-   5. Go back to the main folder [cd ..] & create a folder for smartcontract.
-     i). Open your favourite browser and 
-        - Download and install gnache [Link: https://trufflesuite.com/ganache/]
-     
-     ii). Open smartcontract folder in vscode terminal and  
-        - ` npm i truffle --globally `
-        - ` truffle init ` [initialize the localhost blockchain environment using truffle ]`
-        - Write smart contract using solidity
-        - ` truffle compile`
-        - ` truffle migrate` [will generate build file in json format]
-        - Copy the "abi" array & address from the generated .json from from /build folder and paste on constant file of your client side app.
-     iii). Now you can access all the functions of smartcontract features by simply using `web3.eth.methods.call()` for getter function && `web3.eth.methods.send({from: account_address});`
-        
-
-
 Author: Parbat Lama
