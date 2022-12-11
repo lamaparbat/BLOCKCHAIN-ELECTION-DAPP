@@ -4,9 +4,9 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "prod": "NODE_ENV=production && npx tsc && pm2 start ./dist/server.js --ignore-watch=node_modules && pm2 save && nodemon ./dist/server.js -i max",
-    "dev": "NODE_ENV=development && npx tsc && pm2 start ./dist/server.js && nodemon ./dist/server.js --watch --all",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "export NODE_ENV=production || set NODE_ENV=production && npx tsc && pm2 start ./dist/server.js --ignore-watch=node_modules && pm2 save && nodemon ./dist/server.js -i max",
+    "dev": "export NODE_ENV=development || set NODE_ENV=development && npx tsc && pm2 start ./dist/server.js && nodemon ./dist/server.js --watch --all",
+    "test": "export NODE_ENV=test || set NODE_ENV=test && jest --passWithNoTests --detectOpenHandles"
   },
   "author": "Parbat Lama",
   "license": "ISC",
