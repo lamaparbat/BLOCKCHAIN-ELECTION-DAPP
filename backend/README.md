@@ -90,11 +90,11 @@ Blockchain technology was developed to address these problems, and it now provid
 
 ## Backend API Docs
   1. Installation
-    ``` npm init ```
+    ``` npm init 
     
-    ``` npm add express ts-node @types/node @types/express dotenv nodemon cors helmet pm2```
+    ``` npm add express ts-node @types/node @types/express dotenv nodemon cors helmet pm2
     
-    ``` npm add jest ts-jest @types/jest ```
+    ``` npm add jest ts-jest @types/jest
     
     ``` npx test-jest config:init ``` [generate jest.config.js files with some prebuilt configs]
    
