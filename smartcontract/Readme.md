@@ -2,6 +2,7 @@
   
    ### Blockchain [Smart contract] setup
    5. Go back to the main folder [cd ..] & create a folder for smartcontract.
+ 
      i). Open your favourite browser and 
         - Download and install gnache [Link: https://trufflesuite.com/ganache/]
      
