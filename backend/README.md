@@ -3,9 +3,9 @@
 ## Backend API Docs
   1. Installation
 
-    npm init 
+    npm init [initialize the project setup]
     
-    npm add express ts-node @types/node @types/express dotenv nodemon cors helmet pm2
+    npm add express ts-node @types/node @types/express dotenv nodemon cors helmet pm2 multer @types/multer
     
     npm add jest ts-jest @types/jest
     
