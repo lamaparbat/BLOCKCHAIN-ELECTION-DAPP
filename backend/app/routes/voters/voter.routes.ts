@@ -4,10 +4,10 @@ import multer from 'multer';
 
 const router = Router();
 
-router.post('/voter/signup', multer({storage: multer.memoryStorage()}).single("file"), async (req:Request, res: Response) => {
+router.post('/voter/signup', multer({ storage: multer.memoryStorage() }).single("file"), async (req: Request, res: Response) => {
  try {
-  // const { email, password, file } = req.body; 
-  console.log('files', req?.file)
+  const { fullName, citizenshipNumber, province, district, municipility, ward, email, password, profile } = req.body;
+  console.log('data', req.body);
   res.send({
    message: req?.file,
    statusCode: 200
