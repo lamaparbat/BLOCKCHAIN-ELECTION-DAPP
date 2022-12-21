@@ -24,4 +24,8 @@
    8. ``` pm2 monit ``` [Monit the process details including memory usage, uptime, etc]
    7. ``` pm2 restart starter_file``` [Delete all processes]
 
+  2. Setup scalable project structute [Eg. Clean Arch.]
+  3.
+  
+  
 Author: Parbat Lama
