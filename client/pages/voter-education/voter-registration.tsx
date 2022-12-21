@@ -15,7 +15,6 @@ const VoterRegistration = () => {
 
   // upload voterDetails
   const onSubmit = async () => {
-    console.log(voterDetails)
     try {
       const response = await Http("post", "/voter/signup", voterDetails);
       toast.success("Voter registered successfully", { toastId: 1 });
@@ -126,6 +125,7 @@ const VoterRegistration = () => {
               <input
                 className='overrideInputStyle form-control py-[10px] rounded-1 mt-1'
                 type="file"
+                name="file"
                 onChange={(e) => setVoterDetails({ ...voterDetails, profile: e.target.files[0] })}
               />
             </div>
