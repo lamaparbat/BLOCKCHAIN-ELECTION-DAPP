@@ -6,7 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require("cors");
 const helmet = require("helmet");
-const routes = require("./app/routes/index");
+const routes = require("./src/presentation/routes/index");
 
 // server config
 const app = express();
