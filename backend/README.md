@@ -5,7 +5,9 @@
 
     npm init [initialize the project setup]
     
-    npm add express ts-node @types/node @types/express dotenv nodemon cors helmet pm2 multer @types/multer firebase-admin uuid
+    npm add express ts-node @types/node @types/express dotenv nodemon cors helmet pm2 multer @types/multer 
+    
+    npm add firebase-admin uuid
     
     npm add jest ts-jest @types/jest
     
