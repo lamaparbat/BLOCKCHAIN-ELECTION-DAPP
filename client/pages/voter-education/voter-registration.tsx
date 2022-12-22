@@ -3,7 +3,7 @@ import Select from 'react-select'
 import BreadCrumb from '../../components/BreadCrumb';
 import Navbar from '../../components/Navbar';
 import { responsive, PROVINCE, DISTRICT, WARD_NO } from '../../constants';
-import { Http } from '../../services';
+import { registerVoter } from './actions';
 import { toast } from 'react-toastify';
 
 const VoterRegistration = () => {
@@ -16,7 +16,18 @@ const VoterRegistration = () => {
   // upload voterDetails
   const onSubmit = async () => {
     try {
-      const response = await Http("post", "/voter/signup", voterDetails);
+      const formData = new FormData();
+      formData.append("fullName", voterDetails.fullName);
+      formData.append("citizenshipNumber", voterDetails.citizenshipNo);
+      formData.append("province", voterDetails.province);
+      formData.append("district", voterDetails.district);
+      formData.append("municipality", voterDetails.municipality);
+      formData.append("ward", voterDetails.ward);
+      formData.append("email", voterDetails.email);
+      formData.append("profile", voterDetails.profile);
+
+      await registerVoter(formData);
+
       toast.success("Voter registered successfully", { toastId: 1 });
     } catch (error) {
       toast.error("Failed to register !", { toastId: 2 });

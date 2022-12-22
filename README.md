@@ -5,7 +5,8 @@
 <img width="1440" alt="Screen Shot 2022-11-27 at 22 27 26" src="https://user-images.githubusercontent.com/64581460/204148574-10d794e3-091b-423e-befa-32b5a76981e6.png">
 
 ## Voter Poll Card List UI
-<img width="1440" alt="Screen Shot 2022-12-01 at 22 52 21" src="https://user-images.githubusercontent.com/64581460/205115733-39bc2869-52b7-442f-b047-9469dfa6491a.png">
+<img width="1440" alt="Screen Shot 2022-12-22 at 23 21 10" src="https://user-images.githubusercontent.com/64581460/209193528-13b9197e-1b37-4d61-ae3d-a2b065ba4ead.png">
+
 
 
 ## Mobile view navigation bar
@@ -22,8 +23,6 @@
 
 ## Project Architecture
 <img width="789" alt="Screen Shot 2022-12-05 at 22 28 46" src="https://user-images.githubusercontent.com/64581460/205693485-16e2a57b-e5d4-4f8a-8c16-4f237ac3d80b.png">
-
-<img width="752" alt="Screen Shot 2022-12-05 at 22 29 31" src="https://user-images.githubusercontent.com/64581460/205693547-83bb9be2-fa81-4a56-bb37-23d6de8b1471.png">
 
 
 ## Introduction

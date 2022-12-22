@@ -13,10 +13,10 @@ interface LanguageStruct {
 };
 
 interface UserDetails {
- citizenship: string,
- name: string,
+ citizenshipNumber: string,
+ fullName: string,
  dob: string,
- profileSrc: string
+ profile: string
  education: string,
  district: string,
  address: string,

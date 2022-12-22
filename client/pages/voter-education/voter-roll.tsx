@@ -1,24 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import Navbar from '../../components/Navbar';
 import BreadCrumb from '../../components/BreadCrumb';
 import { DISTRICT, PROVINCE, WARD_NO, responsive } from '../../constants';
 import UserCard from '../../components/UserCard';
+import { getVoterLists } from './actions';
+import { AxiosResponse } from 'axios';
 
 const Details: React.FC = (): React.ReactElement => {
  const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
+ const [voterLists, setVoterLists] = useState([]);
 
- const userDetails = {
-  citizenship: "12-323023",
-  name: "Parbat Lama",
-  dob: "2057-34-23",
-  profileSrc: "/images/parbat.png",
-  education: "Bsc Computer Science",
-  district: "Kathmandu",
-  address: "Kapan, Kathmandu",
-  contact: "9818232343",
-  email: "parbat@gmail.com"
- }
+ useEffect(() => {
+  (async () => {
+   try {
+    const res = await getVoterLists({ skip: 0 });
+    res && setVoterLists(res?.data.data)
+   } catch (error) {
+    console.error(error);
+   }
+
+  })();
+ }, []);
 
  return (
   <div className='mb-[50px]'>
@@ -64,18 +67,9 @@ const Details: React.FC = (): React.ReactElement => {
       </div>
      </div><br />
      <div className='voter__container flex flex-wrap justify-between'>
-      <UserCard details={userDetails} type="voter" />
-      <UserCard details={userDetails} type="voter" />
-      <UserCard details={userDetails} type="voter" />
-      <UserCard details={userDetails} type="voter" />
-      <UserCard details={userDetails} type="voter" />
-      <UserCard details={userDetails} type="voter" />
-      <UserCard details={userDetails} type="voter" />
-      <UserCard details={userDetails} type="voter" />
-      <UserCard details={userDetails} type="voter" />
-      <UserCard details={userDetails} type="voter" />
-      <UserCard details={userDetails} type="voter" />
-      <UserCard details={userDetails} type="voter" />
+      {
+       voterLists && voterLists.map((voterDetails, i) => <UserCard details={voterDetails} type="voter" key={i} />)
+      }
      </div>
     </div>
    </div>
