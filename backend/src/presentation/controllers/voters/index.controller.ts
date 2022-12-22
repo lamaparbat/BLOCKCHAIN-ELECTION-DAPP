@@ -7,14 +7,13 @@ const voterModal = require("../../../infrastructure/models/voter.model");
 
 const voterSignup = async (req: Request, res: Response) => {
  try {
-  const { fullName, citizenshipNumber, province, district, municipility, ward, email, password } = req.body;
-  console.log(req?.file)
+  const { fullName, citizenshipNumber, province, district, municipality, ward, email, password } = req.body;
   const firebaseStorageResponse = await uploadFileToFirebaseStorage(UPLOAD_FOLDER_PATH, req?.file?.filename);
-  const imgHostedURL = firebaseStorageResponse?.metadata?.mediaLink;
+  const imgHostedURL = firebaseStorageResponse[0]?.metadata?.mediaLink;
 
   await new voterModal({
    fullName, citizenshipNumber,
-   province, district, municipility,
+   province, district, municipality,
    ward, email, password, profile: imgHostedURL,
    createdAt: Date.now()
   }).save();
@@ -33,12 +32,28 @@ const voterSignup = async (req: Request, res: Response) => {
  }
 };
 
-const voterLogin = () => {
+const getVoterLists = async (req: Request, res: Response) => {
+ try {
+  const { skip } = req.query;
 
+  const response = await voterModal.find().skip(skip).limit(10);
+  console.log(response)
+  res.status(200).send({
+   message: "Data fetched successfully",
+   data: response,
+   statusCode: 200
+  });
+ } catch (error) {
+  console.error(error);
+  res.status(500).send({
+   message: "Internal Server Error.",
+   statusCode: 500
+  });
+ }
 }
 
 
 module.exports = {
  voterSignup,
- voterLogin,
+ getVoterLists,
 }

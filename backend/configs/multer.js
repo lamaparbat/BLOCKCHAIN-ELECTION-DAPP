@@ -6,7 +6,6 @@ const storage = multer.diskStorage({
   cb(null, UPLOAD_FOLDER_PATH);
  },
  filename: (req, file, cb) => {
-  console.log("oops ", file)
   const orginalFileName = file.originalname.split(".");
   const fileName = `${orginalFileName[0]}-${Date.now()}.${orginalFileName[1]}`;
   cb(null, fileName);
