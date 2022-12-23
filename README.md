@@ -8,11 +8,6 @@
 <img width="1440" alt="Screen Shot 2022-12-22 at 23 21 10" src="https://user-images.githubusercontent.com/64581460/209193528-13b9197e-1b37-4d61-ae3d-a2b065ba4ead.png">
 
 
-## Skeleton Loading Voter Poll card UI
-<img width="1440" alt="Screen Shot 2022-12-23 at 20 37 32" src="https://user-images.githubusercontent.com/64581460/209357728-b07b5f96-c7d9-477a-8fdc-09596ee0b46f.png">
-
-
-
 ## Workflow overview
 
 ![Blockchain Voting Interaction](https://user-images.githubusercontent.com/64581460/200596235-cba703b8-ac91-4600-9a02-d271a6ad8ed6.png)
