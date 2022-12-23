@@ -12,7 +12,6 @@ export const getVoterLists = async ({ skip }) => {
  try {
   const url = `/voter/lists?skip=${skip}`;
   const res = await Http("get", url, null);
-  console.log(res)
   return res;
  } catch (error) {
   return console.error(error);

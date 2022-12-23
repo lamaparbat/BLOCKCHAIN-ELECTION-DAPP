@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import Navbar from '../../components/Navbar';
+import VoterCardSkeleton from "../../components/Skeleton/voter-card-skeleton";
 import BreadCrumb from '../../components/BreadCrumb';
 import { DISTRICT, PROVINCE, WARD_NO, responsive } from '../../constants';
 import UserCard from '../../components/UserCard';
 import { getVoterLists } from './actions';
-import { AxiosResponse } from 'axios';
 
 const Details: React.FC = (): React.ReactElement => {
  const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
  const [voterLists, setVoterLists] = useState([]);
+ const [loading, setLoading] = useState(false);
 
  useEffect(() => {
   (async () => {
    try {
+    setLoading(true);
     const res = await getVoterLists({ skip: 0 });
     res && setVoterLists(res?.data.data)
    } catch (error) {
     console.error(error);
    }
-
+   setLoading(false);
   })();
  }, []);
 
@@ -67,8 +69,11 @@ const Details: React.FC = (): React.ReactElement => {
       </div>
      </div><br />
      <div className='voter__container flex flex-wrap justify-between'>
+      {loading && <VoterCardSkeleton repeatCount={12} />}
       {
-       voterLists && voterLists.map((voterDetails, i) => <UserCard details={voterDetails} type="voter" key={i} />)
+       voterLists ?
+        voterLists.map((voterDetails, i) => <UserCard details={voterDetails} type="voter" key={i} />) :
+        "No Voters Available !"
       }
      </div>
     </div>
