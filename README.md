@@ -9,12 +9,8 @@
 
 
 ## Skeleton Loading Voter Poll card UI
-<img width="1440" alt="Screen Shot 2022-12-23 at 20 37 32" src="https://user-images.githubusercontent.com/64581460/209355455-47aa13e8-8ab9-4aa9-9aee-a0ca10b1d933.png">
+<img width="1440" alt="Screen Shot 2022-12-23 at 20 37 32" src="https://user-images.githubusercontent.com/64581460/209357728-b07b5f96-c7d9-477a-8fdc-09596ee0b46f.png">
 
-
-
-## Voter Registration UI
-<img width="1151" alt="Screen Shot 2022-12-04 at 10 20 53" src="https://user-images.githubusercontent.com/64581460/205474724-e33ab399-49d6-4adc-b3e6-61b0288fee8a.png">
 
 
 ## Workflow overview
