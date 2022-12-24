@@ -12,6 +12,15 @@ interface LanguageStruct {
  value: string
 };
 
+interface PartyStruct {
+ lists: {
+  partyName: string,
+  totalMembers: number,
+  agenda: string,
+  logo: string
+ }
+}
+
 interface UserDetails {
  citizenshipNumber: string,
  fullName: string,
@@ -52,5 +61,6 @@ export type {
  LanguageStruct,
  LiveCounterCardStruct,
  CandidateCardStruct,
- UserCardStruct
+ UserCardStruct,
+ PartyStruct
 };

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Select from 'react-select'
 import BreadCrumb from '../../components/BreadCrumb';
 import Navbar from '../../components/Navbar';
-import { responsive, PROVINCE, DISTRICT, WARD_NO } from '../../constants';
+import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO } from '../../constants';
 import { registerVoter } from './actions';
 import { toast } from 'react-toastify';
 
@@ -91,6 +91,7 @@ const VoterRegistration = () => {
                   setSelectProvince(item);
                   setVoterDetails({ ...voterDetails, district: item.label })
                 }}
+                isDisabled={selectedProvince?.label ? false : true}
               />
             </div>
           </div>
@@ -98,13 +99,14 @@ const VoterRegistration = () => {
             <div>
               <span>Municipality</span>
               <Select
-                options={PROVINCE}
+                options={MUNICIPALITY[selectedProvince.value]}
                 className="w-[220px] mr-2 mt-1"
                 placeholder={<div>Select Municipality</div>}
                 onChange={(item: any) => {
                   setSelectProvince(item);
                   setVoterDetails({ ...voterDetails, municipality: item.label })
                 }}
+                isDisabled={voterDetails?.district ? false : true}
               />
             </div>
             <div>
@@ -117,6 +119,7 @@ const VoterRegistration = () => {
                   setSelectProvince(item);
                   setVoterDetails({ ...voterDetails, ward: item.label })
                 }}
+                isDisabled={voterDetails?.municipality ? false : true}
               />
             </div>
           </div>

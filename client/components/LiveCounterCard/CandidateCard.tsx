@@ -16,7 +16,7 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
 
  const openDetails = (details) => {
   dispatch(setDetails(details));
-  router.push("/candidate/details");
+  router.push("/party/details");
  }
 
  return (

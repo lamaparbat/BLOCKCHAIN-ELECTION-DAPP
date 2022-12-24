@@ -3,12 +3,16 @@ import Select from 'react-select';
 import Navbar from '../../components/Navbar';
 import VoterCardSkeleton from "../../components/Skeleton/voter-card-skeleton";
 import BreadCrumb from '../../components/BreadCrumb';
-import { DISTRICT, PROVINCE, WARD_NO, responsive } from '../../constants';
+import { DISTRICT, PROVINCE, MUNICIPALITY, WARD_NO, responsive } from '../../constants';
 import UserCard from '../../components/UserCard';
 import { getVoterLists } from './actions';
 
 const Details: React.FC = (): React.ReactElement => {
  const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
+ const [selectedDistrict, setSelectDistrict] = useState({ label: '', value: '' });
+ const [selectedMunicipality, setSelectMunicipality] = useState({ label: '', value: '' });
+ const [selectedWard, setSelectWard] = useState({ label: '', value: '' });
+
  const [voterLists, setVoterLists] = useState([]);
  const [loading, setLoading] = useState(false);
 
@@ -47,24 +51,27 @@ const Details: React.FC = (): React.ReactElement => {
         className="w-[180px] mx-2 mt-1"
         placeholder={<div>Select District</div>}
         onChange={(item: any) => {
-         setSelectProvince(item);
+         setSelectDistrict(item);
         }}
+        isDisabled={selectedProvince?.label ? false : true}
        />
        <Select
-        options={PROVINCE}
+        options={MUNICIPALITY[selectedDistrict.value]}
         className="w-[180px] mt-1"
         placeholder={<div>Select Municip...</div>}
         onChange={(item: any) => {
-         setSelectProvince(item);
+         setSelectMunicipality(item);
         }}
+        isDisabled={selectedDistrict?.label ? false : true}
        />
        <Select
         options={WARD_NO}
         className="w-[150px] mx-2 mt-1"
         placeholder={<div>Select Ward</div>}
         onChange={(item: any) => {
-         setSelectProvince(item);
+         setSelectWard(item);
         }}
+        isDisabled={selectedMunicipality?.label ? false : true}
        />
       </div>
      </div><br />

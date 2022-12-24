@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 
 const Http = async (method: string, endpoint: string, data: Object): Promise<AxiosResponse> => {
   try {
@@ -19,6 +20,7 @@ const Http = async (method: string, endpoint: string, data: Object): Promise<Axi
 
     return await axios(config);
   } catch (error) {
+    toast.error(error.message, { toastId: 3 });
     console.log(error);
   }
 }

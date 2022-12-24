@@ -9,7 +9,7 @@ const Avatar: React.FC<AvatarProps> = (AvatarProps): ReactElement => {
 
    return (
       <div className={`${className} profile rounded-full overflow-hidden bg-red-100 flex items-center justify-center ${size} border-${border} border-green-500`}>
-         <img src={src} className={`${className} h-fit w-fit`} alt={alt} />
+         <img src={src} className={`${className} h-full w-full object-cover`} alt={alt} />
       </div>
    )
 }

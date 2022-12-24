@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from 'react';
 import { useRouter } from 'next/router';
-import {useTest} from '../hooks/useTest'
 import Image from 'next/image';
 import { AiOutlineMail, AiOutlineSearch } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -15,8 +14,6 @@ const Navbar: React.FC = (): ReactElement => {
  const [openVerticalNavbar, setOpenVerticalNavbar] = useState(false);
 
  const route = useRouter();
-
- const {goto} = useTest();
 
  // open new page
  const navigate = (path: string) => {
