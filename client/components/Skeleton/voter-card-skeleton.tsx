@@ -6,7 +6,7 @@ const VoterCardSkeleton = ({ repeatCount }) => {
  return (
   <div className='flex flex-wrap justify-between'>
    {Array(repeatCount).fill(0).map((d, i) =>
-    <SkeletonTheme baseColor="#f8f9fa" highlightColor="#e9edf1">
+    <SkeletonTheme baseColor="#f8f9fa" highlightColor="#e9edf1" key={i} >
      <div className='h-[170px] w-[345px] mt-3 d-flex px-4 py-3 bg-white rounded-lg overflow-hidden mb-3 cursor-pointer drop-shadow-md'>
       <div className='d-flex flex-column justify-content-center'>
        <Skeleton count={1} height={95} width={95} className="rounded-circle" />
