@@ -8,14 +8,6 @@
 <img width="1440" alt="Screen Shot 2022-12-22 at 23 21 10" src="https://user-images.githubusercontent.com/64581460/209193528-13b9197e-1b37-4d61-ae3d-a2b065ba4ead.png">
 
 
-
-## Mobile view navigation bar
-![Screen Shot 2022-11-30 at 21 47 45](https://user-images.githubusercontent.com/64581460/204847780-624cdc5b-3a61-411a-aa44-d314db1eb463.png)
-
-## Voter Registration UI
-<img width="1151" alt="Screen Shot 2022-12-04 at 10 20 53" src="https://user-images.githubusercontent.com/64581460/205474724-e33ab399-49d6-4adc-b3e6-61b0288fee8a.png">
-
-
 ## Workflow overview
 
 ![Blockchain Voting Interaction](https://user-images.githubusercontent.com/64581460/200596235-cba703b8-ac91-4600-9a02-d271a6ad8ed6.png)
