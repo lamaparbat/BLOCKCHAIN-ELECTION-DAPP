@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar';
 import VoterCardSkeleton from "../../components/Skeleton/voter-card-skeleton";
 import { responsive } from '../../constants';
 import PartyCard from '../../components/PartyCard';
-import { getPartyLists } from './actions';
+import { getPartyLists } from '../../utils/action';
 
 const Details: React.FC = (): React.ReactElement => {
   const [partyList, setPartyLists] = useState([]);

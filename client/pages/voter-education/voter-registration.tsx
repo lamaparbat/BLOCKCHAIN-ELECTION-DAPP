@@ -3,7 +3,7 @@ import Select from 'react-select'
 import BreadCrumb from '../../components/BreadCrumb';
 import Navbar from '../../components/Navbar';
 import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO } from '../../constants';
-import { registerVoter } from './actions';
+import { registerVoter } from '../../utils/action';
 import { toast } from 'react-toastify';
 
 const VoterRegistration = () => {

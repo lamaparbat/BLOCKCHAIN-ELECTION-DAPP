@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Select from 'react-select'
 import Navbar from '../../components/Navbar';
 import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO } from '../../constants';
-import { registerCandidate } from './actions';
+import { registerCandidate } from '../../utils/action';
 import { toast } from 'react-toastify';
 
 const VoterRegistration = () => {

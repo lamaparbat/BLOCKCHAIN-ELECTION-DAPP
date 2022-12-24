@@ -5,7 +5,7 @@ import VoterCardSkeleton from "../../components/Skeleton/voter-card-skeleton";
 import BreadCrumb from '../../components/BreadCrumb';
 import { DISTRICT, PROVINCE, MUNICIPALITY, WARD_NO, responsive } from '../../constants';
 import UserCard from '../../components/UserCard';
-import { getCandidateLists } from './actions';
+import { getCandidateLists } from '../../utils/action';
 
 const Details: React.FC = (): React.ReactElement => {
   const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
