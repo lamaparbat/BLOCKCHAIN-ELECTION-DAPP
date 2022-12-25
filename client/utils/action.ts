@@ -1,8 +1,9 @@
 import { Http } from "../services/index";
 
-export const registerCandidate = async (data: Object) => {
+// candidate || party
+export const registerCandidate = async (payload: Object) => {
  try {
-  return await Http("post", "/candidate/signup", data);
+  return await Http("post", "/candidate/signup", payload);
  } catch (error) {
   return console.error(error);
  }
@@ -18,9 +19,9 @@ export const getCandidateLists = async ({ skip }) => {
  }
 }
 
-export const registerParty = async (data: Object) => {
+export const registerParty = async (payload: Object) => {
  try {
-  return await Http("post", "/party/signup", data);
+  return await Http("post", "/party/signup", payload);
  } catch (error) {
   return console.error(error);
  }
@@ -36,9 +37,11 @@ export const getPartyLists = async ({ skip }) => {
  }
 }
 
-export const registerVoter = async (data: Object) => {
+
+// Voter
+export const registerVoter = async (payload: Object) => {
  try {
-  return await Http("post", "/voter/signup", data);
+  return await Http("post", "/voter/signup", payload);
  } catch (error) {
   return console.error(error);
  }
@@ -54,3 +57,14 @@ export const getVoterLists = async ({ skip }) => {
  }
 }
 
+
+
+
+// Create a new election
+export const createElection = async (payload: Object) => {
+ try {
+  return await Http("post", "/admin/createElection", payload);
+ } catch (error) {
+  return console.error(error);
+ }
+}

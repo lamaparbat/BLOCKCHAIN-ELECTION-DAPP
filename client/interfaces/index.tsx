@@ -24,6 +24,7 @@ interface PartyStruct {
 interface UserDetails {
  citizenshipNumber: string,
  fullName: string,
+ name: string,
  dob: string,
  profile: string
  education: string,

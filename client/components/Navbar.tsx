@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { AiOutlineMail, AiOutlineSearch } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import _ from 'lodash';
+import ElectionModal from './ElectionModal';
 import Avatar from './Avatar';
 import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style } from '../constants/index';
 import { LanguageStruct } from '../interfaces';
@@ -12,6 +13,7 @@ import Dropdown from './Dropdown';
 const Navbar: React.FC = (): ReactElement => {
  const [selectedLanguage, setSelectedLanguage] = useState({ label: 'english', value: 'ENGLISH' });
  const [openVerticalNavbar, setOpenVerticalNavbar] = useState(false);
+ const [showCreateElectionModal, setShowCreateElectionModal] = useState(false);
 
  const route = useRouter();
 
@@ -34,9 +36,15 @@ const Navbar: React.FC = (): ReactElement => {
   setSelectedLanguage(val ?? selectedLanguage);
  };
 
+ // create new election
+ const createElection = () => {
+  setShowCreateElectionModal(!showCreateElectionModal);
+ }
+
  return (
   <div className='navbar__container'>
-   <div className='navbar__top py-2 w-full flex justify-end bg-slate-100 px-2'>
+   <div className='navbar__top py-2 w-full flex justify-end items-center bg-slate-100 px-2'>
+    <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={createElection}>CREATE ELECTION</span>
     <div className='items w-[450px] flex justify-around items-center text-slate-600'>
      <span className='pr-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/FAQ")}>FAQ</span>
      <select className='text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0' onChange={onLanguageChange}>
@@ -87,6 +95,7 @@ const Navbar: React.FC = (): ReactElement => {
      <div className={sub_navbar_items_style}><Dropdown title="Election Result" items={sub_navbar_items.electionResultTypes} /></div>
     </div>
    </div>
+   <ElectionModal show={showCreateElectionModal} setShowCreateElectionModal={setShowCreateElectionModal} />
   </div>
  )
 }
