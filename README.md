@@ -7,6 +7,10 @@
 ## Voter Poll Card List UI
 <img width="1440" alt="Screen Shot 2022-12-22 at 23 21 10" src="https://user-images.githubusercontent.com/64581460/209193528-13b9197e-1b37-4d61-ae3d-a2b065ba4ead.png">
 
+## Create election with start date and time UI
+<img width="1440" alt="Screen Shot 2022-12-25 at 19 56 32" src="https://user-images.githubusercontent.com/64581460/209471225-e46f3341-aec2-4d3b-8ded-6110dcb44a83.png">
+
+
 
 ## Workflow overview
 
