@@ -27,8 +27,6 @@ const VoterRegistration = () => {
       formData.append("profile", voterDetails.profile);
 
       await registerVoter(formData);
-
-      toast.success("Voter registered successfully", { toastId: 1 });
     } catch (error) {
       toast.error("Failed to register !", { toastId: 2 });
     }

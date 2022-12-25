@@ -1,10 +1,24 @@
+import { useState } from 'react';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import { GoPrimitiveDot } from 'react-icons/go';
 import LiveCounterCard from '../components/LiveCounterCard/LiveCounterCard';
 import { VOTES } from '../constants';
+import electionChannel from "../services/pusher-events";
 
 export default function Home() {
+  const [electionStatus, setElectionStatus] = useState("");
+
+  electionChannel.bind("start-election-event", () => {
+    console.log("election started");
+    setElectionStatus("start")
+  });
+
+  electionChannel.bind("end-election-event", () => {
+    console.log("election ended");
+    setElectionStatus("end")
+  });
+
   return (
     <div>
       <Head>
@@ -18,8 +32,10 @@ export default function Home() {
           <div className='lg:w-[1100px] w-full lg:px-2 max-[1100px]:px-1'>
             <div className='flex items-center'>
               <span className='text-2xl font-bold text-black'>Hot Seats</span>
-              <GoPrimitiveDot className='text-4xl ml-5 mr-1 text-danger' />
-              <span className='text-[17px]'>LIVE</span>
+              <GoPrimitiveDot className={`text-4xl ml-5 mr-1 ${electionStatus === 'start' && "text-danger"}`} />
+              <span className='text-[17px]'>{
+                !electionStatus ? "NO ELECTION" : (electionStatus === "start" ? "LIVE" : "ENDED")
+              }</span>
             </div>
           </div>
           <div className='lg:w-[1100px] flex justify-around flex-wrap'>

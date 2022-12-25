@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SpinningCircles } from 'react-loading-icons'
+import { SpinningCircles } from 'react-loading-icons';
 import Navbar from '../../components/Navbar';
 import { registerParty } from '../../utils/action';
 import { toast } from 'react-toastify';
@@ -22,8 +22,6 @@ const VoterRegistration = () => {
       formData.append("logo", partyDetails.logo);
 
       await registerParty(formData);
-
-      toast.success("Party registered successfully", { toastId: 1 });
     } catch (error) {
       toast.error("Failed to register !", { toastId: 2 });
     }

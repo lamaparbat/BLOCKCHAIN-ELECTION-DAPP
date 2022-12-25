@@ -1,75 +1,107 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
+import { SpinningCircles } from 'react-loading-icons'
 import { createElection } from '../utils/action';
 
+const currentDate = new Date();
+const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
+const defaultElectionData = {
+  title: "",
+  description: "",
+  startDate: defaultDate,
+  endDate: defaultDate
+}
+
+
 const ElectionModal = ({ show, setShowCreateElectionModal }) => {
- const [electionDate, setElectionDate] = useState({
-  startDate: "",
-  endDate: ""
- });
- const [isAgree, setAgree] = useState(false);
- const [isDisabled, setDisabled] = useState(true);
+  const [electionData, setElectionData] = useState({ ...defaultElectionData });
+  const [isAgree, setAgree] = useState(false);
+  const [isDisabled, setDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
- useEffect(() => {
-  setDisabled(!isAgree || !electionDate.startDate || !electionDate.endDate);
- }, [isAgree, electionDate.startDate, electionDate.endDate]);
+  useEffect(() => {
+    setDisabled(!isAgree || !electionData.title || !electionData.description || !electionData.startDate || !electionData.endDate);
+  }, [isAgree, electionData.title, electionData.description, electionData.startDate, electionData.endDate]);
 
- const onDatechange = (name: string, value: string) => {
-  setElectionDate({ ...electionDate, [name]: value });
- };
+  const onChange = (name: string, value: string) => {
+    setElectionData({ ...electionData, [name]: value });
+  };
 
- const onCreate = async () => {
-  try {
-   const res = await createElection(electionDate);
-   console.log(res);
-  } catch (error) {
-   console.error(error);
+  const onCreate = async () => {
+    setLoading(true);
+    try {
+      const res = await createElection(electionData);
+
+      setShowCreateElectionModal(false);
+      setElectionData(defaultElectionData);
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
   }
- }
 
 
- return (
-  <Modal show={show}>
-   <Modal.Header className='pt-3 pb-1 px-4'>
-    <h5>Create new election</h5>
-   </Modal.Header>
-   <Modal.Body>
-    <div className='px-2'>
-     <div className='hold__date flex '>
-      <div className='w-50 mr-2'>
-       <span>Start Date & time</span>
-       <input
-        type="datetime-local"
-        className="form-control mt-1"
-        onChange={(e) => onDatechange("startDate", e.target.value)} />
-      </div>
-      <div className='w-50 ml-2'>
-       <span>End Date & time</span>
-       <input
-        type="datetime-local"
-        className="form-control mt-1"
-        onChange={(e) => onDatechange("endDate", e.target.value)} />
-      </div>
-     </div>
-     <div className='flex mt-3'>
-      <input
-       type="checkbox"
-       className="mr-2 bg-blue-800"
-       onChange={() => setAgree(!isAgree)} />
-      <span>I agree terms and condition.</span>
-     </div>
-    </div>
-   </Modal.Body>
-   <Modal.Footer>
-    <button className='me-4' onClick={() => setShowCreateElectionModal(false)}>Close</button>
-    <button
-     className={`px-4 py-1 text-white rounded-1 ${isDisabled ? 'bg-blue-500' : 'bg-blue-800'}`}
-     disabled={isDisabled}
-     onClick={onCreate}
-    >Create</button>
-   </Modal.Footer>
-  </Modal>
- )
+  return (
+    <Modal show={show} centered>
+      <Modal.Header className='pt-4 pb-3 px-4'>
+        <h5>Create new election</h5>
+      </Modal.Header>
+      <Modal.Body>
+        <div className='px-2'>
+          <div className='flex flex-column'>
+            <label>Election Title</label>
+            <input
+              type="text"
+              className='form-control mt-2 mb-4 shadow-none'
+              onChange={(e) => onChange("title", e.target.value)} />
+          </div>
+          <div className='flex flex-column'>
+            <label>Short Election Description</label>
+            <textarea
+              className='form-control mt-2 mb-4 shadow-none h-[200px]'
+              onChange={(e) => onChange("description", e.target.value)}>
+            </textarea>
+          </div>
+          <div className='hold__date flex '>
+            <div className='w-50 mr-2'>
+              <span>Start Date & time</span>
+              <input
+                type="datetime-local"
+                className="form-control mt-1 shadow-none"
+                value={electionData.startDate}
+                onChange={(e) => onChange("startDate", e.target.value)} />
+            </div>
+            <div className='w-50 ml-2'>
+              <span>End Date & time</span>
+              <input
+                type="datetime-local"
+                value={electionData.endDate}
+                className="form-control mt-1 shadow-none"
+                onChange={(e) => onChange("endDate", e.target.value)} />
+            </div>
+          </div>
+          <div className='flex mt-4 mb-3'>
+            <input
+              type="checkbox"
+              className="mr-2 bg-blue-800"
+              onChange={() => setAgree(!isAgree)} />
+            <label>I agree terms and condition.</label>
+          </div>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <button className='me-4' onClick={() => setShowCreateElectionModal(false)}>Close</button>
+        <button
+          className={`bg-blue-900 text-light py-1 w-[130px] rounded-[5px] hover:opacity-75 flex justify-center items-center ${(isDisabled || loading) && 'opacity-75 cursor-default'}`}
+          onClick={onCreate}
+          disabled={isDisabled || loading}
+        >
+          {loading && <SpinningCircles className='h-[27px] -ml-10' />}
+          {loading ? "Saving" : "Register"}
+        </button>
+      </Modal.Footer>
+    </Modal>
+  )
 }
 
 export default ElectionModal;

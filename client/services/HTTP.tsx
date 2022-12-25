@@ -18,7 +18,10 @@ const Http = async (method: string, endpoint: string, data: Object): Promise<Axi
     // props filtering
     method.toLowerCase() === "get" && delete config.data;
 
-    return await axios(config);
+    const result = await axios(config);
+    toast.success(result.data.message, { toastId: 3 });
+
+    return result;
   } catch (error) {
     toast.error(error.message, { toastId: 3 });
     console.log(error);
