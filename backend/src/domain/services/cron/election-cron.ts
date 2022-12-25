@@ -1,4 +1,6 @@
 const cron = require("node-cron");
+const { pusherInstance } = require("../../../../configs/index.js");
+
 
 const startJob = (startDate: string, endDate: string) => {
  // convert date form
@@ -13,11 +15,13 @@ const startJob = (startDate: string, endDate: string) => {
  // start listening to the start date events
  cron.schedule(scheduleStartDateString, () => {
   console.log("startdate triggered");
+  pusherInstance.trigger("election", "start-election-event", {});
  });
 
  // start listening to the start date events
  cron.schedule(scheduleEndDateString, () => {
   console.log("endate triggered");
+  pusherInstance.trigger("election", "end-election-event", {});
  });
 }
 
