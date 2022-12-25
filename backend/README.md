@@ -13,7 +13,7 @@
     
     npm add express ts-node @types/node @types/express dotenv nodemon cors helmet pm2 multer @types/multer 
     
-    npm add firebase-admin uuid
+    npm add firebase-admin uuid node-cron
     
     npm add jest ts-jest @types/jest
     
