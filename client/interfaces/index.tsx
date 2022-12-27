@@ -43,7 +43,8 @@ interface VoterDetails extends UserDetails { };
 
 interface LiveCounterCardStruct {
  type: string,
- data: Array<CandidateDetails>
+ data: Array<CandidateDetails>,
+ electionStatus: string
 }
 
 interface CandidateCardStruct {

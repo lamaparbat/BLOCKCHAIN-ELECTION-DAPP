@@ -40,7 +40,7 @@ export default function Home() {
           </div>
           <div className='lg:w-[1100px] flex justify-around flex-wrap'>
             {Object.keys(VOTES).map((key, i) =>
-              <LiveCounterCard type={key} data={VOTES[key]} key={i} />)}
+              <LiveCounterCard type={key} data={VOTES[key]} key={i} electionStatus={electionStatus} />)}
           </div>
         </div>
       </div>

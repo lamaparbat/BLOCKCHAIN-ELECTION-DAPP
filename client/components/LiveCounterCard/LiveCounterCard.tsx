@@ -6,20 +6,24 @@ import { BTM_BORDER_STYLE } from '../../constants';
 import { LiveCounterCardStruct } from '../../interfaces/index';
 import TickCircleIcon from '../TickCircleIcon';
 
-const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data }): ReactElement => {
+const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, electionStatus }): ReactElement => {
+ const isElectionStart = electionStatus === "start";
+ const isElectionEnd = electionStatus === "end";
+
  return (
-  <div className={`card__container ${false && 'bg-celebrationGif'} h-fit min-[1140px]:w-[530px] max-[1140px]:w-full mt-3 border border-1 border-slate-300 rounded-1 overflow-hidden`}>
+  <div
+   className={`card__container ${isElectionEnd && 'bg-celebrationGif'} h-fit min-[1140px]:w-[530px] max-[1140px]:w-full mt-3 border border-1 border-slate-300 rounded-1 overflow-hidden`}>
    <div className='card__title pl-4 pt-2 flex items-center bg-slate-100 border-l-0 border-r-0 border-t-0 border-b-2 border-black-500'>
     <h6>{type}</h6>
    </div>
-   <div className={`card__body pt-3 pb-2 ${true && 'animatedBorder'}`}>
+   <div className={`card__body pt-3 pb-2 ${isElectionStart && 'animatedBorder'}`}>
     <div className='card__body__hot px-4 mb-3 flex'>
      <AnimatedAvatar />
      <div className='details pt-2 pl-3 mx-3'>
       <div className='flex items-center'>
        <span className='text-xl me-4'>{data[0].fullName}</span>
        {
-        false ? <TickCircleIcon /> : <FaRegDotCircle className='animate-ping text-danger absolute lg:ml-[200px] max-[1100px]:ml-[100px]' />
+        isElectionEnd ? <TickCircleIcon /> : <FaRegDotCircle className='animate-ping text-danger absolute lg:ml-[200px] max-[1100px]:ml-[100px]' />
        }
       </div>
       <h1 id='count'>{data[0].votes}</h1>
