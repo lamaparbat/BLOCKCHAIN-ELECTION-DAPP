@@ -10,6 +10,9 @@
 ## Create election with start date&time, title, election short description UI
 <img width="1440" alt="Screen Shot 2022-12-25 at 21 18 00" src="https://user-images.githubusercontent.com/64581460/209473925-55f93b5a-e99a-42f5-b782-89cfda0cfbcb.png">
 
+## After election timeout, the result celebration UI
+<img width="1440" alt="Screen Shot 2022-12-27 at 23 20 14" src="https://user-images.githubusercontent.com/64581460/209701990-32222a93-bfb5-421e-a143-9ce8f15ed926.png">
+
 
 
 ## Workflow overview
