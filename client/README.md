@@ -7,5 +7,5 @@
    4. Go inside the recently created folder and init the react project using your fav react-installer like CRA || Vite
       - ``` cd folder_name ```
       - ``` npx create-next-app app_name --typescript ``` [init next project]
-      - ``` npm i web3 ```
+      - ``` npm i web3 pusher-js ```
       - ``` npm run dev ``` [run the react project]
