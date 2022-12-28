@@ -24,7 +24,7 @@ a. Activity diagram of sub-system
 <img width="1439" alt="User registration   Verification Activity Diagram" src="https://user-images.githubusercontent.com/64581460/209851848-9e1c81e0-4202-4617-b6f1-1d242877bfbe.png">
 
  2. Ballot Creation & Distribution
- <img width="1371" alt="Ballot Creation Subsystem Activity Diagram" src="https://user-images.githubusercontent.com/64581460/209851191-fb52c84a-fd2e-4b87-ab29-dc805e3279e8.png">
+<img width="1387" alt="Ballot Creation Subsystem Activity Diagram" src="https://user-images.githubusercontent.com/64581460/209852528-5e370a61-a889-4344-80cf-fb38cfb4f263.png">
 
 
 
