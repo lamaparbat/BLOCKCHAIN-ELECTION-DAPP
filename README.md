@@ -16,8 +16,16 @@
 
 
 ## Workflow overview
-
 ![Blockchain Voting Interaction](https://user-images.githubusercontent.com/64581460/200596235-cba703b8-ac91-4600-9a02-d271a6ad8ed6.png)
+
+## System Design
+a. Activity diagram of sub-system
+ 1. User registration & Verification
+ <img width="1419" alt="User registration   Verification Activity Diagram" src="https://user-images.githubusercontent.com/64581460/209851165-611b96b5-2653-4bd7-8040-db673021884d.png">
+
+ 2. Ballot Creation & Distribution
+ <img width="1371" alt="Ballot Creation Subsystem Activity Diagram" src="https://user-images.githubusercontent.com/64581460/209851191-fb52c84a-fd2e-4b87-ab29-dc805e3279e8.png">
+
 
 
 ## Project Architecture
