@@ -7,7 +7,7 @@
 ## Voter Poll Card List UI
 <img width="1440" alt="Screen Shot 2022-12-22 at 23 21 10" src="https://user-images.githubusercontent.com/64581460/209193528-13b9197e-1b37-4d61-ae3d-a2b065ba4ead.png">
 
-## Create election with start date&time, title, election short description UI
+## Create election
 <img width="1440" alt="Screen Shot 2022-12-25 at 21 18 00" src="https://user-images.githubusercontent.com/64581460/209473925-55f93b5a-e99a-42f5-b782-89cfda0cfbcb.png">
 
 ## After election timeout, the result celebration UI
