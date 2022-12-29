@@ -29,6 +29,9 @@ a. Activity diagram of sub-system
 3. Vote casting 
 <img width="1026" alt="vote casting" src="https://user-images.githubusercontent.com/64581460/209978430-657e3a24-49af-4636-aa0b-2dbb383612ba.png">
 
+4. Result Tabulation
+<img width="1169" alt="Screen Shot 2022-12-29 at 22 57 21" src="https://user-images.githubusercontent.com/64581460/209986521-91e96ffb-c04c-4dc5-bbc5-dddbdd2d8610.png">
+
 
 
 
