@@ -32,6 +32,9 @@ a. Activity diagram of sub-system
 4. Result Tabulation
 <img width="1169" alt="Screen Shot 2022-12-29 at 22 57 21" src="https://user-images.githubusercontent.com/64581460/209986521-91e96ffb-c04c-4dc5-bbc5-dddbdd2d8610.png">
 
+5. User interface 
+<img width="803" alt="Screen Shot 2022-12-29 at 23 39 43" src="https://user-images.githubusercontent.com/64581460/209991017-fb819a23-2f6e-453d-8474-9c9888e16c8b.png">
+
 
 
 
