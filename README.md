@@ -26,6 +26,10 @@ a. Activity diagram of sub-system
  2. Ballot Creation & Distribution
 <img width="1387" alt="Ballot Creation Subsystem Activity Diagram" src="https://user-images.githubusercontent.com/64581460/209852528-5e370a61-a889-4344-80cf-fb38cfb4f263.png">
 
+3. Vote casting 
+<img width="1026" alt="vote casting" src="https://user-images.githubusercontent.com/64581460/209978430-657e3a24-49af-4636-aa0b-2dbb383612ba.png">
+
+
 
 
 ## Project Architecture
