@@ -36,7 +36,7 @@ a. Activity diagram of sub-system
 <img width="803" alt="Screen Shot 2022-12-29 at 23 39 43" src="https://user-images.githubusercontent.com/64581460/209991017-fb819a23-2f6e-453d-8474-9c9888e16c8b.png">
 
 b. USE CASE DIAGRAM
-<img width="932" alt="USE CASE DIAGRAM" src="https://user-images.githubusercontent.com/64581460/210140352-146b983b-e85c-49cb-8a30-122b8b8d9ad9.png">
+<img width="952" alt="USE CASE DIAGRAM" src="https://user-images.githubusercontent.com/64581460/210160720-90486932-fc16-4d41-8d17-d6a68dcdb91a.png">
 
 
 
