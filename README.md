@@ -7,14 +7,42 @@
 ## Voter Poll Card List UI
 <img width="1440" alt="Screen Shot 2022-12-22 at 23 21 10" src="https://user-images.githubusercontent.com/64581460/209193528-13b9197e-1b37-4d61-ae3d-a2b065ba4ead.png">
 
-## Create election with start date&time, title, election short description UI
+## Create election
 <img width="1440" alt="Screen Shot 2022-12-25 at 21 18 00" src="https://user-images.githubusercontent.com/64581460/209473925-55f93b5a-e99a-42f5-b782-89cfda0cfbcb.png">
+
+## After election timeout, the result celebration UI
+<img width="1440" alt="Screen Shot 2022-12-27 at 23 20 14" src="https://user-images.githubusercontent.com/64581460/209701990-32222a93-bfb5-421e-a143-9ce8f15ed926.png">
 
 
 
 ## Workflow overview
-
 ![Blockchain Voting Interaction](https://user-images.githubusercontent.com/64581460/200596235-cba703b8-ac91-4600-9a02-d271a6ad8ed6.png)
+
+## System Design
+
+a. Functional Decomposition Diagram
+![FDD](https://user-images.githubusercontent.com/64581460/201529832-34d33fde-4dd4-4467-a182-dc286865a9ee.png)
+
+b. Activity diagram of sub-system
+ 1. User registration & Verification
+<img width="1439" alt="User registration   Verification Activity Diagram" src="https://user-images.githubusercontent.com/64581460/209851848-9e1c81e0-4202-4617-b6f1-1d242877bfbe.png">
+
+ 2. Ballot Creation & Distribution
+<img width="1387" alt="Ballot Creation Subsystem Activity Diagram" src="https://user-images.githubusercontent.com/64581460/209852528-5e370a61-a889-4344-80cf-fb38cfb4f263.png">
+
+3. Vote casting 
+<img width="1026" alt="vote casting" src="https://user-images.githubusercontent.com/64581460/209978430-657e3a24-49af-4636-aa0b-2dbb383612ba.png">
+
+4. Result Tabulation
+<img width="1169" alt="Screen Shot 2022-12-29 at 22 57 21" src="https://user-images.githubusercontent.com/64581460/209986521-91e96ffb-c04c-4dc5-bbc5-dddbdd2d8610.png">
+
+5. User interface 
+<img width="803" alt="Screen Shot 2022-12-29 at 23 39 43" src="https://user-images.githubusercontent.com/64581460/209991017-fb819a23-2f6e-453d-8474-9c9888e16c8b.png">
+
+c. USE CASE DIAGRAM
+<img width="952" alt="USE CASE DIAGRAM" src="https://user-images.githubusercontent.com/64581460/210160720-90486932-fc16-4d41-8d17-d6a68dcdb91a.png">
+
+
 
 
 ## Project Architecture
@@ -47,10 +75,5 @@ Blockchain technology was developed to address these problems, and it now provid
 
 ## Disadvantages of decentralized voting system
 - The reason blockchain is a highly secure system is the ledger is public. All past transactions can be seen by anyone who works the system, and they can’t be changed because everyone will notice. That doesn’t work in a voting system where secret ballot is mandated. Every transaction is identifiable.
-
-
-## Functional Decomposition Diagram
-![FDD](https://user-images.githubusercontent.com/64581460/201529832-34d33fde-4dd4-4467-a182-dc286865a9ee.png)
-
 
 Author: Parbat Lama
