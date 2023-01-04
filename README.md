@@ -43,7 +43,8 @@ c. USE CASE DIAGRAM
 <img width="952" alt="USE CASE DIAGRAM" src="https://user-images.githubusercontent.com/64581460/210160720-90486932-fc16-4d41-8d17-d6a68dcdb91a.png">
 
 
-## For wireframe: open folder /mockup/wireframes/
+## For wireframe:
+     open folder ``` /mockup/wireframes/ ```
 
 
 ## Project Architecture
