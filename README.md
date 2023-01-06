@@ -13,6 +13,8 @@
 ## After election timeout, the result celebration UI
 <img width="1440" alt="Screen Shot 2022-12-27 at 23 20 14" src="https://user-images.githubusercontent.com/64581460/209701990-32222a93-bfb5-421e-a143-9ce8f15ed926.png">
 
+## Election start date time counter bar.  [Similar to upcoming event time counter]
+<img width="1440" alt="Screen Shot 2023-01-07 at 00 05 28" src="https://user-images.githubusercontent.com/64581460/211074297-a1e9c1f8-9f88-4c1d-9663-83851c5e7e7b.png">
 
 
 ## Workflow overview
