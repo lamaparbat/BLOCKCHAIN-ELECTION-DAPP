@@ -22,9 +22,8 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, election
      <div className='details pt-2 pl-3 mx-3'>
       <div className='flex items-center'>
        <span className='text-xl me-4'>{data[0].fullName}</span>
-       {
-        isElectionEnd ? <TickCircleIcon /> : <FaRegDotCircle className='animate-ping text-danger absolute lg:ml-[200px] max-[1100px]:ml-[100px]' />
-       }
+       { isElectionEnd && <TickCircleIcon /> }
+       { isElectionStart && <FaRegDotCircle className='animate-ping text-danger absolute lg:ml-[200px] max-[1100px]:ml-[100px]' /> }
       </div>
       <h1 id='count'>{data[0].votes}</h1>
      </div>

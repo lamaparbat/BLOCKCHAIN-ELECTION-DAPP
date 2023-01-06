@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import { SpinningCircles } from 'react-loading-icons'
 import { createElection } from '../utils/action';
+import { setElectionTimeCounter } from '../redux/electionTimeCounter';
 
 const currentDate = new Date();
 const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -18,6 +20,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const [isAgree, setAgree] = useState(false);
   const [isDisabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setDisabled(!isAgree || !electionData.title || !electionData.description || !electionData.startDate || !electionData.endDate);
@@ -30,10 +33,11 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const onCreate = async () => {
     setLoading(true);
     try {
-      const res = await createElection(electionData);
+      await createElection(electionData);
 
       setShowCreateElectionModal(false);
       setElectionData(defaultElectionData);
+      dispatch(setElectionTimeCounter(electionData));
     } catch (error) {
       console.error(error);
     }

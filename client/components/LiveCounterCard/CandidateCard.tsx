@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { setDetails } from '../../redux/candidateReducer';
+import { setCandidateDetails } from '../../redux/candidateReducer';
 import Avatar from '../Avatar';
 import { CandidateCardStruct } from '../../interfaces/index';
 import FilterIcon from '../FilterIcon';
@@ -15,7 +15,7 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
  const router = useRouter();
 
  const openDetails = (details) => {
-  dispatch(setDetails(details));
+  dispatch(setCandidateDetails(details));
   router.push("/party/details");
  }
 
