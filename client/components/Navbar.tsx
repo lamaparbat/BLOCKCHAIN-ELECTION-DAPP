@@ -12,6 +12,7 @@ import { LanguageStruct } from '../interfaces';
 import Dropdown from './Dropdown';
 
 import MarqueeBar from './MarqueeBar';
+import SearchModal from './SearchModal';
 
 const Navbar: React.FC = (): ReactElement => {
   const [selectedLanguage, setSelectedLanguage] = useState({ label: 'english', value: 'ENGLISH' });
@@ -102,6 +103,7 @@ const Navbar: React.FC = (): ReactElement => {
         </div>
       </div>
       <ElectionModal show={showCreateElectionModal} setShowCreateElectionModal={setShowCreateElectionModal} />
+      <SearchModal />
     </div>
   )
 }
