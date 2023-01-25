@@ -44,8 +44,8 @@ b. Activity diagram of sub-system
 c. USE CASE DIAGRAM
 <img width="952" alt="USE CASE DIAGRAM" src="https://user-images.githubusercontent.com/64581460/210160720-90486932-fc16-4d41-8d17-d6a68dcdb91a.png">
 
-d. Entity Relation Diagram (ERD)
-![Dapp Voting ERD](https://user-images.githubusercontent.com/64581460/214635700-857a95ba-ec0d-49c1-b1e3-f7e26f4827d6.png)
+d. Class Diagram
+![Dapp Voting Class Diagram](https://user-images.githubusercontent.com/64581460/214637289-67010d57-70de-40f8-9886-404b25803948.png)
 
 ## For wireframe:
      open folder ``` /mockup/wireframes/ ```
