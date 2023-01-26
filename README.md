@@ -50,6 +50,22 @@ d. Class Diagram
 e. ERD
 ![Dapp Voting ERD](https://user-images.githubusercontent.com/64581460/214876029-8bc3aa1f-16d2-47dc-8b7c-4167a7fd1cc1.png)
 
+f. Data Dictionery
+   i). Candidate Data Dictionery
+       <img width="1403" alt="Candidate Data Dictionery" src="https://user-images.githubusercontent.com/64581460/214893926-908943d2-2ff6-452a-8577-1b04f00c772a.png">
+   
+   ii). Voter Data Dictionery
+   <img width="1411" alt="Voter Data Dictionery" src="https://user-images.githubusercontent.com/64581460/214894002-41691053-bfa6-42d8-ba05-c640cb151dc6.png">
+ 
+   iii). Admin Data Dictionery
+   <img width="1396" alt="Admin Data Dictionery" src="https://user-images.githubusercontent.com/64581460/214894085-52593b1d-af1d-4c38-9dc8-49d462de1cac.png">
+
+   iv). Ballot Data Dictionery
+      <img width="1410" alt="Ballot Data Dictionery" src="https://user-images.githubusercontent.com/64581460/214894162-5d921fdf-dc53-4033-894e-5ba1523f0629.png">
+
+   v). Eleciton Data Dictionery
+     <img width="1398" alt="Election Data Dictionery" src="https://user-images.githubusercontent.com/64581460/214894281-71115682-d062-47be-a3c5-9a66586de00c.png">
+
 
 ## For wireframe:
      open folder ``` /mockup/wireframes/ ```
