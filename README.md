@@ -47,6 +47,10 @@ c. USE CASE DIAGRAM
 d. Class Diagram
 ![Dapp Voting Class Diagram](https://user-images.githubusercontent.com/64581460/214637289-67010d57-70de-40f8-9886-404b25803948.png)
 
+e. ERD
+![Dapp Voting ERD](https://user-images.githubusercontent.com/64581460/214876029-8bc3aa1f-16d2-47dc-8b7c-4167a7fd1cc1.png)
+
+
 ## For wireframe:
      open folder ``` /mockup/wireframes/ ```
 
