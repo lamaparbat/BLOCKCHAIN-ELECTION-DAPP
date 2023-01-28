@@ -66,6 +66,9 @@ f. Data Dictionery
    v). Eleciton Data Dictionery
      <img width="1398" alt="Election Data Dictionery" src="https://user-images.githubusercontent.com/64581460/214894281-71115682-d062-47be-a3c5-9a66586de00c.png">
 
+g. Sequence Diagram
+ ![Sequence Diagram](https://user-images.githubusercontent.com/64581460/215278290-7ad473f7-4b9a-432e-8d95-aad3563fd66b.png)
+
 
 ## For wireframe:
      open folder ``` /mockup/wireframes/ ```
