@@ -16,6 +16,9 @@
 ## Election start date time counter bar.  [Similar to upcoming event time counter]
 <img width="1440" alt="Screen Shot 2023-01-07 at 00 05 28" src="https://user-images.githubusercontent.com/64581460/211074297-a1e9c1f8-9f88-4c1d-9663-83851c5e7e7b.png">
 
+## Global Search modal with skeleton loading features
+<img width="1440" alt="Screen Shot 2023-01-29 at 19 40 04" src="https://user-images.githubusercontent.com/64581460/215330847-0ddc9131-e55e-4a7c-b274-6c64114d83ae.png">
+
 
 ## Workflow overview
 ![Blockchain Voting Interaction](https://user-images.githubusercontent.com/64581460/200596235-cba703b8-ac91-4600-9a02-d271a6ad8ed6.png)
