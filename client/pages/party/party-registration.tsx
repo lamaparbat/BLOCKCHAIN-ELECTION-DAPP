@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { SpinningCircles } from 'react-loading-icons';
 import Navbar from '../../components/Navbar';
 import { registerParty } from '../../utils/action';
 import { toast } from 'react-toastify';
+import { PulseLoader } from 'react-spinners';
 
+const defaultPartyDetails = { partyName: "", totalMembers: '', agenda: "", logo: null }
 const VoterRegistration = () => {
-  const [partyDetails, setPartyDetails] = useState({
-    partyName: "", totalMembers: '', agenda: "", logo: null
-  });
+
+  const [partyDetails, setPartyDetails] = useState(defaultPartyDetails);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
 
@@ -21,7 +21,8 @@ const VoterRegistration = () => {
       formData.append("agenda", partyDetails.agenda);
       formData.append("logo", partyDetails.logo);
 
-      await registerParty(formData);
+      const res = await registerParty(formData);
+      if (res) setPartyDetails(defaultPartyDetails)
     } catch (error) {
       toast.error("Failed to register !", { toastId: 2 });
     }
@@ -30,7 +31,7 @@ const VoterRegistration = () => {
 
   useEffect(() => {
     (!partyDetails.partyName || !partyDetails.totalMembers
-      || !partyDetails.agenda || !partyDetails.logo) ? setDisabled(true) : setDisabled(false);
+      || !partyDetails.agenda) ? setDisabled(true) : setDisabled(false);
   }, [partyDetails]);
 
   const onChange = (name, value) => {
@@ -91,8 +92,8 @@ const VoterRegistration = () => {
               onClick={onSubmit}
               disabled={disabled || loading}
             >
-              {loading && <SpinningCircles className='h-[30px] -ml-20' />}
               {loading ? "Saving" : "Register"}
+              {loading && <PulseLoader color='white' size={9} className='ml-4' />}
             </button>
           </div>
         </div>
