@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
-import { SpinningCircles } from 'react-loading-icons'
 import { createElection } from '../utils/action';
 import { setElectionTimeCounter } from '../redux/electionTimeCounter';
 
@@ -100,7 +99,6 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
           onClick={onCreate}
           disabled={isDisabled || loading}
         >
-          {loading && <SpinningCircles className='h-[27px] -ml-10' />}
           {loading ? "Saving" : "Register"}
         </button>
       </Modal.Footer>

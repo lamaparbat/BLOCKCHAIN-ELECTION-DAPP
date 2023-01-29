@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
@@ -18,10 +18,16 @@ const Navbar: React.FC = (): ReactElement => {
   const [selectedLanguage, setSelectedLanguage] = useState({ label: 'english', value: 'ENGLISH' });
   const [openVerticalNavbar, setOpenVerticalNavbar] = useState(false);
   const [showCreateElectionModal, setShowCreateElectionModal] = useState(false);
+  const [isSearchModalOpen, setOpenSearchModal] = useState(false);
 
 
   const route = useRouter();
   const electionTimeCounterData = useSelector((state: any) => state?.electionTimeCounterReducer.timer);
+
+  // on didmount
+  useEffect(() => {
+
+  }, [])
 
   // open new page
   const navigate = (path: string) => {
@@ -30,6 +36,7 @@ const Navbar: React.FC = (): ReactElement => {
 
   // open search modal form
   const openSearchModal = () => {
+    setOpenSearchModal(!isSearchModalOpen)
   }
 
   // open profile component
@@ -103,7 +110,7 @@ const Navbar: React.FC = (): ReactElement => {
         </div>
       </div>
       <ElectionModal show={showCreateElectionModal} setShowCreateElectionModal={setShowCreateElectionModal} />
-      <SearchModal />
+      <SearchModal show={isSearchModalOpen} setOpenSearchModal={setOpenSearchModal} />
     </div>
   )
 }
