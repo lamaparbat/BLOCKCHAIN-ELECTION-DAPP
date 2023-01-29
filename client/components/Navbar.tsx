@@ -31,7 +31,7 @@ const Navbar: React.FC = (): ReactElement => {
 
   // open new page
   const navigate = (path: string) => {
-    path !== "mail" ? route.push(path) : window.open("https://gmail.com/", "_blank");
+    path !== "mail" ? route.push(path) : window.open(process.env.NEXT_PUBLIC_GMAIL_REDIRECT_URL, "_blank");
   }
 
   // open search modal form

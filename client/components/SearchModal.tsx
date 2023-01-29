@@ -25,6 +25,7 @@ const SearchModal = ({ show, setOpenSearchModal }) => {
   }
 
   const onTyping = (e) => setLoading(e.target.value.length > 0 ?? false);
+
   return (
     <Modal show={show} ref={modalRef}>
       <Modal.Body className='px-4 pb-4'>
