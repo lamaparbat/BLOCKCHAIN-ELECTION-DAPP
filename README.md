@@ -28,6 +28,7 @@
 a. Functional Decomposition Diagram
 ![FDD](https://user-images.githubusercontent.com/64581460/201529832-34d33fde-4dd4-4467-a182-dc286865a9ee.png)
 
+
 b. Activity diagram of sub-system
  1. User registration & Verification
 <img width="1439" alt="User registration   Verification Activity Diagram" src="https://user-images.githubusercontent.com/64581460/209851848-9e1c81e0-4202-4617-b6f1-1d242877bfbe.png">
