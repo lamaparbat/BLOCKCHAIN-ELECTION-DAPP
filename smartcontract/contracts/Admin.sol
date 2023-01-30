@@ -22,19 +22,17 @@ contract Voter is Election{
 
     // register a candidate
     function registerCandidate(
-        string memory _name, uint _citizenship_no, uint _age, string memory _agenda, string memory _dob,
-        string memory _address,  string memory _email, string memory _profile
-    ) private returns (bool){
-        election.addCandidate(_name, _citizenship_no, _age, _agenda, _dob, _address,  _email, _profile);
-        return true;
+        string memory _name, uint _citizenshipNo, uint _age, string memory _agenda, string memory _dob,
+        string memory _address,  string memory _email, string memory _profile, string memory _partyName
+    ) private {
+        election.addCandidate(_name, _citizenshipNo, _age, _agenda, _dob, _address,  _email, _profile, _partyName);
     }
 
     // register a voter
     function registerVoter(
         string memory _name, uint _citizenship_no, uint _age, string memory _agenda, string memory _dob,
         string memory _address,  string memory _email, string memory _profile
-    ) private returns (bool){
+    ) private {
         election.addVoter(_name, _citizenship_no, _age, _agenda, _dob, _address,  _email, _profile);
-        return true;
     }
 }
