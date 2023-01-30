@@ -45,14 +45,18 @@ b. Activity diagram of sub-system
 5. User interface 
 <img width="803" alt="Screen Shot 2022-12-29 at 23 39 43" src="https://user-images.githubusercontent.com/64581460/209991017-fb819a23-2f6e-453d-8474-9c9888e16c8b.png">
 
+
 c. USE CASE DIAGRAM
 <img width="952" alt="USE CASE DIAGRAM" src="https://user-images.githubusercontent.com/64581460/210160720-90486932-fc16-4d41-8d17-d6a68dcdb91a.png">
+
 
 d. Class Diagram
 ![Dapp Voting Class Diagram](https://user-images.githubusercontent.com/64581460/214637289-67010d57-70de-40f8-9886-404b25803948.png)
 
+
 e. ERD
 ![Dapp Voting ERD](https://user-images.githubusercontent.com/64581460/214876029-8bc3aa1f-16d2-47dc-8b7c-4167a7fd1cc1.png)
+
 
 f. Data Dictionery
    i). Candidate Data Dictionery
@@ -69,6 +73,7 @@ f. Data Dictionery
 
    v). Eleciton Data Dictionery
      <img width="1398" alt="Election Data Dictionery" src="https://user-images.githubusercontent.com/64581460/214894281-71115682-d062-47be-a3c5-9a66586de00c.png">
+
 
 g. Sequence Diagram
  ![Sequence Diagram](https://user-images.githubusercontent.com/64581460/215278290-7ad473f7-4b9a-432e-8d95-aad3563fd66b.png)
