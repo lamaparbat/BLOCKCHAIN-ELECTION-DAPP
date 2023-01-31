@@ -2,23 +2,31 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
-import { AiOutlineMail, AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineMail, AiOutlineSearch, AiOutlineLogout, AiOutlineUserSwitch } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import _ from 'lodash';
+import { toast } from 'react-toastify';
+import Web3 from 'web3';
 import ElectionModal from './ElectionModal';
 import Avatar from './Avatar';
 import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style } from '../constants/index';
 import { LanguageStruct } from '../interfaces';
+import { getStorage, setStorage } from '../services';
 import Dropdown from './Dropdown';
-
 import MarqueeBar from './MarqueeBar';
 import SearchModal from './SearchModal';
+
+declare var window: any;
 
 const Navbar: React.FC = (): ReactElement => {
   const [selectedLanguage, setSelectedLanguage] = useState({ label: 'english', value: 'ENGLISH' });
   const [openVerticalNavbar, setOpenVerticalNavbar] = useState(false);
   const [showCreateElectionModal, setShowCreateElectionModal] = useState(false);
   const [isSearchModalOpen, setOpenSearchModal] = useState(false);
+  const [loggedInAccountAddress, setLoggedInAccountAddress] = useState(null);
+  const [userCache, setUserCache] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [openProfileDropdown, setOpenProfileDropdown] = useState(false);
 
 
   const route = useRouter();
@@ -26,7 +34,8 @@ const Navbar: React.FC = (): ReactElement => {
 
   // on didmount
   useEffect(() => {
-
+    const loggedInAccountAddressCache = getStorage("loggedInAccountAddress");
+    setLoggedInAccountAddress(loggedInAccountAddressCache);
   }, [])
 
   // open new page
@@ -41,6 +50,7 @@ const Navbar: React.FC = (): ReactElement => {
 
   // open profile component
   const openProfile = () => {
+    setOpenProfileDropdown(!openProfileDropdown)
   }
 
   // on language select
@@ -52,6 +62,32 @@ const Navbar: React.FC = (): ReactElement => {
   // create new election
   const createElection = () => {
     setShowCreateElectionModal(!showCreateElectionModal);
+  }
+
+
+  const connectWallet = async () => {
+    setLoading(true);
+
+    try {
+      if (window?.ethereum?.isMetaMask) {
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts"
+        });
+        const loggedInAccountAddress = Web3.utils.toChecksumAddress(accounts[0]);
+
+        setLoggedInAccountAddress(loggedInAccountAddress);
+        setStorage("loggedInAccountAddress", loggedInAccountAddress);
+      } else {
+        toast.info("Please install MetaMask wallet first !", { toastId: 3 })
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const logout = () => {
+    setStorage("loggedInAccountAddress", null)
+    setLoggedInAccountAddress(null);
   }
 
   return (
@@ -66,10 +102,29 @@ const Navbar: React.FC = (): ReactElement => {
           </select>
           <span className='px-4 cursor-pointer hover:opacity-70 border-r-2 border-slate-400 border-l-2 border-slate-400' onClick={() => navigate("mail")}><AiOutlineMail className='text-lg' /></span>
           <span className='pl-1 pr-4 cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={openSearchModal}><AiOutlineSearch className='text-xl' /></span>
-          <div className='flex justify-between items-center cursor-pointer hover:opacity-60' onClick={openProfile}>
-            <Avatar className='avatar' src="/images/parbat.png" alt="profile" size='sm' border={1} />
-            <span className='mx-2'>Parbat Lama</span>
-          </div>
+          {
+            loggedInAccountAddress ?
+              <div className='flex justify-between items-center cursor-pointer hover:opacity-60' onClick={openProfile}>
+                <Avatar className='avatar' src="/images/parbat.png" alt="profile" size='sm' border={1} />
+                <span className='mx-2'>Parbat Lama</span>
+              </div> :
+              <button
+                className='px-1 py-[3px] rounded-1 border-light flex items-center bg-blue-900 text-light text-sm'
+                onClick={connectWallet}
+              >
+                <img className='mx-1' src={"/images/metamask.png"} height="20" width="20" />
+                <span className='mr-2 text-light text-[14px]'>{loading ? "Connecting" : "Connect Wallet"}</span>
+              </button>
+          }
+          {
+            openProfileDropdown && loggedInAccountAddress &&
+            <div className='profile__dropdown position-absolute bg-slate-100 py-2 px-1 mr-1 right-0 mt-[130px] shadow-sm'>
+              <div className='profile__dropdown__items flex flex-column'>
+                <span className='flex items-center'><AiOutlineUserSwitch className='mr-3' /> Switch Account</span>
+                <span className='flex items-center' onClick={logout}><AiOutlineLogout className='mr-3' /> Logout</span>
+              </div>
+            </div>
+          }
         </div>
       </div>
       <div className='flex justify-center'>

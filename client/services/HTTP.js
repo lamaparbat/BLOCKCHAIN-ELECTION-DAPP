@@ -1,14 +1,14 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios from "axios";
 import { toast } from "react-toastify";
 
-const Http = async (method: string, endpoint: string, data: Object): Promise<AxiosResponse> => {
+const Http = async (method, endpoint, data) => {
   try {
     const url = process.env.NEXT_PUBLIC_API_URL + endpoint;
 
     const headers = {
       "Autherization": localStorage.getItem("token") || null
     }
-    const config: AxiosRequestConfig = {
+    const config = {
       method,
       url,
       data,

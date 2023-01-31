@@ -1,6 +1,7 @@
 import Http from "./HTTP";
-
+import { getStorage, setStorage } from "./localstorage";
 
 export {
- Http
+  Http,
+  getStorage, setStorage,
 }

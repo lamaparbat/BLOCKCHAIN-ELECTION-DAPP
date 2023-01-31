@@ -29,6 +29,18 @@ span, p {
   margin-bottom: 5px;
 }
 
+
+.profile__dropdown__items span {
+  padding: 5px 10px 5px 10px;
+  border-bottom: 1px solid rgb(238, 238, 238);
+  cursor: pointer;
+}
+
+.profile__dropdown__items span:hover {
+  opacity: 0.6;
+  background-color: white;
+}
+
 /* 
 .sub__navbar div:hover {
   opacity: 0.8;
