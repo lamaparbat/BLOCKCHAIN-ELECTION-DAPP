@@ -1,23 +1,24 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier:MIT
 
 pragma solidity ^0.8.0;
 
-contract Structures{
+contract Structure {
     struct Candidate {
         string name;
-        uint citizenship_no;
-        uint age;
+        uint256 citizenshipNo;
+        uint256 age;
         string agenda;
         string dob;
         string address_name;
         string email;
         string profile;
-        uint voteCount;
+        string partyName;
+        uint256 voteCount;
     }
     struct Voter {
         string name;
-        uint citizenship_no;
-        uint age;
+        uint256 citizenshipNo;
+        uint256 age;
         string agenda;
         string dob;
         string address_name;

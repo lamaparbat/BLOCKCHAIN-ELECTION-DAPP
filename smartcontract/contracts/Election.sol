@@ -1,15 +1,15 @@
 // SPDX-License-Identifier:MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.2;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/math/SafeMath.sol";
+import "./SafeMath.sol";
 import "./Structure.sol";
 
-contract Election is Structure{
-    using SafeMath for uint;
-    
-    // Mapping 
-    mapping (string => Candidate) public candidates;
-    mapping (string => Voter) public voters;
+contract Election is Structure {
+    using SafeMath for uint256;
+
+    // Mapping
+    mapping(string => Candidate) public candidates;
+    mapping(string => Voter) public voters;
 
     // Arrays
     Candidate[] public candidateList;
@@ -17,40 +17,46 @@ contract Election is Structure{
     string[] public candidateNames;
     string[] public voterNames;
 
-
-
     // static variables
-    uint public totalCandidate = 0;
-    uint public totalVoter = 0;
-    uint public voteCount;
+    uint256 public totalCandidate = 0;
+    uint256 public totalVoter = 0;
+    uint256 public voteCount;
 
     // Event
     event VoteCast(string candidateName);
 
-
     // updators
     function vote(string memory candidateName) public {
-        candidates[candidateName].voteCount = candidates[candidateName].voteCount.add(1);
+        candidates[candidateName].voteCount = candidates[candidateName]
+            .voteCount
+            .add(1);
         voteCount = voteCount.add(1);
 
         emit VoteCast(candidateName);
     }
 
-    
-
     // setter functions
-    function addCandidate(string memory _name, uint _citizenshipNo, uint _age, string memory _agenda, string memory _dob,
-        string memory _address,  string memory _email, string memory _profile, string memory _partyName) public {
+    function addCandidate(
+        string memory _name,
+        uint256 _citizenshipNo,
+        uint256 _age,
+        string memory _agenda,
+        string memory _dob,
+        string memory _address,
+        string memory _email,
+        string memory _profile,
+        string memory _partyName
+    ) public {
         Candidate memory candidate = Candidate({
             name: _name,
-            citizenshipNo:_citizenshipNo,
-            age:_age,
-            agenda:_agenda,
-            dob:_dob,
-            address_name:_address,
-            email:_email,
-            profile:_profile,
-            partyName:_partyName,
+            citizenshipNo: _citizenshipNo,
+            age: _age,
+            agenda: _agenda,
+            dob: _dob,
+            address_name: _address,
+            email: _email,
+            profile: _profile,
+            partyName: _partyName,
             voteCount: 0
         });
 
@@ -61,17 +67,25 @@ contract Election is Structure{
         totalCandidate = totalCandidate.add(1);
     }
 
-    function addVoter(string memory _name, uint _citizenshipNo, uint _age, string memory _agenda, string memory _dob,
-        string memory _address,  string memory _email, string memory _profile) public {
+    function addVoter(
+        string memory _name,
+        uint256 _citizenshipNo,
+        uint256 _age,
+        string memory _agenda,
+        string memory _dob,
+        string memory _address,
+        string memory _email,
+        string memory _profile
+    ) public {
         Voter memory voter = Voter({
             name: _name,
-            citizenshipNo:_citizenshipNo,
-            age:_age,
-            agenda:_agenda,
-            dob:_dob,
-            address_name:_address,
-            email:_email,
-            profile:_profile,
+            citizenshipNo: _citizenshipNo,
+            age: _age,
+            agenda: _agenda,
+            dob: _dob,
+            address_name: _address,
+            email: _email,
+            profile: _profile,
             voted: false
         });
         voters[_name] = voter;
@@ -81,22 +95,28 @@ contract Election is Structure{
         totalVoter = totalVoter.add(1);
     }
 
-
-
     // getter functions
-    function getAllCandidates() public view returns (Candidate[] memory){
+    function getAllCandidates() public view returns (Candidate[] memory) {
         return candidateList;
     }
 
-    function getAllVoters() public view returns (Voter[] memory){
+    function getAllVoters() public view returns (Voter[] memory) {
         return voterList;
     }
 
-    function getCandidateDetails(string memory name) public view returns(Candidate memory){
+    function getCandidateDetails(string memory name)
+        public
+        view
+        returns (Candidate memory)
+    {
         return candidates[name];
     }
 
-    function getVoterDetails(string memory name) public view returns(Voter memory){
+    function getVoterDetails(string memory name)
+        public
+        view
+        returns (Voter memory)
+    {
         return voters[name];
     }
 }
