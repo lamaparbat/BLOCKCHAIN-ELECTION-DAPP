@@ -15,6 +15,6 @@
       Step 1: npm install @vercel/analytics
       
       Step 2: Import and Add this component to _app.jsx root file inside  '/pages/_app.tsx'
-      <img width="554" alt="Screen Shot 2023-01-31 at 15 58 52" src="https://user-images.githubusercontent.com/64581460/215731872-73e4c129-589d-422a-b2b6-1152b8c19ce6.png">
+            <img width="552" alt="Screen Shot 2023-01-31 at 16 02 19" src="https://user-images.githubusercontent.com/64581460/215732775-9dcefb25-5f6f-4cdb-929a-f55b218bf903.png">
             
       Step 3: Complete deployment in Vercel & Finally setup completed
