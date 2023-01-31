@@ -15,6 +15,8 @@
       Step 1: npm install @vercel/analytics
       
       Step 2: Import and Add this component to _app.jsx root file inside  '/pages/_app.tsx'
-       ![Uploading Screen Shot 2023-01-31 at 16.02.19.png…]()
 
       Step 3: Complete deployment in Vercel & Finally setup completed
+
+       ![Uploading Screen Shot 2023-01-31 at 16.02.19.png…]()
+
