@@ -1,7 +1,7 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { AiOutlineMail, AiOutlineSearch, AiOutlineLogout, AiOutlineUserSwitch } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import _ from 'lodash';
@@ -12,6 +12,7 @@ import Avatar from './Avatar';
 import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style } from '../constants/index';
 import { LanguageStruct } from '../interfaces';
 import { getStorage, setStorage } from '../services';
+import { setWalletDetails } from '../redux/WalletDetailsReducer';
 import Dropdown from './Dropdown';
 import MarqueeBar from './MarqueeBar';
 import SearchModal from './SearchModal';
@@ -27,6 +28,7 @@ const Navbar: React.FC = (): ReactElement => {
   const [userCache, setUserCache] = useState(null);
   const [loading, setLoading] = useState(false);
   const [openProfileDropdown, setOpenProfileDropdown] = useState(false);
+  const dispatch = useDispatch();
 
 
   const route = useRouter();
@@ -60,7 +62,7 @@ const Navbar: React.FC = (): ReactElement => {
   };
 
   // create new election
-  const createElection = () => {
+  const onCreateElection = () => {
     setShowCreateElectionModal(!showCreateElectionModal);
   }
 
@@ -74,7 +76,7 @@ const Navbar: React.FC = (): ReactElement => {
           method: "eth_requestAccounts"
         });
         const loggedInAccountAddress = Web3.utils.toChecksumAddress(accounts[0]);
-
+        dispatch(setWalletDetails(loggedInAccountAddress));
         setLoggedInAccountAddress(loggedInAccountAddress);
         setStorage("loggedInAccountAddress", loggedInAccountAddress);
       } else {
@@ -94,7 +96,7 @@ const Navbar: React.FC = (): ReactElement => {
     <div className='navbar__container'>
       {electionTimeCounterData.startDate && <MarqueeBar counterData={electionTimeCounterData} />}
       <div className='navbar__top py-2 w-full flex justify-end items-center bg-slate-100 px-2'>
-        <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={createElection}>CREATE ELECTION</span>
+        <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={onCreateElection}>CREATE ELECTION</span>
         <div className='items w-[450px] flex justify-around items-center text-slate-600'>
           <span className='pr-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/FAQ")}>FAQ</span>
           <select className='text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0' onChange={onLanguageChange}>

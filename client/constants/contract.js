@@ -63,7 +63,7 @@ export const CONTRACT_ABI = [
     ],
     "name": "addCandidate",
     "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -82,11 +82,6 @@ export const CONTRACT_ABI = [
         "internalType": "uint256",
         "name": "_age",
         "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "_agenda",
-        "type": "string"
       },
       {
         "internalType": "string",
@@ -111,7 +106,7 @@ export const CONTRACT_ABI = [
     ],
     "name": "addVoter",
     "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -349,11 +344,6 @@ export const CONTRACT_ABI = [
           },
           {
             "internalType": "string",
-            "name": "agenda",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
             "name": "dob",
             "type": "string"
           },
@@ -486,11 +476,6 @@ export const CONTRACT_ABI = [
           },
           {
             "internalType": "string",
-            "name": "agenda",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
             "name": "dob",
             "type": "string"
           },
@@ -602,11 +587,6 @@ export const CONTRACT_ABI = [
       },
       {
         "internalType": "string",
-        "name": "agenda",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
         "name": "dob",
         "type": "string"
       },
@@ -680,11 +660,6 @@ export const CONTRACT_ABI = [
       },
       {
         "internalType": "string",
-        "name": "agenda",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
         "name": "dob",
         "type": "string"
       },
@@ -714,6 +689,6 @@ export const CONTRACT_ABI = [
   }
 ]
 
-export const CONTRACT_ABI_ADDRESS = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+export const CONTRACT_ABI_ADDRESS = "0xB5Ccd5B07A44c8300ebE49D909aeE8Af4d6Fd3B3";
 
 
