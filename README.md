@@ -1,11 +1,10 @@
 # Blockchain e-voting system (WEB 3.O)
-![a](https://user-images.githubusercontent.com/64581460/200334222-dff3cce2-5398-4607-b174-141566b1e648.jpeg)
 
 # Before Connecting Metamask wallet [Navbar]
 <img width="1440" alt="Screen Shot 2023-02-01 at 23 54 16" src="https://user-images.githubusercontent.com/64581460/216127121-871a2abc-7e0f-45cb-a5ab-7a550b5b6efb.png">
 
 # After connecting Metamask wallet 
-<img width="1440" alt="Screen Shot 2023-02-01 at 23 54 16" src="https://user-images.githubusercontent.com/64581460/216127545-d3631a49-1972-4c07-a88c-5b1d86084342.png">
+<img width="1440" alt="Screen Shot 2023-02-01 at 23 55 43" src="https://user-images.githubusercontent.com/64581460/216127928-bb32849b-585a-459e-9144-4cf832b3ef9a.png">
 
 ## HOT Candidate Live Vote Count
 <img width="1440" alt="Screen Shot 2022-11-27 at 22 27 26" src="https://user-images.githubusercontent.com/64581460/204148574-10d794e3-091b-423e-befa-32b5a76981e6.png">
