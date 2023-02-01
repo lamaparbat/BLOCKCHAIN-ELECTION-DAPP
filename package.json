@@ -1,0 +1,19 @@
+{
+  "name": "dapp-voting-blockchain",
+  "version": "1.0.0",
+  "description": "![a](https://user-images.githubusercontent.com/64581460/200334222-dff3cce2-5398-4607-b174-141566b1e648.jpeg)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lamaparbat/DAPP-VOTING-BLOCKCHAIN.git"
+  },
+  "author": "Parbat Lama",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lamaparbat/DAPP-VOTING-BLOCKCHAIN/issues"
+  },
+  "homepage": "https://github.com/lamaparbat/DAPP-VOTING-BLOCKCHAIN#readme"
+}
