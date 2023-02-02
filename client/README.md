@@ -10,7 +10,10 @@
       - ``` npm i web3 pusher-js ```
       - ``` npm run dev ``` [run the react project]
 
-
+   5. Install Necessary npm package
+      - ``` npm i redux react-redux ```
+      - ``` npm i bootstrap react-bootstrap react-icons react-fast-marquee react-loading-skeleton react-select react-spinners react-toastify```
+      - ``` npm i lodash moment axios web3 pusher-js```
    ### Enable Audiences in Vercel Analytics
       Step 1: npm install @vercel/analytics
       
