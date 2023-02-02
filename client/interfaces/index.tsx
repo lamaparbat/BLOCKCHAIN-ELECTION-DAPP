@@ -22,7 +22,7 @@ interface PartyStruct {
 }
 
 interface UserDetails {
- citizenshipNumber: string,
+ citizenshipNo: string,
  fullName: string,
  name: string,
  dob: string,

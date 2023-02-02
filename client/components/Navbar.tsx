@@ -22,6 +22,7 @@ declare var window: any;
 const Navbar: React.FC = (): ReactElement => {
   const [selectedLanguage, setSelectedLanguage] = useState({ label: 'english', value: 'ENGLISH' });
   const [openVerticalNavbar, setOpenVerticalNavbar] = useState(false);
+  const [openTopVerticalNavbar, setOpenTopVerticalNavbar] = useState(false);
   const [showCreateElectionModal, setShowCreateElectionModal] = useState(false);
   const [isSearchModalOpen, setOpenSearchModal] = useState(false);
   const [loggedInAccountAddress, setLoggedInAccountAddress] = useState(null);
@@ -96,6 +97,23 @@ const Navbar: React.FC = (): ReactElement => {
     <div className='navbar__container'>
       {electionTimeCounterData.startDate && <MarqueeBar counterData={electionTimeCounterData} />}
       <div className='navbar__top py-2 w-full flex justify-end items-center bg-slate-100 px-2'>
+        <div
+          className={`${sub_navbar_style} ${responsive} min-[800px]:hidden max-[800px]:flex relative`}
+          onClick={() => setOpenTopVerticalNavbar(!openTopVerticalNavbar)}
+        >
+          <GiHamburgerMenu className='text-dark text-lg cursor-pointer' />
+        </div>
+        <div className={`absolute left-0 ml-[25px] mt-[50px] z-50 flex lg:hidden ${openTopVerticalNavbar ? 'block' : 'hidden'}`}>
+          <div className={`py-2 ${sub_navbar_style} w-[220px] h-[100px] bg-blue-800 flex-col justify-around absolute rounded-b-[5px]`}>
+            <div className={sub_navbar_items_style} onClick={() => navigate("/")}>CREATE ELECTION</div>
+            <div className={sub_navbar_items_style} onClick={() => navigate("/FAQ")}>FAQ</div>
+            <select className='text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0' onChange={onLanguageChange}>
+              {LANGUAGES.map((d, i) => <option key={i} value={d.value}>{d.label}</option>)}
+            </select>
+            <span className='px-4 cursor-pointer hover:opacity-70 border-r-2 border-slate-400 border-l-2 border-slate-400' onClick={() => navigate("mail")}><AiOutlineMail className='text-lg' /></span>
+            <span className='pl-1 pr-4 cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={openSearchModal}><AiOutlineSearch className='text-xl' /></span>
+          </div>
+        </div>
         <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={onCreateElection}>CREATE ELECTION</span>
         <div className='items w-[450px] flex justify-around items-center text-slate-600'>
           <span className='pr-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/FAQ")}>FAQ</span>
@@ -130,7 +148,7 @@ const Navbar: React.FC = (): ReactElement => {
         </div>
       </div>
       <div className='flex justify-center'>
-        <div className={`navbar__bottom ${responsive} flex items-center justify-between pt-2`}>
+        <div className={`navbar__bottom ${responsive} flex items-center justify-between pt-2 px-3`}>
           <Image className='cursor-pointer' src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
           <div className='center__content text-center text-red-700 -ml-[15px]'>
             <h3 className='max-[1100px]:text-[23px]'>{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Election Commission Nepal' : 'निर्वाचन आयोग नेपाल'}</h3>
@@ -144,7 +162,7 @@ const Navbar: React.FC = (): ReactElement => {
           className={`${sub_navbar_style} ${responsive} min-[800px]:hidden max-[800px]:flex relative`}
           onClick={() => setOpenVerticalNavbar(!openVerticalNavbar)}
         >
-          <GiHamburgerMenu className='text-white text-lg cursor-pointer' />
+          <GiHamburgerMenu className='text-white text-lg cursor-pointer ml-3' />
         </div>
 
         <div className={`${sub_navbar_style} ${responsive} max-[800px]:hidden text-slate-200`}>

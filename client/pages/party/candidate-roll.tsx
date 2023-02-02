@@ -6,22 +6,21 @@ import BreadCrumb from '../../components/BreadCrumb';
 import { DISTRICT, PROVINCE, MUNICIPALITY, WARD_NO, responsive } from '../../constants';
 import UserCard from '../../components/UserCard';
 import { getCandidateLists } from '../../utils/action';
+import { useSelector } from 'react-redux';
+import { setCandidateDetails } from '../../redux/candidateReducer';
 
 const Details: React.FC = (): React.ReactElement => {
   const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
   const [selectedDistrict, setSelectDistrict] = useState({ label: '', value: '' });
   const [selectedMunicipality, setSelectMunicipality] = useState({ label: '', value: '' });
   const [selectedWard, setSelectWard] = useState({ label: '', value: '' });
-
-  const [voterLists, setVoterLists] = useState([]);
+  const candidateList = useSelector((state:any) => state?.candidateReducer.list);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
         setLoading(true);
-        const res = await getCandidateLists({ skip: 0 });
-        res && setVoterLists(res?.data.data)
       } catch (error) {
         console.error(error);
       }
@@ -34,9 +33,9 @@ const Details: React.FC = (): React.ReactElement => {
       <Navbar /><br />
       <div className='w-full flex justify-center px-5'>
         <div className={`${responsive} flex-col justify-start rounded-1`}>
-          <BreadCrumb routes={["Voter Education", ["Voter Roll"]]} />
+          <BreadCrumb routes={["Candidate", ["List"]]} />
           <div className='flex items-center justify-between'>
-            <p className='text-2xl text-black mt-4'>Voter Roll</p>
+            <p className='text-2xl text-black mt-4'>Candidate List</p>
             <div className='flex justify-between my-4'>
               <Select
                 options={PROVINCE}
@@ -78,8 +77,8 @@ const Details: React.FC = (): React.ReactElement => {
           <div className='voter__container flex flex-wrap justify-between'>
             {loading && <VoterCardSkeleton repeatCount={12} />}
             {
-              voterLists ?
-                voterLists.map((voterDetails, i) => <UserCard details={voterDetails} type="voter" key={i} />) :
+              candidateList ?
+                candidateList.map((candidateDetails:any, i) => <UserCard details={candidateDetails} type="candidate" key={i} />) :
                 "No Voters Available !"
             }
           </div>

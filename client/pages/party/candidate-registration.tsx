@@ -1,30 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Navbar from '../../components/Navbar';
 import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO } from '../../constants';
 import { registerCandidate, getConvertedAge } from '../../utils/index';
+import { setCandidateList } from '../../redux/candidateReducer';
 import { toast } from 'react-toastify';
 import { SmartContract } from '../../constants';
+import { getStorage } from '../../services';
 
 const CandidateRegistration = () => {
   const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
   const [candidateDetails, setCandidateDetails] = useState({
-    fullName: "", citizenshipNo: "", province: "", district: "", municipality: "", ward: "",
+    fullName: "", citizenshipNumber: "", province: "", district: "", municipality: "", ward: "",
     email: "", profile: null, agenda: "", age: 22, dob: null, partyName: null, address: null
   });
-  const loggedInAccountAddress = useSelector((state: any) => state?.walletDetailsReducer?.loggedInAccountAddress);
-
+  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
       await getList();
-    })()
+    })();
   }, [])
 
   const getList = async () => {
     const candidateList = await SmartContract.methods.getAllCandidates().call();
-    console.log(candidateList);
+    dispatch(setCandidateList(candidateList));
   }
 
   // upload candidateDetails
@@ -32,7 +34,7 @@ const CandidateRegistration = () => {
     try {
       const {
         fullName,
-        citizenshipNo,
+        citizenshipNumber,
         province,
         district,
         municipality,
@@ -43,17 +45,17 @@ const CandidateRegistration = () => {
       const age = getConvertedAge(dob);
       const formData = new FormData();
       formData.append("fullName", fullName);
-      formData.append("citizenshipNumber", citizenshipNo);
+      formData.append("citizenshipNumber", citizenshipNumber);
       formData.append("province", province);
       formData.append("district", district);
       formData.append("municipality", municipality);
       formData.append("ward", ward);
       formData.append("email", email);
       formData.append("profile", profile);
-
+      console.log(loggedInAccountAddress)
       const response = await SmartContract.methods.addCandidate(
         fullName,
-        citizenshipNo,
+        citizenshipNumber,
         age,
         agenda,
         dob,
@@ -61,7 +63,8 @@ const CandidateRegistration = () => {
         email,
         profile,
         partyName
-      ).send({ from: loggedInAccountAddress });
+      ).send({ from: loggedInAccountAddress});
+      toast.success("New candidate registered successfully")
       await getList();
       // await registerCandidate(formData);
     } catch (error) {
@@ -97,7 +100,7 @@ const CandidateRegistration = () => {
                 className='overrideInputStyle form-control px-3 py-[10px] rounded-1 mt-1 shadow-none outline-0'
                 type="text"
                 placeholder="E.g  0054-2334"
-                onChange={(e) => setCandidateDetails({ ...candidateDetails, citizenshipNo: e.target.value })}
+                onChange={(e) => setCandidateDetails({ ...candidateDetails, citizenshipNumber: e.target.value })}
               />
             </div>
           </div>
