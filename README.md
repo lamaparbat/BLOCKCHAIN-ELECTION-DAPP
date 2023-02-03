@@ -1,4 +1,4 @@
-# Blockchain e-voting system (WEB 3.O)
+# Blockchain E-Voting System (WEB 3.O)
 
 ### Before Connecting Metamask wallet [Navbar]
 <img width="1440" alt="Screen Shot 2023-02-01 at 23 54 16" src="https://user-images.githubusercontent.com/64581460/216127121-871a2abc-7e0f-45cb-a5ab-7a550b5b6efb.png">
@@ -23,6 +23,14 @@
 
 ## Global Search modal with skeleton loading features
 <img width="1440" alt="Screen Shot 2023-01-29 at 19 40 04" src="https://user-images.githubusercontent.com/64581460/215330847-0ddc9131-e55e-4a7c-b274-6c64114d83ae.png">
+
+## Constitutional Provision. [/about/constitutional-provision]
+<img width="1439" alt="Screen Shot 2023-02-03 at 22 22 38" src="https://user-images.githubusercontent.com/64581460/216657904-406efa27-b65f-46f0-bcf0-f4cbf7e32d56.png">
+
+## FAQs List Page
+<img width="1440" alt="Screen Shot 2023-02-03 at 23 47 45" src="https://user-images.githubusercontent.com/64581460/216675055-37ab0a47-1592-4be9-b229-ffc951400c1c.png">
+<img width="1440" alt="Screen Shot 2023-02-03 at 23 51 12" src="https://user-images.githubusercontent.com/64581460/216675582-ce39bd1b-8ff4-4561-8761-3e5c612a8364.png">
+
 
 
 ### Workflow overview
