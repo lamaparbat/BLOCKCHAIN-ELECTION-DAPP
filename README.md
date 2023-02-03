@@ -27,6 +27,10 @@
 ## Constitutional Provision. [/about/constitutional-provision]
 <img width="1439" alt="Screen Shot 2023-02-03 at 22 22 38" src="https://user-images.githubusercontent.com/64581460/216657904-406efa27-b65f-46f0-bcf0-f4cbf7e32d56.png">
 
+## FAQs List Page
+<img width="1440" alt="Screen Shot 2023-02-03 at 23 47 45" src="https://user-images.githubusercontent.com/64581460/216675055-37ab0a47-1592-4be9-b229-ffc951400c1c.png">
+
+
 ### Workflow overview
 ![Blockchain Voting Interaction](https://user-images.githubusercontent.com/64581460/200596235-cba703b8-ac91-4600-9a02-d271a6ad8ed6.png)
 
