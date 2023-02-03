@@ -1,8 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Miriam+Libre&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
+* {
+  font-family: 'Hind Siliguri', sans-serif;
+  font-family: 'Miriam Libre', sans-serif;
+}
 
 .overrideInputStyle {
   font-size: 15px !important;
@@ -16,7 +22,6 @@
 
 span, p {
   color: rgb(71 85 105);
-  font-family: 'Hind Siliguri', sans-serif;
 }
 
 .sub__navbar div {
