@@ -24,6 +24,8 @@
 ## Global Search modal with skeleton loading features
 <img width="1440" alt="Screen Shot 2023-01-29 at 19 40 04" src="https://user-images.githubusercontent.com/64581460/215330847-0ddc9131-e55e-4a7c-b274-6c64114d83ae.png">
 
+## Constitutional Provision. [/about/constitutional-provision]
+<img width="1439" alt="Screen Shot 2023-02-03 at 22 22 38" src="https://user-images.githubusercontent.com/64581460/216657904-406efa27-b65f-46f0-bcf0-f4cbf7e32d56.png">
 
 ### Workflow overview
 ![Blockchain Voting Interaction](https://user-images.githubusercontent.com/64581460/200596235-cba703b8-ac91-4600-9a02-d271a6ad8ed6.png)
