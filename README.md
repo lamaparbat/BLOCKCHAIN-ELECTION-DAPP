@@ -29,6 +29,8 @@
 
 ## FAQs List Page
 <img width="1440" alt="Screen Shot 2023-02-03 at 23 47 45" src="https://user-images.githubusercontent.com/64581460/216675055-37ab0a47-1592-4be9-b229-ffc951400c1c.png">
+<img width="1440" alt="Screen Shot 2023-02-03 at 23 51 12" src="https://user-images.githubusercontent.com/64581460/216675582-ce39bd1b-8ff4-4561-8761-3e5c612a8364.png">
+
 
 
 ### Workflow overview
