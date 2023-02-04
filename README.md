@@ -31,7 +31,8 @@
 <img width="1440" alt="Screen Shot 2023-02-03 at 23 47 45" src="https://user-images.githubusercontent.com/64581460/216675055-37ab0a47-1592-4be9-b229-ffc951400c1c.png">
 <img width="1440" alt="Screen Shot 2023-02-03 at 23 51 12" src="https://user-images.githubusercontent.com/64581460/216675582-ce39bd1b-8ff4-4561-8761-3e5c612a8364.png">
 
-
+## Election Offices Page
+<img width="1440" alt="Screen Shot 2023-02-04 at 12 20 01" src="https://user-images.githubusercontent.com/64581460/216752957-86d7d634-48dc-4563-8218-183e9dcffbe2.png">
 
 ### Workflow overview
 ![Blockchain Voting Interaction](https://user-images.githubusercontent.com/64581460/200596235-cba703b8-ac91-4600-9a02-d271a6ad8ed6.png)
