@@ -3,7 +3,8 @@ import { Http } from "../services/index";
 // candidate || party
 const registerCandidate = async (payload: Object) => {
   try {
-    return await Http("post", "/candidate/signup", payload);
+    const response = await Http("post", "/candidate/signup", payload);
+    return response?.data?.data;
   } catch (error) {
     return console.error(error);
   }

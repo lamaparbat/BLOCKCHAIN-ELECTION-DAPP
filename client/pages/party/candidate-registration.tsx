@@ -3,11 +3,11 @@ import Select from 'react-select'
 import { useSelector, useDispatch } from 'react-redux';
 import Navbar from '../../components/Navbar';
 import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO } from '../../constants';
-import { registerCandidate, getConvertedAge } from '../../utils/index';
-import { setCandidateList } from '../../redux/candidateReducer';
+import { registerCandidate, getConvertedAge, getCandidateList } from '../../utils/index';
 import { toast } from 'react-toastify';
 import { SmartContract } from '../../constants';
 import { getStorage } from '../../services';
+import { PulseLoader } from 'react-spinners';
 
 const CandidateRegistration = () => {
   const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
@@ -15,23 +15,13 @@ const CandidateRegistration = () => {
     fullName: "", citizenshipNumber: "", province: "", district: "", municipality: "", ward: "",
     email: "", profile: null, agenda: "", age: 22, dob: null, partyName: null, address: null
   });
+  const [loading, setLoading] = useState(false);
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    (async () => {
-      await getList();
-    })();
-  }, [])
-
-  const getList = async () => {
-    const candidateList = await SmartContract.methods.getAllCandidates().call();
-    dispatch(setCandidateList(candidateList));
-  }
 
   // upload candidateDetails
   const onSubmit = async () => {
     try {
+      setLoading(true);
       const {
         fullName,
         citizenshipNumber,
@@ -52,8 +42,9 @@ const CandidateRegistration = () => {
       formData.append("ward", ward);
       formData.append("email", email);
       formData.append("profile", profile);
-      console.log(loggedInAccountAddress)
-      const response = await SmartContract.methods.addCandidate(
+
+      const { profile: profileUrl } = await registerCandidate(formData);;
+      await SmartContract.methods.addCandidate(
         fullName,
         citizenshipNumber,
         age,
@@ -61,20 +52,17 @@ const CandidateRegistration = () => {
         dob,
         address,
         email,
-        profile,
+        profileUrl,
         partyName
-      ).send({ from: loggedInAccountAddress});
-      toast.success("New candidate registered successfully")
-      await getList();
-      // await registerCandidate(formData);
+      ).send({ from: loggedInAccountAddress });
+      toast.success("New candidate registered successfully");
+      setLoading(false);
     } catch (error) {
       console.log(error)
       toast.error("Failed to register !", { toastId: 2 });
     }
 
   }
-
-
 
   return (
     <div className='mb-[50px]'>
@@ -98,7 +86,7 @@ const CandidateRegistration = () => {
               <span>Enter Citizenship Number</span>
               <input
                 className='overrideInputStyle form-control px-3 py-[10px] rounded-1 mt-1 shadow-none outline-0'
-                type="text"
+                type="number"
                 placeholder="E.g  0054-2334"
                 onChange={(e) => setCandidateDetails({ ...candidateDetails, citizenshipNumber: e.target.value })}
               />
@@ -214,7 +202,16 @@ const CandidateRegistration = () => {
             </div>
           </div>
           <div className='flex justify-between mt-[30px] mb-1'>
-            <button className='bg-blue-900 text-light py-2 w-100 rounded-[5px] hover:opacity-75' onClick={onSubmit}>Register</button>
+            <button
+              className={`bg-blue-900 text-light py-2 w-100 rounded-[5px] ${!loading ? "hover:opacity-75" : "bg-blue-600"}`}
+              onClick={onSubmit}
+              disabled={loading}
+            >
+              {loading ?
+                <span className='text-slate-300 flex justify-center items-center'>
+                  <PulseLoader color='#dedede' size={9} className='mr-3' /> Registering
+                </span> : "Register"}
+            </button>
           </div>
         </div>
       </div>

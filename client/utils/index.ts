@@ -9,6 +9,7 @@ import {
   getVoterLists,
   createElection
 } from "./action";
+import { getCandidateList } from "./web3";
 
 export {
   getConvertedAge,
@@ -19,5 +20,6 @@ export {
   getPartyLists,
   registerVoter,
   getVoterLists,
-  createElection
+  createElection,
+  getCandidateList
 }
