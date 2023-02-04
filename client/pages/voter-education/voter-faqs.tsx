@@ -61,7 +61,7 @@ const VoterFaqs = () => {
                 {
                   faqList && faqList.map((faq, i) => {
                     return (
-                      <Accordion.Item eventKey={`${i}`} className='shadow-md border-white-500 mb-3'>
+                      <Accordion.Item eventKey={`${i}`} className='shadow-md border-white-500 mb-3' key={i}>
                         <Accordion.Header>{faq.title}</Accordion.Header>
                         <Accordion.Body>{faq.desc}</Accordion.Body>
                       </Accordion.Item>
