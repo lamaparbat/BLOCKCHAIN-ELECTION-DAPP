@@ -13,13 +13,11 @@ const VoterFaqs = () => {
 
   const onAddHeaderClick = () => {
     setOpenAddQuestionModal(!openAddQuestionModal)
-    !openAddQuestionModal && setNewFaq({ ...defaultFaqDetails })
+    !openAddQuestionModal && setNewFaq({ ...defaultFaqDetails });
   }
 
   const handleSubmit = () => {
-    let list: any = faqList;
-    list.push(newFaq);
-    setFaqList(list);
+    setFaqList([...faqList, newFaq]);
   }
 
   return (

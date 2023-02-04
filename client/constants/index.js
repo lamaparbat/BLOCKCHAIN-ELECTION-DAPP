@@ -475,8 +475,9 @@ const sub_navbar_items_style = "text-start w-full pl-4 hover:text-red-500";
 
 const aboutItems = [
   { label: "Constitutional Provision", value: '/about/constitutional-provision' },
+  { label: 'Election Offices', value: '/about/election-office' },
   { label: 'Privacy Policy', value: '/about/privacy-policy' },
-  { label: 'Former Election Commissioners', value: '/about/voter-registration' }]
+]
 
 const electoralItems = [
   { label: "Electoral Framework Overview", value: '/electoral-framework/overview' },
@@ -503,6 +504,22 @@ const voterItems = [
   { label: 'Voter Registration', value: '/voter-education/voter-registration' },
   { label: 'FAQs on Voter Registration', value: '/voter-education/voter-faqs' }]
 
+const StateProvinceOffices = [
+  "Sudurpaschim Province",
+  "Province 1",
+  "Province 2",
+  "Bagmati Province",
+  "Gandaki Province",
+  "Lumbini Province",
+  "Karnali Province"
+]
+
+let DistrictOffices = [];
+Object.entries(DISTRICT).forEach((d) => {
+  let filter = d[1].map(d => d.label)
+  DistrictOffices = [...DistrictOffices, ...filter]
+});
+
 const sub_navbar_items = {
   aboutItems, electoralItems, voterItems, politicalItems, electionResultTypes
 }
@@ -515,6 +532,6 @@ export {
   PARTIES, VOTES,
   responsive, BTM_BORDER_STYLE,
   sub_navbar_style, sub_navbar_items_style, sub_navbar_items,
-  PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO,
+  PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, StateProvinceOffices, DistrictOffices,
   web3, SmartContract
 };
