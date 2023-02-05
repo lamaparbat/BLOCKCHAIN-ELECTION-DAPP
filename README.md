@@ -24,6 +24,10 @@
 ## Party Registration page
 <img width="1440" alt="Screen Shot 2023-02-05 at 22 03 00" src="https://user-images.githubusercontent.com/64581460/216831144-ddc64de4-4e43-43eb-8e3e-66319a837e37.png">
 
+## Party list page
+<img width="1440" alt="Screen Shot 2023-02-05 at 22 02 46" src="https://user-images.githubusercontent.com/64581460/216831164-62cde638-e8a3-49ed-b1ee-f10b14d871b4.png">
+
+
 ## Global Search modal with skeleton loading features
 <img width="1440" alt="Screen Shot 2023-01-29 at 19 40 04" src="https://user-images.githubusercontent.com/64581460/215330847-0ddc9131-e55e-4a7c-b274-6c64114d83ae.png">
 
