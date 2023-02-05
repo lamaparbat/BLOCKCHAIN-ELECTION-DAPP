@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Navbar from '../../components/Navbar';
 import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO } from '../../constants';
 import { registerCandidate, getConvertedAge, getCandidateList } from '../../utils/index';
@@ -17,6 +17,10 @@ const CandidateRegistration = () => {
   });
   const [loading, setLoading] = useState(false);
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
+  const partyList = useSelector((state: any) => state?.partyReducer?.list);
+  const partyListOption = partyList?.map((d) => {
+    return { label: d.name, value: d.name }
+  })
 
   // upload candidateDetails
   const onSubmit = async () => {
@@ -28,7 +32,7 @@ const CandidateRegistration = () => {
         province,
         district,
         municipality,
-        ward, email, address,
+        ward, email,
         profile, dob,
         partyName, agenda
       } = candidateDetails;
@@ -43,22 +47,29 @@ const CandidateRegistration = () => {
       formData.append("email", email);
       formData.append("profile", profile);
 
-      const { profile: profileUrl } = await registerCandidate(formData);;
+      const { profile: profileUrl } = await registerCandidate(formData);
+
+      if (!profile) throw new Error("Failed to upload image !");
+
       await SmartContract.methods.addCandidate(
         fullName,
         citizenshipNumber,
         age,
         agenda,
         dob,
-        address,
         email,
         profileUrl,
-        partyName
+        partyName,
+        province,
+        district,
+        municipality,
+        ward
       ).send({ from: loggedInAccountAddress });
+
       toast.success("New candidate registered successfully");
       setLoading(false);
     } catch (error) {
-      console.log(error)
+      console.error(error)
       toast.error("Failed to register !", { toastId: 2 });
     }
 
@@ -157,7 +168,7 @@ const CandidateRegistration = () => {
               />
             </div>
           </div>
-          <div className='flex justify-between my-4'>
+          <div className='flex justify-between items-center my-4'>
             <div className='w-[220px]'>
               <span>DOB</span>
               <input
@@ -168,20 +179,16 @@ const CandidateRegistration = () => {
             </div>
             <div className='w-full ml-2'>
               <span>Party Name</span>
-              <input
-                className='form-control shadow-none outline-0'
-                type="text"
-                onChange={(e) => setCandidateDetails({ ...candidateDetails, partyName: e.target.value })}
+              <Select
+                options={partyListOption}
+                className="w-[220px]"
+                placeholder={<div>Select Party</div>}
+                onChange={(item: any) => {
+                  setSelectProvince(item);
+                  setCandidateDetails({ ...candidateDetails, partyName: item.label })
+                }}
               />
             </div>
-          </div>
-          <div className='mt-4'>
-            <span>Address</span>
-            <input
-              className='form-control shadow-none outline-0'
-              type="text"
-              onChange={(e) => setCandidateDetails({ ...candidateDetails, address: e.target.value })}
-            />
           </div>
           <div className='mt-4'>
             <span>Agenda</span>

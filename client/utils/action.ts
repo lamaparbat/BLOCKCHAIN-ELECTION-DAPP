@@ -42,7 +42,8 @@ const getPartyLists = async ({ skip }) => {
 // Voter
 const registerVoter = async (payload: Object) => {
   try {
-    return await Http("post", "/voter/signup", payload);
+    const response = await Http("post", "/voter/signup", payload);
+    return response?.data?.data;
   } catch (error) {
     return console.error(error);
   }
@@ -71,10 +72,7 @@ const createElection = async (payload: Object) => {
 
 export {
   registerCandidate,
-  getCandidateLists,
   registerParty,
-  getPartyLists,
   registerVoter,
-  getVoterLists,
   createElection
 }

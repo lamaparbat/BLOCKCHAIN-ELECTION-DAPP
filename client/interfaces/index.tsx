@@ -1,68 +1,71 @@
 
 interface AvatarProps {
- src: string,
- className: string,
- alt: string,
- size: string,
- border: number
+  src: string,
+  className: string,
+  alt: string,
+  size: string,
+  border: number
 }
 
 interface LanguageStruct {
- label: string,
- value: string
+  label: string,
+  value: string
 };
 
 interface PartyStruct {
- lists: {
-  partyName: string,
-  totalMembers: number,
-  agenda: string,
-  logo: string
- }
+  lists: {
+    name: string,
+    totalMember: number,
+    agenda: string,
+    logoUrl: string
+  },
+  openAgendaPreview: (details: Object) => void
 }
 
 interface UserDetails {
- citizenshipNo: string,
- fullName: string,
- name: string,
- dob: string,
- profile: string
- education: string,
- district: string,
- address: string,
- contact: string,
- email: string
+  citizenshipNumber: string,
+  fullName: string,
+  name: string,
+  dob: string,
+  profile: string
+  education: string,
+  province: string,
+  district: string,
+  municipality: string,
+  ward: string,
+  contact: string,
+  email: string
 }
 
 interface CandidateDetails extends UserDetails {
- party: string,
- votes: number
+  party: string,
+  votes: number
 }
 
 interface VoterDetails extends UserDetails { };
 
 interface LiveCounterCardStruct {
- type: string,
- data: Array<CandidateDetails>,
- electionStatus: string
+  type: string,
+  data: Array<CandidateDetails>,
+  electionStatus: string
 }
 
 interface CandidateCardStruct {
- details: CandidateDetails,
- border: string,
- ishighlighted: boolean
+  details: CandidateDetails,
+  border: string,
+  ishighlighted: boolean
 }
 
 interface UserCardStruct {
- details: VoterDetails | CandidateDetails,
- type: string
+  details: VoterDetails | CandidateDetails,
+  type: string
 }
 
 export type {
- AvatarProps,
- LanguageStruct,
- LiveCounterCardStruct,
- CandidateCardStruct,
- UserCardStruct,
- PartyStruct
+  AvatarProps,
+  LanguageStruct,
+  LiveCounterCardStruct,
+  CandidateCardStruct,
+  UserCardStruct,
+  PartyStruct
 };

@@ -1,26 +1,43 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Modal } from 'react-bootstrap';
+import { responsive, SmartContract } from '../../constants';
 import Navbar from '../../components/Navbar';
-import VoterCardSkeleton from "../../components/Skeleton/voter-card-skeleton";
-import { responsive } from '../../constants';
 import PartyCard from '../../components/PartyCard';
-import { getPartyLists } from '../../utils/action';
+import VoterCardSkeleton from "../../components/Skeleton/voter-card-skeleton";
+import { getPartyList } from '../../utils';
+import { setParties } from '../../redux/partyReducer';
 
 const Details: React.FC = (): React.ReactElement => {
   const [partyList, setPartyLists] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [openAgendaPreviewModal, setOpenAgendaPreviewModal] = useState(false);
+  const [selectedPartyDetails, setSelectedPartyDetails] = useState<any>({});
+  const dispatch = useDispatch();
+  let partyEvent: any = null;
 
   useEffect(() => {
     (async () => {
-      try {
-        setLoading(true);
-        const res = await getPartyLists({ skip: 0 });
-        res && setPartyLists(res?.data.data)
-      } catch (error) {
-        console.error(error);
-      }
-      setLoading(false);
+      const list = await getPartyList();
+      dispatch(setParties(list));
+      setPartyLists(list);
+
+      partyEvent = SmartContract.events?.PartyCreated().on("data", (event: any) => {
+        dispatch(setParties([...partyList, event.returnValues[0]]));
+      }).on("error", () => console.error("PartyCreated Event Error !"));
     })();
+
+    return () => {
+      partyEvent && partyEvent?.unsubscribe();
+    }
   }, []);
+
+  const openAgendaPreview = (partyDetails) => {
+    setSelectedPartyDetails(partyDetails);
+    setOpenAgendaPreviewModal(true);
+  }
+
+  const handleClose = () => setOpenAgendaPreviewModal(false);
 
   return (
     <div className='mb-[50px]'>
@@ -37,12 +54,27 @@ const Details: React.FC = (): React.ReactElement => {
             {loading && <VoterCardSkeleton repeatCount={12} />}
             {
               partyList ?
-                partyList.map((partyList, i) => <PartyCard lists={partyList} key={i} />) :
-                "No Party Available !"
+                partyList.map((partyList, i) =>
+                  <PartyCard
+                    lists={partyList}
+                    openAgendaPreview={openAgendaPreview}
+                    key={i}
+                  />) : "No Party Available !"
             }
           </div>
         </div>
       </div>
+      <Modal show={openAgendaPreviewModal} className="px-2">
+        <Modal.Header>
+          <h4 className='mt-3'>{selectedPartyDetails?.name} Agenda</h4>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedPartyDetails?.agenda}
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-danger" onClick={handleClose}>Close</button>
+        </Modal.Footer>
+      </Modal>
     </div>
   )
 }

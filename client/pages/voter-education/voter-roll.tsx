@@ -1,32 +1,43 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Select from 'react-select';
 import Navbar from '../../components/Navbar';
 import VoterCardSkeleton from "../../components/Skeleton/voter-card-skeleton";
 import BreadCrumb from '../../components/BreadCrumb';
-import { DISTRICT, PROVINCE, MUNICIPALITY, WARD_NO, responsive } from '../../constants';
+import { DISTRICT, PROVINCE, MUNICIPALITY, WARD_NO, responsive, SmartContract } from '../../constants';
 import UserCard from '../../components/UserCard';
-import { getVoterLists } from '../../utils/action';
+import { getVoterList } from '../../utils';
+import { setCandidateList } from '../../redux/candidateReducer';
 
 const Details: React.FC = (): React.ReactElement => {
   const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
   const [selectedDistrict, setSelectDistrict] = useState({ label: '', value: '' });
   const [selectedMunicipality, setSelectMunicipality] = useState({ label: '', value: '' });
   const [selectedWard, setSelectWard] = useState({ label: '', value: '' });
-
   const [voterLists, setVoterLists] = useState([]);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  let voterEvent: any = null;
 
   useEffect(() => {
     (async () => {
       try {
         setLoading(true);
-        const res = await getVoterLists({ skip: 0 });
-        res && setVoterLists(res?.data.data)
+        const res = await getVoterList();
+        res && setVoterLists(res)
+
+        voterEvent = SmartContract.events?.VoterCreated().on("data", (event: any) => {
+          dispatch(setCandidateList([...voterLists, event.returnValues[0]]));
+        }).on("error", () => console.error("VoterCreated Event Error !"));
       } catch (error) {
         console.error(error);
       }
       setLoading(false);
     })();
+
+    return () => {
+      voterEvent && voterEvent?.unsubscribe();
+    }
   }, []);
 
   return (

@@ -1,33 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import { registerParty } from '../../utils/action';
+import { SmartContract } from '../../constants';
 import { toast } from 'react-toastify';
 import { PulseLoader } from 'react-spinners';
+import { getStorage } from '../../services';
 
-const defaultPartyDetails = { partyName: "", totalMembers: '', agenda: "", logo: null }
+const defaultPartyDetails = { partyName: "", totalMembers: '', agenda: "", partyLogo: null }
 const VoterRegistration = () => {
-
   const [partyDetails, setPartyDetails] = useState(defaultPartyDetails);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
-
-  // upload partyDetails
-  const onSubmit = async () => {
-    setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append("partyName", partyDetails.partyName);
-      formData.append("totalMembers", partyDetails.totalMembers);
-      formData.append("agenda", partyDetails.agenda);
-      formData.append("logo", partyDetails.logo);
-
-      const res = await registerParty(formData);
-      if (res) setPartyDetails(defaultPartyDetails)
-    } catch (error) {
-      toast.error("Failed to register !", { toastId: 2 });
-    }
-    setLoading(false);
-  }
+  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
 
   useEffect(() => {
     (!partyDetails.partyName || !partyDetails.totalMembers
@@ -36,6 +20,40 @@ const VoterRegistration = () => {
 
   const onChange = (name, value) => {
     setPartyDetails({ ...partyDetails, [name]: value })
+  }
+
+  // upload partyDetails
+  const onSubmit = async () => {
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      const { partyName, totalMembers, agenda, partyLogo } = partyDetails;
+
+      formData.append("partyName", partyName);
+      formData.append("totalMembers", totalMembers);
+      formData.append("agenda", agenda);
+      formData.append("logo", partyLogo);
+
+      const res1: any = await registerParty(formData);
+      const { logo } = res1.data.data;
+
+      if (!logo) throw new Error("Failed to upload logo !");
+
+      const res2 = await SmartContract.methods.addParty(
+        partyName,
+        totalMembers,
+        agenda,
+        logo
+      ).send({ from: loggedInAccountAddress });
+
+      if (res1.data.data && res2) {
+        toast.success("New Party Registered successfully.", { toastId: 2 });
+        setPartyDetails(defaultPartyDetails)
+      } else throw new Error();
+    } catch (error) {
+      toast.error("Failed to register !", { toastId: 2 });
+    }
+    setLoading(false);
   }
 
   return (
@@ -81,8 +99,8 @@ const VoterRegistration = () => {
               <input
                 className='overrideInputStyle form-control py-[10px] rounded-1 mt-1'
                 type="file"
-                name="file"
-                onChange={(e) => onChange("agenda", e.target.files[0])}
+                name="logo"
+                onChange={(e) => onChange("partyLogo", e.target.files[0])}
               />
             </div>
           </div>

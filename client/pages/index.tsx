@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import Navbar from '../components/Navbar';
 import { GoPrimitiveDot } from 'react-icons/go';
+import Navbar from '../components/Navbar';
 import LiveCounterCard from '../components/LiveCounterCard/LiveCounterCard';
 import { VOTES } from '../constants';
 import electionChannel from "../services/pusher-events";

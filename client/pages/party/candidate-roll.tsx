@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Select from 'react-select';
 import Navbar from '../../components/Navbar';
 import VoterCardSkeleton from "../../components/Skeleton/voter-card-skeleton";
@@ -6,54 +7,30 @@ import BreadCrumb from '../../components/BreadCrumb';
 import { DISTRICT, PROVINCE, MUNICIPALITY, WARD_NO, responsive, SmartContract } from '../../constants';
 import UserCard from '../../components/UserCard';
 import { getCandidateList } from '../../utils';
+import { setCandidateList } from '../../redux/candidateReducer';
 
 const Details: React.FC = (): React.ReactElement => {
-  const [candidateList, setCandidateList] = useState([]);
+  const [candidateLists, setCandidateLists] = useState([]);
   const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
   const [selectedDistrict, setSelectDistrict] = useState({ label: '', value: '' });
   const [selectedMunicipality, setSelectMunicipality] = useState({ label: '', value: '' });
   const [selectedWard, setSelectWard] = useState({ label: '', value: '' });
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  let candidateEvent: any = null;
 
   useEffect(() => {
-    let eventInstance: any = null;
     (async () => {
       const list = await getCandidateList();
-      setCandidateList(list);
+      setCandidateLists(list);
 
-      eventInstance = SmartContract.events?.CandidateCreated().on("data", (event: any) => {
-        const {
-          address_name: address,
-          age,
-          agenda,
-          citizenshipNumber: citizenshipNo,
-          dob,
-          email,
-          fullName,
-          partyName: party,
-          profile,
-          voteCount
-        } = event.returnValues[0];
-        const newCandidate = {
-          address_name: address,
-          age,
-          agenda,
-          citizenshipNo: citizenshipNo,
-          dob,
-          email,
-          fullName,
-          partyName: party,
-          profile,
-          voteCount
-        };
-        console.log(candidateList, newCandidate);
-        setCandidateList([...candidateList, newCandidate])
-
+      candidateEvent = SmartContract.events?.CandidateCreated().on("data", (event: any) => {
+        dispatch(setCandidateList([...list, event.returnValues[0]]));
       }).on("error", () => console.error("CandidateCreated Event Error !"));
     })();
 
     return () => {
-      eventInstance && eventInstance?.unsubscribe();
+      candidateEvent && candidateEvent?.unsubscribe();
     }
   }, []);
 
@@ -106,8 +83,8 @@ const Details: React.FC = (): React.ReactElement => {
           <div className='voter__container flex flex-wrap justify-between'>
             {loading && <VoterCardSkeleton repeatCount={12} />}
             {
-              candidateList ?
-                candidateList.map((candidateDetails: any, i) => <UserCard details={candidateDetails} type="candidate" key={i} />) :
+              candidateLists ?
+                candidateLists.map((candidateDetails: any, i) => <UserCard details={candidateDetails} type="candidate" key={i} />) :
                 "No Candidates Available !"
             }
           </div>

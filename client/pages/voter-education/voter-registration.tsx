@@ -2,31 +2,59 @@ import React, { useState } from 'react';
 import Select from 'react-select'
 import BreadCrumb from '../../components/BreadCrumb';
 import Navbar from '../../components/Navbar';
-import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO } from '../../constants';
+import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, SmartContract } from '../../constants';
 import { registerVoter } from '../../utils/action';
 import { toast } from 'react-toastify';
+import { getStorage } from '../../services';
+import { getConvertedAge } from '../../utils';
 
 const VoterRegistration = () => {
   const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
   const [voterDetails, setVoterDetails] = useState({
-    fullName: "", citizenshipNo: "", province: "", district: "", municipality: "", ward: "",
-    email: "", profile: null
+    fullName: "", citizenshipNumber: "", province: "", district: "", municipality: "", ward: "",
+    email: "", profileUrl: null, dob: null
   });
+  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
 
   // upload voterDetails
   const onSubmit = async () => {
     try {
       const formData = new FormData();
-      formData.append("fullName", voterDetails.fullName);
-      formData.append("citizenshipNumber", voterDetails.citizenshipNo);
-      formData.append("province", voterDetails.province);
-      formData.append("district", voterDetails.district);
-      formData.append("municipality", voterDetails.municipality);
-      formData.append("ward", voterDetails.ward);
-      formData.append("email", voterDetails.email);
-      formData.append("profile", voterDetails.profile);
+      const {
+        fullName,
+        citizenshipNumber,
+        province,
+        district,
+        municipality,
+        ward, email,
+        profileUrl, dob,
+      } = voterDetails;
 
-      await registerVoter(formData);
+      formData.append("fullName", fullName);
+      formData.append("citizenshipNumber", citizenshipNumber);
+      formData.append("province", province);
+      formData.append("district", district);
+      formData.append("municipality", municipality);
+      formData.append("ward", ward);
+      formData.append("email", email);
+      formData.append("profile", profileUrl);
+
+      const { profile }: any = await registerVoter(formData);
+      const age = getConvertedAge(dob);
+      await SmartContract.methods.addVoter(
+        fullName,
+        citizenshipNumber,
+        age,
+        dob,
+        email,
+        profile,
+        province,
+        district,
+        municipality,
+        ward
+      ).send({ from: loggedInAccountAddress });
+
+      toast.success("New Voter registered successfully");
     } catch (error) {
       toast.error("Failed to register !", { toastId: 2 });
     }
@@ -62,7 +90,7 @@ const VoterRegistration = () => {
                 className='overrideInputStyle form-control px-3 py-[10px] rounded-1 mt-1'
                 type="text"
                 placeholder="E.g  0054-2334"
-                onChange={(e) => setVoterDetails({ ...voterDetails, citizenshipNo: e.target.value })}
+                onChange={(e) => setVoterDetails({ ...voterDetails, citizenshipNumber: e.target.value })}
               />
             </div>
           </div>
@@ -123,6 +151,16 @@ const VoterRegistration = () => {
           </div>
           <div className='flex justify-between mt-4'>
             <div className='w-100'>
+              <span>DOB</span>
+              <input
+                className='form-control shadow-none outline-0 font-monospace'
+                type="datetime-local"
+                onChange={(e) => setVoterDetails({ ...voterDetails, dob: e.target.value })}
+              />
+            </div>
+          </div>
+          <div className='flex justify-between mt-4'>
+            <div className='w-100'>
               <span>Email Address</span>
               <input
                 className='overrideInputStyle form-control py-[10px] rounded-1 mt-1'
@@ -138,7 +176,7 @@ const VoterRegistration = () => {
                 className='overrideInputStyle form-control py-[10px] rounded-1 mt-1'
                 type="file"
                 name="file"
-                onChange={(e) => setVoterDetails({ ...voterDetails, profile: e.target.files[0] })}
+                onChange={(e) => setVoterDetails({ ...voterDetails, profileUrl: e.target.files[0] })}
               />
             </div>
           </div>
