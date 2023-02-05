@@ -3,26 +3,35 @@
 pragma solidity ^0.8.0;
 
 contract Structure {
-    struct Candidate {
+    struct User {
         string fullName;
-        uint citizenshipNumber;
-        uint age;
-        string agenda;
+        uint256 citizenshipNumber;
+        uint256 age;
         string dob;
-        string address_name;
         string email;
         string profile;
-        string partyName;
-        uint voteCount;
+        string province;
+        string district;
+        string municipality;
+        string ward;
     }
+
     struct Voter {
-        string fullName;
-        uint citizenshipNumber;
-        uint age;
-        string dob;
-        string address_name;
-        string email;
-        string profile;
+        User user;
         bool voted;
+    }
+    struct Candidate {
+        User user;
+        string partyName;
+        string agenda;
+        uint256 voteCount;
+    }
+
+    struct Party {
+        string name;
+        uint256 totalMember;
+        string agenda;
+        string logoUrl;
+        string[] members;
     }
 }
