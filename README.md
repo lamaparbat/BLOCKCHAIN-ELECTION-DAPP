@@ -13,7 +13,7 @@
 <img width="1440" alt="Screen Shot 2022-12-22 at 23 21 10" src="https://user-images.githubusercontent.com/64581460/209193528-13b9197e-1b37-4d61-ae3d-a2b065ba4ead.png">
 
 ### Create election
-<img width="1440" alt="Screen Shot 2022-12-25 at 21 18 00" src="https://user-images.githubusercontent.com/64581460/209473925-55f93b5a-e99a-42f5-b782-89cfda0cfbcb.png">
+<img width="1440" alt="Screen Shot 2023-02-06 at 23 12 09" src="https://user-images.githubusercontent.com/64581460/217041926-12feba4c-ad8f-428b-b96e-ae63ed3b9812.png">
 
 ### After election timeout, the result celebration UI
 <img width="1440" alt="Screen Shot 2022-12-27 at 23 20 14" src="https://user-images.githubusercontent.com/64581460/209701990-32222a93-bfb5-421e-a143-9ce8f15ed926.png">
