@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
+import Select from "react-select";
 import { createElection } from '../utils/action';
-import { setElectionTimeCounter } from '../redux/electionTimeCounter';
+import { setElectionData } from '../redux/electionReducer';
+import { ELECTION_TYPE } from '../constants';
 
 const currentDate = new Date();
 const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -10,33 +12,34 @@ const defaultElectionData = {
   title: "",
   description: "",
   startDate: defaultDate,
-  endDate: defaultDate
+  endDate: defaultDate,
+  type: ELECTION_TYPE[0].value
 }
 
 
 const ElectionModal = ({ show, setShowCreateElectionModal }) => {
-  const [electionData, setElectionData] = useState({ ...defaultElectionData });
+  const [election, setElection] = useState({ ...defaultElectionData });
   const [isAgree, setAgree] = useState(false);
   const [isDisabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setDisabled(!isAgree || !electionData.title || !electionData.description || !electionData.startDate || !electionData.endDate);
-  }, [isAgree, electionData.title, electionData.description, electionData.startDate, electionData.endDate]);
+    setDisabled(!isAgree || !election.title || !election.description || !election.startDate || !election.endDate);
+  }, [isAgree, election.title, election.description, election.startDate, election.endDate]);
 
   const onChange = (name: string, value: string) => {
-    setElectionData({ ...electionData, [name]: value });
+    setElection({ ...election, [name]: value });
   };
 
   const onCreate = async () => {
     setLoading(true);
     try {
-      await createElection(electionData);
+      await createElection(election);
 
       setShowCreateElectionModal(false);
-      setElectionData(defaultElectionData);
-      dispatch(setElectionTimeCounter(electionData));
+      setElection(defaultElectionData);
+      dispatch(setElectionData(election));
     } catch (error) {
       console.error(error);
     }
@@ -71,17 +74,27 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
               <input
                 type="datetime-local"
                 className="form-control mt-1 shadow-none"
-                value={electionData.startDate}
+                value={election.startDate}
                 onChange={(e) => onChange("startDate", e.target.value)} />
             </div>
             <div className='w-50 ml-2'>
               <span>End Date & time</span>
               <input
                 type="datetime-local"
-                value={electionData.endDate}
+                value={election.endDate}
                 className="form-control mt-1 shadow-none"
                 onChange={(e) => onChange("endDate", e.target.value)} />
             </div>
+          </div>
+          <div className='w-full flex flex-column mt-4 mb-3'>
+            <label>Election Type</label>
+            <Select
+              options={ELECTION_TYPE}
+              className="w-[220px] mr-2 mt-1"
+              placeholder={<div>Select Type</div>}
+              onChange={(item: any) => onChange("type", item.value)}
+              isDisabled={election?.type ? false : true}
+            />
           </div>
           <div className='flex mt-4 mb-3'>
             <input

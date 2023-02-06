@@ -31,7 +31,7 @@ const Navbar: React.FC = (): ReactElement => {
 
 
   const route = useRouter();
-  const electionTimeCounterData = useSelector((state: any) => state?.electionTimeCounterReducer.timer);
+  const electionData = useSelector((state: any) => state?.electionReducer);
 
   // on mount
   useEffect(() => {
@@ -93,7 +93,7 @@ const Navbar: React.FC = (): ReactElement => {
 
   return (
     <div className='navbar__container'>
-      {electionTimeCounterData.startDate && <MarqueeBar counterData={electionTimeCounterData} />}
+      {electionData && electionData.startDate && <MarqueeBar counterData={electionData} />}
       <div className='navbar__top py-2 w-full flex justify-end items-center bg-slate-100 px-2'>
         <div
           className={`${sub_navbar_style} ${responsive} min-[800px]:hidden max-[800px]:flex relative`}

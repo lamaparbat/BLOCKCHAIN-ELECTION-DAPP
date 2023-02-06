@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select'
-import { useSelector } from 'react-redux';
 import Navbar from '../../components/Navbar';
-import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO } from '../../constants';
-import { registerCandidate, getConvertedAge, getCandidateList } from '../../utils/index';
+import { PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO } from '../../constants';
+import { registerCandidate, getConvertedAge, getCandidateList, getPartyList } from '../../utils/index';
 import { toast } from 'react-toastify';
 import { SmartContract } from '../../constants';
 import { getStorage } from '../../services';
@@ -15,12 +14,19 @@ const CandidateRegistration = () => {
     fullName: "", citizenshipNumber: "", province: "", district: "", municipality: "", ward: "",
     email: "", profile: null, agenda: "", age: 22, dob: null, partyName: null, address: null
   });
+  const [partyList, setPartyList] = useState([]);
   const [loading, setLoading] = useState(false);
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
-  const partyList = useSelector((state: any) => state?.partyReducer?.list);
   const partyListOption = partyList?.map((d) => {
     return { label: d.name, value: d.name }
   })
+
+  useEffect(() => {
+    (async () => {
+      const partyList = await getPartyList();
+      setPartyList(partyList);
+    })();
+  }, [])
 
   // upload candidateDetails
   const onSubmit = async () => {
@@ -75,6 +81,7 @@ const CandidateRegistration = () => {
 
   }
 
+  console.log(selectedProvince, MUNICIPALITY[selectedProvince.value])
   return (
     <div className='mb-[50px]'>
       <Navbar /><br />

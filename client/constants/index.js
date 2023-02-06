@@ -514,6 +514,13 @@ const StateProvinceOffices = [
   "Karnali Province"
 ]
 
+const ELECTION_TYPE = [
+  { label: "Province", value: "Province" },
+  { label: "District", value: "District" },
+  { label: "Municipaliy", value: "Municipaliy" },
+  { label: "Ward", value: "Ward" },
+]
+
 let DistrictOffices = [];
 Object.entries(DISTRICT).forEach((d) => {
   let filter = d[1].map(d => d.label)
@@ -530,7 +537,7 @@ const SmartContract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ABI_ADDRESS);
 export {
   LANGUAGES,
   PARTIES, VOTES,
-  responsive, BTM_BORDER_STYLE,
+  responsive, BTM_BORDER_STYLE, ELECTION_TYPE,
   sub_navbar_style, sub_navbar_items_style, sub_navbar_items,
   PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, StateProvinceOffices, DistrictOffices,
   web3, SmartContract

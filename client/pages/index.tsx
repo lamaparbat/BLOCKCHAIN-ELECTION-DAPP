@@ -1,13 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { GoPrimitiveDot } from 'react-icons/go';
 import Navbar from '../components/Navbar';
 import LiveCounterCard from '../components/LiveCounterCard/LiveCounterCard';
-import { VOTES } from '../constants';
 import electionChannel from "../services/pusher-events";
+import { getCandidateList } from '../utils';
+import { useSelector } from 'react-redux';
+import { PROVINCE } from '../constants';
+import _ from 'lodash';
 
 export default function Home() {
   const [electionStatus, setElectionStatus] = useState("");
+  const [candidateList, setCandidateList] = useState([]);
+  const { electionData } = useSelector((state: any) => state.electionReducer);
+
+  useEffect(() => {
+    (async () => {
+      const candidateList = await getCandidateList();
+      setCandidateList(candidateList);
+    })();
+  }, []);
+
+
+  const electionCandidates = _.groupBy(candidateList, candidate => candidate.user.province);
+  const electionCandidatesArray = Object.entries(electionCandidates);
 
   electionChannel.bind("start-election-event", () => {
     console.log("election started");
@@ -39,8 +55,8 @@ export default function Home() {
             </div>
           </div>
           <div className='lg:w-[1100px] flex justify-around flex-wrap'>
-            {Object.keys(VOTES).map((key, i) =>
-              <LiveCounterCard type={key} data={VOTES[key]} key={i} electionStatus={electionStatus} />)}
+            {electionData && electionCandidatesArray.length > 0 && electionCandidatesArray?.map(([key, value]: any) =>
+              <LiveCounterCard type={key} data={value} key={key} electionStatus={electionStatus} />)}
           </div>
         </div>
       </div>

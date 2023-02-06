@@ -1,10 +1,10 @@
 import React from 'react';
 import Avatar from './Avatar';
 
-const AnimatedAvatar = () => {
+const AnimatedAvatar: any = ({ src }) => {
   return (
     <div className='d-flex w-fit h-fit items-end '>
-      <Avatar className='avatar' src="/images/parbat.png" alt="profile" size='xl' border={8} />
+      <Avatar className='avatar' src={src} alt="profile" size='xl' border={8} />
     </div>
   )
 }

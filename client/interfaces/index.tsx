@@ -26,6 +26,7 @@ interface UserDetails {
   citizenshipNumber: string,
   fullName: string,
   name: string,
+  age: string,
   dob: string,
   profile: string
   education: string,
@@ -39,10 +40,13 @@ interface UserDetails {
 
 interface CandidateDetails extends UserDetails {
   party: string,
+  agenda: string,
   votes: number
 }
 
-interface VoterDetails extends UserDetails { };
+interface VoterDetails extends UserDetails {
+  voted: boolean
+};
 
 interface LiveCounterCardStruct {
   type: string,
