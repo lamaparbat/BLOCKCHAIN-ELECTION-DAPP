@@ -1,7 +1,7 @@
 # Blockchain E-Voting System (WEB 3.O)
 
 ### Before Connecting Metamask wallet [Navbar]
-<img width="1440" alt="Screen Shot 2023-02-01 at 23 54 16" src="https://user-images.githubusercontent.com/64581460/216127121-871a2abc-7e0f-45cb-a5ab-7a550b5b6efb.png">
+<img width="1440" alt="Screen Shot 2023-02-07 at 21 34 31" src="https://user-images.githubusercontent.com/64581460/217293885-4554f347-3319-4ba4-bc57-0d70f565b368.png">
 
 ### After connecting Metamask wallet 
 <img width="1440" alt="Screen Shot 2023-02-01 at 23 55 43" src="https://user-images.githubusercontent.com/64581460/216127928-bb32849b-585a-459e-9144-4cf832b3ef9a.png">
