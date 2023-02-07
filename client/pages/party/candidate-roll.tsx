@@ -4,10 +4,11 @@ import Select from 'react-select';
 import Navbar from '../../components/Navbar';
 import VoterCardSkeleton from "../../components/Skeleton/voter-card-skeleton";
 import BreadCrumb from '../../components/BreadCrumb';
-import { DISTRICT, PROVINCE, MUNICIPALITY, WARD_NO, responsive, SmartContract } from '../../constants';
+import { DISTRICT, PROVINCE, MUNICIPALITY, WARD_NO, responsive, SmartContract, ELECTION_TYPE } from '../../constants';
 import UserCard from '../../components/UserCard';
 import { getCandidateList } from '../../utils';
 import { setCandidateList } from '../../redux/candidateReducer';
+import { toast } from 'react-toastify';
 
 const Details: React.FC = (): React.ReactElement => {
   const [candidateLists, setCandidateLists] = useState([]);
@@ -15,9 +16,11 @@ const Details: React.FC = (): React.ReactElement => {
   const [selectedDistrict, setSelectDistrict] = useState({ label: '', value: '' });
   const [selectedMunicipality, setSelectMunicipality] = useState({ label: '', value: '' });
   const [selectedWard, setSelectWard] = useState({ label: '', value: '' });
+  const [isEidtModeOn, setEditModeOn] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   let candidateEvent: any = null;
+  const selectedCandidatesPayload = { electionAddress: null, selectedCandidates: [] };
 
   useEffect(() => {
     (async () => {
@@ -34,6 +37,16 @@ const Details: React.FC = (): React.ReactElement => {
     }
   }, []);
 
+  const onSubmit = async () => {
+    const { electionAddress, selectedCandidates } = selectedCandidatesPayload;
+    await SmartContract.methods.addSelectedCandidates(
+      electionAddress,
+      selectedCandidates
+    );
+
+    toast.success("Candidates added successfully .");
+  }
+
   return (
     <div className='mb-[50px]'>
       <Navbar /><br />
@@ -42,7 +55,12 @@ const Details: React.FC = (): React.ReactElement => {
           <BreadCrumb routes={["Candidate", ["List"]]} />
           <div className='flex items-center justify-between'>
             <p className='text-2xl text-black mt-4'>Candidate List</p>
-            <div className='flex justify-between my-4'>
+            {!isEidtModeOn &&
+              <button
+                className='btn btn-primary px-3 py-1 rounded-1 outline-0'
+                onClick={() => setEditModeOn(true)}
+              >Choose Candidates for election</button>}
+            {/* <div className='flex justify-between my-4'>
               <Select
                 options={PROVINCE}
                 className="w-[180px] mt-1"
@@ -78,7 +96,9 @@ const Details: React.FC = (): React.ReactElement => {
                 }}
                 isDisabled={selectedMunicipality?.label ? false : true}
               />
-            </div>
+            </div> */}
+            {isEidtModeOn &&
+              <button className='btn btn-primary px-3 py-1 rounded-1 outline-0'>Submit Selection</button>}
           </div><br />
           <div className='voter__container flex flex-wrap justify-between'>
             {loading && <VoterCardSkeleton repeatCount={12} />}

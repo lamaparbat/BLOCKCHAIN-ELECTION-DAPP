@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import Select from "react-select";
-import { createElection } from '../utils/action';
 import { setElectionData } from '../redux/electionReducer';
-import { ELECTION_TYPE } from '../constants';
+import { ELECTION_TYPE, SmartContract } from '../constants';
+import { toast } from 'react-toastify';
 
 const currentDate = new Date();
 const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -13,7 +13,7 @@ const defaultElectionData = {
   description: "",
   startDate: defaultDate,
   endDate: defaultDate,
-  type: ELECTION_TYPE[0].value
+  electionType: ELECTION_TYPE[0].value
 }
 
 
@@ -35,13 +35,22 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const onCreate = async () => {
     setLoading(true);
     try {
-      await createElection(election);
+      const { title, description, startDate, endDate, electionType } = election;
+      await SmartContract.methods.createElection(
+        title,
+        description,
+        startDate,
+        endDate,
+        electionType
+      );
 
       setShowCreateElectionModal(false);
       setElection(defaultElectionData);
       dispatch(setElectionData(election));
+      toast.success("Election created successfully.");
     } catch (error) {
       console.error(error);
+      toast.success("Failed to create election !");
     }
     setLoading(false);
   }
@@ -93,7 +102,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
               className="w-[220px] mr-2 mt-1"
               placeholder={<div>Select Type</div>}
               onChange={(item: any) => onChange("type", item.value)}
-              isDisabled={election?.type ? false : true}
+              isDisabled={election?.electionType ? false : true}
             />
           </div>
           <div className='flex mt-4 mb-3'>

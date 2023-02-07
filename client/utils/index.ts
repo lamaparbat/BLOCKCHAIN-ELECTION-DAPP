@@ -3,10 +3,9 @@ import { getEventDate } from "./getEventDate";
 import {
   registerCandidate,
   registerParty,
-  registerVoter,
-  createElection
+  registerVoter
 } from "./action";
-import { getCandidateList, getVoterList, getPartyList } from "./web3";
+import { getCandidateList, getVoterList, getPartyList, getElectionList } from "./web3";
 
 export {
   getConvertedAge,
@@ -14,6 +13,5 @@ export {
   registerCandidate,
   registerParty,
   registerVoter,
-  createElection,
-  getCandidateList, getVoterList, getPartyList
+  getCandidateList, getVoterList, getPartyList, getElectionList
 }

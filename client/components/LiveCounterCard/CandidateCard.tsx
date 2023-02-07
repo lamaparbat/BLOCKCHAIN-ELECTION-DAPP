@@ -8,7 +8,6 @@ import FilterIcon from '../FilterIcon';
 
 
 const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
-  console.log(props)
   const { details, border, ishighlighted }: any = props;
 
   // redux dispatcher
@@ -32,7 +31,7 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
             <h6 className='text-[16px]'>{details?.user.fullName}</h6>
             <div className='d-flex items-center -mt-[5px]'>
               <FilterIcon party={details?.agenda} />
-              <span className='mx-2 text-sm text-slate-600'>{details?.agenda}</span>
+              <span className='mx-2 text-sm text-slate-600'>{details?.partyName}</span>
             </div>
           </div>
         </div>

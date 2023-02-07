@@ -4,20 +4,23 @@ import { GoPrimitiveDot } from 'react-icons/go';
 import Navbar from '../components/Navbar';
 import LiveCounterCard from '../components/LiveCounterCard/LiveCounterCard';
 import electionChannel from "../services/pusher-events";
-import { getCandidateList } from '../utils';
+import { getCandidateList, getElectionList } from '../utils';
 import { useSelector } from 'react-redux';
-import { PROVINCE } from '../constants';
 import _ from 'lodash';
 
 export default function Home() {
   const [electionStatus, setElectionStatus] = useState("");
   const [candidateList, setCandidateList] = useState([]);
+  const [electionList, setElectionList] = useState([]);
   const { electionData } = useSelector((state: any) => state.electionReducer);
 
   useEffect(() => {
     (async () => {
       const candidateList = await getCandidateList();
+      const electionList = await getElectionList();
+
       setCandidateList(candidateList);
+      setElectionList(electionList);
     })();
   }, []);
 

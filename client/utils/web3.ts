@@ -11,3 +11,7 @@ export const getVoterList = async () => {
 export const getPartyList = async () => {
   return await SmartContract.methods.getAllParties().call();
 }
+
+export const getElectionList = async () => {
+  return await SmartContract.methods.getAllElections().call();
+}
