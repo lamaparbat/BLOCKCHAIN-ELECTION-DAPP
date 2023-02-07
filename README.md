@@ -6,6 +6,10 @@
 ### After connecting Metamask wallet 
 <img width="1440" alt="Screen Shot 2023-02-01 at 23 55 43" src="https://user-images.githubusercontent.com/64581460/216127928-bb32849b-585a-459e-9144-4cf832b3ef9a.png">
 
+### Candidate selection for particular election [Provisional | District | Municipality | Ward ]
+<img width="1440" alt="Screen Shot 2023-02-07 at 22 59 33" src="https://user-images.githubusercontent.com/64581460/217316374-4e5061b8-140a-4907-aa61-3da88d9135e2.png">
+
+
 ### HOT Candidate Live Vote Count
 <img width="1440" alt="Screen Shot 2022-11-27 at 22 27 26" src="https://user-images.githubusercontent.com/64581460/204148574-10d794e3-091b-423e-befa-32b5a76981e6.png">
 
