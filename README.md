@@ -7,7 +7,7 @@
 <img width="1440" alt="Screen Shot 2023-02-01 at 23 55 43" src="https://user-images.githubusercontent.com/64581460/216127928-bb32849b-585a-459e-9144-4cf832b3ef9a.png">
 
 ### Candidate selection for particular election [Provisional | District | Municipality | Ward ]
-<img width="1440" alt="Screen Shot 2023-02-07 at 22 59 33" src="https://user-images.githubusercontent.com/64581460/217316374-4e5061b8-140a-4907-aa61-3da88d9135e2.png">
+<img width="1440" alt="Screen Shot 2023-02-07 at 23 47 01" src="https://user-images.githubusercontent.com/64581460/217328463-da5ef674-2708-40be-bade-f4773443aa9d.png">
 
 
 ### HOT Candidate Live Vote Count
