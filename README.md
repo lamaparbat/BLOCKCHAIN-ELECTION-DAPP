@@ -27,7 +27,7 @@
 ## Party list page
 <img width="1440" alt="Screen Shot 2023-02-05 at 22 02 46" src="https://user-images.githubusercontent.com/64581460/216831164-62cde638-e8a3-49ed-b1ee-f10b14d871b4.png">
 
-## Preview party agenda model
+## Preview party agenda popup model
 <img width="1440" alt="Screen Shot 2023-02-07 at 21 08 33" src="https://user-images.githubusercontent.com/64581460/217287277-03c367f9-d33d-471e-a9dd-602d2b18809a.png">
 
 ## Global Search modal with skeleton loading features
