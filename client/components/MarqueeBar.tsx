@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Marquee from "react-fast-marquee";
 import { useDispatch } from 'react-redux';
 import { getEventDate } from '../utils/getEventDate';
-import { setElectionTimeCounter } from '../redux/electionReducer';
+import { setElectionData } from '../redux/electionReducer';
 
 const MarqueeBar = ({ counterData }): React.ReactElement => {
   const [counter, setCounter] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -17,7 +17,7 @@ const MarqueeBar = ({ counterData }): React.ReactElement => {
     }, 1000);
     if (diffInMillis <= 0) {
       clearInterval(interval);
-      dispatch(setElectionTimeCounter({ startDate: "", endDate: "" }));
+      dispatch(setElectionData({ startDate: "", endDate: "" }));
     }
   }
 
