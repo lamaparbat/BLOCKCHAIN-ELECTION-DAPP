@@ -5,6 +5,7 @@ import Select from "react-select";
 import { setElectionData } from '../redux/electionReducer';
 import { ELECTION_TYPE, SmartContract } from '../constants';
 import { toast } from 'react-toastify';
+import { getElectionList } from '../utils';
 
 const currentDate = new Date();
 const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -43,7 +44,8 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
         endDate,
         electionType
       );
-
+      const electionList = await getElectionList();
+      console.log("elections ", electionList)
       setShowCreateElectionModal(false);
       setElection(defaultElectionData);
       dispatch(setElectionData(election));

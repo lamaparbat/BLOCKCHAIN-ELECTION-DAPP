@@ -82,7 +82,7 @@ const DISTRICT = {
     { label: "Banke", value: "Banke" },
     { label: "Bardiya", value: "Bardiya" },
     { label: "Dang", value: "Dang" },
-    { label: "Eastern Rukum", value: "Eastern Rukum" },
+    { label: "Rukum", value: "Rukum" },
     { label: "Gulmi", value: "Gulmi" },
     { label: "Kapilvastu", value: "Tanahun" },
     { label: "Parasi", value: "Parasi" },
@@ -747,37 +747,251 @@ const MUNICIPALITY = {
     {label:"Aarughat Rural", value:"Aarughat Rural"},
     {label:"Gandaki Rural", value:"Gandaki Rural"},
   ],
-  "":[
+  "Kaski":[
+    {label:"Pokhara Metropolitan City", value:"Pokhara Metropolitan City"},
+    {label:"Annapurna Rural Municipality", value:"Annapurna Rural Municipality"},
+    {label:"Machhapuchchhre Rural Municipality", value:"Machhapuchchhre Rural Municipality"},
+    {label:"Madi Rural Municipality", value:"Madi Rural Municipality"},
+    {label:"Rupa Rural Municipality", value:"Rupa Rural Municipality"},
   ],
-  "":[
+  "Lamjung":[
+    {label:"Besisahar", value:"Besisahar"},
+    {label:"Dordi Rural", value:"Dordi Rural"},
+    {label:"Dudhpokhari Rural", value:"Dudhpokhari Rural"},
+    {label:"Kwhlosothar Rural", value:"Kwhlosothar Rural"},
+    {label:"Madhya Nepal", value:"Madhya Nepal"},
+    {label:"Marsyandi Rural", value:"Marsyandi Rural"},
+    {label:"Rainas", value:"Rainas"},
+    {label:"Sundarbazar", value:"Sundarbazar"},
   ],
-  "":[
+  "Manang":[
+    {label:"Bhakra", value:"Bhakra"},
+    {label:"Chame", value:"Chame"},
+    {label:"Dharapani", value:"Dharapani"},
+    {label:"Ghyaru", value:"Ghyaru"},
+    {label:"Khangsar", value:"Khangsar"},
+    {label:"Manang", value:"Manang"},
+    {label:"Nar", value:"Nar"},
+    {label:"Ngawal", value:"Ngawal"},
+    {label:"Phu", value:"Phu"},
+    {label:"Pisang", value:"Pisang"},
+    {label:"Tachi Bagarchhap", value:"Tachi Bagarchhap"},
+    {label:"Tanki Manang", value:"Tanki Manang"},
+    {label:"Thoche", value:"Thoche"},
   ],
-  "":[
+  "Mustang":[
+    {label:"Gharpajhong Rural", value:"Gharpajhong Rural"},
+    {label:"Lo-Ghekar Damodarkunda Rural", value:"Lo-Ghekar Damodarkunda Rural"},
+    {label:"Lomanthang Rural", value:"Lomanthang Rural"},
+    {label:"Thasang Rural", value:"Thasang Rural"},
+    {label:"Varagung Muktichhetra Rural", value:"Varagung Muktichhetra Rural"},
   ],
-  "":[
+  "Myagdi":[
+    {label:"Beni Nagarpalika Urban ", value:"Beni Nagarpalika Urban "},
+    {label:"Mangala Rural ", value:"Mangala Rural "},
+    {label:"Raghuganga Rural ", value:"Raghuganga Rural "},
+    {label:"Anapurna Rural ", value:"Anapurna Rural "},
+    {label:"Dhaulagiri Rural ", value:"Dhaulagiri Rural "},
+    {label:"Malika Rural", value:"Malika Rural"},
   ],
-  "":[
-  ],
-  "":[
-  ],
-  "":[
-  ],
-  "":[
-  ],
-  "":[
-  ],
-  "":[
-  ],
-  "":[
-  ],
-  "":[
-  ],
-  "":[
-  ],
-  "":[
-  ],
-  "":[
+  "Nawalpur":[
+    {label:"Bulingtar Rural", value:"Bulingtar Rural"},
+    {label:"Devchuli Urban", value:"Devchuli Urban"},
+    {label:"Hupsekot Rural", value:"Hupsekot Rural"},
+    {label:"Madhyabindu Urban", value:"Madhyabindu Urban"},
+    {label:"Bungdikali Rural", value:"Bungdikali Rural"},
+    {label:"Binai Rural", value:"Binai Rural"},
+    {label:"Gaidakot Urban", value:"Gaidakot Urban"},
+    {label:"Bardaghat Urban", value:"Bardaghat Urban"},
+    {label:"Palhinandan Rural", value:"Palhinandan Rural"},
+    {label:"Pratappur Rural", value:"Pratappur Rural"},
+    {label:"Sarawal Rural", value:"Sarawal Rural"},
+    {label:"Kawasoti Urban", value:"Kawasoti Urban"},
+    {label:"Sunwal Urban", value:"Sunwal Urban"},
+    {label:"Trivenisusta Rural", value:"Trivenisusta Rural"},
+    {label:"Ramgram Urban", value:"Ramgram Urban"},
   ],
 
+
+  "Kapilvastu":[
+    {label:"Kapilvastu", value:"Kapilvastu"},
+    {label:"Banganga", value:"Banganga"},
+    {label:"Buddhabhumi", value:"Buddhabhumi"},
+    {label:"Shivaraj", value:"Shivaraj"},
+    {label:"Krishnanagar", value:"Krishnanagar"},
+    {label:"Maharajgunj", value:"Maharajgunj"},
+    {label:"Mayadevi Rural", value:"Mayadevi Rural"},
+    {label:"Yashodhara Rural", value:"Yashodhara Rural"},
+    {label:"Suddhodhan Rural", value:"Suddhodhan Rural"},
+    {label:"Bijaynagar Rural", value:"Bijaynagar Rural"},
+  ],
+  "Parasi":[
+    {label:"Bulingtar Rural", value:"Bulingtar Rural"},
+    {label:"Devchuli Urban", value:"Devchuli Urban"},
+    {label:"Hupsekot Rural", value:"Hupsekot Rural"},
+    {label:"Madhyabindu Urban", value:"Madhyabindu Urban"},
+    {label:"Bungdikali Rural", value:"Bungdikali Rural"},
+    {label:"Binai Rural", value:"Binai Rural"},
+    {label:"Gaidakot Urban", value:"Gaidakot Urban"},
+    {label:"Bardaghat Urban", value:"Bardaghat Urban"},
+    {label:"Palhinandan Rural", value:"Palhinandan Rural"},
+    {label:"Pratappur Rural", value:"Pratappur Rural"},
+    {label:"Sarawal Rural", value:"Sarawal Rural"},
+    {label:"Kawasoti Urban", value:"Kawasoti Urban"},
+    {label:"Sunwal Urban", value:"Sunwal Urban"},
+    {label:"Trivenisusta Rural", value:"Trivenisusta Rural"},
+    {label:"Ramgram Urban", value:"Ramgram Urban"},
+  ],
+  "Rupandehi":[
+    {label:"Butwal	Sub-Metropolitan", value:"Butwal	Sub-Metropolitan"},
+    {label:"Devdaha", value:"Devdaha"},
+    {label:"Lumbini Sanskritik", value:"Lumbini Sanskritik"},
+    {label:"Sainamaina", value:"Sainamaina"},
+    {label:"Siddharthanagar", value:"Siddharthanagar"},
+    {label:"Tilottama", value:"Tilottama"},
+    {label:"Gaidahawa	Rural", value:"Gaidahawa	Rural"},
+    {label:"Kanchan	Rural", value:"Kanchan	Rural"},
+    {label:"Kotahimai	Rural", value:"Kotahimai	Rural"},
+    {label:"Marchawari	Rural", value:"Marchawari	Rural"},
+    {label:"Mayadevi	Rural", value:"Mayadevi	Rural"},
+    {label:"Omsatiya	Rural", value:"Omsatiya	Rural"},
+    {label:"Rohini	Rural", value:"Rohini	Rural"},
+    {label:"Sammarimai	Rural", value:"Sammarimai	Rural"},
+    {label:"Siyari	Rural", value:"Siyari	Rural"},
+    {label:"Suddodhan", value:"Suddodhan"},
+  ],
+  "Arghakhanchi":[
+    {label:"Malarani Rural", value:"Malarani Rural"},
+    {label:"Chatradev Rural", value:"Chatradev Rural"},
+    {label:"Sitganga Urban", value:"Sitganga Urban"},
+    {label:"Bhumikikasthan Urban", value:"Bhumikikasthan Urban"},
+    {label:"Parini Rural", value:"Parini Rural"},
+    {label:"Sandikharka Urban", value:"Sandikharka Urban"},
+  ],
+  "Gulmi":[
+    {label:"Kaligandaki Rural", value:"Kaligandaki Rural"},
+    {label:"Musikot Urban", value:"Musikot Urban"},
+    {label:"Dhurkot Rural", value:"Dhurkot Rural"},
+    {label:"Satyawati Rural", value:"Satyawati Rural"},
+    {label:"Resunga Urban", value:"Resunga Urban"},
+    {label:"Ruru Rural", value:"Ruru Rural"},
+    {label:"Madane Rural", value:"Madane Rural"},
+    {label:"Chhatrakot Rural", value:"Chhatrakot Rural"},
+    {label:"Gulmidarbar Rural", value:"Gulmidarbar Rural"},
+    {label:"Chandrakot Rural", value:"Chandrakot Rural"},
+    {label:"Isma Rural", value:"Isma Rural"},
+    {label:"Malika Rural", value:"Malika Rural"},
+  ],
+  "Palpa":[
+  ],
+  "Dang":[
+  ],
+  "Pyuthan":[
+  ],
+  "Rolpa":[
+  ],
+  "Rukum":[
+  ],
+  "Banke":[
+  ],
+  "Bardiya":[
+  ],
+
+
+  "Eastern":[
+  ],
+  "Eastern":[
+  ],
+  "Eastern":[
+  ],
+  "Eastern":[
+  ],
+  "Eastern":[
+  ],
+  "Eastern":[
+  ],
 }
+
+
+
+
+
+
+	  
+	  
+	  
+	  
+	
+	  
+	  
+	  
+	  
+	  
+	  
+	 
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

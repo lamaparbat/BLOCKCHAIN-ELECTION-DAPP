@@ -62,7 +62,9 @@ interface CandidateCardStruct {
 
 interface UserCardStruct {
   details: VoterDetails | CandidateDetails,
-  type: string
+  type: string,
+  onCandidateSelected: (checked: boolean, details: CandidateDetails) => void,
+  currentElection: Array<Object>
 }
 
 export type {

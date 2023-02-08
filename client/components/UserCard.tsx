@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs';
 import Avatar from './Avatar';
 import { UserCardStruct } from '../interfaces';
+import moment from 'moment';
 
 const UserCard: React.FC<UserCardStruct> = (props): React.ReactElement => {
   const {
     details,
-    type
+    type,
+    onCandidateSelected,
+    currentElection
   }: any = props;
-  const [opendEditModal, setOpenEditModal] = useState(true);
   const formattedEmail = details?.user?.email.split("@")[0];
+  const isElectionLive = moment(currentElection?.startDate).format("YYYY") === new Date().getFullYear().toString();
 
   return (
     <div className='user__card h-[180px] w-[350px] px-2 mb-3  max-[500px]:w-[500px] max-[400px]:w-full bg-slate-100 rounded-[12px] hover:bg-red-20'>
-      {opendEditModal &&
-        <div className='absolute m-2 p-2 bg-white shadow-lg border-[1px] border-red-300 rounded-circle h-[45px] w-[45px] flex justify-center items-center'>
-          <input className='h-[20px] w-[20px] cursor-pointer' type="checkbox" />
+      {isElectionLive &&
+        <div className='absolute m-2 p-2 bg-white shadow-lg border-[1px] border-slate-500 rounded-circle h-[45px] w-[45px] flex justify-center items-center'>
+          <input
+            className='h-[20px] w-[20px] cursor-pointer'
+            type="checkbox"
+            onClick={(e: any) => {
+              onCandidateSelected(e.target.checked, details);
+            }}
+          />
         </div>
       }
       <div className='flex justify-around items-center mt-4'>

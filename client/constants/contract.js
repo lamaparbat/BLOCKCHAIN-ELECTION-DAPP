@@ -99,6 +99,98 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
+				"components": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "fullName",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "citizenshipNumber",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "age",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "dob",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "email",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "profile",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "province",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "district",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "municipality",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "ward",
+								"type": "string"
+							}
+						],
+						"internalType": "struct Structure.User",
+						"name": "user",
+						"type": "tuple"
+					},
+					{
+						"internalType": "string",
+						"name": "partyName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "agenda",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "voteCount",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct Structure.Candidate[]",
+				"name": "_selectedCandidates",
+				"type": "tuple[]"
+			},
+			{
+				"internalType": "string",
+				"name": "electionAddress",
+				"type": "string"
+			}
+		],
+		"name": "addSelectedCandidates",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "string",
 				"name": "_name",
 				"type": "string"
@@ -317,9 +409,9 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "candidateName",
-				"type": "string"
+				"internalType": "uint256",
+				"name": "_citizenshipNo",
+				"type": "uint256"
 			}
 		],
 		"name": "vote",
@@ -332,9 +424,9 @@ export const CONTRACT_ABI = [
 		"inputs": [
 			{
 				"indexed": false,
-				"internalType": "string",
-				"name": "candidateName",
-				"type": "string"
+				"internalType": "uint256",
+				"name": "_citizenshipNo",
+				"type": "uint256"
 			}
 		],
 		"name": "VoteCast",
@@ -446,6 +538,85 @@ export const CONTRACT_ABI = [
 						"internalType": "string",
 						"name": "electionType",
 						"type": "string"
+					},
+					{
+						"components": [
+							{
+								"components": [
+									{
+										"internalType": "string",
+										"name": "fullName",
+										"type": "string"
+									},
+									{
+										"internalType": "uint256",
+										"name": "citizenshipNumber",
+										"type": "uint256"
+									},
+									{
+										"internalType": "uint256",
+										"name": "age",
+										"type": "uint256"
+									},
+									{
+										"internalType": "string",
+										"name": "dob",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "email",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "profile",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "province",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "district",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "municipality",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "ward",
+										"type": "string"
+									}
+								],
+								"internalType": "struct Structure.User",
+								"name": "user",
+								"type": "tuple"
+							},
+							{
+								"internalType": "string",
+								"name": "partyName",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "agenda",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "voteCount",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct Structure.Candidate[]",
+						"name": "selectedCandidates",
+						"type": "tuple[]"
 					}
 				],
 				"indexed": false,
@@ -565,9 +736,9 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"name": "candidates",
@@ -843,6 +1014,85 @@ export const CONTRACT_ABI = [
 						"internalType": "string",
 						"name": "electionType",
 						"type": "string"
+					},
+					{
+						"components": [
+							{
+								"components": [
+									{
+										"internalType": "string",
+										"name": "fullName",
+										"type": "string"
+									},
+									{
+										"internalType": "uint256",
+										"name": "citizenshipNumber",
+										"type": "uint256"
+									},
+									{
+										"internalType": "uint256",
+										"name": "age",
+										"type": "uint256"
+									},
+									{
+										"internalType": "string",
+										"name": "dob",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "email",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "profile",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "province",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "district",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "municipality",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "ward",
+										"type": "string"
+									}
+								],
+								"internalType": "struct Structure.User",
+								"name": "user",
+								"type": "tuple"
+							},
+							{
+								"internalType": "string",
+								"name": "partyName",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "agenda",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "voteCount",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct Structure.Candidate[]",
+						"name": "selectedCandidates",
+						"type": "tuple[]"
 					}
 				],
 				"internalType": "struct Structure.Election[]",
@@ -973,9 +1223,9 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "name",
-				"type": "string"
+				"internalType": "uint256",
+				"name": "_citizenshipNo",
+				"type": "uint256"
 			}
 		],
 		"name": "getCandidateDetails",
@@ -1112,9 +1362,9 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "name",
-				"type": "string"
+				"internalType": "uint256",
+				"name": "_citizenshipNo",
+				"type": "uint256"
 			}
 		],
 		"name": "getVoterDetails",
@@ -1442,9 +1692,9 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"name": "voters",
@@ -1516,6 +1766,4 @@ export const CONTRACT_ABI = [
 		"type": "function"
 	}
 ]
-export const CONTRACT_ABI_ADDRESS = "0x1A568aF5Bf9dc3c42Fa1bAE797d29610176e6039";
-
-
+export const CONTRACT_ABI_ADDRESS = "0x635D82c480EdD497785157Efd7fDBc98d4f4eAf4";
