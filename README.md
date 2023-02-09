@@ -10,7 +10,7 @@
 <img width="1440" alt="Screen Shot 2023-02-07 at 23 47 01" src="https://user-images.githubusercontent.com/64581460/217328463-da5ef674-2708-40be-bade-f4773443aa9d.png">
 
 ### Canadidate search and sorting UI designed
-<img width="1440" alt="sorting   searching" src="https://user-images.githubusercontent.com/64581460/217617334-8359d211-0b36-4e16-b0cd-58d4d2adb7c7.png">
+<img width="1440" alt="Screen Shot 2023-02-09 at 23 38 43" src="https://user-images.githubusercontent.com/64581460/217897337-546cf434-7e54-4b6d-84f1-1690e7ca0e44.png">
 
 ### HOT Candidate Live Vote Count
 <img width="1440" alt="Screen Shot 2022-11-27 at 22 27 26" src="https://user-images.githubusercontent.com/64581460/204148574-10d794e3-091b-423e-befa-32b5a76981e6.png">
