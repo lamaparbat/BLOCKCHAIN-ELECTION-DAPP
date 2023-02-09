@@ -22,7 +22,10 @@ const Details: React.FC = (): React.ReactElement => {
       dispatch(setParties(list));
       setPartyLists(list);
 
-      partyEvent = SmartContract.events?.PartyCreated().on("data", (event: any) => {
+      partyEvent = SmartContract.events?.PartyCreated().on("data", (event: any) => {  
+        let tempArray = [...partyList];
+        tempArray.push(event.returnValues[0]);
+        setPartyLists(tempArray);
         dispatch(setParties([...partyList, event.returnValues[0]]));
       }).on("error", () => console.error("PartyCreated Event Error !"));
     })();

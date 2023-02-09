@@ -10,16 +10,21 @@ import { getCandidateList, getElectionList } from '../../utils';
 import { setCandidateList } from '../../redux/candidateReducer';
 import { toast } from 'react-toastify';
 import { BsFilter, BsSearch } from 'react-icons/bs';
+import { AiOutlineReload } from 'react-icons/ai';
+import _ from 'lodash';
 
 const defaultElectedCandidates = { electionAddress: null, selectedCandidates: [] };
+const defaultOptions = { label: '', value: '' };
+let originalCandidatesList = [];
+
 const Details: React.FC = (): React.ReactElement => {
   const [candidateLists, setCandidateLists] = useState([]);
   const [electionList, setElectionList] = useState([]);
   const [electedCandidatesList, setElectedCandidates] = useState(defaultElectedCandidates);
-  const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
-  const [selectedDistrict, setSelectDistrict] = useState({ label: '', value: '' });
-  const [selectedMunicipality, setSelectMunicipality] = useState({ label: '', value: '' });
-  const [selectedWard, setSelectWard] = useState({ label: '', value: '' });
+  const [selectedProvince, setSelectProvince] = useState(defaultOptions);
+  const [selectedDistrict, setSelectDistrict] = useState(defaultOptions);
+  const [selectedMunicipality, setSelectMunicipality] = useState(defaultOptions);
+  const [selectedWard, setSelectWard] = useState(defaultOptions);
   const [openSortModal, setOpenSortModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -28,14 +33,18 @@ const Details: React.FC = (): React.ReactElement => {
   useEffect(() => {
     (async () => {
       let list = await getCandidateList();
+      originalCandidatesList = list;
       const electionList = await getElectionList();
-
-      list = list.filter(candidate => candidate.user.fullName != "Darshan Karki")
 
       setCandidateLists(list);
       setElectionList(electionList);
 
       candidateEvent = SmartContract.events?.CandidateCreated().on("data", (event: any) => {
+        let tempArray = [...candidateLists];
+        tempArray.push(event.returnValues[0]);
+
+        originalCandidatesList = tempArray;
+        setCandidateLists(tempArray);
         dispatch(setCandidateList([...list, event.returnValues[0]]));
       }).on("error", () => console.error("CandidateCreated Event Error !"));
     })();
@@ -44,6 +53,23 @@ const Details: React.FC = (): React.ReactElement => {
       candidateEvent && candidateEvent?.unsubscribe();
     }
   }, []);
+
+  useEffect(() => {
+    if (selectedProvince.label.length === 0) return;
+
+    let sortResult = originalCandidatesList.filter((candidate) => candidate.user.province.toUpperCase().includes(selectedProvince.label.toUpperCase()));
+
+    if (selectedDistrict.label.length > 0)
+      sortResult = sortResult.filter((candidate) => candidate.user.district.toUpperCase().includes(selectedDistrict.label.toUpperCase()));
+
+    if (selectedMunicipality.label.length > 0)
+      sortResult = sortResult.filter((candidate) => candidate.user.municipality.toUpperCase().includes(selectedMunicipality.label.toUpperCase()));
+
+    if (selectedWard.label.length > 0)
+      sortResult = sortResult.filter((candidate) => candidate.user.ward.toUpperCase().includes(selectedWard.label.toUpperCase()));
+
+    setCandidateLists(sortResult);
+  }, [selectedProvince, selectedDistrict, selectedMunicipality, selectedWard])
 
   const onSubmit = async () => {
     const { electionAddress, selectedCandidates } = electedCandidatesList;
@@ -63,6 +89,19 @@ const Details: React.FC = (): React.ReactElement => {
     });
   }
 
+  const onHandleSearch = (keyword: string) => {
+    if (keyword.length === 0) return setCandidateLists(originalCandidatesList);
+    const filterSearch = candidateLists.filter((candidate) => candidate.user.fullName.toUpperCase().includes(keyword.toUpperCase()));
+    setCandidateLists(filterSearch);
+  }
+
+  const resetSorting = () => {
+    setSelectProvince(defaultOptions);
+    setSelectDistrict(defaultOptions);
+    setSelectMunicipality(defaultOptions);
+    setSelectWard(defaultOptions);
+    setCandidateLists(originalCandidatesList);
+  }
 
   return (
     <div className='mb-[50px]'>
@@ -74,23 +113,33 @@ const Details: React.FC = (): React.ReactElement => {
             <p className='text-2xl text-black mt-4'>Candidate List</p>
             <div className='flex'>
               {electedCandidatesList && electedCandidatesList.selectedCandidates.length > 0 &&
-                <button className='btn btn-primary px-3 py-1 mr-3 rounded-1 outline-0 relative'>Confirm Selection</button>}
-              <div className='mx-3 flex items-center bg-slate-200 border border-1 rounded-sm'>
+                <button className='bg-blue-900 text-slate-200 px-3 py-0 mr-3 rounded-1 outline-0 relative'>
+                  Confirm Selection
+                  {electedCandidatesList.selectedCandidates.length &&
+                    <span className='h-[30px] w-8 text-lg flex justify-center items-center rounded-circle bg-blue-800 text-slate-100 shadow-lg -ml-6 absolute top-0 -mt-3'>
+                      {electedCandidatesList.selectedCandidates.length}
+                    </span>
+                  }
+                </button>
+              }
+              <div className='mx-3 flex items-center bg-slate-100 border border-1 rounded-sm'>
                 <input
                   type="search"
-                  className='pl-3 form-control outline-0 shadow-none py-1 border-0 rounded-0'
+                  className='pl-3 form-control outline-0 shadow-none border-0 rounded-0'
                   placeholder='Search Candidate'
+                  onChange={(e: any) => onHandleSearch(e.target.value)}
+                  onKeyDown={(e: any) => onHandleSearch(e.target.value)}
                 />
                 <BsSearch className='mx-3 text-xl' />
               </div>
               <div className='filter--section'>
                 <div
-                  className='px-3 py-1 flex items-center rounded-[0.9px] bg-slate-200 shadow-md hover:cursor-pointer hover:opacity-70'
+                  className='px-3 py-2 flex items-center rounded-[0.9px] bg-slate-100 shadow-md hover:cursor-pointer hover:opacity-70'
                   onClick={() => setOpenSortModal(!openSortModal)}
                 >
                   Sort <BsFilter className='text-2xl ml-2' />
                 </div>
-                <div className={`absolute px-3 py-2 flex flex-column bg-slate-200 shadow-md mt-3 w-[500px] -ml-[400px] z-50 ${!openSortModal && "hidden"}`}>
+                <div className={`absolute px-3 py-2 flex flex-column bg-slate-100 shadow-lg mt-3 w-[500px] -ml-[400px] z-50 ${!openSortModal && "hidden"}`}>
                   <h5 className='mt-3 mb-2'>Address</h5>
                   <div className='flex'>
                     <Select
@@ -131,6 +180,14 @@ const Details: React.FC = (): React.ReactElement => {
                       isDisabled={selectedMunicipality?.label ? false : true}
                     />
                   </div>
+                  <div className=' px-2 my-3 flex justify-end'>
+                    <button
+                      className='px-2 py-1 rounded-1 bg-blue-900 shadow-md text-slate-200 flex items-center justify-center'
+                      onClick={resetSorting}
+                    >
+                      Reset <AiOutlineReload className='ml-2' />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -146,8 +203,8 @@ const Details: React.FC = (): React.ReactElement => {
                     key={i}
                     onCandidateSelected={onCandidateSelected}
                     currentElection={electionList[electionList.length - 1]}
-                  />
-                ) : "No Candidates Available !"
+                    isElected={_.find(electedCandidatesList.selectedCandidates, (d) => d.user.citizenshipNumber === candidateDetails.user.citizenshipNumber) ?? false}
+                  />) : "No Candidates Available !"
             }
           </div>
         </div>
