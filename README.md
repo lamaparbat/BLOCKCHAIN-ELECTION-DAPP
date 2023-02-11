@@ -7,7 +7,7 @@
 <img width="1440" alt="Screen Shot 2023-02-01 at 23 55 43" src="https://user-images.githubusercontent.com/64581460/216127928-bb32849b-585a-459e-9144-4cf832b3ef9a.png">
 
 ### Candidate selection for particular election [Provisional | District | Municipality | Ward ]
-<img width="1440" alt="Screen Shot 2023-02-07 at 23 47 01" src="https://user-images.githubusercontent.com/64581460/217328463-da5ef674-2708-40be-bade-f4773443aa9d.png">
+<img width="1440" alt="Screen Shot 2023-02-11 at 11 26 44" src="https://user-images.githubusercontent.com/64581460/218242586-dec98d95-081c-4553-81ea-2e74bc8b5e22.png">
 
 ### Canadidate search and sorting UI designed
 <img width="1440" alt="Screen Shot 2023-02-10 at 23 08 27" src="https://user-images.githubusercontent.com/64581460/218156204-8f187102-e4e6-4f0c-91f7-9d64e361adc4.png">
