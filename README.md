@@ -1,16 +1,16 @@
 # Blockchain E-Voting System (WEB 3.O)
 
 ### Before Connecting Metamask wallet [Navbar]
-<img width="1440" alt="Screen Shot 2023-02-07 at 21 34 31" src="https://user-images.githubusercontent.com/64581460/217293885-4554f347-3319-4ba4-bc57-0d70f565b368.png">
+<img width="1440" alt="Screen Shot 2023-02-12 at 11 53 26" src="https://user-images.githubusercontent.com/64581460/218295911-cb5d59b3-81ae-4d66-a873-d6be3a947ea7.png">
 
 ### After connecting Metamask wallet 
 <img width="1440" alt="Screen Shot 2023-02-01 at 23 55 43" src="https://user-images.githubusercontent.com/64581460/216127928-bb32849b-585a-459e-9144-4cf832b3ef9a.png">
 
 ### Candidate selection for particular election [Provisional | District | Municipality | Ward ]
-<img width="1440" alt="Screen Shot 2023-02-07 at 23 47 01" src="https://user-images.githubusercontent.com/64581460/217328463-da5ef674-2708-40be-bade-f4773443aa9d.png">
+<img width="1440" alt="Screen Shot 2023-02-11 at 11 26 44" src="https://user-images.githubusercontent.com/64581460/218242586-dec98d95-081c-4553-81ea-2e74bc8b5e22.png">
 
 ### Canadidate search and sorting UI designed
-<img width="1440" alt="Screen Shot 2023-02-09 at 23 38 43" src="https://user-images.githubusercontent.com/64581460/217897337-546cf434-7e54-4b6d-84f1-1690e7ca0e44.png">
+<img width="1440" alt="Screen Shot 2023-02-12 at 08 37 35" src="https://user-images.githubusercontent.com/64581460/218290265-4daea1e2-9f9b-4a24-904a-3b6138bf367d.png">
 
 ### HOT Candidate Live Vote Count
 <img width="1440" alt="Screen Shot 2022-11-27 at 22 27 26" src="https://user-images.githubusercontent.com/64581460/204148574-10d794e3-091b-423e-befa-32b5a76981e6.png">
