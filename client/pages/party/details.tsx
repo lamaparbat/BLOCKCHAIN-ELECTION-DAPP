@@ -21,7 +21,7 @@ const Details: React.FC = (): React.ReactElement => {
     municipality,
     ward,
     profile,
-  }: any = user;
+  }: any = user || {};
 
   // custom field
   const FieldRow = ({ title1, title1Val, title2, title2Val }) => {
