@@ -89,14 +89,6 @@ const Details: React.FC = (): React.ReactElement => {
     setCandidateLists(sortResult);
   }, [selectedProvince, selectedDistrict, selectedMunicipality, selectedWard, selectedParty]);
 
-  const onCandidateSelected = (checked, details) => {
-    setElectedCandidates({
-      ...electedCandidatesList,
-      selectedCandidates: checked ? [...electedCandidatesList.selectedCandidates, details] :
-        electedCandidatesList.selectedCandidates.filter((candidate) => candidate.user.citizenshipNumber !== details.user.citizenshipNumber)
-    });
-  }
-
   const onHandleSearch = (keyword: string) => {
     if (keyword.length === 0) return setCandidateLists(originalCandidatesList);
     const filterSearch = candidateLists.filter((candidate) => candidate.user.fullName.toUpperCase().includes(keyword.toUpperCase()));
@@ -112,10 +104,22 @@ const Details: React.FC = (): React.ReactElement => {
     setCandidateLists(originalCandidatesList);
   }
 
+  const onCandidateSelected = (checked: boolean, details: any) => {
+    setElectedCandidates({
+      ...electedCandidatesList,
+      selectedCandidates: checked ? [...electedCandidatesList.selectedCandidates, details] :
+        electedCandidatesList.selectedCandidates.filter((candidate) => candidate?.user?.citizenshipNumber !== details?.user?.citizenshipNumber)
+    });
+  }
+
+  const undoSelection = () => {
+    setElectedCandidates({ ...electedCandidatesList, selectedCandidates: [] });
+  }
+
   const handleSubmitSelection = async () => {
     try {
       const { electionAddress, selectedCandidates } = electedCandidatesList;
-      console.log(electionAddress, selectedCandidates)
+
       await SmartContract.methods.addSelectedCandidates(selectedCandidates, electionAddress).send({ from: loggedInAccountAddress });
       toast.success("Selected candidates added successfully.")
     } catch (error) {
@@ -139,19 +143,27 @@ const Details: React.FC = (): React.ReactElement => {
                 </span>
               }
             </div>
-            <div className='flex'>
+            <div className='flex items-center'>
               {electedCandidatesList && electedCandidatesList.selectedCandidates.length > 0 &&
-                <button
-                  className='bg-blue-900 text-slate-100 px-3 py-0 mr-3 rounded-1 outline-0 relative'
-                  onClick={handleSubmitSelection}
-                >
-                  Confirm Selection
-                  {electedCandidatesList.selectedCandidates.length > 0 &&
-                    <span className='h-[24px] w-6 text-[14px] flex justify-center items-center rounded-circle bg-blue-800 text-slate-100 shadow-lg -ml-6 absolute top-0 -mt-3'>
-                      {electedCandidatesList.selectedCandidates.length}
-                    </span>
-                  }
-                </button>
+                <div className='flex items-center'>
+                  {/* <button
+                    className='flex items-center bg-red-600 text-slate-100 px-2 py-1 mr-3 rounded-1 outline-0 relative'
+                    onClick={undoSelection}>
+                    <AiFillMinusSquare className='text-xl mx-1' />
+                    Undo All
+                  </button> */}
+                  <button
+                    className='bg-blue-900 text-slate-100 px-3 py-1 mr-3 rounded-1 outline-0 relative'
+                    onClick={handleSubmitSelection}
+                  >
+                    Confirm Selection
+                    {electedCandidatesList.selectedCandidates.length > 0 &&
+                      <span className='h-[24px] w-6 text-[14px] flex justify-center items-center rounded-circle bg-blue-800 text-slate-100 shadow-lg -ml-6 absolute top-0 -mt-3'>
+                        {electedCandidatesList.selectedCandidates.length}
+                      </span>
+                    }
+                  </button>
+                </div>
               }
               <div className='mx-3 flex items-center bg-slate-100 border border-1 rounded-sm'>
                 <input

@@ -22,7 +22,7 @@ const UserCard: React.FC<UserCardStruct> = (props): React.ReactElement => {
           <input
             className='h-[20px] w-[20px] cursor-pointer'
             type="checkbox"
-            defaultChecked={isElected}
+            value={isElected}
             onClick={(e: any) => {
               onCandidateSelected(e.target.checked, details);
             }}

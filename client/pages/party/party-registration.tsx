@@ -5,16 +5,23 @@ import { SmartContract } from '../../constants';
 import { toast } from 'react-toastify';
 import { PulseLoader } from 'react-spinners';
 import { getStorage } from '../../services';
+import _ from 'lodash';
 
 const defaultPartyDetails = { partyName: "", totalMembers: '', agenda: "", partyLogo: null }
 const VoterRegistration = () => {
   const [partyDetails, setPartyDetails] = useState({ ...defaultPartyDetails });
+  const [partyList, setPartyList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
 
   useEffect(() => {
-    console.log(partyDetails);
+    (async () => {
+      const res = await SmartContract.methods.getAllParties().call();
+
+      setPartyList(res);
+    })();
+
     (!partyDetails.partyName || !partyDetails.totalMembers
       || !partyDetails.agenda) ? setDisabled(true) : setDisabled(false);
   }, [partyDetails]);
@@ -27,6 +34,10 @@ const VoterRegistration = () => {
   const onSubmit = async () => {
     setLoading(true);
     try {
+      // check if party already exists
+      const isExits = _.includes(partyList, (party: any) => party.name === partyDetails.partyName);
+      if (isExits) return toast.error("Party already exists on given name !");
+
       const formData = new FormData();
       const { partyName, totalMembers, agenda, partyLogo } = partyDetails;
 
