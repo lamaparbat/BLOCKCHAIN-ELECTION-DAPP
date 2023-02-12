@@ -4,14 +4,15 @@ import Select from 'react-select';
 import Navbar from '../../components/Navbar';
 import VoterCardSkeleton from "../../components/Skeleton/voter-card-skeleton";
 import BreadCrumb from '../../components/BreadCrumb';
-import { DISTRICT, PROVINCE, MUNICIPALITY, WARD_NO, responsive, SmartContract, ELECTION_TYPE } from '../../constants';
+import { DISTRICT, PROVINCE, MUNICIPALITY, WARD_NO, responsive, SmartContract } from '../../constants';
 import UserCard from '../../components/UserCard';
-import { getCandidateList, getElectionList } from '../../utils';
+import { getCandidateList, getElectionList, getPartyList } from '../../utils';
 import { setCandidateList } from '../../redux/candidateReducer';
 import { toast } from 'react-toastify';
 import { BsFilter, BsSearch } from 'react-icons/bs';
-import { AiOutlineReload } from 'react-icons/ai';
+import { AiOutlineClose, AiOutlineReload } from 'react-icons/ai';
 import _ from 'lodash';
+import { getStorage } from '../../services';
 
 const defaultElectedCandidates = { electionAddress: null, selectedCandidates: [] };
 const defaultOptions = { label: '', value: '' };
@@ -21,30 +22,43 @@ const Details: React.FC = (): React.ReactElement => {
   const [candidateLists, setCandidateLists] = useState([]);
   const [electionList, setElectionList] = useState([]);
   const [electedCandidatesList, setElectedCandidates] = useState(defaultElectedCandidates);
+  const [partyList, setPartyList] = useState([]);
   const [selectedProvince, setSelectProvince] = useState(defaultOptions);
   const [selectedDistrict, setSelectDistrict] = useState(defaultOptions);
   const [selectedMunicipality, setSelectMunicipality] = useState(defaultOptions);
   const [selectedWard, setSelectWard] = useState(defaultOptions);
+  const [selectedParty, setSelectedParty] = useState(defaultOptions);
   const [openSortModal, setOpenSortModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
   let candidateEvent: any = null;
+  const partyListOption = partyList?.map((d) => {
+    return { label: d.name, value: d.name }
+  });
 
   useEffect(() => {
     (async () => {
       let list = await getCandidateList();
-      originalCandidatesList = list;
       const electionList = await getElectionList();
+      const partyList = await getPartyList();
 
+      originalCandidatesList = list;
       setCandidateLists(list);
       setElectionList(electionList);
+      setPartyList(partyList);
+      setElectedCandidates({
+        ...electedCandidatesList,
+        electionAddress: electionList[electionList.length - 1]?.startDate ?? null
+      })
 
       candidateEvent = SmartContract.events?.CandidateCreated().on("data", (event: any) => {
-        let tempArray = [...candidateLists];
-        tempArray.push(event.returnValues[0]);
+        const tempArray = [...originalCandidatesList, event.returnValues[0]];
 
-        originalCandidatesList = tempArray;
-        setCandidateLists(tempArray);
+        originalCandidatesList = _.uniqBy(tempArray, (candidate) => {
+          return candidate.user.citizenshipNumber;
+        });
+        setCandidateLists(originalCandidatesList);
         dispatch(setCandidateList([...list, event.returnValues[0]]));
       }).on("error", () => console.error("CandidateCreated Event Error !"));
     })();
@@ -55,9 +69,10 @@ const Details: React.FC = (): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    if (selectedProvince.label.length === 0) return;
+    let sortResult = originalCandidatesList;
 
-    let sortResult = originalCandidatesList.filter((candidate) => candidate.user.province.toUpperCase().includes(selectedProvince.label.toUpperCase()));
+    if (selectedProvince.label.length > 0)
+      sortResult = originalCandidatesList.filter((candidate) => candidate.user.province.toUpperCase().includes(selectedProvince.label.toUpperCase()));
 
     if (selectedDistrict.label.length > 0)
       sortResult = sortResult.filter((candidate) => candidate.user.district.toUpperCase().includes(selectedDistrict.label.toUpperCase()));
@@ -68,18 +83,11 @@ const Details: React.FC = (): React.ReactElement => {
     if (selectedWard.label.length > 0)
       sortResult = sortResult.filter((candidate) => candidate.user.ward.toUpperCase().includes(selectedWard.label.toUpperCase()));
 
+    if (selectedParty.label.length > 0)
+      sortResult = sortResult.filter((candidate) => candidate.partyName.toUpperCase().includes(selectedParty.label.toUpperCase()));
+
     setCandidateLists(sortResult);
-  }, [selectedProvince, selectedDistrict, selectedMunicipality, selectedWard])
-
-  const onSubmit = async () => {
-    const { electionAddress, selectedCandidates } = electedCandidatesList;
-    await SmartContract.methods.addSelectedCandidates(
-      electionAddress,
-      selectedCandidates
-    );
-
-    toast.success("Candidates added successfully .");
-  }
+  }, [selectedProvince, selectedDistrict, selectedMunicipality, selectedWard, selectedParty]);
 
   const onCandidateSelected = (checked, details) => {
     setElectedCandidates({
@@ -100,7 +108,20 @@ const Details: React.FC = (): React.ReactElement => {
     setSelectDistrict(defaultOptions);
     setSelectMunicipality(defaultOptions);
     setSelectWard(defaultOptions);
+    setSelectedParty(defaultOptions);
     setCandidateLists(originalCandidatesList);
+  }
+
+  const handleSubmitSelection = async () => {
+    try {
+      const { electionAddress, selectedCandidates } = electedCandidatesList;
+      console.log(electionAddress, selectedCandidates)
+      await SmartContract.methods.addSelectedCandidates(selectedCandidates, electionAddress).send({ from: loggedInAccountAddress });
+      toast.success("Selected candidates added successfully.")
+    } catch (error) {
+      console.log(error)
+      toast.error("Fail to add selected candidates !");
+    }
   }
 
   return (
@@ -110,13 +131,23 @@ const Details: React.FC = (): React.ReactElement => {
         <div className={`${responsive} flex-col justify-start rounded-1`}>
           <BreadCrumb routes={["Candidate", ["List"]]} />
           <div className='flex items-center justify-between'>
-            <p className='text-2xl text-black mt-4'>Candidate List</p>
+            <div className='text-2xl text-black mt-4 relative'>
+              Candidate List
+              {true &&
+                <span className='h-[24px] w-6 text-[14px] flex justify-center items-center rounded-circle bg-blue-800 text-slate-100 shadow-lg absolute -top-2 -right-7'>
+                  {candidateLists.length}
+                </span>
+              }
+            </div>
             <div className='flex'>
               {electedCandidatesList && electedCandidatesList.selectedCandidates.length > 0 &&
-                <button className='bg-blue-900 text-slate-200 px-3 py-0 mr-3 rounded-1 outline-0 relative'>
+                <button
+                  className='bg-blue-900 text-slate-100 px-3 py-0 mr-3 rounded-1 outline-0 relative'
+                  onClick={handleSubmitSelection}
+                >
                   Confirm Selection
-                  {electedCandidatesList.selectedCandidates.length &&
-                    <span className='h-[30px] w-8 text-lg flex justify-center items-center rounded-circle bg-blue-800 text-slate-100 shadow-lg -ml-6 absolute top-0 -mt-3'>
+                  {electedCandidatesList.selectedCandidates.length > 0 &&
+                    <span className='h-[24px] w-6 text-[14px] flex justify-center items-center rounded-circle bg-blue-800 text-slate-100 shadow-lg -ml-6 absolute top-0 -mt-3'>
                       {electedCandidatesList.selectedCandidates.length}
                     </span>
                   }
@@ -134,13 +165,14 @@ const Details: React.FC = (): React.ReactElement => {
               </div>
               <div className='filter--section'>
                 <div
-                  className='px-3 py-2 flex items-center rounded-[0.9px] bg-slate-100 shadow-md hover:cursor-pointer hover:opacity-70'
+                  className={`px-3 py-2 flex items-center rounded-[2px] ${openSortModal ? "bg-red-500 text-slate-100" : "bg-slate-100"} shadow-md hover:cursor-pointer hover:opacity-70`}
                   onClick={() => setOpenSortModal(!openSortModal)}
                 >
-                  Sort <BsFilter className='text-2xl ml-2' />
+                  {!openSortModal ? <>Sort <BsFilter className='text-2xl ml-2' /></> :
+                    <>Cancel <AiOutlineClose className='text-1xl ml-2' /></>}
                 </div>
                 <div className={`absolute px-3 py-2 flex flex-column bg-slate-100 shadow-lg mt-3 w-[500px] -ml-[400px] z-50 ${!openSortModal && "hidden"}`}>
-                  <h5 className='mt-3 mb-2'>Address</h5>
+                  <h5 className='mt-3 mb-3'>Address</h5>
                   <div className='flex'>
                     <Select
                       options={PROVINCE}
@@ -180,7 +212,19 @@ const Details: React.FC = (): React.ReactElement => {
                       isDisabled={selectedMunicipality?.label ? false : true}
                     />
                   </div>
-                  <div className=' px-2 my-3 flex justify-end'>
+                  <h5 className='mt-3 mb-3'>Party</h5>
+                  <div className='flex'>
+                    <Select
+                      options={partyListOption}
+                      className="w-50"
+                      placeholder={<div>Select Party</div>}
+                      onChange={(item) => {
+                        setSelectedParty(item);
+                      }}
+                    />
+                  </div>
+                  <div className=' px-2 my-3 flex justify-between items-center'>
+                    {openSortModal && <span>Result: {candidateLists.length}</span>}
                     <button
                       className='px-2 py-1 rounded-1 bg-blue-900 shadow-md text-slate-200 flex items-center justify-center'
                       onClick={resetSorting}

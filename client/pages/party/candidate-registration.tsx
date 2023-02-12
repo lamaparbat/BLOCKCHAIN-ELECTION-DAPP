@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import Select from 'react-select'
 import Navbar from '../../components/Navbar';
 import { PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO } from '../../constants';
-import { registerCandidate, getConvertedAge, getCandidateList, getPartyList } from '../../utils/index';
+import { registerCandidate, getConvertedAge, getPartyList, getCandidateList } from '../../utils/index';
 import { toast } from 'react-toastify';
 import { SmartContract } from '../../constants';
 import { getStorage } from '../../services';
 import { PulseLoader } from 'react-spinners';
+import _ from 'lodash';
 
 const CandidateRegistration = () => {
   const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
+  const [candidateLists, setCandidateLists] = useState([]);
   const [candidateDetails, setCandidateDetails] = useState({
     fullName: "", citizenshipNumber: "", province: "", district: "", municipality: "", ward: "",
     email: "", profile: null, agenda: "", age: 22, dob: null, partyName: null, address: null
@@ -19,11 +21,14 @@ const CandidateRegistration = () => {
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
   const partyListOption = partyList?.map((d) => {
     return { label: d.name, value: d.name }
-  })
+  });
 
   useEffect(() => {
     (async () => {
       const partyList = await getPartyList();
+      const candidates = await getCandidateList();
+
+      setCandidateLists(candidates);
       setPartyList(partyList);
     })();
   }, [])
@@ -31,7 +36,7 @@ const CandidateRegistration = () => {
   // upload candidateDetails
   const onSubmit = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const {
         fullName,
         citizenshipNumber,
@@ -42,6 +47,11 @@ const CandidateRegistration = () => {
         profile, dob,
         partyName, agenda
       } = candidateDetails;
+
+      // check if candidate already exists
+      const isExits = _.includes(candidateLists, (candidate: any) => candidate.user.citizenshipNumber === citizenshipNumber);
+      if (isExits) return toast.error("Candidate already exists on given citizenship nuber !");
+
       const age = getConvertedAge(dob);
       const formData = new FormData();
       formData.append("fullName", fullName);
@@ -81,7 +91,6 @@ const CandidateRegistration = () => {
 
   }
 
-  console.log(selectedProvince, MUNICIPALITY[selectedProvince.value])
   return (
     <div className='mb-[50px]'>
       <Navbar /><br />
@@ -211,6 +220,7 @@ const CandidateRegistration = () => {
                 className='overrideInputStyle form-control py-[10px] rounded-1 mt-1'
                 type="file"
                 name="file"
+                accept='image/*, image/jpeg, image/png, image/gif'
                 onChange={(e) => setCandidateDetails({ ...candidateDetails, profile: e.target.files[0] })}
               />
             </div>

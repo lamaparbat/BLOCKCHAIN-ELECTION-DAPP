@@ -22,10 +22,11 @@ const UserCard: React.FC<UserCardStruct> = (props): React.ReactElement => {
           <input
             className='h-[20px] w-[20px] cursor-pointer'
             type="checkbox"
-            checked={isElected}
+            defaultChecked={isElected}
             onClick={(e: any) => {
               onCandidateSelected(e.target.checked, details);
             }}
+            key={details?.user?.citizenshipNumber}
           />
         </div>
       }

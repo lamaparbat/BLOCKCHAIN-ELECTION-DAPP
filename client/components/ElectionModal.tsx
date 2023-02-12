@@ -6,6 +6,7 @@ import { setElectionData } from '../redux/electionReducer';
 import { ELECTION_TYPE, SmartContract } from '../constants';
 import { toast } from 'react-toastify';
 import { getElectionList } from '../utils';
+import { getStorage } from '../services';
 
 const currentDate = new Date();
 const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -24,6 +25,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const [isDisabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
 
   useEffect(() => {
     setDisabled(!isAgree || !election.title || !election.description || !election.startDate || !election.endDate);
@@ -43,12 +45,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
         startDate,
         endDate,
         electionType
-      );
-      const electionList = await getElectionList();
-      console.log("elections ", electionList)
-      setShowCreateElectionModal(false);
-      setElection(defaultElectionData);
-      dispatch(setElectionData(election));
+      ).send({ from: loggedInAccountAddress });
       toast.success("Election created successfully.");
     } catch (error) {
       console.error(error);

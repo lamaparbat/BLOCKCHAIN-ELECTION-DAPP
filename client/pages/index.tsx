@@ -4,33 +4,28 @@ import { GoPrimitiveDot } from 'react-icons/go';
 import Navbar from '../components/Navbar';
 import LiveCounterCard from '../components/LiveCounterCard/LiveCounterCard';
 import electionChannel from "../services/pusher-events";
-import { getCandidateList, getElectionList } from '../utils';
-import { useSelector } from 'react-redux';
+import { getElectionList } from '../utils';
 import _ from 'lodash';
 
 export default function Home() {
   const [electionStatus, setElectionStatus] = useState("");
-  const [candidateList, setCandidateList] = useState([]);
   const [electionList, setElectionList] = useState([]);
-  const { electionData } = useSelector((state: any) => state.electionReducer);
 
   useEffect(() => {
     (async () => {
-      const candidateList = await getCandidateList();
       const electionList = await getElectionList();
-
-      setCandidateList(candidateList);
+      console.log(electionList)
       setElectionList(electionList);
     })();
   }, []);
 
-
-  const electionCandidates = _.groupBy(candidateList, candidate => candidate.user.province);
+  // console.log(electionList[electionList.length - 1]?.selectedCandidates);
+  const electionCandidates = _.groupBy(electionList[electionList.length - 1]?.selectedCandidates, (candidate) => candidate.user.province);
   const electionCandidatesArray = Object.entries(electionCandidates);
 
   electionChannel.bind("start-election-event", () => {
     console.log("election started");
-    setElectionStatus("start")
+    setElectionStatus("start");
   });
 
   electionChannel.bind("end-election-event", () => {
@@ -38,6 +33,7 @@ export default function Home() {
     setElectionStatus("end")
   });
 
+  // console.log(electionList)
   return (
     <div>
       <Head>
@@ -58,7 +54,7 @@ export default function Home() {
             </div>
           </div>
           <div className='lg:w-[1100px] flex justify-around flex-wrap'>
-            {electionData && electionCandidatesArray.length > 0 && electionCandidatesArray?.map(([key, value]: any) =>
+            {electionList.length > 0 && electionCandidatesArray.length > 0 && electionCandidatesArray?.map(([key, value]: any) =>
               <LiveCounterCard type={key} data={value} key={key} electionStatus={electionStatus} />)}
           </div>
         </div>

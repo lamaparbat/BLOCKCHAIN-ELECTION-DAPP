@@ -8,12 +8,13 @@ import { getStorage } from '../../services';
 
 const defaultPartyDetails = { partyName: "", totalMembers: '', agenda: "", partyLogo: null }
 const VoterRegistration = () => {
-  const [partyDetails, setPartyDetails] = useState(defaultPartyDetails);
+  const [partyDetails, setPartyDetails] = useState({ ...defaultPartyDetails });
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
 
   useEffect(() => {
+    console.log(partyDetails);
     (!partyDetails.partyName || !partyDetails.totalMembers
       || !partyDetails.agenda) ? setDisabled(true) : setDisabled(false);
   }, [partyDetails]);
@@ -89,6 +90,7 @@ const VoterRegistration = () => {
               <textarea
                 className='overrideInputStyle form-control h-[150px] px-3 py-[10px] rounded-1 mt-1'
                 placeholder='Brief description of party agenda'
+                value={partyDetails.agenda}
                 onChange={(e) => onChange("agenda", e.target.value)}
               ></textarea>
             </div>

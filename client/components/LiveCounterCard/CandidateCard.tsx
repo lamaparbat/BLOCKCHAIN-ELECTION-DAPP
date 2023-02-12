@@ -19,6 +19,8 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
     router.push("/party/details");
   }
 
+  console.log(details)
+
   return (
     <div
       className={`card__candidates py-1 pe-4 pb-2 rounded-1 cursor-pointer ${border} ${ishighlighted && 'bg-slate-50 drop-shadow-md'}`}
@@ -35,7 +37,7 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
             </div>
           </div>
         </div>
-        <h5 className='ml-[5px]' id='count'>{details?.user.voteCount}</h5>
+        <h5 className='ml-[5px]' id='count'>{details.voteCount}</h5>
       </div>
     </div>
   )

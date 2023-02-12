@@ -7,6 +7,7 @@ import PartyCard from '../../components/PartyCard';
 import VoterCardSkeleton from "../../components/Skeleton/voter-card-skeleton";
 import { getPartyList } from '../../utils';
 import { setParties } from '../../redux/partyReducer';
+import _ from 'lodash';
 
 const Details: React.FC = (): React.ReactElement => {
   const [partyList, setPartyLists] = useState([]);
@@ -15,17 +16,21 @@ const Details: React.FC = (): React.ReactElement => {
   const [selectedPartyDetails, setSelectedPartyDetails] = useState<any>({});
   const dispatch = useDispatch();
   let partyEvent: any = null;
+  let originalParties = [];
 
   useEffect(() => {
     (async () => {
       const list = await getPartyList();
+
+      originalParties = [...list];
       dispatch(setParties(list));
       setPartyLists(list);
 
-      partyEvent = SmartContract.events?.PartyCreated().on("data", (event: any) => {  
-        let tempArray = [...partyList];
-        tempArray.push(event.returnValues[0]);
-        setPartyLists(tempArray);
+      partyEvent = SmartContract.events?.PartyCreated().on("data", (event: any) => {
+        const tempArray = [...originalParties, event.returnValues[0]]
+
+        originalParties = _.uniqBy(tempArray, "name");
+        setPartyLists(originalParties);
         dispatch(setParties([...partyList, event.returnValues[0]]));
       }).on("error", () => console.error("PartyCreated Event Error !"));
     })();
