@@ -4,17 +4,24 @@ import { GoPrimitiveDot } from 'react-icons/go';
 import Navbar from '../components/Navbar';
 import LiveCounterCard from '../components/LiveCounterCard/LiveCounterCard';
 import electionChannel from "../services/pusher-events";
-import { getElectionList } from '../utils';
+import { getCandidateList, getElectionList } from '../utils';
 import _ from 'lodash';
+import { SmartContract } from '../constants';
+import { getStorage } from '../services';
+import { toast } from 'react-toastify';
 
 export default function Home() {
   const [electionStatus, setElectionStatus] = useState("");
   const [electionList, setElectionList] = useState([]);
+  const [candidateLists, setCandidateLists] = useState([]);
+  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
 
   useEffect(() => {
     (async () => {
       const electionList = await getElectionList();
-      console.log(electionList)
+      const candidateLists = await getCandidateList();
+
+      setCandidateLists(candidateLists);
       setElectionList(electionList);
     })();
   }, []);
@@ -33,6 +40,18 @@ export default function Home() {
     setElectionStatus("end")
   });
 
+  const casteVote = async (_candidateID: string) => {
+    try {
+      // validation
+      const isAlreadyVoted = _.includes(candidateLists, (candidate) => candidate.user.citizenshipNumber === _candidateID);
+      console.log(isAlreadyVoted);
+
+      await SmartContract.methods.vote(_candidateID).send({ from: loggedInAccountAddress });
+      toast.success("Vote caste successfully.");
+    } catch (err) {
+      toast.error("Failed to caste vote !");
+    }
+  }
   // console.log(electionList)
   return (
     <div>
@@ -55,7 +74,8 @@ export default function Home() {
           </div>
           <div className='lg:w-[1100px] flex justify-around flex-wrap'>
             {electionList.length > 0 && electionCandidatesArray.length > 0 && electionCandidatesArray?.map(([key, value]: any) =>
-              <LiveCounterCard type={key} data={value} key={key} electionStatus={electionStatus} />)}
+              <LiveCounterCard type={key} data={value} key={key} electionStatus={electionStatus} casteVote={casteVote} />
+            )}
           </div>
         </div>
       </div>

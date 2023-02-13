@@ -423,10 +423,84 @@ export const CONTRACT_ABI = [
 		"anonymous": false,
 		"inputs": [
 			{
+				"components": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "fullName",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "citizenshipNumber",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "age",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "dob",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "email",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "profile",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "province",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "district",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "municipality",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "ward",
+								"type": "string"
+							}
+						],
+						"internalType": "struct Structure.User",
+						"name": "user",
+						"type": "tuple"
+					},
+					{
+						"internalType": "string",
+						"name": "partyName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "agenda",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "voteCount",
+						"type": "uint256"
+					}
+				],
 				"indexed": false,
-				"internalType": "uint256",
-				"name": "_citizenshipNo",
-				"type": "uint256"
+				"internalType": "struct Structure.Candidate",
+				"name": "candidate",
+				"type": "tuple"
 			}
 		],
 		"name": "VoteCast",
@@ -1766,4 +1840,4 @@ export const CONTRACT_ABI = [
 		"type": "function"
 	}
 ]
-export const CONTRACT_ABI_ADDRESS = "0xbb9A488792abb18D00c33bd5330BF16c2D98FBB3";
+export const CONTRACT_ABI_ADDRESS = "0x046A3c19Cfc7F767B09e807aB95E1Ea1f7b65085";

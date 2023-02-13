@@ -51,13 +51,16 @@ interface VoterDetails extends UserDetails {
 interface LiveCounterCardStruct {
   type: string,
   data: Array<CandidateDetails>,
-  electionStatus: string
+  electionStatus: string,
+  casteVote: (citizenshipNumber: string) => void
 }
 
 interface CandidateCardStruct {
   details: CandidateDetails,
   border: string,
-  ishighlighted: boolean
+  ishighlighted: boolean,
+  casteVote: (citizenshipNumber: string) => void,
+  voted: boolean
 }
 
 interface UserCardStruct {

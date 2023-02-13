@@ -6,7 +6,7 @@ import { BTM_BORDER_STYLE } from '../../constants';
 import { LiveCounterCardStruct } from '../../interfaces/index';
 import TickCircleIcon from '../TickCircleIcon';
 
-const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, electionStatus }): ReactElement => {
+const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, electionStatus, casteVote }): ReactElement => {
   const isElectionStart = electionStatus === "start";
   const isElectionEnd = electionStatus === "end";
   const { agenda, partyName, voteCount, user }: any = data[0];
@@ -32,9 +32,9 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, election
           </div>
         </div>
         <div className='candidate_row px-3'>
-          <CandidateCard details={data[0]} border={BTM_BORDER_STYLE} ishighlighted={true} />
-          <CandidateCard details={data[1]} border={BTM_BORDER_STYLE} ishighlighted={false} />
-          <CandidateCard details={data[2]} border={null} ishighlighted={false} />
+          <CandidateCard details={data[0]} border={BTM_BORDER_STYLE} ishighlighted={true} casteVote={casteVote} voted={true} />
+          <CandidateCard details={data[1]} border={BTM_BORDER_STYLE} ishighlighted={false} casteVote={casteVote} voted={true} />
+          <CandidateCard details={data[2]} border={null} ishighlighted={false} casteVote={casteVote} voted={false} />
         </div>
       </div>
     </div>
