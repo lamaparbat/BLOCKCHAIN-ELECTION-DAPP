@@ -13,7 +13,7 @@
 <img width="1440" alt="Screen Shot 2023-02-12 at 08 37 35" src="https://user-images.githubusercontent.com/64581460/218290265-4daea1e2-9f9b-4a24-904a-3b6138bf367d.png">
 
 ### HOT Candidate Live Vote Count
-<img width="1440" alt="Screen Shot 2022-11-27 at 22 27 26" src="https://user-images.githubusercontent.com/64581460/204148574-10d794e3-091b-423e-befa-32b5a76981e6.png">
+<img width="1440" alt="Screen Shot 2023-02-13 at 22 32 24" src="https://user-images.githubusercontent.com/64581460/218519657-0c37e0bf-a37b-4302-b234-71ce969060a8.png">
 
 ### Voter Poll Card List UI
 <img width="1440" alt="Screen Shot 2022-12-22 at 23 21 10" src="https://user-images.githubusercontent.com/64581460/209193528-13b9197e-1b37-4d61-ae3d-a2b065ba4ead.png">
