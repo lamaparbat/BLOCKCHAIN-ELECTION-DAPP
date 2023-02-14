@@ -1,21 +1,23 @@
 // SPDX-License-Identifier:MIT
 pragma solidity ^0.8.0;
 
-import "./SafeMath.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/math/SafeMath.sol";
 import "./Structure.sol";
 
 contract Election is Structure {
     using SafeMath for uint256;
 
     // Mapping
-    mapping(string => Candidate) public candidates;
-    mapping(string => Voter) public voters;
+    mapping(uint256 => Candidate) public candidates;
+    mapping(uint256 => Voter) public voters;
     mapping(string => Party) public parties;
+    mapping(string => Election) public elections;
 
     // Arrays
     Candidate[] public candidateList;
     Voter[] public voterList;
     Party[] public partyList;
+    Election[] public electionList;
     string[] public candidateNames;
     string[] public voterNames;
     string[] public partyNames;
@@ -24,22 +26,25 @@ contract Election is Structure {
     uint256 public totalCandidate = 0;
     uint256 public totalVoter = 0;
     uint256 public totalParty = 0;
+    uint256 public totalElection = 0;
     uint256 public voteCount = 0;
 
     // Event
     event PartyCreated(Party party);
     event CandidateCreated(Candidate candidate);
     event VoterCreated(Voter voter);
-    event VoteCast(string candidateName);
+    event VoteCast(Candidate candidate);
+    event electionStart(Election election);
 
     // updators
-    function vote(string memory candidateName) public {
-        candidates[candidateName].voteCount = candidates[candidateName]
+    function vote(uint256 _citizenshipNo) public {
+        candidateList[_citizenshipNo];
+        candidates[_citizenshipNo].voteCount = candidates[_citizenshipNo]
             .voteCount
             .add(1);
         voteCount = voteCount.add(1);
 
-        emit VoteCast(candidateName);
+        emit VoteCast(candidates[_citizenshipNo]);
     }
 
     // setter functions
@@ -93,12 +98,12 @@ contract Election is Structure {
                 _municipality,
                 _ward
             ),
-            _agenda,
             _partyName,
+            _agenda,
             0
         );
 
-        candidates[_name] = candidate;
+        candidates[_citizenshipNo] = candidate;
         candidateNames.push(_name);
         candidateList.push(candidate);
         totalVoter = totalVoter.add(1);
@@ -134,12 +139,61 @@ contract Election is Structure {
             false
         );
 
-        voters[_name] = voter;
+        voters[_citizenshipNo] = voter;
         voterNames.push(_name);
         voterList.push(voter);
         totalVoter = totalVoter.add(1);
 
         emit VoterCreated(voter);
+    }
+
+    function createElection(
+        string memory _title,
+        string memory _description,
+        string memory _startDate,
+        string memory _endDate,
+        string memory _electionType
+    ) public payable {
+        Candidate[] memory selectedCandidates;
+        Election memory election = Election(
+            _title,
+            _description,
+            _startDate,
+            _endDate,
+            _electionType,
+            selectedCandidates
+        );
+
+        elections[_startDate] = election;
+        electionList.push(election);
+        totalElection = totalElection.add(1);
+
+        emit electionStart(election);
+    }
+
+    function addSelectedCandidates(
+        Candidate[] memory _selectedCandidates,
+        string memory electionAddress
+    ) public payable {
+        for (uint256 i = 0; i < _selectedCandidates.length; i++) {
+            elections[electionAddress].selectedCandidates.push(
+                _selectedCandidates[i]
+            );
+        }
+
+        for (uint256 i = 0; i < electionList.length; i++) {
+            if (
+                keccak256(bytes(electionList[i].startDate)) ==
+                keccak256(bytes(electionAddress))
+            ) {
+                for (uint256 j = 0; j < _selectedCandidates.length; j++) {
+                    electionList[i].selectedCandidates.push(
+                        _selectedCandidates[j]
+                    );
+                }
+                break;
+            }
+        }
     }
 
     // getter functions
@@ -155,6 +209,10 @@ contract Election is Structure {
         return voterList;
     }
 
+    function getAllElections() public view returns (Election[] memory) {
+        return electionList;
+    }
+
     function getPartyDetails(string memory name)
         public
         view
@@ -163,23 +221,26 @@ contract Election is Structure {
         return parties[name];
     }
 
-    function getCandidateDetails(string memory name)
+    function getCandidateDetails(uint256 _citizenshipNo)
         public
         view
         returns (Candidate memory)
     {
-        return candidates[name];
+        return candidates[_citizenshipNo];
     }
 
-    function getVoterDetails(string memory name)
+    function getVoterDetails(uint256 _citizenshipNo)
         public
         view
         returns (Voter memory)
     {
-        return voters[name];
+        return voters[_citizenshipNo];
     }
 }
 
 // test data
 // Parbat, 0778, 22, wanna make secure system, sep 12 2022, kathamandu nepal, parbat@gmail.com, http://profile.com, Congress
 // Gaurab, 0778, 22, oct 11 2022, Pokhara nepal, garuab@gmail.com, http://profile.com
+
+// create election
+// Election 2022, hello world election, sep 12 2022 , sep 13 2022, province

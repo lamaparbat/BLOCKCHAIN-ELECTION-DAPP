@@ -18,13 +18,14 @@ contract Structure {
 
     struct Voter {
         User user;
-        bool voted;
+        string[] votedCandidateList;
     }
     struct Candidate {
         User user;
         string partyName;
         string agenda;
         uint256 voteCount;
+        string[] votedVoterLists;
     }
 
     struct Party {
@@ -33,5 +34,14 @@ contract Structure {
         string agenda;
         string logoUrl;
         string[] members;
+    }
+
+    struct Election {
+        string title;
+        string description;
+        string startDate;
+        string endDate;
+        string electionType;
+        Candidate[] selectedCandidates;
     }
 }
