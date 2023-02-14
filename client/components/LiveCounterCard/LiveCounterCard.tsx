@@ -1,17 +1,31 @@
 import React, { ReactElement } from 'react';
+import { useSelector } from 'react-redux';
 import { FaRegDotCircle } from 'react-icons/fa';
 import AnimatedAvatar from '../AnimatedAvatar';
 import CandidateCard from './CandidateCard';
 import { BTM_BORDER_STYLE } from '../../constants';
 import { LiveCounterCardStruct } from '../../interfaces/index';
 import TickCircleIcon from '../TickCircleIcon';
+import { getStorage } from '../../services';
+import _ from 'lodash';
 
 const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, electionStatus, casteVote }): ReactElement => {
+  const {list} = useSelector((state:any) => state.candidateReducer)
+  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
   const isElectionStart = electionStatus === "start";
   const isElectionEnd = electionStatus === "end";
-  const { agenda, partyName, voteCount, user }: any = data[0];
+  let { agenda, partyName, voteCount, user }: any = data[0];
   const { fullName, profile }: any = user;
 
+  const filter = _.map(data, (candidate:any) => {
+    const isFound = _.find(list, (d:any) => d.user._id === candidate.user._id);
+    if(isFound) return {...candidate, votedVoterLists: isFound.votedVoterLists}
+    else return {...candidate};
+  });
+  console.log("ola",filter);
+  const isAlreadyVoted1 = filter[0].votedVoterLists.includes(loggedInAccountAddress);
+  const isAlreadyVoted2 = filter[1].votedVoterLists.includes(loggedInAccountAddress);
+  const isAlreadyVoted3 = filter[2].votedVoterLists.includes(loggedInAccountAddress);
 
   return (
     <div
@@ -32,9 +46,9 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, election
           </div>
         </div>
         <div className='candidate_row px-3'>
-          <CandidateCard details={data[0]} border={BTM_BORDER_STYLE} ishighlighted={true} casteVote={casteVote} voted={true} />
-          <CandidateCard details={data[1]} border={BTM_BORDER_STYLE} ishighlighted={false} casteVote={casteVote} voted={true} />
-          <CandidateCard details={data[2]} border={null} ishighlighted={false} casteVote={casteVote} voted={false} />
+          <CandidateCard details={data[0]} border={BTM_BORDER_STYLE} ishighlighted={true} casteVote={casteVote} voted={isAlreadyVoted1} />
+          <CandidateCard details={data[1]} border={BTM_BORDER_STYLE} ishighlighted={false} casteVote={casteVote} voted={isAlreadyVoted2} />
+          <CandidateCard details={data[2]} border={null} ishighlighted={false} casteVote={casteVote} voted={isAlreadyVoted3} />
         </div>
       </div>
     </div>

@@ -49,7 +49,7 @@ const Details: React.FC = (): React.ReactElement => {
       setPartyList(partyList);
       setElectedCandidates({
         ...electedCandidatesList,
-        electionAddress: electionList[electionList.length - 1]?.startDate ?? null
+        electionAddress: electionList.at(-1)?.owner ?? null
       })
 
       candidateEvent = SmartContract.events?.CandidateCreated().on("data", (event: any) => {

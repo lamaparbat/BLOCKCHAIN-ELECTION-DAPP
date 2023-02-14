@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import { useDispatch } from 'react-redux';
 import { GoPrimitiveDot } from 'react-icons/go';
 import Navbar from '../components/Navbar';
 import LiveCounterCard from '../components/LiveCounterCard/LiveCounterCard';
@@ -8,6 +9,7 @@ import { getCandidateList, getElectionList } from '../utils';
 import _ from 'lodash';
 import { SmartContract } from '../constants';
 import { getStorage } from '../services';
+import { setCandidateList } from '../redux/candidateReducer';
 import { toast } from 'react-toastify';
 
 export default function Home() {
@@ -15,6 +17,7 @@ export default function Home() {
   const [electionList, setElectionList] = useState([]);
   const [candidateLists, setCandidateLists] = useState([]);
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
@@ -22,6 +25,7 @@ export default function Home() {
       const candidateLists = await getCandidateList();
 
       setCandidateLists(candidateLists);
+      dispatch(setCandidateList(candidateLists));
       setElectionList(electionList);
     })();
   }, []);
@@ -43,8 +47,8 @@ export default function Home() {
   const casteVote = async (_candidateID: string) => {
     try {
       // validation
-      const isAlreadyVoted = _.includes(candidateLists, (candidate) => candidate.user.citizenshipNumber === _candidateID);
-      console.log(isAlreadyVoted);
+      const isAlreadyVoted = _.some(candidateLists, {votedVoterLists: [_candidateID]});
+      if(isAlreadyVoted) return toast.info("You've already casted vote !");
 
       await SmartContract.methods.vote(_candidateID).send({ from: loggedInAccountAddress });
       toast.success("Vote caste successfully.");

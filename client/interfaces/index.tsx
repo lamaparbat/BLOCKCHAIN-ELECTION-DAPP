@@ -41,7 +41,8 @@ interface UserDetails {
 interface CandidateDetails extends UserDetails {
   party: string,
   agenda: string,
-  votes: number
+  votes: number,
+  votedVoterLists:Array<string>
 }
 
 interface VoterDetails extends UserDetails {

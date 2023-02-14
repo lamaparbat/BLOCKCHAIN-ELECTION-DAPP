@@ -1,4 +1,3 @@
-
 export const CONTRACT_ABI = [
 	{
 		"inputs": [
@@ -103,6 +102,11 @@ export const CONTRACT_ABI = [
 					{
 						"components": [
 							{
+								"internalType": "address",
+								"name": "_id",
+								"type": "address"
+							},
+							{
 								"internalType": "string",
 								"name": "fullName",
 								"type": "string"
@@ -171,6 +175,11 @@ export const CONTRACT_ABI = [
 						"internalType": "uint256",
 						"name": "voteCount",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "votedVoterLists",
+						"type": "address[]"
 					}
 				],
 				"internalType": "struct Structure.Candidate[]",
@@ -178,9 +187,9 @@ export const CONTRACT_ABI = [
 				"type": "tuple[]"
 			},
 			{
-				"internalType": "string",
+				"internalType": "address",
 				"name": "electionAddress",
-				"type": "string"
+				"type": "address"
 			}
 		],
 		"name": "addSelectedCandidates",
@@ -254,6 +263,11 @@ export const CONTRACT_ABI = [
 					{
 						"components": [
 							{
+								"internalType": "address",
+								"name": "_id",
+								"type": "address"
+							},
+							{
 								"internalType": "string",
 								"name": "fullName",
 								"type": "string"
@@ -322,6 +336,11 @@ export const CONTRACT_ABI = [
 						"internalType": "uint256",
 						"name": "voteCount",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "votedVoterLists",
+						"type": "address[]"
 					}
 				],
 				"indexed": false,
@@ -372,6 +391,11 @@ export const CONTRACT_ABI = [
 			{
 				"components": [
 					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
 						"internalType": "string",
 						"name": "name",
 						"type": "string"
@@ -409,14 +433,14 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "_citizenshipNo",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "_candidateId",
+				"type": "address"
 			}
 		],
 		"name": "vote",
 		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -426,6 +450,11 @@ export const CONTRACT_ABI = [
 				"components": [
 					{
 						"components": [
+							{
+								"internalType": "address",
+								"name": "_id",
+								"type": "address"
+							},
 							{
 								"internalType": "string",
 								"name": "fullName",
@@ -495,6 +524,11 @@ export const CONTRACT_ABI = [
 						"internalType": "uint256",
 						"name": "voteCount",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "votedVoterLists",
+						"type": "address[]"
 					}
 				],
 				"indexed": false,
@@ -513,6 +547,11 @@ export const CONTRACT_ABI = [
 				"components": [
 					{
 						"components": [
+							{
+								"internalType": "address",
+								"name": "_id",
+								"type": "address"
+							},
 							{
 								"internalType": "string",
 								"name": "fullName",
@@ -569,9 +608,9 @@ export const CONTRACT_ABI = [
 						"type": "tuple"
 					},
 					{
-						"internalType": "bool",
-						"name": "voted",
-						"type": "bool"
+						"internalType": "address[]",
+						"name": "votedCandidateList",
+						"type": "address[]"
 					}
 				],
 				"indexed": false,
@@ -588,6 +627,11 @@ export const CONTRACT_ABI = [
 		"inputs": [
 			{
 				"components": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
 					{
 						"internalType": "string",
 						"name": "title",
@@ -617,6 +661,11 @@ export const CONTRACT_ABI = [
 						"components": [
 							{
 								"components": [
+									{
+										"internalType": "address",
+										"name": "_id",
+										"type": "address"
+									},
 									{
 										"internalType": "string",
 										"name": "fullName",
@@ -686,6 +735,11 @@ export const CONTRACT_ABI = [
 								"internalType": "uint256",
 								"name": "voteCount",
 								"type": "uint256"
+							},
+							{
+								"internalType": "address[]",
+								"name": "votedVoterLists",
+								"type": "address[]"
 							}
 						],
 						"internalType": "struct Structure.Candidate[]",
@@ -714,6 +768,11 @@ export const CONTRACT_ABI = [
 		"outputs": [
 			{
 				"components": [
+					{
+						"internalType": "address",
+						"name": "_id",
+						"type": "address"
+					},
 					{
 						"internalType": "string",
 						"name": "fullName",
@@ -810,15 +869,20 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "address",
 				"name": "",
-				"type": "uint256"
+				"type": "address"
 			}
 		],
 		"name": "candidates",
 		"outputs": [
 			{
 				"components": [
+					{
+						"internalType": "address",
+						"name": "_id",
+						"type": "address"
+					},
 					{
 						"internalType": "string",
 						"name": "fullName",
@@ -904,6 +968,11 @@ export const CONTRACT_ABI = [
 		"name": "electionList",
 		"outputs": [
 			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
 				"internalType": "string",
 				"name": "title",
 				"type": "string"
@@ -935,13 +1004,18 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "address",
 				"name": "",
-				"type": "string"
+				"type": "address"
 			}
 		],
 		"name": "elections",
 		"outputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
 			{
 				"internalType": "string",
 				"name": "title",
@@ -979,6 +1053,11 @@ export const CONTRACT_ABI = [
 				"components": [
 					{
 						"components": [
+							{
+								"internalType": "address",
+								"name": "_id",
+								"type": "address"
+							},
 							{
 								"internalType": "string",
 								"name": "fullName",
@@ -1048,6 +1127,11 @@ export const CONTRACT_ABI = [
 						"internalType": "uint256",
 						"name": "voteCount",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "votedVoterLists",
+						"type": "address[]"
 					}
 				],
 				"internalType": "struct Structure.Candidate[]",
@@ -1064,6 +1148,11 @@ export const CONTRACT_ABI = [
 		"outputs": [
 			{
 				"components": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
 					{
 						"internalType": "string",
 						"name": "title",
@@ -1093,6 +1182,11 @@ export const CONTRACT_ABI = [
 						"components": [
 							{
 								"components": [
+									{
+										"internalType": "address",
+										"name": "_id",
+										"type": "address"
+									},
 									{
 										"internalType": "string",
 										"name": "fullName",
@@ -1162,6 +1256,11 @@ export const CONTRACT_ABI = [
 								"internalType": "uint256",
 								"name": "voteCount",
 								"type": "uint256"
+							},
+							{
+								"internalType": "address[]",
+								"name": "votedVoterLists",
+								"type": "address[]"
 							}
 						],
 						"internalType": "struct Structure.Candidate[]",
@@ -1183,6 +1282,11 @@ export const CONTRACT_ABI = [
 		"outputs": [
 			{
 				"components": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
 					{
 						"internalType": "string",
 						"name": "name",
@@ -1225,6 +1329,11 @@ export const CONTRACT_ABI = [
 				"components": [
 					{
 						"components": [
+							{
+								"internalType": "address",
+								"name": "_id",
+								"type": "address"
+							},
 							{
 								"internalType": "string",
 								"name": "fullName",
@@ -1281,9 +1390,9 @@ export const CONTRACT_ABI = [
 						"type": "tuple"
 					},
 					{
-						"internalType": "bool",
-						"name": "voted",
-						"type": "bool"
+						"internalType": "address[]",
+						"name": "votedCandidateList",
+						"type": "address[]"
 					}
 				],
 				"internalType": "struct Structure.Voter[]",
@@ -1297,9 +1406,9 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "_citizenshipNo",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "_id",
+				"type": "address"
 			}
 		],
 		"name": "getCandidateDetails",
@@ -1308,6 +1417,11 @@ export const CONTRACT_ABI = [
 				"components": [
 					{
 						"components": [
+							{
+								"internalType": "address",
+								"name": "_id",
+								"type": "address"
+							},
 							{
 								"internalType": "string",
 								"name": "fullName",
@@ -1377,6 +1491,11 @@ export const CONTRACT_ABI = [
 						"internalType": "uint256",
 						"name": "voteCount",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "votedVoterLists",
+						"type": "address[]"
 					}
 				],
 				"internalType": "struct Structure.Candidate",
@@ -1390,15 +1509,20 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "name",
-				"type": "string"
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
 			}
 		],
 		"name": "getPartyDetails",
 		"outputs": [
 			{
 				"components": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
 					{
 						"internalType": "string",
 						"name": "name",
@@ -1436,9 +1560,9 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "_citizenshipNo",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "_id",
+				"type": "address"
 			}
 		],
 		"name": "getVoterDetails",
@@ -1447,6 +1571,11 @@ export const CONTRACT_ABI = [
 				"components": [
 					{
 						"components": [
+							{
+								"internalType": "address",
+								"name": "_id",
+								"type": "address"
+							},
 							{
 								"internalType": "string",
 								"name": "fullName",
@@ -1503,9 +1632,9 @@ export const CONTRACT_ABI = [
 						"type": "tuple"
 					},
 					{
-						"internalType": "bool",
-						"name": "voted",
-						"type": "bool"
+						"internalType": "address[]",
+						"name": "votedCandidateList",
+						"type": "address[]"
 					}
 				],
 				"internalType": "struct Structure.Voter",
@@ -1519,13 +1648,18 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "address",
 				"name": "",
-				"type": "string"
+				"type": "address"
 			}
 		],
 		"name": "parties",
 		"outputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
 			{
 				"internalType": "string",
 				"name": "name",
@@ -1560,6 +1694,11 @@ export const CONTRACT_ABI = [
 		],
 		"name": "partyList",
 		"outputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
 			{
 				"internalType": "string",
 				"name": "name",
@@ -1681,6 +1820,11 @@ export const CONTRACT_ABI = [
 			{
 				"components": [
 					{
+						"internalType": "address",
+						"name": "_id",
+						"type": "address"
+					},
+					{
 						"internalType": "string",
 						"name": "fullName",
 						"type": "string"
@@ -1734,11 +1878,6 @@ export const CONTRACT_ABI = [
 				"internalType": "struct Structure.User",
 				"name": "user",
 				"type": "tuple"
-			},
-			{
-				"internalType": "bool",
-				"name": "voted",
-				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -1766,15 +1905,20 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "address",
 				"name": "",
-				"type": "uint256"
+				"type": "address"
 			}
 		],
 		"name": "voters",
 		"outputs": [
 			{
 				"components": [
+					{
+						"internalType": "address",
+						"name": "_id",
+						"type": "address"
+					},
 					{
 						"internalType": "string",
 						"name": "fullName",
@@ -1829,15 +1973,10 @@ export const CONTRACT_ABI = [
 				"internalType": "struct Structure.User",
 				"name": "user",
 				"type": "tuple"
-			},
-			{
-				"internalType": "bool",
-				"name": "voted",
-				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
 		"type": "function"
 	}
 ]
-export const CONTRACT_ABI_ADDRESS = "0x046A3c19Cfc7F767B09e807aB95E1Ea1f7b65085";
+export const CONTRACT_ABI_ADDRESS = "0x6a35Db6689Ca1C6622688EabB77f2308F4F7F65a";
