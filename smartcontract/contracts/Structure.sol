@@ -4,9 +4,10 @@ pragma solidity ^0.8.0;
 
 contract Structure {
     struct User {
+        address _id;
         string fullName;
-        uint256 citizenshipNumber;
-        uint256 age;
+        uint citizenshipNumber;
+        uint age;
         string dob;
         string email;
         string profile;
@@ -18,25 +19,40 @@ contract Structure {
 
     struct Voter {
         User user;
+<<<<<<< HEAD
         string[] votedCandidateList;
+=======
+        address[] votedCandidateList;
+>>>>>>> 43b8cc9fc904a013b7fc10d9ddc8534bce9a2f3a
     }
     struct Candidate {
         User user;
         string partyName;
         string agenda;
+<<<<<<< HEAD
         uint256 voteCount;
         string[] votedVoterLists;
+=======
+        uint voteCount;
+        address[] votedVoterLists;
+>>>>>>> 43b8cc9fc904a013b7fc10d9ddc8534bce9a2f3a
     }
 
-    struct Party {
+    struct Party{
+        address owner;
         string name;
-        uint256 totalMember;
+        uint totalMember;
         string agenda;
         string logoUrl;
         string[] members;
     }
 
+<<<<<<< HEAD
     struct Election {
+=======
+    struct Election{
+        address owner;
+>>>>>>> 43b8cc9fc904a013b7fc10d9ddc8534bce9a2f3a
         string title;
         string description;
         string startDate;
