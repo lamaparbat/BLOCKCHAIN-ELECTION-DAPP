@@ -23,7 +23,7 @@ export default function Home() {
     (async () => {
       const electionList = await getElectionList();
       const candidateLists = await getCandidateList();
-
+console.log(electionList)
       setCandidateLists(candidateLists);
       dispatch(setCandidateList(candidateLists));
       setElectionList(electionList);
@@ -31,8 +31,8 @@ export default function Home() {
   }, []);
 
   // console.log(electionList[electionList.length - 1]?.selectedCandidates);
-  const electionCandidates = _.groupBy(electionList[electionList.length - 1]?.selectedCandidates, (candidate) => candidate.user.province);
-  const electionCandidatesArray = Object.entries(electionCandidates);
+  const electionCandidates = electionList ? _.groupBy(electionList[electionList?.length - 1]?.selectedCandidates, (candidate) => candidate.user.province): [];
+  const electionCandidatesArray = electionCandidates ? Object.entries(electionCandidates) : [];
 
   electionChannel.bind("start-election-event", () => {
     console.log("election started");
@@ -47,7 +47,7 @@ export default function Home() {
   const casteVote = async (_candidateID: string) => {
     try {
       // validation
-      const isAlreadyVoted = _.some(candidateLists, {votedVoterLists: [_candidateID]});
+      const isAlreadyVoted = _.some(candidateLists, (candidate) => candidate.votedVoterLists.includes(loggedInAccountAddress));
       if(isAlreadyVoted) return toast.info("You've already casted vote !");
 
       await SmartContract.methods.vote(_candidateID).send({ from: loggedInAccountAddress });
@@ -56,7 +56,7 @@ export default function Home() {
       toast.error("Failed to caste vote !");
     }
   }
-  // console.log(electionList)
+
   return (
     <div>
       <Head>
@@ -77,7 +77,7 @@ export default function Home() {
             </div>
           </div>
           <div className='lg:w-[1100px] flex justify-around flex-wrap'>
-            {electionList.length > 0 && electionCandidatesArray.length > 0 && electionCandidatesArray?.map(([key, value]: any) =>
+            {electionList?.length > 0 && electionCandidatesArray.length > 0 && electionCandidatesArray?.map(([key, value]: any) =>
               <LiveCounterCard type={key} data={value} key={key} electionStatus={electionStatus} casteVote={casteVote} />
             )}
           </div>

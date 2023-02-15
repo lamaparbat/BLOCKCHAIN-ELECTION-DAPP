@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { PulseLoader } from 'react-spinners';
 import { getStorage } from '../../services';
 import _ from 'lodash';
+import { getFormattedErrorMessage } from '../../utils';
 
 const defaultPartyDetails = { partyName: "", totalMembers: '', agenda: "", partyLogo: null }
 const VoterRegistration = () => {
@@ -63,7 +64,9 @@ const VoterRegistration = () => {
         setPartyDetails(defaultPartyDetails)
       } else throw new Error();
     } catch (error) {
-      toast.error("Failed to register !", { toastId: 2 });
+      const erroMsg = getFormattedErrorMessage(error.message);
+      console.log(erroMsg);
+      toast.error(`Failed to register !, ${erroMsg}`, { toastId: 2 });
     }
     setLoading(false);
   }

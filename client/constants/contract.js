@@ -256,6 +256,11 @@ export const CONTRACT_ABI = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -611,6 +616,11 @@ export const CONTRACT_ABI = [
 						"internalType": "address[]",
 						"name": "votedCandidateList",
 						"type": "address[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "voteLimitCount",
+						"type": "uint256"
 					}
 				],
 				"indexed": false,
@@ -1393,6 +1403,11 @@ export const CONTRACT_ABI = [
 						"internalType": "address[]",
 						"name": "votedCandidateList",
 						"type": "address[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "voteLimitCount",
+						"type": "uint256"
 					}
 				],
 				"internalType": "struct Structure.Voter[]",
@@ -1635,6 +1650,11 @@ export const CONTRACT_ABI = [
 						"internalType": "address[]",
 						"name": "votedCandidateList",
 						"type": "address[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "voteLimitCount",
+						"type": "uint256"
 					}
 				],
 				"internalType": "struct Structure.Voter",
@@ -1878,6 +1898,11 @@ export const CONTRACT_ABI = [
 				"internalType": "struct Structure.User",
 				"name": "user",
 				"type": "tuple"
+			},
+			{
+				"internalType": "uint256",
+				"name": "voteLimitCount",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -1973,10 +1998,15 @@ export const CONTRACT_ABI = [
 				"internalType": "struct Structure.User",
 				"name": "user",
 				"type": "tuple"
+			},
+			{
+				"internalType": "uint256",
+				"name": "voteLimitCount",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
 		"type": "function"
 	}
 ]
-export const CONTRACT_ABI_ADDRESS = "0x6a35Db6689Ca1C6622688EabB77f2308F4F7F65a";
+export const CONTRACT_ABI_ADDRESS = "0x8B719c274a0EDD2fF66dfFBFD8541fC86a9C8407";

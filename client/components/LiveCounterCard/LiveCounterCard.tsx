@@ -23,9 +23,9 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, election
     else return {...candidate};
   });
   console.log("ola",filter);
-  const isAlreadyVoted1 = filter[0].votedVoterLists.includes(loggedInAccountAddress);
-  const isAlreadyVoted2 = filter[1].votedVoterLists.includes(loggedInAccountAddress);
-  const isAlreadyVoted3 = filter[2].votedVoterLists.includes(loggedInAccountAddress);
+  const isAlreadyVoted1 = filter[0]?.votedVoterLists.includes(loggedInAccountAddress);
+  const isAlreadyVoted2 = filter[1]?.votedVoterLists.includes(loggedInAccountAddress);
+  const isAlreadyVoted3 = filter[2]?.votedVoterLists.includes(loggedInAccountAddress);
 
   return (
     <div
@@ -46,9 +46,9 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, election
           </div>
         </div>
         <div className='candidate_row px-3'>
-          <CandidateCard details={data[0]} border={BTM_BORDER_STYLE} ishighlighted={true} casteVote={casteVote} voted={isAlreadyVoted1} />
-          <CandidateCard details={data[1]} border={BTM_BORDER_STYLE} ishighlighted={false} casteVote={casteVote} voted={isAlreadyVoted2} />
-          <CandidateCard details={data[2]} border={null} ishighlighted={false} casteVote={casteVote} voted={isAlreadyVoted3} />
+          {data[0] && <CandidateCard details={data[0]} border={BTM_BORDER_STYLE} ishighlighted={true} casteVote={casteVote} voted={isAlreadyVoted1} />}
+          {data[1] && <CandidateCard details={data[1]} border={BTM_BORDER_STYLE} ishighlighted={false} casteVote={casteVote} voted={isAlreadyVoted2} />}
+          {data[2] &&<CandidateCard details={data[2]} border={null} ishighlighted={false} casteVote={casteVote} voted={isAlreadyVoted3} />}
         </div>
       </div>
     </div>

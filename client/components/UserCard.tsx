@@ -13,8 +13,7 @@ const UserCard: React.FC<UserCardStruct> = (props): React.ReactElement => {
     isElected
   }: any = props;
   const formattedEmail = details?.user?.email.split("@")[0];
-  const isElectionLive = moment(currentElection?.startDate).format("YYYY") === new Date().getFullYear().toString();
-
+  const isElectionLive = currentElection ? moment(currentElection?.startDate).format("YYYY") === new Date().getFullYear().toString() : false;
   return (
     <div className='user__card h-[180px] w-[350px] px-2 mb-3  max-[500px]:w-[500px] max-[400px]:w-full bg-slate-100 rounded-[12px] hover:bg-red-20'>
       {isElectionLive &&
