@@ -1,1 +1,11 @@
+<<<<<<< HEAD
 .history
+=======
+node_modules
+
+dist
+
+.env
+
+jest.config.js
+>>>>>>> b92f13f2aa19bae1550b3fcc3ad6866b8dda7dec
