@@ -6,7 +6,7 @@ import "./Structure.sol";
 
 contract Election is Structure{
     using SafeMath for uint;
-    address public adminAddress;
+    address adminAddress;
     
     constructor(){
         adminAddress = msg.sender;
@@ -47,8 +47,15 @@ contract Election is Structure{
     function vote(address _candidateId) public payable{
         address _voterId = msg.sender;
 
+        // restrict admin for vote casting
+        if(_voterId == adminAddress){
+            revert("Admin is restrict to caste vote.");
+        }
+
         // verify vote limit count
-        require(voters[_voterId].voteLimitCount > 3, "You have exceed the vote caste limit.");
+        if(voters[_voterId].voteLimitCount > 3){
+            revert("You have exceed the vote caste limit.");
+        }
 
         candidates[_candidateId].votedVoterLists.push(_voterId);
         voters[_voterId].votedCandidateList.push(_candidateId);
@@ -75,7 +82,9 @@ contract Election is Structure{
 
     // setter functions
     function addParty(string memory _name, uint _totalMember, string memory _agenda, string memory _logoUrl) public payable {
-        require(msg.sender == adminAddress, "Only admin is allow to add Party !");
+        if(msg.sender != adminAddress){
+            revert("Only admin is allow to add Party !");
+        }
 
         string[] memory emptyArray;
         Party memory party = Party(adminAddress, _name, _totalMember, _agenda, _logoUrl, emptyArray);
@@ -133,7 +142,9 @@ contract Election is Structure{
         string memory _endDate,
         string memory _electionType
     ) public payable{
-        require(msg.sender == adminAddress, "Only admin is allow to create election !");
+        if(msg.sender != adminAddress){
+            revert("Only admin is allow to create election !");
+        }
 
         Candidate[] memory selectedCandidates;
         Election memory election = Election(adminAddress, _title, _description, _startDate, _endDate, _electionType, selectedCandidates);
@@ -149,7 +160,9 @@ contract Election is Structure{
         Candidate[] memory _selectedCandidates,
         address electionAddress
     ) public payable{
-        require(msg.sender == adminAddress, "Only admin is allow to select candidates !");
+        if(msg.sender != adminAddress){
+            revert("Only admin is allow to select candidates !");
+        }
 
         for (uint i = 0; i < _selectedCandidates.length; i++) {
             elections[electionAddress].selectedCandidates.push(_selectedCandidates[i]);
