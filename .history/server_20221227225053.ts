@@ -1,5 +1,5 @@
 require("./scripts/switch-node-version");
-import cluster from "node:cluster";
+const cluster = require("node:cluster");
 const totalCpus = require("node:os").cpus();
 
 if (cluster.isPrimary) {
