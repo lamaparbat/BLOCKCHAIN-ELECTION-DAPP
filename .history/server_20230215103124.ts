@@ -1,6 +1,6 @@
 require("./scripts/switch-node-version");
 const cluster = require("cluster");
-const totalCpus = require("os").cpus();
+const totalCpus = require("node:os").cpus();
 
 if (cluster.isPrimary) {
  console.log(`Master node:${process.pid} is running.`);
