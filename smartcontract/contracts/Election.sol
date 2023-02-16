@@ -86,7 +86,7 @@ contract Election is Structure{
             revert("Only admin is allow to add Party !");
         }
 
-        string[] memory emptyArray;
+        address[] memory emptyArray;
         Party memory party = Party(adminAddress, _name, _totalMember, _agenda, _logoUrl, emptyArray);
         
         parties[adminAddress] = party;
@@ -146,7 +146,7 @@ contract Election is Structure{
             revert("Only admin is allow to create election !");
         }
 
-        Candidate[] memory selectedCandidates;
+        address[] memory selectedCandidates;
         Election memory election = Election(adminAddress, _title, _description, _startDate, _endDate, _electionType, selectedCandidates);
 
         elections[adminAddress] = election;
@@ -157,7 +157,7 @@ contract Election is Structure{
     }
 
     function addSelectedCandidates(
-        Candidate[] memory _selectedCandidates,
+        address[] memory _selectedCandidates,
         address electionAddress
     ) public payable{
         if(msg.sender != adminAddress){
