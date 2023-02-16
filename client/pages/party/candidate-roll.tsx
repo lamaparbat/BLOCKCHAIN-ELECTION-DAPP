@@ -107,8 +107,8 @@ const Details: React.FC = (): React.ReactElement => {
   const onCandidateSelected = (checked: boolean, details: any) => {
     setElectedCandidates({
       ...electedCandidatesList,
-      selectedCandidates: checked ? [...electedCandidatesList.selectedCandidates, details] :
-        electedCandidatesList.selectedCandidates.filter((candidate) => candidate?.user?.citizenshipNumber !== details?.user?.citizenshipNumber)
+      selectedCandidates: checked ? [...electedCandidatesList.selectedCandidates, details.user._id] :
+        electedCandidatesList.selectedCandidates.filter((address:string) => address !== details?.address)
     });
   }
 
@@ -119,7 +119,7 @@ const Details: React.FC = (): React.ReactElement => {
   const handleSubmitSelection = async () => {
     try {
       const { electionAddress, selectedCandidates } = electedCandidatesList;
-
+console.log(selectedCandidates)
       await SmartContract.methods.addSelectedCandidates(selectedCandidates, electionAddress).send({ from: loggedInAccountAddress });
       toast.success("Selected candidates added successfully.")
     } catch (error) {
@@ -259,7 +259,7 @@ const Details: React.FC = (): React.ReactElement => {
                     key={i}
                     onCandidateSelected={onCandidateSelected}
                     currentElection={electionList[electionList.length - 1]}
-                    isElected={_.find(electedCandidatesList.selectedCandidates, (d) => d.user.citizenshipNumber === candidateDetails.user.citizenshipNumber) ?? false}
+                    isElected={_.find(electedCandidatesList, (address:string) => address === candidateDetails.user._id) ?? false}
                   />) : "No Candidates Available !"
             }
           </div>

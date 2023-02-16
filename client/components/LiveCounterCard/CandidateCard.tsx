@@ -50,7 +50,7 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
           </div>
         </div>
         <div className='flex items-center'>
-          <h3 className='mr-5 mt-2' id='count'>{details.voteCount}</h3>
+          <h3 className='mr-5 mt-2' id='count'>{details?.votedVoterLists?.length ?? 0}</h3>
           <button
             className={`relative flex justify-center items-center bg-slate-100 ${!voted && "shadow-md"} pt-2 pb-2 px-4 rounded-pill text-sm ${voted && "text-slate-500 cursor-default"}`}
             onClick={() => casteVote(details?.user?._id)}

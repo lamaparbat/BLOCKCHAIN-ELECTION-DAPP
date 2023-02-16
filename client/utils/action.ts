@@ -61,17 +61,18 @@ const getVoterLists = async ({ skip }) => {
 
 
 // Create a new election
-// const createElection = async (payload: Object) => {
-//   try {
-//     return await Http("post", "/admin/createElection", payload);
-//   } catch (error) {
-//     return console.error(error);
-//   }
-// }
+const createElection = async (payload: Object) => {
+  try {
+    return await Http("post", "/admin/createElection", payload);
+  } catch (error) {
+    return console.error(error);
+  }
+}
 
 
 export {
   registerCandidate,
   registerParty,
   registerVoter,
+  createElection
 }

@@ -7,6 +7,7 @@ import { ELECTION_TYPE, SmartContract } from '../constants';
 import { toast } from 'react-toastify';
 import { getElectionList } from '../utils';
 import { getStorage } from '../services';
+import { createElection } from '../utils/action';
 
 const currentDate = new Date();
 const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -39,6 +40,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
     setLoading(true);
     try {
       const { title, description, startDate, endDate, electionType } = election;
+      await createElection({title, description, startDate, endDate});
       await SmartContract.methods.createElection(
         title,
         description,
@@ -49,7 +51,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
       toast.success("Election created successfully.");
     } catch (error) {
       console.error(error);
-      toast.success("Failed to create election !");
+      toast.error("Failed to create election !");
     }
     setLoading(false);
   }

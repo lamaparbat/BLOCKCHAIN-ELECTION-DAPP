@@ -5,17 +5,18 @@ import { GoPrimitiveDot } from 'react-icons/go';
 import Navbar from '../components/Navbar';
 import LiveCounterCard from '../components/LiveCounterCard/LiveCounterCard';
 import electionChannel from "../services/pusher-events";
-import { getCandidateList, getElectionList } from '../utils';
+import { getCandidateList, getElectionList, getFormattedErrorMessage, getVoterList } from '../utils';
 import _ from 'lodash';
 import { SmartContract } from '../constants';
-import { getStorage } from '../services';
+import { getStorage, setStorage } from '../services';
 import { setCandidateList } from '../redux/candidateReducer';
 import { toast } from 'react-toastify';
 
 export default function Home() {
-  const [electionStatus, setElectionStatus] = useState("");
+  const [electionStatus, setElectionStatus] = useState(null);
   const [electionList, setElectionList] = useState([]);
   const [candidateLists, setCandidateLists] = useState([]);
+  const [voterLists, setVoterLists] = useState([]);
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
   const dispatch = useDispatch();
 
@@ -23,37 +24,50 @@ export default function Home() {
     (async () => {
       const electionList = await getElectionList();
       const candidateLists = await getCandidateList();
-console.log(electionList)
+      const voterLists = await getVoterList(); 
+      const electionStatus = getStorage("electionStatus") ?? null;
+
+      setElectionStatus(electionStatus);
       setCandidateLists(candidateLists);
+      setVoterLists(voterLists);
       dispatch(setCandidateList(candidateLists));
       setElectionList(electionList);
     })();
   }, []);
 
-  // console.log(electionList[electionList.length - 1]?.selectedCandidates);
-  const electionCandidates = electionList ? _.groupBy(electionList[electionList?.length - 1]?.selectedCandidates, (candidate) => candidate.user.province): [];
+  const filteredElectionsList = _.map(electionList, (election:any, i:number) => {
+    if(electionList.length-1 !== i) return;
+    const allSelectedCandidates = _.filter(candidateLists, (candidate:any) => {
+      return election?.selectedCandidates.includes(candidate?.user?._id);
+    })
+    return {...election, selectedCandidates:allSelectedCandidates}
+  });
+
+  const electionCandidates = filteredElectionsList.length > 0 ? _.groupBy(filteredElectionsList?.at(-1)?.selectedCandidates, (candidate) => candidate.user.province): [];
   const electionCandidatesArray = electionCandidates ? Object.entries(electionCandidates) : [];
 
   electionChannel.bind("start-election-event", () => {
     console.log("election started");
-    setElectionStatus("start");
+    setStorage("electionStatus", "LIVE");
+    setElectionStatus("LIVE");
   });
 
   electionChannel.bind("end-election-event", () => {
     console.log("election ended");
-    setElectionStatus("end")
+    setStorage("electionStatus", "ENDED");
+    setElectionStatus("ENDED")
   });
 
   const casteVote = async (_candidateID: string) => {
     try {
-      // validation
-      const isAlreadyVoted = _.some(candidateLists, (candidate) => candidate.votedVoterLists.includes(loggedInAccountAddress));
+      const casteCandidateDetails = _.find(candidateLists, (candidate) => candidate.user._id === _candidateID);
+      const isAlreadyVoted = casteCandidateDetails?.votedVoterLists?.includes(loggedInAccountAddress);
       if(isAlreadyVoted) return toast.info("You've already casted vote !");
 
       await SmartContract.methods.vote(_candidateID).send({ from: loggedInAccountAddress });
       toast.success("Vote caste successfully.");
-    } catch (err) {
-      toast.error("Failed to caste vote !");
+    } catch (error) {
+      toast.error(`Failed to caste vote !, ${getFormattedErrorMessage(error.message)}`, { toastId: 2 });
     }
   }
 
@@ -70,14 +84,14 @@ console.log(electionList)
           <div className='lg:w-[1100px] w-full lg:px-2 max-[1100px]:px-1'>
             <div className='flex items-center'>
               <span className='text-2xl font-bold text-black'>Hot Seats</span>
-              <GoPrimitiveDot className={`text-4xl ml-5 mr-1 ${electionStatus === 'start' && "text-danger"}`} />
+              <GoPrimitiveDot className={`text-4xl ml-5 mr-1 ${electionStatus === 'LIVE' && "text-danger"}`} />
               <span className='text-[17px]'>{
-                !electionStatus ? "NO ELECTION" : (electionStatus === "start" ? "LIVE" : "ENDED")
+                electionStatus ? electionStatus : "NO ELECTION"
               }</span>
             </div>
           </div>
           <div className='lg:w-[1100px] flex justify-around flex-wrap'>
-            {electionList?.length > 0 && electionCandidatesArray.length > 0 && electionCandidatesArray?.map(([key, value]: any) =>
+            {electionStatus && electionList?.length > 0 && electionCandidatesArray.length > 0 && electionCandidatesArray?.map(([key, value]: any) =>
               <LiveCounterCard type={key} data={value} key={key} electionStatus={electionStatus} casteVote={casteVote} />
             )}
           </div>

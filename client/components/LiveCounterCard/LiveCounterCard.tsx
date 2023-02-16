@@ -14,15 +14,14 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, election
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
   const isElectionStart = electionStatus === "start";
   const isElectionEnd = electionStatus === "end";
-  let { agenda, partyName, voteCount, user }: any = data[0];
+  let { agenda, partyName, voteCount, user, votedVoterLists }: any = data[0];
   const { fullName, profile }: any = user;
-
   const filter = _.map(data, (candidate:any) => {
     const isFound = _.find(list, (d:any) => d.user._id === candidate.user._id);
     if(isFound) return {...candidate, votedVoterLists: isFound.votedVoterLists}
     else return {...candidate};
   });
-  console.log("ola",filter);
+
   const isAlreadyVoted1 = filter[0]?.votedVoterLists.includes(loggedInAccountAddress);
   const isAlreadyVoted2 = filter[1]?.votedVoterLists.includes(loggedInAccountAddress);
   const isAlreadyVoted3 = filter[2]?.votedVoterLists.includes(loggedInAccountAddress);
@@ -42,7 +41,7 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, election
               {isElectionEnd && <TickCircleIcon />}
               {isElectionStart && <FaRegDotCircle className='animate-ping text-danger absolute lg:ml-[200px] max-[1100px]:ml-[100px]' />}
             </div>
-            <h1 id='count'>{voteCount}</h1>
+            <h1 id='count'>{votedVoterLists?.length}</h1>
           </div>
         </div>
         <div className='candidate_row px-3'>

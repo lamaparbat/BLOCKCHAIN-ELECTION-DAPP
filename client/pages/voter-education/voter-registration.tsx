@@ -6,7 +6,7 @@ import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, SmartContract } 
 import { registerVoter } from '../../utils/action';
 import { toast } from 'react-toastify';
 import { getStorage } from '../../services';
-import { getConvertedAge } from '../../utils';
+import { getConvertedAge, getFormattedErrorMessage } from '../../utils';
 
 const VoterRegistration = () => {
   const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
@@ -56,7 +56,7 @@ const VoterRegistration = () => {
 
       toast.success("New Voter registered successfully");
     } catch (error) {
-      toast.error("Failed to register !", { toastId: 2 });
+      toast.error(`Failed to register !, ${getFormattedErrorMessage(error.message)}`, { toastId: 2 });
     }
 
   }
@@ -156,6 +156,7 @@ const VoterRegistration = () => {
                 className='form-control shadow-none outline-0 font-monospace'
                 type="datetime-local"
                 onChange={(e) => setVoterDetails({ ...voterDetails, dob: e.target.value })}
+                accept="image/*, image/png, image/jpeg, image/gif"
               />
             </div>
           </div>
