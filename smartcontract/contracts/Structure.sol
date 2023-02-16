@@ -19,23 +19,15 @@ contract Structure {
 
     struct Voter {
         User user;
-<<<<<<< HEAD
-        string[] votedCandidateList;
-=======
         address[] votedCandidateList;
->>>>>>> 43b8cc9fc904a013b7fc10d9ddc8534bce9a2f3a
+        uint voteLimitCount;
     }
     struct Candidate {
         User user;
         string partyName;
         string agenda;
-<<<<<<< HEAD
-        uint256 voteCount;
-        string[] votedVoterLists;
-=======
         uint voteCount;
         address[] votedVoterLists;
->>>>>>> 43b8cc9fc904a013b7fc10d9ddc8534bce9a2f3a
     }
 
     struct Party{
@@ -44,20 +36,16 @@ contract Structure {
         uint totalMember;
         string agenda;
         string logoUrl;
-        string[] members;
+        address[] members;
     }
 
-<<<<<<< HEAD
-    struct Election {
-=======
     struct Election{
         address owner;
->>>>>>> 43b8cc9fc904a013b7fc10d9ddc8534bce9a2f3a
         string title;
         string description;
         string startDate;
         string endDate;
         string electionType;
-        Candidate[] selectedCandidates;
+        address[] selectedCandidates;
     }
 }
