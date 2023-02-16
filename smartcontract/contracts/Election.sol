@@ -120,8 +120,12 @@ contract Election is Structure{
         string memory _email, string memory _profile,string memory _province,
         string memory _district, string memory _municipality, string memory _ward
     ) public payable {
-        address[] memory votedCandidateList;
         address _id = msg.sender;
+
+        // verify voter if already exist
+        require(voters[_id].user.citizenshipNumber == 0, "Voter already registered !");
+        
+        address[] memory votedCandidateList;
         Voter memory voter = Voter(
             User(_id, _name, _citizenshipNo, _age, _dob, _email, _profile, _province, _district, _municipality, _ward), 
             votedCandidateList, 0
@@ -214,7 +218,7 @@ contract Election is Structure{
 
 // test data
 // Parbat, 0778, 22, wanna make secure system, sep 12 2022, kathamandu nepal, parbat@gmail.com, http://profile.com, Congress
-// Gaurab, 0778, 22, oct 11 2022, Pokhara nepal, garuab@gmail.com, http://profile.com
+// Gaurab, 0778, 22, oct 11 2022, garuab@gmail.com, http://profile.com, madhesh ,sarlahi,barahathawa, 9 
 
 
 // create election
