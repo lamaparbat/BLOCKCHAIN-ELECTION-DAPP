@@ -103,6 +103,12 @@ contract Election is Structure{
     ) public payable {
         address[] memory votedVoterLists;
         address _id = msg.sender;
+
+        // verify voter if already exist
+        if(candidates[_id].user.citizenshipNumber != 0){
+            revert("Candidate already registered !");
+        }
+
         Candidate memory candidate = Candidate(
             User(_id, _name, _citizenshipNo, _age, _dob, _email, _profile, _province, _district, _municipality, _ward),
              _partyName, _agenda, 0, votedVoterLists
@@ -123,7 +129,9 @@ contract Election is Structure{
         address _id = msg.sender;
 
         // verify voter if already exist
-        require(voters[_id].user.citizenshipNumber == 0, "Voter already registered !");
+        if(voters[_id].user.citizenshipNumber != 0){
+            revert("Voter already registered !");
+        }
         
         address[] memory votedCandidateList;
         Voter memory voter = Voter(
