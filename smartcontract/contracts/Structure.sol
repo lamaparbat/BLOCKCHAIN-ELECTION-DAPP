@@ -36,7 +36,7 @@ contract Structure {
         uint totalMember;
         string agenda;
         string logoUrl;
-        string[] members;
+        address[] members;
     }
 
     struct Election{
@@ -46,6 +46,6 @@ contract Structure {
         string startDate;
         string endDate;
         string electionType;
-        Candidate[] selectedCandidates;
+        address[] selectedCandidates;
     }
 }
