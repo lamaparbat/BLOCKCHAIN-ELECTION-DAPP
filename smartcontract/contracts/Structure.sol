@@ -40,7 +40,6 @@ contract Structure {
     }
 
     struct Election{
-        address owner;
         string title;
         string description;
         string startDate;
