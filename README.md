@@ -1,7 +1,7 @@
 # Blockchain E-Voting System (WEB 3.O)
 
 ### Landing Page
-![Uploading Screen Shot 2023-02-18 at 23.41.42.png…]()
+<img width="1440" alt="Screen Shot 2023-02-18 at 23 41 42" src="https://user-images.githubusercontent.com/64581460/219881138-995c1c0f-9c77-4cef-937a-696cd5ac3441.png">
 
 ### Before Connecting Metamask wallet [Navbar]
 <img width="1440" alt="Screen Shot 2023-02-13 at 22 32 24" src="https://user-images.githubusercontent.com/64581460/218519876-a822631a-b9c5-464c-871d-82b6a31eaf00.png">
