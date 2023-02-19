@@ -103,9 +103,9 @@ export const CONTRACT_ABI = [
 				"type": "address[]"
 			},
 			{
-				"internalType": "address",
+				"internalType": "string",
 				"name": "electionAddress",
-				"type": "address"
+				"type": "string"
 			}
 		],
 		"name": "addSelectedCandidates",
@@ -554,11 +554,6 @@ export const CONTRACT_ABI = [
 			{
 				"components": [
 					{
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					},
-					{
 						"internalType": "string",
 						"name": "title",
 						"type": "string"
@@ -810,11 +805,6 @@ export const CONTRACT_ABI = [
 		"name": "electionList",
 		"outputs": [
 			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			},
-			{
 				"internalType": "string",
 				"name": "title",
 				"type": "string"
@@ -846,18 +836,13 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "address",
+				"internalType": "string",
 				"name": "",
-				"type": "address"
+				"type": "string"
 			}
 		],
 		"name": "elections",
 		"outputs": [
-			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			},
 			{
 				"internalType": "string",
 				"name": "title",
@@ -990,11 +975,6 @@ export const CONTRACT_ABI = [
 		"outputs": [
 			{
 				"components": [
-					{
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					},
 					{
 						"internalType": "string",
 						"name": "title",
@@ -1757,4 +1737,4 @@ export const CONTRACT_ABI = [
 		"type": "function"
 	}
 ];
-export const CONTRACT_ABI_ADDRESS = "0x253adb7870295C3e285afC8D4549D1eA9CCdA22D";
+export const CONTRACT_ABI_ADDRESS = "0xB1FC4Ae3A5fE987Ad4EDE0acB8ae61001386C318";

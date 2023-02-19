@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import Select from "react-select";
-import { setElectionData } from '../redux/electionReducer';
 import { ELECTION_TYPE, SmartContract } from '../constants';
 import { toast } from 'react-toastify';
-import { getElectionList } from '../utils';
 import { getStorage } from '../services';
 import { createElection } from '../utils/action';
 
@@ -34,13 +32,15 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
 
   const onChange = (name: string, value: string) => {
     setElection({ ...election, [name]: value });
+    console.log(election)
   };
 
   const onCreate = async () => {
     setLoading(true);
     try {
       const { title, description, startDate, endDate, electionType } = election;
-      await createElection({title, description, startDate, endDate});
+      console.log(electionType)
+      await createElection({ title, description, startDate, endDate });
       await SmartContract.methods.createElection(
         title,
         description,
@@ -102,7 +102,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
               options={ELECTION_TYPE}
               className="w-[220px] mr-2 mt-1"
               placeholder={<div>Select Type</div>}
-              onChange={(item: any) => onChange("type", item.value)}
+              onChange={(item: any) => onChange("electionType", item.value)}
               isDisabled={election?.electionType ? false : true}
             />
           </div>

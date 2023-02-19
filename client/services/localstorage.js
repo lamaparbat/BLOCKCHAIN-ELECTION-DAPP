@@ -1,4 +1,3 @@
-
 export const getStorage = (key) => {
   if (typeof window !== "undefined") {
     return localStorage?.getItem(key);
@@ -6,7 +5,7 @@ export const getStorage = (key) => {
 }
 
 export const setStorage = (key, value) => {
-  localStorage.setItem(
+  window?.localStorage?.setItem(
     key,
     typeof value === 'string' ? value : JSON.stringify(value)
   );

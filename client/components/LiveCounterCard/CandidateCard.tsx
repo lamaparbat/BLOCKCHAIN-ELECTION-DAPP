@@ -5,28 +5,28 @@ import { setCandidateDetails } from '../../redux/candidateReducer';
 import Avatar from '../Avatar';
 import { CandidateCardStruct } from '../../interfaces/index';
 import FilterIcon from '../FilterIcon';
-import { toast } from 'react-toastify';
 import { SmartContract } from '../../constants';
-import { getStorage } from '../../services';
-import { getCandidateList } from '../../utils';
 import _ from 'lodash';
-import { GiLockedBox } from 'react-icons/gi';
 import { TiLockClosed } from 'react-icons/ti';
 
 
 const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
   const { details, border, ishighlighted, casteVote, voted }: any = props;
+  const [updatedCandidateDetails, setUpdatedCandidateDetails] = useState({ ...details, voted: voted });
   let voteCasteEvent = null;
 
   useEffect(() => {
     voteCasteEvent = SmartContract.events.VoteCast().on("data", (event: any) => {
-      console.log("new vote", event.returnValues[0]);
+      const updatedDetails = event.returnValues[0];
+      updatedDetails.user._id === details.user._id &&
+        setUpdatedCandidateDetails({ ...updatedCandidateDetails, voted: true, votedVoterLists: updatedDetails.votedVoterLists });
     });
 
     return () => {
       voteCasteEvent && voteCasteEvent.unsubscribe();
     }
   }, []);
+
   // redux dispatcher
   const dispatch = useDispatch();
   const router = useRouter();
@@ -50,13 +50,13 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
           </div>
         </div>
         <div className='flex items-center'>
-          <h3 className='mr-5 mt-2' id='count'>{details?.votedVoterLists?.length ?? 0}</h3>
+          <h3 className='mr-5 mt-2' id='count'>{updatedCandidateDetails?.votedVoterLists?.length ?? 0}</h3>
           <button
             className={`relative flex justify-center items-center bg-slate-100 ${!voted && "shadow-md"} pt-2 pb-2 px-4 rounded-pill text-sm ${voted && "text-slate-500 cursor-default"}`}
             onClick={() => casteVote(details?.user?._id)}
           >
             {
-              voted && <span className='absolute -top-1 -left-2 p-1 rounded-circle bg-slate-200 shadow-md cursor-default'>
+              updatedCandidateDetails?.voted && <span className='absolute -top-1 -left-2 p-1 rounded-circle bg-slate-200 shadow-md cursor-default'>
                 <TiLockClosed className='text-slate-500' />
               </span>
             }
