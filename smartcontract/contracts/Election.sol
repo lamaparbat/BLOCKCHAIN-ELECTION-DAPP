@@ -16,7 +16,7 @@ contract Election is Structure{
     mapping (address => Candidate) public candidates;
     mapping (address => Voter) public voters;
     mapping (address => Party) public parties;
-    mapping (address => Election) public elections;
+    mapping (string => Election) public elections;
 
     // Arrays
     Candidate[] public candidateList;
@@ -159,9 +159,9 @@ contract Election is Structure{
         }
 
         address[] memory selectedCandidates;
-        Election memory election = Election(adminAddress, _title, _description, _startDate, _endDate, _electionType, selectedCandidates);
+        Election memory election = Election(_title, _description, _startDate, _endDate, _electionType, selectedCandidates);
 
-        elections[adminAddress] = election;
+        elections[_startDate] = election;
         electionList.push(election);
         totalElection = totalElection.add(1);
 
@@ -170,7 +170,7 @@ contract Election is Structure{
 
     function addSelectedCandidates(
         address[] memory _selectedCandidates,
-        address electionAddress
+        string memory electionAddress
     ) public payable{
         if(msg.sender != adminAddress){
             revert("Only admin is allow to select candidates !");
@@ -181,7 +181,7 @@ contract Election is Structure{
         }
 
         for(uint i = 0; i < electionList.length; i++){
-            if(electionList[i].owner == electionAddress){
+            if(keccak256(bytes(electionList[i].startDate)) == keccak256(bytes(electionAddress))){
                 for (uint j = 0; j < _selectedCandidates.length; j++) {
                     electionList[i].selectedCandidates.push(_selectedCandidates[j]);
                 }
