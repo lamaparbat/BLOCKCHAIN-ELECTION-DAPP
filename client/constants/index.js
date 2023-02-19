@@ -126,6 +126,87 @@ const WARD_NO = [
   { label: 11, value: 11 }, { label: 12, value: 12 }
 ]
 
+const VOTES = {
+  "Province 1": [{
+    party: "Nepal Congress",
+    name: "Sher Bahadur Deuba",
+    votes: 13861,
+  }, {
+    party: "Emaly",
+    name: "K.P Sharma Oli",
+    votes: 15861,
+  }, {
+    party: "Maoist",
+    name: "Prachandey",
+    votes: 12861,
+  }],
+  "Province 2": [{
+    party: "Nepal Congress",
+    name: "Balendra Shah",
+    votes: 32861,
+  }, {
+    party: "Emaly",
+    name: "Sunita Dangol",
+    votes: 19861,
+  }, {
+    party: "Maoist",
+    name: "Prem Ale Magar",
+    votes: 18861,
+  }],
+  "Province 3": [{
+    party: "Nepal Congress",
+    name: "Gagan kumar Thapa",
+    votes: 22861,
+  }, {
+    party: "Emaly",
+    name: "Srijana Jhakri",
+    votes: 14861,
+  }, {
+    party: "Maoist",
+    name: "Madhav kumar Nepal",
+    votes: 19861,
+  }],
+  "Province 4": [{
+    party: "Nepal Congress",
+    name: "Gagan kumar Thapa",
+    votes: 54861,
+  }, {
+    party: "Emaly",
+    name: "Srijana Jhakri",
+    votes: 66861,
+  }, {
+    party: "Maoist",
+    name: "Madhav kumar Nepal",
+    votes: 33861,
+  }],
+  "Province 5": [{
+    party: "Nepal Congress",
+    name: "Gagan kumar Thapa",
+    votes: 54861,
+  }, {
+    party: "Emaly",
+    name: "Srijana Jhakri",
+    votes: 99861,
+  }, {
+    party: "Maoist",
+    name: "Madhav kumar Nepal",
+    votes: 65861,
+  }],
+  "Province 6": [{
+    party: "Nepal Congress",
+    name: "Gagan kumar Thapa",
+    votes: 13861,
+  }, {
+    party: "Emaly",
+    name: "Srijana Jhakri",
+    votes: 11861,
+  }, {
+    party: "Maoist",
+    name: "Madhav kumar Nepal",
+    votes: 32861,
+  }]
+}
+
 // custom style
 const BTM_BORDER_STYLE = "border-r-0 border-l-0 border-b-2 border-slate-100";
 const responsive = "lg:w-[1100px] w-full max-[1100px]:px-5";
@@ -153,9 +234,9 @@ const politicalItems = [
 ]
 
 const electionResultTypes = [
-  { label: "Parliament Election", value: '/election/province' },
-  { label: 'District Election', value: '/election/district' },
-  { label: 'Local Election', value: '/election/local' }
+  { label: "Federal Parliament Election", value: '/election-result/parliament' },
+  { label: 'Province Election', value: '/election-result/province' },
+  { label: 'Local Election', value: '/election-result/local' }
 ]
 
 const voterItems = [
@@ -196,7 +277,7 @@ const SmartContract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ABI_ADDRESS);
 
 export {
   LANGUAGES,
-  PARTIES,
+  PARTIES, VOTES,
   responsive, BTM_BORDER_STYLE, ELECTION_TYPE,
   sub_navbar_style, sub_navbar_items_style, sub_navbar_items,
   PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, StateProvinceOffices, DistrictOffices,

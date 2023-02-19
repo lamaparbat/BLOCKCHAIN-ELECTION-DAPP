@@ -4,7 +4,7 @@ import Select from 'react-select';
 import Navbar from '../../components/Navbar';
 import VoterCardSkeleton from "../../components/Skeleton/voter-card-skeleton";
 import BreadCrumb from '../../components/BreadCrumb';
-import { DISTRICT, PROVINCE, MUNICIPALITY, WARD_NO, responsive, SmartContract, ELECTION_TYPE } from '../../constants';
+import { DISTRICT, PROVINCE, MUNICIPALITY, WARD_NO, responsive, SmartContract } from '../../constants';
 import UserCard from '../../components/UserCard';
 import { getCandidateList, getElectionList, getPartyList } from '../../utils';
 import { setCandidateList } from '../../redux/candidateReducer';
@@ -13,7 +13,6 @@ import { BsFilter, BsSearch } from 'react-icons/bs';
 import { AiOutlineClose, AiOutlineReload } from 'react-icons/ai';
 import _ from 'lodash';
 import { getStorage } from '../../services';
-import { Modal } from 'react-bootstrap';
 
 const defaultElectedCandidates = { electionAddress: null, selectedCandidates: [] };
 const defaultOptions = { label: '', value: '' };
@@ -24,24 +23,19 @@ const Details: React.FC = (): React.ReactElement => {
   const [electionList, setElectionList] = useState([]);
   const [electedCandidatesList, setElectedCandidates] = useState(defaultElectedCandidates);
   const [partyList, setPartyList] = useState([]);
-
-  const [electionOptions, setElectionOptions] = useState([]);
   const [selectedProvince, setSelectProvince] = useState(defaultOptions);
   const [selectedDistrict, setSelectDistrict] = useState(defaultOptions);
   const [selectedMunicipality, setSelectMunicipality] = useState(defaultOptions);
   const [selectedWard, setSelectWard] = useState(defaultOptions);
   const [selectedParty, setSelectedParty] = useState(defaultOptions);
   const [openSortModal, setOpenSortModal] = useState(false);
-  const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
   let candidateEvent: any = null;
   const partyListOption = partyList?.map((d) => {
     return { label: d.name, value: d.name }
   });
-
-  // disptcher
-  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
@@ -50,13 +44,13 @@ const Details: React.FC = (): React.ReactElement => {
       const partyList = await getPartyList();
 
       originalCandidatesList = list;
-      let filteredElectionOptions = electionList.map((details: any) => { return { label: details.title, value: details.startDate } });
-      filteredElectionOptions = _.orderBy(filteredElectionOptions, [(option) => new Date(option.value)], ["desc"])
-
       setCandidateLists(list);
       setElectionList(electionList);
       setPartyList(partyList);
-      setElectionOptions(filteredElectionOptions);
+      setElectedCandidates({
+        ...electedCandidatesList,
+        electionAddress: electionList.at(-1)?.owner ?? null
+      })
 
       candidateEvent = SmartContract.events?.CandidateCreated().on("data", (event: any) => {
         const tempArray = [...originalCandidatesList, event.returnValues[0]];
@@ -114,7 +108,7 @@ const Details: React.FC = (): React.ReactElement => {
     setElectedCandidates({
       ...electedCandidatesList,
       selectedCandidates: checked ? [...electedCandidatesList.selectedCandidates, details.user._id] :
-        electedCandidatesList.selectedCandidates.filter((address: string) => address !== details?.user?._id)
+        electedCandidatesList.selectedCandidates.filter((address:string) => address !== details?.address)
     });
   }
 
@@ -122,17 +116,10 @@ const Details: React.FC = (): React.ReactElement => {
     setElectedCandidates({ ...electedCandidatesList, selectedCandidates: [] });
   }
 
-  const handleSelectElection = ({ value }) => {
-    setElectedCandidates({
-      ...electedCandidatesList,
-      electionAddress: value ?? electionList?.at(-1)?.startDate
-    });
-  }
-
   const handleSubmitSelection = async () => {
     try {
       const { electionAddress, selectedCandidates } = electedCandidatesList;
-
+console.log(selectedCandidates)
       await SmartContract.methods.addSelectedCandidates(selectedCandidates, electionAddress).send({ from: loggedInAccountAddress });
       toast.success("Selected candidates added successfully.")
     } catch (error) {
@@ -140,6 +127,7 @@ const Details: React.FC = (): React.ReactElement => {
       toast.error("Fail to add selected candidates !");
     }
   }
+
   return (
     <div className='mb-[50px]'>
       <Navbar /><br />
@@ -151,7 +139,7 @@ const Details: React.FC = (): React.ReactElement => {
               Candidate List
               {true &&
                 <span className='h-[24px] w-6 text-[14px] flex justify-center items-center rounded-circle bg-blue-800 text-slate-100 shadow-lg absolute -top-2 -right-7'>
-                  {candidateLists?.length ?? 0}
+                  {candidateLists.length}
                 </span>
               }
             </div>
@@ -166,7 +154,7 @@ const Details: React.FC = (): React.ReactElement => {
                   </button> */}
                   <button
                     className='bg-blue-900 text-slate-100 px-3 py-1 mr-3 rounded-1 outline-0 relative'
-                    onClick={() => setShowSubmitModal(true)}
+                    onClick={handleSubmitSelection}
                   >
                     Confirm Selection
                     {electedCandidatesList.selectedCandidates.length > 0 &&
@@ -271,28 +259,12 @@ const Details: React.FC = (): React.ReactElement => {
                     key={i}
                     onCandidateSelected={onCandidateSelected}
                     currentElection={electionList[electionList.length - 1]}
-                    isElected={_.find(electedCandidatesList, (address: string) => address === candidateDetails.user._id) ?? false}
+                    isElected={_.find(electedCandidatesList, (address:string) => address === candidateDetails.user._id) ?? false}
                   />) : "No Candidates Available !"
             }
           </div>
         </div>
       </div>
-      <Modal show={showSubmitModal} size="sm">
-        <Modal.Body>
-          <div className='my-2 mx-3'>
-            <label className='mb-2'>Select Election</label>
-            <Select options={electionOptions} onChange={handleSelectElection} />
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <button className='btn px-3 py-1 rounded-1' onClick={() => setShowSubmitModal(false)}>Close</button>
-          <button
-            className='btn btn-primary px-3 py-1 rounded-1'
-            onClick={() => handleSubmitSelection()}
-            disabled={!electedCandidatesList.electionAddress}
-          >Submit</button>
-        </Modal.Footer>
-      </Modal>
     </div>
   )
 }

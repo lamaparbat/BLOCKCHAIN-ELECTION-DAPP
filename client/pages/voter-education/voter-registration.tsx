@@ -156,6 +156,7 @@ const VoterRegistration = () => {
                 className='form-control shadow-none outline-0 font-monospace'
                 type="datetime-local"
                 onChange={(e) => setVoterDetails({ ...voterDetails, dob: e.target.value })}
+                accept="image/*, image/png, image/jpeg, image/gif"
               />
             </div>
           </div>
@@ -176,7 +177,6 @@ const VoterRegistration = () => {
                 className='overrideInputStyle form-control py-[10px] rounded-1 mt-1'
                 type="file"
                 name="file"
-                accept='image/*, image/jpeg, image/png, image/gif'
                 onChange={(e) => setVoterDetails({ ...voterDetails, profileUrl: e.target.files[0] })}
               />
             </div>

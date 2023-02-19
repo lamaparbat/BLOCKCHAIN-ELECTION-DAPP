@@ -71,14 +71,6 @@ interface UserCardStruct {
   currentElection?: Array<Object>,
   isElected?: boolean
 }
-interface ElectionStruct{
-  title: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-  electionType: string;
-  electedCandidates: Array<String>;
-}
 
 export type {
   AvatarProps,
@@ -86,6 +78,5 @@ export type {
   LiveCounterCardStruct,
   CandidateCardStruct,
   UserCardStruct,
-  PartyStruct,
-  ElectionStruct
+  PartyStruct
 };

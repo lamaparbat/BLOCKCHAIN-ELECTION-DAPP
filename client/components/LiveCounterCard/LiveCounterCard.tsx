@@ -12,8 +12,8 @@ import _ from 'lodash';
 const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, electionStatus, casteVote }): ReactElement => {
   const {list} = useSelector((state:any) => state.candidateReducer)
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
-  const isElectionStart = electionStatus === "LIVE";
-  const isElectionEnd = electionStatus === "ENDED";
+  const isElectionStart = electionStatus === "start";
+  const isElectionEnd = electionStatus === "end";
   let { agenda, partyName, voteCount, user, votedVoterLists }: any = data[0];
   const { fullName, profile }: any = user;
   const filter = _.map(data, (candidate:any) => {
