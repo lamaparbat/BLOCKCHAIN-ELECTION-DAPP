@@ -22,7 +22,7 @@ const Details: React.FC = (): React.ReactElement => {
     (async () => {
       const list = await getPartyList();
 
-      originalParties = [...list];
+      originalParties = list ? [...list]: [];
       dispatch(setParties(list));
       setPartyLists(list);
 

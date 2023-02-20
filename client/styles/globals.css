@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Miriam+Libre&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -19,6 +20,11 @@
   font-family: 'Anek Devanagari', sans-serif;
   font-family: 'Space Mono', monospace;
 }
+
+.countdown_timer div, .countdown_timer h5 {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
 
 span, p {
   color: rgb(71 85 105);
