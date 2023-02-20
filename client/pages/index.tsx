@@ -18,6 +18,7 @@ export default function Home() {
   const [electionLists, setElectionLists] = useState([]);
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
   const [countDown, setCountDown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [timer, setTimer] = useState({ id: "seconds", play: false });
   const countDownDate = new Date("March 5, 2023 15:37:25").getTime();
 
   const dispatch = useDispatch();
@@ -40,6 +41,35 @@ export default function Home() {
       setCountDown({ days, hours, minutes, seconds });
     }, 1000);
   }, []);
+
+
+  useEffect(() => {
+    setTimer({ id: "days", play: true });
+    setTimeout(() => {
+      setTimer({ id: "days", play: false });
+    }, 950);
+  }, [countDown.days]);
+
+  useEffect(() => {
+    setTimer({ id: "hours", play: true });
+    setTimeout(() => {
+      setTimer({ id: "hours", play: false });
+    }, 950);
+  }, [countDown.hours]);
+
+  useEffect(() => {
+    setTimer({ id: "minutes", play: true });
+    setTimeout(() => {
+      setTimer({ id: "minutes", play: false });
+    }, 950);
+  }, [countDown.minutes]);
+
+  useEffect(() => {
+    setTimer({ id: "seconds", play: true });
+    setTimeout(() => {
+      setTimer({ id: "seconds", play: false });
+    }, 950);
+  }, [countDown.seconds]);
 
   return (
     <div>
@@ -84,26 +114,26 @@ export default function Home() {
               <div className='px-5 flex justify-evenly w-100 mt-3'>
                 <div className='days w-[140px] text-center'>
                   <h5 className='my-3 text-slate-300'>DAYS</h5>
-                  <div className='px-3 py-3 text-8xl bg-black shadow-lg rounded-1 countdown_timer_count'>
-                    <div className={`animate__animated animate__slideInUp`}>{countDown.days}</div>
+                  <div className='px-3 py-3 text-8xl bg-black shadow-lg rounded-1 countdown_timer_count overflow-hidden'>
+                    <div className={`animate__animated ${timer.id === "days" && timer.play && "animate__slideInUp"}`}>{countDown.days}</div>
                   </div>
                 </div>
                 <div className='days w-[140px] text-center'>
                   <h5 className='my-3 text-slate-300'>HOURSE</h5>
-                  <div className='px-3 py-3 text-8xl bg-black shadow-lg rounded-1 countdown_timer_count'>
-                    <div className={`${countDown.hours && "animate__animated animate__slideInUp "}`}>{countDown.hours}</div>
+                  <div className='px-3 py-3 text-8xl bg-black shadow-lg rounded-1 countdown_timer_count overflow-hidden'>
+                    <div className={`animate__animated ${timer.id === "hours" && timer.play && "animate__slideInUp"}`}>{countDown.hours}</div>
                   </div>
                 </div>
                 <div className='days w-[140px] text-center'>
                   <h5 className='my-3 text-slate-300'>MINUTES</h5>
-                  <div className='px-3 py-3 text-8xl bg-black shadow-lg rounded-1 countdown_timer_count'>
-                    <div className={`${countDown.minutes && "animate__animated animate__slideInUp "}`}>{countDown.minutes}</div>
+                  <div className='px-3 py-3 text-8xl bg-black shadow-lg rounded-1 countdown_timer_count overflow-hidden'>
+                    <div className={`animate__animated ${timer.id === "minutes" && timer.play && "animate__slideInUp"}`}>{countDown.minutes}</div>
                   </div>
                 </div>
                 <div className='days w-[140px] text-center'>
                   <h5 className='my-3 text-slate-300'>SECONDS</h5>
-                  <div className='px-3 py-3 text-8xl bg-black shadow-lg rounded-1 countdown_timer_count'>
-                    {countDown?.days && <div className="animate__animated animate__slideInUp">{countDown.seconds}</div>}
+                  <div className='px-3 py-3 text-8xl bg-black shadow-lg rounded-1 countdown_timer_count overflow-hidden'>
+                    <div className={`animate__animated ${timer.id === "seconds" && timer.play && "animate__slideInUp"}`}>{countDown.seconds}</div>
                   </div>
                 </div>
               </div>
