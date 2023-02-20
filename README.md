@@ -1,5 +1,11 @@
 # Blockchain E-Voting System (WEB 3.O)
 
+### Landing page UI
+<img width="1440" alt="Screen Shot 2023-02-20 at 21 33 39" src="https://user-images.githubusercontent.com/64581460/220150908-0da8a309-9e5e-4d6a-ac41-c35244729f31.png">
+
+### Live Election Starting CountDown Timer
+
+
 ### Before Connecting Metamask wallet [Navbar]
 <img width="1440" alt="Screen Shot 2023-02-13 at 22 32 24" src="https://user-images.githubusercontent.com/64581460/218519876-a822631a-b9c5-464c-871d-82b6a31eaf00.png">
 
