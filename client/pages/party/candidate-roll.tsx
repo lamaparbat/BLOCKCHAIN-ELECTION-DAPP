@@ -195,7 +195,7 @@ const Details: React.FC = (): React.ReactElement => {
                   {!openSortModal ? <>Sort <BsFilter className='text-2xl ml-2' /></> :
                     <>Cancel <AiOutlineClose className='text-1xl ml-2' /></>}
                 </div>
-                <div className={`absolute px-3 py-2 flex flex-column bg-slate-100 shadow-lg mt-3 w-[500px] -ml-[400px] z-50 ${!openSortModal && "hidden"}`}>
+                <div className={`absolute px-3 py-2 flex flex-column bg-white shadow-lg mt-3 w-[500px] -ml-[400px] z-50 ${!openSortModal && "hidden"}`}>
                   <h5 className='mt-3 mb-3'>Address</h5>
                   <div className='flex'>
                     <Select
