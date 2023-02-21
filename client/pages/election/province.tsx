@@ -34,6 +34,14 @@ export default function Home() {
       setVoterLists(voterLists);
       dispatch(setCandidateList(candidateLists));
       setElectionList(electionList);
+
+      voteCastEvent = SmartContract.events.VoteCast().on("data", (event: any) => {
+        const votedCandidateDetails = event.returnValues[0];
+        let filterCandidates = candidateLists.map((d) => {
+          return d.user._id === votedCandidateDetails.user._id ? { ...votedCandidateDetails } : { ...d };
+        });
+        setCandidateLists(filterCandidates);
+      });
     })();
 
     return () => {
@@ -51,6 +59,7 @@ export default function Home() {
   const currentElection = filteredElectionsList.length > 0 && filteredElectionsList?.at(-1);
   const electionCandidates = currentElection ? _.groupBy(currentElection?.selectedCandidates, (candidate) => candidate.user.province) : [];
   const electionCandidatesArray = electionCandidates ? Object.entries(electionCandidates) : [];
+
 
   electionChannel.bind("start-election-event", () => {
     console.log("election started");
@@ -101,7 +110,7 @@ export default function Home() {
           </div>
           <div className='lg:w-[1100px] flex justify-around flex-wrap'>
             {electionStatus && electionList?.length > 0 && electionCandidatesArray.length > 0 && electionCandidatesArray?.map(([key, value]: any) =>
-              <LiveCounterCard type={key} data={value} key={key} electionStatus={electionStatus} casteVote={casteVote} />
+              <LiveCounterCard type={key} data={_.orderBy(value, ["votedVoterLists.length"], ["desc"])} key={key} electionStatus={electionStatus} casteVote={casteVote} />
             )}
           </div>
         </div>

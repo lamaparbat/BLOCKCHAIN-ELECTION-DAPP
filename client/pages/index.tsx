@@ -13,35 +13,37 @@ import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { Fade } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import 'animate.css';
+import moment from 'moment';
 
 export default function Home() {
   const [electionLists, setElectionLists] = useState([]);
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
   const [countDown, setCountDown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [timer, setTimer] = useState({ id: "seconds", play: false });
-  const countDownDate = new Date("March 5, 2023 15:37:25").getTime();
-
-  const dispatch = useDispatch();
+  let counterInterval;
 
   useEffect(() => {
     (async () => {
       const electionList = await getElectionList();
-
       setElectionLists(electionList);
     })();
-
-    setInterval(() => {
-      const now = new Date().getTime();
-      const distance = countDownDate - now;
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      setCountDown({ days, hours, minutes, seconds });
-    }, 1000);
   }, []);
 
+  if (electionLists.length > 0) {
+    const { startDate, endDate } = electionLists.at(-1);
+    console.log(new Date(startDate), new Date(endDate));
+    if (new Date() < new Date(startDate)) {
+      counterInterval = setInterval(() => {
+        const diff = moment(startDate).diff(moment(new Date()));
+        var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        setCountDown({ ...countDown, days, hours, minutes, seconds })
+      }, 1000);
+    }
+  }
 
   useEffect(() => {
     setTimer({ id: "days", play: true });
@@ -68,7 +70,7 @@ export default function Home() {
     setTimer({ id: "seconds", play: true });
     setTimeout(() => {
       setTimer({ id: "seconds", play: false });
-    }, 950);
+    }, 900);
   }, [countDown.seconds]);
 
   return (
