@@ -95,25 +95,33 @@ const Navbar: React.FC = (): ReactElement => {
     <div className='navbar__container'>
       {electionData && electionData.startDate && <MarqueeBar counterData={electionData} />}
       <div className='navbar__top py-2 w-full flex justify-end items-center bg-slate-100 px-2'>
+
+        {/* sidebar */}
         <div
           className={`${sub_navbar_style} ${responsive} min-[800px]:hidden max-[800px]:flex relative`}
           onClick={() => setOpenTopVerticalNavbar(!openTopVerticalNavbar)}
         >
           <GiHamburgerMenu className='text-dark text-lg cursor-pointer' />
         </div>
-        <div className={`absolute left-0 ml-[25px] mt-[50px] z-50 flex lg:hidden ${openTopVerticalNavbar ? 'block' : 'hidden'}`}>
-          <div className={`py-2 ${sub_navbar_style} w-[220px] h-[100px] bg-blue-800 flex-col justify-around absolute rounded-b-[5px]`}>
-            <div className={sub_navbar_items_style} onClick={() => navigate("/")}>CREATE ELECTION</div>
-            <div className={sub_navbar_items_style} onClick={() => navigate("/FAQ")}>FAQ</div>
-            <select className='text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0' onChange={onLanguageChange}>
-              {LANGUAGES.map((d, i) => <option key={i} value={d.value}>{d.label}</option>)}
+
+
+        {/*  vertical-top-navbar */}
+        <div className={`vertical__navbar absolute left-0 ml-[25px] mt-[40px] shadow-inner z-50 flex lg:hidden ${openTopVerticalNavbar ? 'block' : 'hidden'}`}>
+          <div className={`px-4 pt-3 pb-4 w-[220px] h-[240px] bg-slate-100 absolute rounded-b-[5px] text-slate-600 text-[16px]`}>
+            <div onClick={() => navigate("/")}>CREATE ELECTION</div>
+            <div className="my-[18px]" onClick={() => navigate("/FAQ")}>FAQ</div>
+            <select className='form-control py-1 cursor-pointer hover:opacity-70 outline-0' onChange={onLanguageChange}>
+              {LANGUAGES.map((d, i) => <option className='text-[14px]' key={i} value={d.value}>{d.label}</option>)}
             </select>
-            <span className='px-4 cursor-pointer hover:opacity-70 border-r-2 border-slate-400 border-l-2 border-slate-400' onClick={() => navigate("mail")}><AiOutlineMail className='text-lg' /></span>
-            <span className='pl-1 pr-4 cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={openSearchModal}><AiOutlineSearch className='text-xl' /></span>
+            <div className='my-[18px] cursor-pointer hover:opacity-70 flex items-center' onClick={() => navigate("mail")}>Gmail <AiOutlineMail className='text-lg ml-3' /></div>
+            <div className='cursor-pointer hover:opacity-70 flex items-center' onClick={openSearchModal}>Search <AiOutlineSearch className='text-xl ml-3' /></div>
           </div>
         </div>
-        <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={onCreateElection}>CREATE ELECTION</span>
-        <div className='items w-[450px] flex justify-around items-center text-slate-600'>
+
+
+        {/*  */}
+        <div className='items w-[600px] flex justify-around items-center text-slate-600 min-[800px]:flex max-[800px]:hidden'>
+          <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={onCreateElection}>CREATE ELECTION</span>
           <span className='pr-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/FAQ")}>FAQ</span>
           <select className='text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0' onChange={onLanguageChange}>
             {LANGUAGES.map((d, i) => <option key={i} value={d.value}>{d.label}</option>)}
@@ -145,9 +153,11 @@ const Navbar: React.FC = (): ReactElement => {
           }
         </div>
       </div>
+
+
       <div className='flex justify-center'>
         <div className={`navbar__bottom ${responsive} flex items-center justify-between pt-2 px-3`}>
-          <Image className='cursor-pointer' src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
+          <Image className='cursor-pointer max-w-md:hidden' src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
           <div className='center__content text-center text-red-700 -ml-[15px]'>
             <h3 className='max-[1100px]:text-[23px]'>{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Election Commission Nepal' : 'निर्वाचन आयोग नेपाल'}</h3>
             <h6 className='max-[1100px]:text-md'>{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Kantipath, Kathmandu' : 'कान्तिपथ, काठमाण्डौ'}</h6>
@@ -155,6 +165,9 @@ const Navbar: React.FC = (): ReactElement => {
           <Image src='/images/flag.png' height={40} width={50} alt="nepal-flag" />
         </div>
       </div>
+
+
+      {/* bottom navbar */}
       <div className='py-[12px] flex justify-center items-center bg-blue-900'>
         <div
           className={`${sub_navbar_style} ${responsive} min-[800px]:hidden max-[800px]:flex relative`}
