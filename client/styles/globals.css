@@ -112,3 +112,13 @@ span, p {
 .animatedBorder {
   animation: rotate 4s linear infinite, opacityChange 3s infinite alternate;
 }
+
+.vertical__navbar div div{
+  cursor: pointer;
+}
+
+.card__box__shadow{
+  box-shadow: 0px -1px 14px 0px rgba(120,120,120,0.75);
+  -webkit-box-shadow: 0px -1px 14px 0px rgba(120,120,120,0.75);
+  -moz-box-shadow: 0px -1px 14px 0px rgba(120,120,120,0.75);
+}
