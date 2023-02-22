@@ -20,20 +20,31 @@ export default function Home() {
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
   const [countDown, setCountDown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [timer, setTimer] = useState({ id: "seconds", play: false });
-  let counterInterval;
+  const [showSlideCount, setShowSlideCount] = useState(3);
 
   useEffect(() => {
     (async () => {
       const electionList = await getElectionList();
       setElectionLists(electionList);
     })();
+
+    window.addEventListener('resize', (e) => {
+      if (window.innerWidth > 1080) setShowSlideCount(3.5)
+      if (window.innerWidth <= 1000) setShowSlideCount(3)
+      if (window.innerWidth <= 900) setShowSlideCount(2)
+      if (window.innerWidth <= 700) setShowSlideCount(1)
+    })
+
+    return () => {
+      window.removeEventListener("resize", null);
+    }
   }, []);
 
   if (electionLists.length > 0) {
     const { startDate, endDate } = electionLists.at(-1);
-    console.log(new Date(startDate), new Date(endDate));
+
     if (new Date() < new Date(startDate)) {
-      counterInterval = setInterval(() => {
+      setInterval(() => {
         const diff = moment(startDate).diff(moment(new Date()));
         var days = Math.floor(diff / (1000 * 60 * 60 * 24));
         var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -83,10 +94,10 @@ export default function Home() {
       <Navbar />
       <div className='px-4 py-3 flex justify-center'>
         <div className='flex flex-column justify-between'>
-          <div className='lg:w-[1100px] w-full lg:px-4 max-[1100px]:px-1'>
-            <div className='flex items-center'>
-              <div className='w-full flex'>
-                <div className='w-[200px] px-3 py-[5px] flex items-center bg-red-600 rounded-tr-[10px] text-slate-100 shadow-inner'>
+          <div className='lg:w-[1065px] w-[100vw] overflow-hidden'>
+            <div className='flex items-center max-[1000px]:px-3'>
+              <div className='w-full flex '>
+                <div className='shrink-0 w-[170px] px-3 py-[5px] flex items-center bg-red-600 rounded-tr-[10px] text-slate-100 shadow-inner'>
                   <FaRegNewspaper className='text-2xl mr-2' />
                   Latest update
                 </div>
@@ -96,58 +107,60 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='h-[400px] w-100 my-3 object-cover rounded-t-[5px] overflow-hidden'>
+            <div className='mt-3 lg:h-[400px] sm:h-[300px] w-[100vw] max-[1000px]:px-3 max-[450px]:px-0 rounded-t-[5px] overflow-hidden'>
               <Fade
                 autoplay={true}
                 nextArrow={<BsChevronRight className='absolute text-slate-100 text-4xl' />}
                 prevArrow={<BsChevronLeft className='absolute text-slate-100 text-4xl' />}>
-                <img className='h-[400px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner1.jpeg" />
-                <img className='h-[400px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner2.jpeg" />
-                <img className='h-[400px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner3.jpeg" />
-                <img className='h-[400px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner4.jpeg" />
-                <img className='h-[400px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner5.jpeg" />
-                <img className='h-[400px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner6.jpeg" />
-                <img className='h-[400px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner7.jpeg" />
+                <img className='lg:h-[400px] h-[300px] w-[100vw] object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner1.jpeg" />
+                <img className='lg:h-[400px] h-[300px] w-[100vw] object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner2.jpeg" />
+                <img className='lg:h-[400px] h-[300px] w-[100vw] object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner3.jpeg" />
+                <img className='lg:h-[400px] h-[300px] w-[100vw] object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner4.jpeg" />
+                <img className='lg:h-[400px] h-[300px] w-[100vw] object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner5.jpeg" />
+                <img className='lg:h-[400px] h-[300px] w-[100vw] object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner6.jpeg" />
+                <img className='lg:h-[400px] h-[300px] w-[100vw] object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner7.jpeg" />
               </Fade>
             </div>
 
-            <div className='countdown_timer p-2 py-4 my-5 h-[350px] bg-[url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkkyoysDz8fhLil6JB1VlqOh08zd-h2emhWw&usqp=CAU")] rounded-1 text-slate-100 flex flex-column items-center'>
-              <h3 className='my-4 mb-3 text-slate-300 text-center'>Election Nepal 2024 Happening</h3>
-              <div className='px-5 flex justify-evenly w-100 mt-3'>
-                <div className='days w-[140px] text-center'>
-                  <h5 className='my-3 text-slate-300'>DAYS</h5>
-                  <div className='px-3 py-3 text-8xl bg-black shadow-lg rounded-1 countdown_timer_count overflow-hidden'>
-                    <div className={`animate__animated ${timer.id === "days" && timer.play && "animate__slideInUp"}`}>{countDown.days}</div>
+            <div className='max-[1000]:pl-3 max-[1000]:pr-3'>
+              <div className='countdown_timer py-4 my-3 lg:h-[350px] bg-[url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkkyoysDz8fhLil6JB1VlqOh08zd-h2emhWw&usqp=CAU")] rounded-1 text-slate-100 flex flex-column items-center'>
+                <h3 className='my-4 mb-3 text-slate-300 text-center'>Election Nepal 2024 Happening</h3>
+                <div className='flex justify-evenly lg:w-[70vw] max-[1000px]:w-[100vw] mt-3'>
+                  <div className='days w-[140px] max-[700px]:w-[120px] max-[530px]:w-[90px] text-center'>
+                    <h5 className='my-3 text-slate-300'>DAYS</h5>
+                    <div className='px-0 py-[10px] text-8xl max-[700px]:text-7xl max-[530px]:text-5xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
+                      <div className={`animate__animated ${timer.id === "days" && timer.play && "animate__slideInUp"}`}>{countDown.days}</div>
+                    </div>
                   </div>
-                </div>
-                <div className='days w-[140px] text-center'>
-                  <h5 className='my-3 text-slate-300'>HOURSE</h5>
-                  <div className='px-3 py-3 text-8xl bg-black shadow-lg rounded-1 countdown_timer_count overflow-hidden'>
-                    <div className={`animate__animated ${timer.id === "hours" && timer.play && "animate__slideInUp"}`}>{countDown.hours}</div>
+                  <div className='days w-[140px] max-[700px]:w-[120px] max-[530px]:w-[90px] text-center'>
+                    <h5 className='my-3 text-slate-300'>HOURSE</h5>
+                    <div className='px-0 py-[10px] text-8xl max-[700px]:text-7xl max-[530px]:text-5xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
+                      <div className={`animate__animated ${timer.id === "hours" && timer.play && "animate__slideInUp"}`}>{countDown.hours}</div>
+                    </div>
                   </div>
-                </div>
-                <div className='days w-[140px] text-center'>
-                  <h5 className='my-3 text-slate-300'>MINUTES</h5>
-                  <div className='px-3 py-3 text-8xl bg-black shadow-lg rounded-1 countdown_timer_count overflow-hidden'>
-                    <div className={`animate__animated ${timer.id === "minutes" && timer.play && "animate__slideInUp"}`}>{countDown.minutes}</div>
+                  <div className='days w-[140px] max-[700px]:w-[120px] max-[530px]:w-[90px] text-center'>
+                    <h5 className='my-3 text-slate-300'>MINUTES</h5>
+                    <div className='px-0 py-[10px] text-8xl max-[700px]:text-7xl max-[530px]:text-5xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
+                      <div className={`animate__animated ${timer.id === "minutes" && timer.play && "animate__slideInUp"}`}>{countDown.minutes}</div>
+                    </div>
                   </div>
-                </div>
-                <div className='days w-[140px] text-center'>
-                  <h5 className='my-3 text-slate-300'>SECONDS</h5>
-                  <div className='px-3 py-3 text-8xl bg-black shadow-lg rounded-1 countdown_timer_count overflow-hidden'>
-                    <div className={`animate__animated ${timer.id === "seconds" && timer.play && "animate__slideInUp"}`}>{countDown.seconds}</div>
+                  <div className='days w-[140px] max-[700px]:w-[120px] max-[530px]:w-[90px] text-center'>
+                    <h5 className='my-3 text-slate-300'>SECONDS</h5>
+                    <div className='px-0 py-[10px] text-8xl max-[700px]:text-7xl max-[530px]:text-5xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
+                      <div className={`animate__animated ${timer.id === "seconds" && timer.play && "animate__slideInUp"}`}>{countDown.seconds}</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className='my-5'>
+            <div className='my-5 max-[1000px]:px-3'>
               <h4 className='font-bold'>Election Gallery</h4>
               <div className='flex justify-between'>
                 <Carousel
                   className='pt-2 shadow-none'
-                  show={3}
-                  slide={3}
+                  show={showSlideCount}
+                  slide={showSlideCount}
                   transition={0.5}
                   infinite={true}
                   swiping={true}
