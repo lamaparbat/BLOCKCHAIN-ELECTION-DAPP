@@ -20,7 +20,7 @@ export default function Home() {
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
   const [countDown, setCountDown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [timer, setTimer] = useState({ id: "seconds", play: false });
-  const [showSlideCount, setShowSlideCount] = useState(3);
+  const [showSlideCount, setShowSlideCount] = useState(4);
 
   useEffect(() => {
     (async () => {
@@ -29,10 +29,12 @@ export default function Home() {
     })();
 
     window.addEventListener('resize', (e) => {
-      if (window.innerWidth > 1080) setShowSlideCount(3.5)
-      if (window.innerWidth <= 1000) setShowSlideCount(3)
-      if (window.innerWidth <= 900) setShowSlideCount(2)
-      if (window.innerWidth <= 700) setShowSlideCount(1)
+      window.innerWidth > 1080 && setShowSlideCount(3.5)
+      window.innerWidth <= 1080 && setShowSlideCount(3)
+      window.innerWidth <= 1060 && setShowSlideCount(2.5)
+      window.innerWidth <= 900 && setShowSlideCount(2)
+      window.innerWidth <= 500 && setShowSlideCount(1.5)
+      window.innerWidth <= 400 && setShowSlideCount(1)
     })
 
     return () => {
@@ -95,8 +97,8 @@ export default function Home() {
       <div className='px-4 py-3 flex justify-center'>
         <div className='flex flex-column justify-between'>
           <div className='lg:w-[1065px] w-[100vw] overflow-hidden'>
-            <div className='flex items-center max-[1000px]:px-3'>
-              <div className='w-full flex '>
+            <div className='flex items-center'>
+              <div className='w-full flex'>
                 <div className='shrink-0 w-[170px] px-3 py-[5px] flex items-center bg-red-600 rounded-tr-[10px] text-slate-100 shadow-inner'>
                   <FaRegNewspaper className='text-2xl mr-2' />
                   Latest update
@@ -107,7 +109,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='mt-3 lg:h-[400px] sm:h-[300px] w-[100vw] max-[1000px]:px-3 max-[450px]:px-0 rounded-t-[5px] overflow-hidden'>
+            <div className='mt-3 w-[100vw] lg:h-[400px] sm:h-[300px] md:rounded-t-[5px] sm:rounded-0 overflow-hidden'>
               <Fade
                 autoplay={true}
                 nextArrow={<BsChevronRight className='absolute text-slate-100 text-4xl' />}
@@ -122,31 +124,31 @@ export default function Home() {
               </Fade>
             </div>
 
-            <div className='max-[1000]:pl-3 max-[1000]:pr-3'>
-              <div className='countdown_timer py-4 my-3 lg:h-[350px] bg-[url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkkyoysDz8fhLil6JB1VlqOh08zd-h2emhWw&usqp=CAU")] rounded-1 text-slate-100 flex flex-column items-center'>
+            <div>
+              <div className='countdown_timer py-4 my-3 min-h-[320px] sm:h-fit bg-[url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkkyoysDz8fhLil6JB1VlqOh08zd-h2emhWw&usqp=CAU")] rounded-1 text-slate-100 flex flex-column items-center'>
                 <h3 className='my-4 mb-3 text-slate-300 text-center'>Election Nepal 2024 Happening</h3>
-                <div className='flex justify-evenly lg:w-[70vw] max-[1000px]:w-[100vw] mt-3'>
-                  <div className='days w-[140px] max-[700px]:w-[120px] max-[530px]:w-[90px] text-center'>
+                <div className='flex justify-evenly flex-wrap lg:w-[70vw] mt-3'>
+                  <div className='days lg:w-[140px] sm:w-[100px] mx-3 text-center'>
                     <h5 className='my-3 text-slate-300'>DAYS</h5>
-                    <div className='px-0 py-[10px] text-8xl max-[700px]:text-7xl max-[530px]:text-5xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
+                    <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-7xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
                       <div className={`animate__animated ${timer.id === "days" && timer.play && "animate__slideInUp"}`}>{countDown.days}</div>
                     </div>
                   </div>
-                  <div className='days w-[140px] max-[700px]:w-[120px] max-[530px]:w-[90px] text-center'>
+                  <div className='days lg:w-[140px] sm:w-[100px] mx-3 text-center'>
                     <h5 className='my-3 text-slate-300'>HOURSE</h5>
-                    <div className='px-0 py-[10px] text-8xl max-[700px]:text-7xl max-[530px]:text-5xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
+                    <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-7xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
                       <div className={`animate__animated ${timer.id === "hours" && timer.play && "animate__slideInUp"}`}>{countDown.hours}</div>
                     </div>
                   </div>
-                  <div className='days w-[140px] max-[700px]:w-[120px] max-[530px]:w-[90px] text-center'>
+                  <div className='days lg:w-[140px] sm:w-[100px] mx-3 text-center'>
                     <h5 className='my-3 text-slate-300'>MINUTES</h5>
-                    <div className='px-0 py-[10px] text-8xl max-[700px]:text-7xl max-[530px]:text-5xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
+                    <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-7xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
                       <div className={`animate__animated ${timer.id === "minutes" && timer.play && "animate__slideInUp"}`}>{countDown.minutes}</div>
                     </div>
                   </div>
-                  <div className='days w-[140px] max-[700px]:w-[120px] max-[530px]:w-[90px] text-center'>
+                  <div className='days lg:w-[140px] sm:w-[100px] mx-3 text-center'>
                     <h5 className='my-3 text-slate-300'>SECONDS</h5>
-                    <div className='px-0 py-[10px] text-8xl max-[700px]:text-7xl max-[530px]:text-5xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
+                    <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-7xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
                       <div className={`animate__animated ${timer.id === "seconds" && timer.play && "animate__slideInUp"}`}>{countDown.seconds}</div>
                     </div>
                   </div>
@@ -154,12 +156,12 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='my-5 max-[1000px]:px-3'>
+            <div className='my-5'>
               <h4 className='font-bold'>Election Gallery</h4>
               <div className='flex justify-between'>
                 <Carousel
                   className='pt-2 shadow-none'
-                  show={showSlideCount}
+                  show={showSlideCount-1}
                   slide={showSlideCount}
                   transition={0.5}
                   infinite={true}
