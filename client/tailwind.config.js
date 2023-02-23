@@ -5,6 +5,11 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens:{
+      "sm":"300px",
+      "md":"768px",
+      "lg":"1100px"
+    },
     extend: {
       backgroundImage: {
         'celebrationGif': "url('/images/giphy.gif')"
