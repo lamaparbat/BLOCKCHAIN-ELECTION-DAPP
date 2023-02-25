@@ -4,16 +4,18 @@ import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { AiOutlineMail, AiOutlineSearch, AiOutlineLogout, AiOutlineUserSwitch } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { BiCopy } from 'react-icons/bi';
 import _ from 'lodash';
 import Web3 from 'web3';
 import ElectionModal from './ElectionModal';
 import Avatar from './Avatar';
 import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style } from '../constants/index';
 import { LanguageStruct } from '../interfaces';
-import { setStorage } from '../services';
+import { getStorage, setStorage } from '../services';
 import Dropdown from './Dropdown';
 import MarqueeBar from './MarqueeBar';
 import SearchModal from './SearchModal';
+import { trimAddress } from '../utils';
 
 declare var window: any;
 
@@ -27,6 +29,7 @@ const Navbar: React.FC = (): ReactElement => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openProfileDropdown, setOpenProfileDropdown] = useState(false);
+  const [isAddressCopied, setIsAddressCopied] = useState(false);
 
 
   const route = useRouter();
@@ -35,6 +38,7 @@ const Navbar: React.FC = (): ReactElement => {
   // on mount
   useEffect(() => {
     if (window.ethereum) {
+      setLoggedInAccountAddress(getStorage("loggedInAccountAddress"));
       window.ethereum.enable().then(handleLogin);
     }
   }, [])
@@ -90,6 +94,12 @@ const Navbar: React.FC = (): ReactElement => {
     }
   };
 
+  const copyToClipboard = (): void => {
+    navigator.clipboard.writeText(isAddressCopied ? " " : loggedInAccountAddress);
+    setIsAddressCopied(!isAddressCopied);
+  }
+
+
   return (
     <div className='navbar__container'>
       {electionData && electionData.startDate && <MarqueeBar counterData={electionData} />}
@@ -119,7 +129,7 @@ const Navbar: React.FC = (): ReactElement => {
 
 
         {/*  */}
-        <div className='items w-[700px] justify-around items-center text-slate-600 lg:flex sm:hidden'>
+        <div className='items w-[600px] justify-around items-center text-slate-600 lg:flex sm:hidden'>
           <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={onCreateElection}>CREATE ELECTION</span>
           <span className='pr-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/FAQ")}>FAQ</span>
           <select className='text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0' onChange={onLanguageChange}>
@@ -129,9 +139,9 @@ const Navbar: React.FC = (): ReactElement => {
           <span className='pl-1 pr-4 cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={openSearchModal}><AiOutlineSearch className='text-xl' /></span>
           {
             isLoggedIn ?
-              <div className='flex justify-between items-center cursor-pointer hover:opacity-60' onClick={openProfile}>
-                <Avatar className='avatar' src="/images/parbat.png" alt="profile" size='sm' border={1} />
-                <span className='mx-2'>Parbat Lama</span>
+              <div className='flex items-center cursor-pointer hover:opacity-60' onClick={openProfile}>
+                {/* <Avatar className='avatar' src="/images/parbat.png" alt="profile" size='sm' border={1} /> */}
+                <span className=''>{trimAddress(loggedInAccountAddress)}</span>
               </div> :
               <button
                 className='px-1 py-[3px] rounded-1 border-light flex items-center bg-blue-900 text-light text-sm'
@@ -143,9 +153,10 @@ const Navbar: React.FC = (): ReactElement => {
           }
           {
             openProfileDropdown && isLoggedIn &&
-            <div className='profile__dropdown position-absolute bg-slate-100 py-2 px-1 mr-1 right-0 mt-[130px] shadow-sm'>
+            <div className='profile__dropdown position-absolute bg-slate-100 py-2 px-2 mr-1 right-0 mt-[165px] shadow-sm'>
               <div className='profile__dropdown__items flex flex-column'>
                 <span className='flex items-center'><AiOutlineUserSwitch className='mr-3' /> Switch Account</span>
+                <span className={`flex items-center ${isAddressCopied && "bg-red-100 hover:bg-red-100"}`} onClick={copyToClipboard}><BiCopy className='mr-3' />{isAddressCopied ? "Copied" : "Copy Address"}</span>
                 <span className='flex items-center' onClick={handleLogout}><AiOutlineLogout className='mr-3' /> Logout</span>
               </div>
             </div>
