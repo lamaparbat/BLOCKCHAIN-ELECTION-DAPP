@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { useDispatch } from 'react-redux';
 import Navbar from '../components/Navbar';
 import ElectionCard from '../components/LiveCounterCard/ElectionCard';
 import { Carousel } from '@trendyol-js/react-carousel';
@@ -44,15 +43,13 @@ export default function Home() {
 
   if (electionLists.length > 0) {
     const { startDate, endDate } = electionLists.at(-1);
-
     if (new Date() < new Date(startDate)) {
       setInterval(() => {
-        const diff = moment(startDate).diff(moment(new Date()));
-        var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
+        const diff = new Date(startDate).getTime() - new Date().getTime();
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
         setCountDown({ ...countDown, days, hours, minutes, seconds })
       }, 1000);
     }
@@ -161,7 +158,7 @@ export default function Home() {
               <div className='flex justify-between'>
                 <Carousel
                   className='pt-2 shadow-none'
-                  show={showSlideCount-1}
+                  show={showSlideCount - 1}
                   slide={showSlideCount}
                   transition={0.5}
                   infinite={true}
