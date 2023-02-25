@@ -1,9 +1,10 @@
+import moment from 'moment';
 import React, { useState } from 'react';
 import { FcGallery } from 'react-icons/fc';
 
-const ElectionCard = ({ title, src }) => {
+const ElectionCard = ({ details, src }) => {
   const [showIcon, setShowIcon] = useState(false);
-  // const { banner, title, startDate, endDate, totalCandidate, totalVotes } = details;
+  const { title, startDate, endDate, description, selectedCandidates } = details ?? {};
 
   const mouseOver = () => {
     setShowIcon(true)
@@ -14,7 +15,7 @@ const ElectionCard = ({ title, src }) => {
   }
 
   return (
-    <div className='relative bg-slate-50 w-[340px] h-fit rounded-t-[5px] overflow-hidden shadow-md mr-2 mb-2'>
+    <div className='relative bg-slate-50 w-[340px] h-fit rounded-t-[5px] overflow-hidden shadow-md mr-2 mb-3'>
       <div className='w-full h-[180px] overflow-hidden' onMouseOver={mouseOver} onMouseOut={mouseOut}>
         {
           showIcon &&
@@ -28,8 +29,9 @@ const ElectionCard = ({ title, src }) => {
       </div>
       <div className='flex flex-column pt-2 pb-4 px-3'>
         <span className='text-[18px] mb-1 font-bold text-black select-none'>{title}</span>
-        <span className='select-none'><span className='font-bold'>Held:</span> 20<sup>th</sup> Sept, 2022 - 30<sup>th</sup> Sept, 2022</span>
-        <span className='my-[3px] select-none'><span className='font-bold select-none'>Total Candidates:</span> 1203</span>
+        <span className='select-none'><span className='font-bold'>Held:</span> {moment(startDate).format("lll")}</span>
+        <span className='select-none'><span className='font-bold'>Ended:</span> {moment(endDate).format("lll")}</span>
+        <span className='my-[3px] select-none'><span className='font-bold select-none'>Total Candidates:</span> {selectedCandidates?.length}</span>
         <span className='select-none'><span className='font-bold select-none'>Total Votes:</span> 1203</span>
       </div>
     </div>

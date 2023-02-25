@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",
-    "@trendyol-js/react-carousel": "^3.0.2",
     "@types/lodash": "^4.14.189",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",

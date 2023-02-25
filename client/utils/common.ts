@@ -2,11 +2,11 @@ import _ from "lodash";
 import moment from "moment";
 import { ElectionStruct } from "../interfaces";
 
-export const getFormattedErrorMessage = (msgObject:string) => {
-  if(!msgObject) return "";
+export const getFormattedErrorMessage = (msgObject: string) => {
+  if (!msgObject) return "";
 
   const arr = msgObject?.split("{");
-  let formattedMsg:any = _.find(arr, (str) => str.includes("message"));
+  let formattedMsg: any = _.find(arr, (str) => str.includes("message"));
   formattedMsg = formattedMsg?.split(":");
   formattedMsg = formattedMsg?.length > 0 ? formattedMsg[2]?.split("!")[0] : "";
   formattedMsg = formattedMsg?.split("revert")[1];
@@ -14,7 +14,7 @@ export const getFormattedErrorMessage = (msgObject:string) => {
   return formattedMsg ?? "";
 }
 
-export const getElectionStatus = (electionArray:Array<ElectionStruct>): string => {
+export const getElectionStatus = (electionArray: Array<ElectionStruct>): string => {
   const currentElection = electionArray.at(-1);
 
   // if(!currentElection) return "No election found !";
@@ -23,9 +23,16 @@ export const getElectionStatus = (electionArray:Array<ElectionStruct>): string =
   const startDate = moment(currentElection?.startDate);
   const endDate = moment(currentElection?.endDate);
 
-  if(current_date >= startDate && current_date <= endDate) return "LIVE";
+  if (current_date >= startDate && current_date <= endDate) return "LIVE";
 
-  if(current_date >= startDate && current_date <= endDate) return "LIVE";
+  if (current_date >= startDate && current_date <= endDate) return "LIVE";
 
   return "No election available !";
+}
+
+export const trimAddress = (address: string): string => {
+  let trimmedAddr = address.trim() ?? "";
+  trimmedAddr = trimmedAddr.substr(0, 8).concat(`...${trimmedAddr.substr(trimmedAddr.length - 8, address.length)}`);
+
+  return trimmedAddr;
 }
