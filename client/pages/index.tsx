@@ -151,9 +151,9 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='my-5'>
+            <div className='my-5 sm:px-2'>
               <h4 className='font-bold'>Election Gallery</h4>
-              <div className='flex justify-between flex-wrap'>
+              <div className='flex lg:justify-between md:justify-between flex-wrap sm:justify-center'>
                 {
                   electionLists?.map((election, i) => {
                     return (
@@ -169,7 +169,7 @@ export default function Home() {
             </div>
 
 
-            <div className='my-4'>
+            <div className='my-4 sm:px-2'>
               <h5 className='font-bold'>Overall Elections Data</h5>
               <div className='w-full'>
 
