@@ -7,7 +7,7 @@ import BreadCrumb from '../../components/BreadCrumb';
 import { DISTRICT, PROVINCE, MUNICIPALITY, WARD_NO, responsive, SmartContract, ELECTION_TYPE } from '../../constants';
 import UserCard from '../../components/UserCard';
 import { getCandidateList, getElectionList, getPartyList } from '../../utils';
-import { setCandidateList } from '../../redux/candidateReducer';
+import { setCandidateList } from '../../redux/reducers/candidateReducer';
 import { toast } from 'react-toastify';
 import { BsFilter, BsSearch } from 'react-icons/bs';
 import { AiOutlineClose, AiOutlineReload } from 'react-icons/ai';

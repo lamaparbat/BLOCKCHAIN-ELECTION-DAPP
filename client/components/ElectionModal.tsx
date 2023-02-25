@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import Select from "react-select";
 import { ELECTION_TYPE, SmartContract } from '../constants';
 import { toast } from 'react-toastify';
-import { getStorage } from '../services';
 import { createElection } from '../utils/action';
 
 const currentDate = new Date();
@@ -23,8 +22,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const [isAgree, setAgree] = useState(false);
   const [isDisabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
-  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
+  const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
 
   useEffect(() => {
     setDisabled(!isAgree || !election.title || !election.description || !election.startDate || !election.endDate);
@@ -39,7 +37,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
     setLoading(true);
     try {
       const { title, description, startDate, endDate, electionType } = election;
-      console.log(electionType)
+
       await createElection({ title, description, startDate, endDate });
       await SmartContract.methods.createElection(
         title,

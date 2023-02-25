@@ -5,7 +5,7 @@ import {
   registerParty,
   registerVoter
 } from "./action";
-import { getCandidateList, getVoterList, getPartyList, getElectionList } from "./web3";
+import { getCandidateList, getVoterList, getPartyList, getElectionList, disconnectWallet } from "./web3";
 import { getFormattedErrorMessage, getElectionStatus, trimAddress } from "./common";
 
 export {
@@ -14,7 +14,7 @@ export {
   registerCandidate,
   registerParty,
   registerVoter,
-  getCandidateList, getVoterList, getPartyList, getElectionList,
+  getCandidateList, getVoterList, getPartyList, getElectionList, disconnectWallet,
   getFormattedErrorMessage, trimAddress,
   getElectionStatus
 }

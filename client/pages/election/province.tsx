@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { GoPrimitiveDot } from 'react-icons/go';
 import Navbar from '../../components/Navbar';
 import LiveCounterCard from '../../components/LiveCounterCard/LiveCounterCard';
@@ -8,16 +8,16 @@ import electionChannel from "../../services/pusher-events";
 import { getCandidateList, getElectionList, getElectionStatus, getFormattedErrorMessage, getVoterList } from '../../utils';
 import _ from 'lodash';
 import { SmartContract } from '../../constants';
-import { getStorage } from '../../services';
-import { setCandidateList } from '../../redux/candidateReducer';
+import { setCandidateList } from '../../redux/reducers/candidateReducer';
 import { toast } from 'react-toastify';
 
 export default function Home() {
   const [electionStatus, setElectionStatus] = useState(null);
+  const [electionType, setElectionType] = useState(null);
   const [electionList, setElectionList] = useState([]);
   const [candidateLists, setCandidateLists] = useState([]);
   const [voterLists, setVoterLists] = useState([]);
-  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
+  const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
   let voteCastEvent = null;
 
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ export default function Home() {
       const electionList = await getElectionList();
       const candidateLists = await getCandidateList();
       const voterLists = await getVoterList();
-      const electionStatus = getElectionStatus(electionList);
+      const electionStatus = getElectionStatus("Province", electionList);
 
       setElectionStatus(electionStatus);
       setCandidateLists(candidateLists);
@@ -37,7 +37,7 @@ export default function Home() {
 
       voteCastEvent = SmartContract.events.VoteCast().on("data", (event: any) => {
         const votedCandidateDetails = event.returnValues[0];
-        let filterCandidates = candidateLists.map((d) => {
+        let filterCandidates = candidateLists.map((d: any) => {
           return d.user._id === votedCandidateDetails.user._id ? { ...votedCandidateDetails } : { ...d };
         });
         setCandidateLists(filterCandidates);
@@ -109,7 +109,7 @@ export default function Home() {
             </div>
           </div>
           <div className='lg:w-[1100px] flex justify-around flex-wrap'>
-            {electionStatus && electionList?.length > 0 && electionCandidatesArray.length > 0 && electionCandidatesArray?.map(([key, value]: any) =>
+            {currentElection.electionType === "Province" && electionStatus && electionList?.length > 0 && electionCandidatesArray.length > 0 && electionCandidatesArray?.map(([key, value]: any) =>
               <LiveCounterCard type={key} data={_.orderBy(value, ["votedVoterLists.length"], ["desc"])} key={key} electionStatus={electionStatus} casteVote={casteVote} />
             )}
           </div>

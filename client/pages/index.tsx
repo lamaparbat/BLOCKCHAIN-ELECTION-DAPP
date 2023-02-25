@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar';
 import ElectionCard from '../components/LiveCounterCard/ElectionCard';
 import { getElectionList } from '../utils';
 import _ from 'lodash';
-import { getStorage } from '../services';
 import Marquee from 'react-fast-marquee';
 import { FaRegNewspaper } from 'react-icons/fa';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
@@ -14,25 +13,14 @@ import 'animate.css';
 
 export default function Home() {
   const [electionLists, setElectionLists] = useState([]);
-  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
   const [countDown, setCountDown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [timer, setTimer] = useState({ id: "seconds", play: false });
-  const [showSlideCount, setShowSlideCount] = useState(4);
 
   useEffect(() => {
     (async () => {
       const electionList = await getElectionList();
       setElectionLists(electionList);
     })();
-
-    window.addEventListener('resize', (e) => {
-      window.innerWidth > 1080 && setShowSlideCount(3.5)
-      window.innerWidth <= 1080 && setShowSlideCount(3)
-      window.innerWidth <= 1060 && setShowSlideCount(2.5)
-      window.innerWidth <= 900 && setShowSlideCount(2)
-      window.innerWidth <= 500 && setShowSlideCount(1.5)
-      window.innerWidth <= 400 && setShowSlideCount(1)
-    })
 
     return () => {
       window.removeEventListener("resize", null);

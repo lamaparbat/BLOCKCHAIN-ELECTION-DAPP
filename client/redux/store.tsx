@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import candidateReducer from './candidateReducer';
-import electionReducer from './electionReducer';
-import partyReducer from './partyReducer';
-import voterReducer from './voterReducer';
+import candidateReducer from './reducers/candidateReducer';
+import electionReducer from './reducers/electionReducer';
+import partyReducer from './reducers/partyReducer';
+import voterReducer from './reducers/voterReducer';
+import loggedInUserReducer from './reducers/loggedInUserReducer';
 
 export default configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
     voterReducer,
     partyReducer,
     electionReducer,
+    loggedInUserReducer
   },
 })

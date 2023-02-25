@@ -13,7 +13,7 @@ const ElectionCard = ({ details, src }) => {
   const mouseOut = () => {
     setShowIcon(false)
   }
-  console.log(details)
+
   return (
     <div className='relative bg-slate-50 w-[340px] h-fit rounded-t-[5px] overflow-hidden shadow-md mr-2 mb-3'>
       <div className='w-full h-[180px] overflow-hidden' onMouseOver={mouseOver} onMouseOut={mouseOut}>

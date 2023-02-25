@@ -9,7 +9,7 @@ import { getCandidateList, getElectionList, getElectionStatus, getFormattedError
 import _ from 'lodash';
 import { SmartContract } from '../../constants';
 import { getStorage } from '../../services';
-import { setCandidateList } from '../../redux/candidateReducer';
+import { setCandidateList } from '../../redux/reducers/candidateReducer';
 import { toast } from 'react-toastify';
 
 export default function Home() {
@@ -27,7 +27,7 @@ export default function Home() {
       const electionList = await getElectionList();
       const candidateLists = await getCandidateList();
       const voterLists = await getVoterList();
-      const electionStatus = getElectionStatus(electionList);
+      const electionStatus = getElectionStatus("Local", electionList);
 
       setElectionStatus(electionStatus);
       setCandidateLists(candidateLists);
@@ -100,7 +100,7 @@ export default function Home() {
             </div>
           </div>
           <div className='lg:w-[1100px] flex justify-around flex-wrap'>
-            {electionStatus && electionList?.length > 0 && electionCandidatesArray.length > 0 && electionCandidatesArray?.map(([key, value]: any) =>
+            {currentElection.electionType != "Province" && currentElection.electionType != "District" && electionStatus && electionList?.length > 0 && electionCandidatesArray.length > 0 && electionCandidatesArray?.map(([key, value]: any) =>
               <LiveCounterCard type={key} data={value} key={key} electionStatus={electionStatus} casteVote={casteVote} />
             )}
           </div>

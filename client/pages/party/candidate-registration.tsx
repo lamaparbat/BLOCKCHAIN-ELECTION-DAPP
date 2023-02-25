@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Select from 'react-select'
+import { useSelector } from 'react-redux';
+import Select from 'react-select';
 import Navbar from '../../components/Navbar';
 import { PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO } from '../../constants';
 import { registerCandidate, getConvertedAge, getPartyList, getCandidateList } from '../../utils/index';
@@ -18,7 +19,9 @@ const CandidateRegistration = () => {
   });
   const [partyList, setPartyList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
+
+  const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
+
   const partyListOption = partyList?.map((d) => {
     return { label: d.name, value: d.name }
   });
@@ -62,7 +65,7 @@ const CandidateRegistration = () => {
       formData.append("ward", ward);
       formData.append("email", email);
       formData.append("profile", profile);
-
+      console.log(loggedInAccountAddress)
       const { profile: profileUrl } = await registerCandidate(formData);
 
       if (!profile) throw new Error("Failed to upload image !");

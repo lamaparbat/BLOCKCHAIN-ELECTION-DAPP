@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { setCandidateDetails } from '../../redux/candidateReducer';
+import { setCandidateDetails } from '../../redux/reducers/candidateReducer';
 import Avatar from '../Avatar';
 import { CandidateCardStruct } from '../../interfaces/index';
 import FilterIcon from '../FilterIcon';

@@ -6,12 +6,11 @@ import CandidateCard from './CandidateCard';
 import { BTM_BORDER_STYLE } from '../../constants';
 import { LiveCounterCardStruct } from '../../interfaces/index';
 import TickCircleIcon from '../TickCircleIcon';
-import { getStorage } from '../../services';
 import _ from 'lodash';
 
 const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, electionStatus, casteVote }): ReactElement => {
   const { list } = useSelector((state: any) => state.candidateReducer)
-  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
+  const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
   const isElectionStart = electionStatus === "LIVE";
   const isElectionEnd = electionStatus === "ENDED";
   const filter = _.map(data, (candidate: any) => {
@@ -19,7 +18,6 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, election
     if (isFound) return { ...candidate, votedVoterLists: isFound.votedVoterLists }
     else return { ...candidate };
   });
-  console.log(filter)
 
   const isAlreadyVoted1 = filter[0]?.votedVoterLists.includes(loggedInAccountAddress);
   const isAlreadyVoted2 = filter[1]?.votedVoterLists.includes(loggedInAccountAddress);

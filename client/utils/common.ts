@@ -14,10 +14,10 @@ export const getFormattedErrorMessage = (msgObject: string) => {
   return formattedMsg ?? "";
 }
 
-export const getElectionStatus = (electionArray: Array<ElectionStruct>): string => {
+export const getElectionStatus = (electionType: string, electionArray: Array<ElectionStruct>): string => {
   const currentElection = electionArray.at(-1);
 
-  // if(!currentElection) return "No election found !";
+  if (currentElection.electionType !== electionType) return "No election available !";
 
   const current_date = moment(Date.now());
   const startDate = moment(currentElection?.startDate);
@@ -25,7 +25,7 @@ export const getElectionStatus = (electionArray: Array<ElectionStruct>): string 
 
   if (current_date >= startDate && current_date <= endDate) return "LIVE";
 
-  if (current_date >= startDate && current_date <= endDate) return "LIVE";
+  if (current_date >= startDate && current_date > endDate) return "ENDED";
 
   return "No election available !";
 }

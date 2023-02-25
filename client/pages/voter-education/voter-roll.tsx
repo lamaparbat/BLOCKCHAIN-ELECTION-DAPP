@@ -7,7 +7,7 @@ import BreadCrumb from '../../components/BreadCrumb';
 import { DISTRICT, PROVINCE, MUNICIPALITY, WARD_NO, responsive, SmartContract } from '../../constants';
 import UserCard from '../../components/UserCard';
 import { getVoterList } from '../../utils';
-import { setCandidateList } from '../../redux/candidateReducer';
+import { setCandidateList } from '../../redux/reducers/candidateReducer';
 
 const Details: React.FC = (): React.ReactElement => {
   const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });

@@ -2,7 +2,8 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
-import { AiOutlineMail, AiOutlineSearch, AiOutlineLogout, AiOutlineUserSwitch } from 'react-icons/ai';
+import { useDispatch } from 'react-redux';
+import { AiOutlineMail, AiOutlineSearch, AiOutlineUserSwitch } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { BiCopy } from 'react-icons/bi';
 import _ from 'lodash';
@@ -16,6 +17,7 @@ import Dropdown from './Dropdown';
 import MarqueeBar from './MarqueeBar';
 import SearchModal from './SearchModal';
 import { trimAddress } from '../utils';
+import { setLoggedInAddress } from '../redux/reducers/loggedInUserReducer';
 
 declare var window: any;
 
@@ -33,6 +35,7 @@ const Navbar: React.FC = (): ReactElement => {
 
 
   const route = useRouter();
+  const dispatch = useDispatch();
   const electionData = useSelector((state: any) => state?.electionReducer);
 
   // on mount
@@ -81,18 +84,20 @@ const Navbar: React.FC = (): ReactElement => {
     }
   };
 
-  const handleLogout = async () => {
+  const handleAccountSwitch = async () => {
     if (window.ethereum) {
       try {
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-        setLoggedInAccountAddress(null);
-        setIsLoggedIn(false);
-        setStorage("loggedInAccountAddress", null)
+        await window.ethereum.request({ method: 'wallet_requestPermissions', params: [{ eth_accounts: {} }] });
+        const currentAccount = window.ethereum.selectedAddress;
+
+        dispatch(setLoggedInAddress(currentAccount));
+        setStorage(currentAccount)
+        setLoggedInAccountAddress(currentAccount);
       } catch (error) {
         console.error(error);
       }
     }
-  };
+  }
 
   const copyToClipboard = (): void => {
     navigator.clipboard.writeText(isAddressCopied ? " " : loggedInAccountAddress);
@@ -152,11 +157,10 @@ const Navbar: React.FC = (): ReactElement => {
           }
           {
             openProfileDropdown && isLoggedIn &&
-            <div className='profile__dropdown position-absolute bg-slate-100 py-2 px-2 mr-1 right-0 mt-[165px] shadow-sm'>
+            <div className='profile__dropdown position-absolute bg-slate-100 py-2 px-2 mr-1 right-0 mt-[130px] shadow-sm'>
               <div className='profile__dropdown__items flex flex-column'>
-                <span className='flex items-center'><AiOutlineUserSwitch className='mr-3' /> Switch Account</span>
+                <span className='flex items-center' onClick={handleAccountSwitch}><AiOutlineUserSwitch className='mr-3' /> Switch Account</span>
                 <span className={`flex items-center ${isAddressCopied && "bg-red-100 hover:bg-red-100"}`} onClick={copyToClipboard}><BiCopy className='mr-3' />{isAddressCopied ? "Copied" : "Copy Address"}</span>
-                <span className='flex items-center' onClick={handleLogout}><AiOutlineLogout className='mr-3' /> Logout</span>
               </div>
             </div>
           }
