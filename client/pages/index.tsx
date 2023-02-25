@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import ElectionCard from '../components/LiveCounterCard/ElectionCard';
-import { Carousel } from '@trendyol-js/react-carousel';
 import { getElectionList } from '../utils';
 import _ from 'lodash';
 import { getStorage } from '../services';
@@ -12,7 +11,6 @@ import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { Fade } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import 'animate.css';
-import moment from 'moment';
 
 export default function Home() {
   const [electionLists, setElectionLists] = useState([]);
@@ -155,21 +153,18 @@ export default function Home() {
 
             <div className='my-5'>
               <h4 className='font-bold'>Election Gallery</h4>
-              <div className='flex justify-between'>
-                <Carousel
-                  className='pt-2 shadow-none'
-                  show={showSlideCount - 1}
-                  slide={showSlideCount}
-                  transition={0.5}
-                  infinite={true}
-                  swiping={true}
-                  responsive={true}
-                >
-                  <ElectionCard title={electionLists[0]} src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6TmGNICTnHT0loCNYhfHl19PNyeyoFwgWWA&usqp=CAU"} />
-                  <ElectionCard title={electionLists[1]} src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRr7tAfxvSIht5RdzGToAQY4_-dijvGgxsXAg&usqp=CAU"} />
-                  <ElectionCard title={electionLists[2]} src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVbKo5oeymz96MHktj8BTL5Ylyx-AhWVCe_Q&usqp=CAU"} />
-                  <ElectionCard title={electionLists[3]} src={"https://static.pib.gov.in/WriteReadData/userfiles/image/image01342FU.jpg"} />
-                </Carousel>
+              <div className='flex justify-between flex-wrap'>
+                {
+                  electionLists?.map((election, i) => {
+                    return (
+                      <ElectionCard
+                        key={i}
+                        details={election}
+                        src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6TmGNICTnHT0loCNYhfHl19PNyeyoFwgWWA&usqp=CAU"}
+                      />
+                    )
+                  })
+                }
               </div>
             </div>
 
