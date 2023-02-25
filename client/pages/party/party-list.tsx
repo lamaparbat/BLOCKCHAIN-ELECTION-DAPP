@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbar';
 import PartyCard from '../../components/PartyCard';
 import VoterCardSkeleton from "../../components/Skeleton/voter-card-skeleton";
 import { getPartyList } from '../../utils';
-import { setParties } from '../../redux/partyReducer';
+import { setParties } from '../../redux/reducers/partyReducer';
 import _ from 'lodash';
 
 const Details: React.FC = (): React.ReactElement => {
@@ -22,7 +22,7 @@ const Details: React.FC = (): React.ReactElement => {
     (async () => {
       const list = await getPartyList();
 
-      originalParties = list ? [...list]: [];
+      originalParties = list ? [...list] : [];
       dispatch(setParties(list));
       setPartyLists(list);
 
