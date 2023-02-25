@@ -6,7 +6,7 @@ import {
   registerVoter
 } from "./action";
 import { getCandidateList, getVoterList, getPartyList, getElectionList } from "./web3";
-import {getFormattedErrorMessage, getElectionStatus} from "./common";
+import { getFormattedErrorMessage, getElectionStatus, trimAddress } from "./common";
 
 export {
   getConvertedAge,
@@ -15,6 +15,6 @@ export {
   registerParty,
   registerVoter,
   getCandidateList, getVoterList, getPartyList, getElectionList,
-  getFormattedErrorMessage,
+  getFormattedErrorMessage, trimAddress,
   getElectionStatus
 }
