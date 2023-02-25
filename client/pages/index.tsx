@@ -104,46 +104,46 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='mt-3 w-[100vw] lg:h-[400px] sm:h-[300px] md:rounded-t-[5px] sm:rounded-0 overflow-hidden'>
+            <div className='mt-3 w-full lg:h-[400px] sm:h-[300px] md:rounded-t-[5px] sm:rounded-0 overflow-hidden'>
               <Fade
                 autoplay={true}
                 nextArrow={<BsChevronRight className='absolute text-slate-100 text-4xl' />}
                 prevArrow={<BsChevronLeft className='absolute text-slate-100 text-4xl' />}>
-                <img className='lg:h-[400px] h-[300px] w-[100vw] object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner1.jpeg" />
-                <img className='lg:h-[400px] h-[300px] w-[100vw] object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner2.jpeg" />
-                <img className='lg:h-[400px] h-[300px] w-[100vw] object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner3.jpeg" />
-                <img className='lg:h-[400px] h-[300px] w-[100vw] object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner4.jpeg" />
-                <img className='lg:h-[400px] h-[300px] w-[100vw] object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner5.jpeg" />
-                <img className='lg:h-[400px] h-[300px] w-[100vw] object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner6.jpeg" />
-                <img className='lg:h-[400px] h-[300px] w-[100vw] object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner7.jpeg" />
+                <img className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner1.jpeg" />
+                <img className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner2.jpeg" />
+                <img className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner3.jpeg" />
+                <img className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner4.jpeg" />
+                <img className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner5.jpeg" />
+                <img className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner6.jpeg" />
+                <img className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner7.jpeg" />
               </Fade>
             </div>
 
             <div>
-              <div className='countdown_timer py-4 my-3 min-h-[320px] sm:h-fit bg-[url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkkyoysDz8fhLil6JB1VlqOh08zd-h2emhWw&usqp=CAU")] rounded-1 text-slate-100 flex flex-column items-center'>
+              <div className='countdown_timer py-4 my-3 min-h-[320px] sm:h-fit bg-[url("https://t4.ftcdn.net/jpg/02/83/57/05/360_F_283570582_3J78GC9E5OesLLgG5lUkQLGEoyN2ijmc.jpg")] rounded-1 text-slate-100 flex flex-column items-center'>
                 <h3 className='my-4 mb-3 text-slate-300 text-center'>Election Nepal 2024 Happening</h3>
                 <div className='flex justify-evenly flex-wrap lg:w-[70vw] mt-3'>
                   <div className='days lg:w-[140px] sm:w-[100px] mx-3 text-center'>
                     <h5 className='my-3 text-slate-300'>DAYS</h5>
-                    <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-7xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
+                    <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-6xl bg-[url("https://t3.ftcdn.net/jpg/03/05/45/96/240_F_305459609_qqNT6Sk6DZGhcEexcAbs9xfq2iI3yl2e.jpg")] card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
                       <div className={`animate__animated ${timer.id === "days" && timer.play && "animate__slideInUp"}`}>{countDown.days}</div>
                     </div>
                   </div>
                   <div className='days lg:w-[140px] sm:w-[100px] mx-3 text-center'>
                     <h5 className='my-3 text-slate-300'>HOURSE</h5>
-                    <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-7xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
+                    <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-6xl bg-[url("https://t3.ftcdn.net/jpg/03/05/45/96/240_F_305459609_qqNT6Sk6DZGhcEexcAbs9xfq2iI3yl2e.jpg")] card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
                       <div className={`animate__animated ${timer.id === "hours" && timer.play && "animate__slideInUp"}`}>{countDown.hours}</div>
                     </div>
                   </div>
                   <div className='days lg:w-[140px] sm:w-[100px] mx-3 text-center'>
                     <h5 className='my-3 text-slate-300'>MINUTES</h5>
-                    <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-7xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
+                    <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-6xl bg-[url("https://t3.ftcdn.net/jpg/03/05/45/96/240_F_305459609_qqNT6Sk6DZGhcEexcAbs9xfq2iI3yl2e.jpg")] card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
                       <div className={`animate__animated ${timer.id === "minutes" && timer.play && "animate__slideInUp"}`}>{countDown.minutes}</div>
                     </div>
                   </div>
                   <div className='days lg:w-[140px] sm:w-[100px] mx-3 text-center'>
                     <h5 className='my-3 text-slate-300'>SECONDS</h5>
-                    <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-7xl bg-black card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
+                    <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-6xl bg-[url("https://t3.ftcdn.net/jpg/03/05/45/96/240_F_305459609_qqNT6Sk6DZGhcEexcAbs9xfq2iI3yl2e.jpg")] card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
                       <div className={`animate__animated ${timer.id === "seconds" && timer.play && "animate__slideInUp"}`}>{countDown.seconds}</div>
                     </div>
                   </div>

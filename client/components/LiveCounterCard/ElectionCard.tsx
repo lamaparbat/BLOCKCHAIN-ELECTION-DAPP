@@ -30,8 +30,8 @@ const ElectionCard = ({ details, src }) => {
       <div className='flex flex-column pt-2 pb-4 px-3'>
         <span className='text-[18px] mb-1 font-bold text-black select-none'>{title}</span>
         <span className='select-none'><span className='font-bold'>Held:</span> {moment(startDate).format("lll")}</span>
-        <span className='select-none'><span className='font-bold'>Ended:</span> {moment(endDate).format("lll")}</span>
-        <span className='my-[3px] select-none'><span className='font-bold select-none'>Total Candidates:</span> {selectedCandidates?.length}</span>
+        <span className='select-none my-1'><span className='font-bold'>Ended:</span> {moment(endDate).format("lll")}</span>
+        <span className='mb-1 select-none'><span className='font-bold select-none'>Total Candidates:</span> {selectedCandidates?.length}</span>
         <span className='select-none'><span className='font-bold select-none'>Total Votes:</span> 1203</span>
       </div>
     </div>
