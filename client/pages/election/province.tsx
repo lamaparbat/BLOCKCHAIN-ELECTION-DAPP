@@ -13,10 +13,8 @@ import { toast } from 'react-toastify';
 
 export default function Home() {
   const [electionStatus, setElectionStatus] = useState(null);
-  const [electionType, setElectionType] = useState(null);
   const [electionList, setElectionList] = useState([]);
   const [candidateLists, setCandidateLists] = useState([]);
-  const [voterLists, setVoterLists] = useState([]);
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
   let voteCastEvent = null;
 
@@ -26,12 +24,10 @@ export default function Home() {
     (async () => {
       const electionList = await getElectionList();
       const candidateLists = await getCandidateList();
-      const voterLists = await getVoterList();
       const electionStatus = getElectionStatus("Province", electionList);
 
       setElectionStatus(electionStatus);
       setCandidateLists(candidateLists);
-      setVoterLists(voterLists);
       dispatch(setCandidateList(candidateLists));
       setElectionList(electionList);
 
