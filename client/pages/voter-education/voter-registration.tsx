@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Select from 'react-select'
+import Select from 'react-select';
+import { useSelector } from 'react-redux';
 import BreadCrumb from '../../components/BreadCrumb';
 import Navbar from '../../components/Navbar';
 import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, SmartContract } from '../../constants';
 import { registerVoter } from '../../utils/action';
 import { toast } from 'react-toastify';
-import { getStorage } from '../../services';
 import { getConvertedAge, getFormattedErrorMessage } from '../../utils';
 
 const VoterRegistration = () => {
@@ -14,7 +14,7 @@ const VoterRegistration = () => {
     fullName: "", citizenshipNumber: "", province: "", district: "", municipality: "", ward: "",
     email: "", profileUrl: null, dob: null
   });
-  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
+  const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
 
   // upload voterDetails
   const onSubmit = async () => {
