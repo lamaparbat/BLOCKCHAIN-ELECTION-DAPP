@@ -10,7 +10,7 @@
 <img width="1440" alt="Screen Shot 2023-02-13 at 22 32 24" src="https://user-images.githubusercontent.com/64581460/218519876-a822631a-b9c5-464c-871d-82b6a31eaf00.png">
 
 ### After connecting Metamask wallet 
-<img width="1440" alt="Screen Shot 2023-02-01 at 23 55 43" src="https://user-images.githubusercontent.com/64581460/216127928-bb32849b-585a-459e-9144-4cf832b3ef9a.png">
+<img width="1440" alt="Screen Shot 2023-02-28 at 23 03 08" src="https://user-images.githubusercontent.com/64581460/221928980-59c57dfa-8681-472f-ba87-ee06f5589bef.png">
 
 ### Candidate selection for particular election [Provisional | District | Municipality | Ward ]
 <img width="1440" alt="Screen Shot 2023-02-11 at 11 26 44" src="https://user-images.githubusercontent.com/64581460/218242586-dec98d95-081c-4553-81ea-2e74bc8b5e22.png">
