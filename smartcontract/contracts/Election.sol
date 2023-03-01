@@ -17,12 +17,14 @@ contract Election is Structure{
     mapping (address => Voter) public voters;
     mapping (address => Party) public parties;
     mapping (string => Election) public elections;
+    mapping (address => FAQ) public faqs;
 
     // Arrays
     Candidate[] public candidateList;
     Voter[] public voterList;
     Party[] public partyList;
     Election[] public electionList;
+    FAQ[] public faqList;
     string[] public candidateNames;
     string[] public voterNames;
     string[] public partyNames;
@@ -42,6 +44,7 @@ contract Election is Structure{
     event VoterCreated(Voter voter);
     event VoteCast(Candidate candidate);
     event electionStart(Election election);
+    event NewFaqAdded(FAQ faq);
     
     // updators
     function vote(address _candidateId) public payable{
@@ -190,6 +193,15 @@ contract Election is Structure{
         }
     }
 
+    function addFaqs(string memory title, string memory description, string memory fileUrl, string memory createdAt) public payable {
+        address _id = msg.sender;
+        ReplyComment[] memory replies;
+
+        FAQ memory faq = FAQ(_id, title, description, fileUrl, createdAt, replies);
+        faqs[_id] =faq;
+        faqList.push(faq);
+    }
+
 
     // getter functions
     function getAllParties() public view returns (Party[] memory){
@@ -218,6 +230,10 @@ contract Election is Structure{
 
     function getVoterDetails(address _id) public view returns(Voter memory){
         return voters[_id];
+    }
+
+    function getFAQs(address _id) public view returns (FAQ memory) {
+        return faqs[_id];
     }
 }
 
