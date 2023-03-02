@@ -1,7 +1,7 @@
 # Blockchain E-Voting System (WEB 3.O)
 
 ### Landing page UI
-<img width="1440" alt="Screen Shot 2023-02-20 at 21 33 39" src="https://user-images.githubusercontent.com/64581460/220150908-0da8a309-9e5e-4d6a-ac41-c35244729f31.png">
+<img width="1440" alt="Screen Shot 2023-03-02 at 22 57 10" src="https://user-images.githubusercontent.com/64581460/222502200-97d92d19-3219-4c51-8681-c3f3bd719d5e.png">
 
 ### Live Election Starting CountDown Timer
 <img width="1440" alt="Screen Shot 2023-02-20 at 21 31 26" src="https://user-images.githubusercontent.com/64581460/220151007-c36e57fb-9bda-4baa-9e9a-21faf6b0aad9.png">
