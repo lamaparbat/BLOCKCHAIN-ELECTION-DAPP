@@ -9,19 +9,13 @@ import TickCircleIcon from '../TickCircleIcon';
 import _ from 'lodash';
 
 const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, electionStatus, casteVote }): ReactElement => {
-  const { list } = useSelector((state: any) => state.candidateReducer)
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
   const isElectionStart = electionStatus === "LIVE";
   const isElectionEnd = electionStatus === "ENDED";
-  const filter = _.map(data, (candidate: any) => {
-    const isFound = _.find(list, (d: any) => d.user._id === candidate.user._id);
-    if (isFound) return { ...candidate, votedVoterLists: isFound.votedVoterLists }
-    else return { ...candidate };
-  });
 
-  const isAlreadyVoted1 = filter[0]?.votedVoterLists.includes(loggedInAccountAddress);
-  const isAlreadyVoted2 = filter[1]?.votedVoterLists.includes(loggedInAccountAddress);
-  const isAlreadyVoted3 = filter[2]?.votedVoterLists.includes(loggedInAccountAddress);
+  const isAlreadyVoted1 = data[0]?.votedVoterLists.includes(loggedInAccountAddress);
+  const isAlreadyVoted2 = data[1]?.votedVoterLists.includes(loggedInAccountAddress);
+  const isAlreadyVoted3 = data[2]?.votedVoterLists.includes(loggedInAccountAddress);
 
   return (
     <div
@@ -31,20 +25,20 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, election
       </div>
       <div className={`card__body pt-3 pb-2 ${isElectionStart && 'animatedBorder'}`}>
         <div className='card__body__hot px-4 mb-3 flex'>
-          <AnimatedAvatar src={filter[0].user.profile} />
+          <AnimatedAvatar src={data[0].user.profile} />
           <div className='details pt-2 pl-3 mx-3'>
             <div className='flex items-center'>
-              <span className='text-xl me-4'>{filter[0].user.fullName}</span>
+              <span className='text-xl me-4'>{data[0].user.fullName}</span>
               {isElectionEnd && <TickCircleIcon />}
               {isElectionStart && <FaRegDotCircle className='animate-ping text-danger absolute lg:ml-[200px] max-[1100px]:ml-[100px]' />}
             </div>
-            <h1 id='count'>{filter[0].votedVoterLists?.length}</h1>
+            <h1 id='count'>{data[0].votedVoterLists?.length}</h1>
           </div>
         </div>
         <div className='candidate_row px-3'>
-          {filter[0] && <CandidateCard details={filter[0]} border={BTM_BORDER_STYLE} ishighlighted={true} casteVote={casteVote} voted={isAlreadyVoted1} />}
-          {filter[1] && <CandidateCard details={filter[1]} border={BTM_BORDER_STYLE} ishighlighted={false} casteVote={casteVote} voted={isAlreadyVoted2} />}
-          {filter[2] && <CandidateCard details={filter[2]} border={null} ishighlighted={false} casteVote={casteVote} voted={isAlreadyVoted3} />}
+          {data[0] && <CandidateCard details={data[0]} border={BTM_BORDER_STYLE} ishighlighted={true} casteVote={casteVote} voted={isAlreadyVoted1} />}
+          {data[1] && <CandidateCard details={data[1]} border={BTM_BORDER_STYLE} ishighlighted={false} casteVote={casteVote} voted={isAlreadyVoted2} />}
+          {data[2] && <CandidateCard details={data[2]} border={null} ishighlighted={false} casteVote={casteVote} voted={isAlreadyVoted3} />}
         </div>
       </div>
     </div>

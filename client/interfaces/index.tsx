@@ -42,7 +42,11 @@ interface CandidateDetails extends UserDetails {
   party: string,
   agenda: string,
   votes: number,
-  votedVoterLists:Array<string>
+  user: {
+    profile: string,
+    fullName: string
+  },
+  votedVoterLists: Array<string>
 }
 
 interface VoterDetails extends UserDetails {
@@ -71,7 +75,7 @@ interface UserCardStruct {
   currentElection?: Array<Object>,
   isElected?: boolean
 }
-interface ElectionStruct{
+interface ElectionStruct {
   title: string;
   description: string;
   startDate: string;

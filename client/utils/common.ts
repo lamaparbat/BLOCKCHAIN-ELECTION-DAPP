@@ -36,3 +36,26 @@ export const trimAddress = (address: string): string => {
 
   return trimmedAddr;
 }
+
+export const getPartyListOptions = (partyList: Array<any>) => {
+  const filter = partyList?.map((d) => {
+    return { label: d.name, value: d.name }
+  })
+  return filter;
+};
+
+
+export const getSortedCandidatesList = (electionList: Array<any>, candidateLists: Array<any>) => {
+  const filteredElectionsList = _.map(electionList, (election: any, i: number) => {
+    if (electionList.length - 1 !== i) return;
+    const allSelectedCandidates = _.filter(candidateLists, (candidate: any) => {
+      return election?.selectedCandidates.includes(candidate?.user?._id);
+    })
+    return { ...election, selectedCandidates: allSelectedCandidates }
+  });
+  const currentElection = filteredElectionsList.length > 0 && filteredElectionsList?.at(-1);
+  const electionCandidates = currentElection ? _.groupBy(currentElection?.selectedCandidates, (candidate) => candidate.user.province) : [];
+  const electionCandidatesArray = electionCandidates ? Object.entries(electionCandidates) : [];
+  console.log(currentElection, electionCandidatesArray)
+  return { currentElection, electionCandidatesArray };
+}

@@ -5,7 +5,7 @@ import { GoPrimitiveDot } from 'react-icons/go';
 import Navbar from '../../components/Navbar';
 import LiveCounterCard from '../../components/LiveCounterCard/LiveCounterCard';
 import electionChannel from "../../services/pusher-events";
-import { getCandidateList, getElectionList, getElectionStatus, getFormattedErrorMessage, getVoterList } from '../../utils';
+import { getCandidateList, getElectionList, getElectionStatus, getFormattedErrorMessage, getSortedCandidatesList, getVoterList } from '../../utils';
 import _ from 'lodash';
 import { SmartContract } from '../../constants';
 import { setCandidateList } from '../../redux/reducers/candidateReducer';
@@ -13,10 +13,9 @@ import { toast } from 'react-toastify';
 
 export default function Home() {
   const [electionStatus, setElectionStatus] = useState(null);
-  const [electionType, setElectionType] = useState(null);
   const [electionList, setElectionList] = useState([]);
   const [candidateLists, setCandidateLists] = useState([]);
-  const [voterLists, setVoterLists] = useState([]);
+  const [currentElection, setCurrentElection] = useState<any>({});
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
   let voteCastEvent = null;
 
@@ -26,12 +25,12 @@ export default function Home() {
     (async () => {
       const electionList = await getElectionList();
       const candidateLists = await getCandidateList();
-      const voterLists = await getVoterList();
       const electionStatus = getElectionStatus("Province", electionList);
+      const { currentElection, electionCandidatesArray } = getSortedCandidatesList(electionList, candidateLists);
 
       setElectionStatus(electionStatus);
-      setCandidateLists(candidateLists);
-      setVoterLists(voterLists);
+      setCandidateLists(electionCandidatesArray);
+      setCurrentElection(currentElection);
       dispatch(setCandidateList(candidateLists));
       setElectionList(electionList);
 
@@ -40,7 +39,8 @@ export default function Home() {
         let filterCandidates = candidateLists.map((d: any) => {
           return d.user._id === votedCandidateDetails.user._id ? { ...votedCandidateDetails } : { ...d };
         });
-        setCandidateLists(filterCandidates);
+        const { electionCandidatesArray } = getSortedCandidatesList(electionList, filterCandidates);
+        setCandidateLists(electionCandidatesArray);
       });
     })();
 
@@ -48,17 +48,6 @@ export default function Home() {
       voteCastEvent && voteCastEvent?.unsubscribe();
     }
   }, []);
-
-  const filteredElectionsList = _.map(electionList, (election: any, i: number) => {
-    if (electionList.length - 1 !== i) return;
-    const allSelectedCandidates = _.filter(candidateLists, (candidate: any) => {
-      return election?.selectedCandidates.includes(candidate?.user?._id);
-    })
-    return { ...election, selectedCandidates: allSelectedCandidates }
-  });
-  const currentElection = filteredElectionsList.length > 0 && filteredElectionsList?.at(-1);
-  const electionCandidates = currentElection ? _.groupBy(currentElection?.selectedCandidates, (candidate) => candidate.user.province) : [];
-  const electionCandidatesArray = electionCandidates ? Object.entries(electionCandidates) : [];
 
 
   electionChannel.bind("start-election-event", () => {
@@ -75,13 +64,16 @@ export default function Home() {
 
   const casteVote = async (_candidateID: string) => {
     try {
-      const casteCandidateDetails = _.find(candidateLists, (candidate) => candidate.user._id === _candidateID);
+      const casteCandidateDetails = _.find(candidateLists, (elections) => {
+        elections[1].find(((candidate: any) => candidate.user._id === _candidateID))
+      });
       const isAlreadyVoted = casteCandidateDetails?.votedVoterLists?.includes(loggedInAccountAddress);
       if (isAlreadyVoted) return toast.info("You've already casted vote !");
 
       await SmartContract.methods.vote(_candidateID).send({ from: loggedInAccountAddress });
       toast.success("Vote caste successfully.");
     } catch (error) {
+      console.log(error)
       toast.error(`Failed to caste vote !, ${getFormattedErrorMessage(error.message)}`, { toastId: 2 });
     }
   }
@@ -109,7 +101,7 @@ export default function Home() {
             </div>
           </div>
           <div className='lg:w-[1100px] flex justify-around flex-wrap'>
-            {currentElection.electionType === "Province" && electionStatus && electionList?.length > 0 && electionCandidatesArray.length > 0 && electionCandidatesArray?.map(([key, value]: any) =>
+            {currentElection.electionType === "Province" && electionStatus && electionList?.length > 0 && candidateLists.length > 0 && candidateLists?.map(([key, value]: any) =>
               <LiveCounterCard type={key} data={_.orderBy(value, ["votedVoterLists.length"], ["desc"])} key={key} electionStatus={electionStatus} casteVote={casteVote} />
             )}
           </div>
