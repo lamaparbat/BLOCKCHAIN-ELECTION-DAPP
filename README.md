@@ -1,7 +1,7 @@
 # Blockchain E-Voting System (WEB 3.O)
 
 ### Landing page UI
-<img width="1440" alt="Screen Shot 2023-02-20 at 21 33 39" src="https://user-images.githubusercontent.com/64581460/220150908-0da8a309-9e5e-4d6a-ac41-c35244729f31.png">
+<img width="1440" alt="Screen Shot 2023-03-02 at 22 57 10" src="https://user-images.githubusercontent.com/64581460/222502200-97d92d19-3219-4c51-8681-c3f3bd719d5e.png">
 
 ### Live Election Starting CountDown Timer
 <img width="1440" alt="Screen Shot 2023-02-20 at 21 31 26" src="https://user-images.githubusercontent.com/64581460/220151007-c36e57fb-9bda-4baa-9e9a-21faf6b0aad9.png">
@@ -10,7 +10,7 @@
 <img width="1440" alt="Screen Shot 2023-02-13 at 22 32 24" src="https://user-images.githubusercontent.com/64581460/218519876-a822631a-b9c5-464c-871d-82b6a31eaf00.png">
 
 ### After connecting Metamask wallet 
-<img width="1440" alt="Screen Shot 2023-02-01 at 23 55 43" src="https://user-images.githubusercontent.com/64581460/216127928-bb32849b-585a-459e-9144-4cf832b3ef9a.png">
+<img width="1440" alt="Screen Shot 2023-02-28 at 23 03 08" src="https://user-images.githubusercontent.com/64581460/221928980-59c57dfa-8681-472f-ba87-ee06f5589bef.png">
 
 ### Candidate selection for particular election [Provisional | District | Municipality | Ward ]
 <img width="1440" alt="Screen Shot 2023-02-11 at 11 26 44" src="https://user-images.githubusercontent.com/64581460/218242586-dec98d95-081c-4553-81ea-2e74bc8b5e22.png">
@@ -22,7 +22,7 @@
 <img width="1440" alt="Screen Shot 2023-02-13 at 22 32 24" src="https://user-images.githubusercontent.com/64581460/218519657-0c37e0bf-a37b-4302-b234-71ce969060a8.png">
 
 ### Voter Poll Card List UI
-<img width="1440" alt="Screen Shot 2022-12-22 at 23 21 10" src="https://user-images.githubusercontent.com/64581460/209193528-13b9197e-1b37-4d61-ae3d-a2b065ba4ead.png">
+<img width="1440" alt="Screen Shot 2023-03-03 at 15 41 14" src="https://user-images.githubusercontent.com/64581460/222690006-361f61f3-28b6-400b-bbcb-225bdbeeaf9d.png">
 
 ### Create election
 <img width="1440" alt="Screen Shot 2023-02-06 at 23 12 09" src="https://user-images.githubusercontent.com/64581460/217041926-12feba4c-ad8f-428b-b96e-ae63ed3b9812.png">

@@ -17,6 +17,12 @@ contract Structure {
         string ward;
     }
 
+    struct ReplyComment {
+        address _id;
+        string replyMsg;
+        string createdAt;
+    }
+
     struct Voter {
         User user;
         address[] votedCandidateList;
@@ -46,5 +52,14 @@ contract Structure {
         string endDate;
         string electionType;
         address[] selectedCandidates;
+    }
+
+    struct FAQ {
+        address _id;
+        string title;
+        string description;
+        string fileUrl;
+        string createdAt;
+        ReplyComment[] comments;
     }
 }
