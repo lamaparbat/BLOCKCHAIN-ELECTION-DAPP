@@ -22,7 +22,7 @@
 <img width="1440" alt="Screen Shot 2023-02-13 at 22 32 24" src="https://user-images.githubusercontent.com/64581460/218519657-0c37e0bf-a37b-4302-b234-71ce969060a8.png">
 
 ### Voter Poll Card List UI
-<img width="1440" alt="Screen Shot 2022-12-22 at 23 21 10" src="https://user-images.githubusercontent.com/64581460/209193528-13b9197e-1b37-4d61-ae3d-a2b065ba4ead.png">
+<img width="1440" alt="Screen Shot 2023-03-03 at 15 41 14" src="https://user-images.githubusercontent.com/64581460/222690006-361f61f3-28b6-400b-bbcb-225bdbeeaf9d.png">
 
 ### Create election
 <img width="1440" alt="Screen Shot 2023-02-06 at 23 12 09" src="https://user-images.githubusercontent.com/64581460/217041926-12feba4c-ad8f-428b-b96e-ae63ed3b9812.png">
