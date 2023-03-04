@@ -202,6 +202,20 @@ contract Election is Structure{
         faqList.push(faq);
     }
 
+    function addFaqComment(address faqId, string memory replyMsg, string memory createdAt) public payable {
+        address _id = msg.sender;
+        ReplyComment memory reply = ReplyComment(_id, replyMsg, createdAt);
+
+        faqs[_id].comments.push(reply);
+
+        for(uint i=0;i<faqList.length;i++){
+            if(faqList[i]._id == faqId){
+                faqList[i].comments.push(reply);
+                break;
+            }
+        }
+    }
+
 
     // getter functions
     function getAllParties() public view returns (Party[] memory){
@@ -232,13 +246,8 @@ contract Election is Structure{
         return voters[_id];
     }
 
-    function getAllFAQs(address _id) public view returns (FAQ[] memory) {
-        FAQ[] memory temp = new FAQ[](1);
-        if(adminAddress == _id){
-            return faqList;
-        }
-        temp[0] = faqs[_id];
-        return temp;
+    function getAllFAQs() public view returns (FAQ[] memory) {
+        return faqList;
     }
 }
 
@@ -253,5 +262,6 @@ contract Election is Structure{
 // create election
 // Election 2022, hello world election, sep 12 2022 , sep 13 2022, province
 
-// add faq
+// add faq & reply
 // UI design issues, please maintain your desing, https://file.png, 2023-23-23T1-23-12
+// 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, yes it caused problem, 2023-34-23T2-34-23
