@@ -232,8 +232,13 @@ contract Election is Structure{
         return voters[_id];
     }
 
-    function getFAQs(address _id) public view returns (FAQ memory) {
-        return faqs[_id];
+    function getAllFAQs(address _id) public view returns (FAQ[] memory) {
+        FAQ[] memory temp = new FAQ[](1);
+        if(adminAddress == _id){
+            return faqList;
+        }
+        temp[0] = faqs[_id];
+        return temp;
     }
 }
 
@@ -247,3 +252,6 @@ contract Election is Structure{
 
 // create election
 // Election 2022, hello world election, sep 12 2022 , sep 13 2022, province
+
+// add faq
+// UI design issues, please maintain your desing, https://file.png, 2023-23-23T1-23-12
