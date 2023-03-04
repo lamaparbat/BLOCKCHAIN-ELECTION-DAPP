@@ -22,3 +22,7 @@ export const getPartyList = async () => {
 export const getElectionList = async () => {
   return await SmartContract.methods.getAllElections().call();
 }
+
+export const getFaqs = async () => {
+  return await SmartContract.methods.getAllFAQs().call();
+}

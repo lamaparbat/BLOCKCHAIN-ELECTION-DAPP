@@ -1,23 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Accordion from 'react-bootstrap/Accordion';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { toast } from 'react-toastify';
 import Navbar from '../../components/Navbar';
-import { responsive } from '../../constants';
+import { responsive, SmartContract } from '../../constants';
+import { getStorage } from '../../services';
+import { getHostedUrl } from '../../utils/action';
+import { getFaqs } from '../../utils/web3';
+import { BiSend } from 'react-icons/bi';
+import CommentCard from '../../components/CommentCard';
 
-const defaultFaqDetails = { title: null, desc: null };
+const defaultFaqDetails = { title: null, description: null, file: null };
 const VoterFaqs = () => {
   const [openAddQuestionModal, setOpenAddQuestionModal] = useState(false);
   const [faqList, setFaqList] = useState([]);
   const [newFaq, setNewFaq] = useState({ ...defaultFaqDetails });
+  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
 
+  useEffect(() => {
+    getFaqsList();
+  }, []);
+
+  const getFaqsList = async () => {
+    const faqList = await getFaqs();
+    setFaqList([...faqList]);
+  }
 
   const onAddHeaderClick = () => {
     setOpenAddQuestionModal(!openAddQuestionModal)
     !openAddQuestionModal && setNewFaq({ ...defaultFaqDetails });
   }
 
-  const handleSubmit = () => {
-    setFaqList([...faqList, newFaq]);
+  const handleSubmit = async () => {
+    try {
+      setFaqList([...faqList, newFaq]);
+      const formData = new FormData();
+      formData.append("faqFile", newFaq.file);
+
+      const response = await getHostedUrl(formData);
+      if (response) {
+        const { data: { url } } = response;
+        url ? await SmartContract.methods.addFaqs(
+          newFaq.title,
+          newFaq.description,
+          url,
+          new Date()
+        ).send({ from: loggedInAccountAddress }) : toast.error("Failed to upload File !");
+        toast.success("Faq successfully uploaded !");
+        getFaqsList();
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const replyComment = () => {
+
   }
 
   return (
@@ -47,11 +86,12 @@ const VoterFaqs = () => {
                     <textarea
                       className="form-control h-[250px] shadow-none"
                       placeholder="Descriptions"
-                      onChange={(e) => setNewFaq({ ...newFaq, desc: e.target.value })}
+                      onChange={(e) => setNewFaq({ ...newFaq, description: e.target.value })}
                     ></textarea>
+                    <input type="file" name="file" className='form-control my-3' onChange={(e) => setNewFaq({ ...newFaq, file: e.target.files[0] })} />
                     <button
                       className='btn btn-primary rounded-1 px-3 my-3'
-                      disabled={!newFaq.title || !newFaq.desc}
+                      disabled={!newFaq.title || !newFaq.description}
                       onClick={handleSubmit}
                     >Submit</button>
                   </div>
@@ -63,7 +103,44 @@ const VoterFaqs = () => {
                     return (
                       <Accordion.Item eventKey={`${i}`} className='shadow-md border-white-500 mb-3' key={i}>
                         <Accordion.Header>{faq.title}</Accordion.Header>
-                        <Accordion.Body>{faq.desc}</Accordion.Body>
+                        <Accordion.Body>
+                          <div className='h-[400px] w-100 overflow-hidden'>
+                            <Image
+                              src={faq.fileUrl}
+                              alt={faq.title}
+                              height={500}
+                              width={900}
+                              loading="lazy"
+                              className='object-cover w-100 h-100'
+                            />
+                          </div>
+                          <p className='my-2'>{faq.description}</p><br />
+                          <div className='input__cont flex border border-slate-200 rounded-tr-[10px] overflow-hidden'>
+                            <input
+                              type='text'
+                              className='form-control rounded-1 border-0 shadow-none'
+                              placeholder='Reply your opinions' />
+                            <button className='btn btn-primary rounded-0 px-4'><BiSend /></button>
+                          </div>
+                          <div className='replies my-3'>
+                            <h5>Comments</h5>
+                            <CommentCard
+                              address="a0231knsfvk443239lm23n223"
+                              comment="Lorem ipsum dolor sit amet consectetur adipisicing elit.Minus vel delectus ullam illo, iusto suscipit dolor veniamreiciendis aperiam ipsa necessitatibus, reprehenderit et quibusdamincidunt quidem obcaecati rem accusantium impedit."
+                              date="12th Dec, 2023 12:00 pm"
+                            />
+                            <CommentCard
+                              address="a0231knsfvk443239lm23n223"
+                              comment="Lorem ipsum dolor sit amet consectetur adipisicing elit.Minus vel delectus ullam illo, iusto suscipit dolor veniamreiciendis aperiam ipsa necessitatibus, reprehenderit et quibusdamincidunt quidem obcaecati rem accusantium impedit."
+                              date="12th Dec, 2023 12:00 pm"
+                            />
+                            <CommentCard
+                              address="a0231knsfvk443239lm23n223"
+                              comment="Lorem ipsum dolor sit amet consectetur adipisicing elit.Minus vel delectus ullam illo, iusto suscipit dolor veniamreiciendis aperiam ipsa necessitatibus, reprehenderit et quibusdamincidunt quidem obcaecati rem accusantium impedit."
+                              date="12th Dec, 2023 12:00 pm"
+                            />
+                          </div>
+                        </Accordion.Body>
                       </Accordion.Item>
                     )
                   })

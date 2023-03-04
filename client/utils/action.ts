@@ -70,9 +70,19 @@ const createElection = async (payload: Object) => {
 }
 
 
+// file upload and get hosted url
+const getHostedUrl = async (payload: Object) => {
+  try {
+    return await Http("post", "/upload/uploadFile", payload);
+  } catch (error) {
+    return console.error(error);
+  }
+}
+
 export {
   registerCandidate,
   registerParty,
   registerVoter,
-  createElection
+  createElection,
+  getHostedUrl
 }

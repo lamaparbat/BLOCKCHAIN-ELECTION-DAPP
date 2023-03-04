@@ -6,7 +6,6 @@ import { PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO } from '../../constants';
 import { registerCandidate, getConvertedAge, getPartyList, getCandidateList } from '../../utils/index';
 import { toast } from 'react-toastify';
 import { SmartContract } from '../../constants';
-import { getStorage } from '../../services';
 import { PulseLoader } from 'react-spinners';
 import _ from 'lodash';
 

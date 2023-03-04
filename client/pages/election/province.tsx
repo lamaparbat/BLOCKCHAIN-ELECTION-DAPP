@@ -15,10 +15,7 @@ export default function Home() {
   const [electionStatus, setElectionStatus] = useState(null);
   const [electionList, setElectionList] = useState([]);
   const [candidateLists, setCandidateLists] = useState([]);
-<<<<<<< HEAD
   const [currentElection, setCurrentElection] = useState<any>({});
-=======
->>>>>>> ca69efb86bd7bfb2a7d0fcfe3a820509ed453c4f
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
   let voteCastEvent = null;
 
@@ -32,12 +29,8 @@ export default function Home() {
       const { currentElection, electionCandidatesArray } = getSortedCandidatesList(electionList, candidateLists);
 
       setElectionStatus(electionStatus);
-<<<<<<< HEAD
       setCandidateLists(electionCandidatesArray);
       setCurrentElection(currentElection);
-=======
-      setCandidateLists(candidateLists);
->>>>>>> ca69efb86bd7bfb2a7d0fcfe3a820509ed453c4f
       dispatch(setCandidateList(candidateLists));
       setElectionList(electionList);
 

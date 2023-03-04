@@ -98,6 +98,7 @@ const Details: React.FC = (): React.ReactElement => {
       toast.error("Fail to add selected candidates !");
     }
   }
+  console.log(candidateLists)
   return (
     <div className='mb-[50px]'>
       <Navbar /><br />
