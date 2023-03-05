@@ -135,7 +135,7 @@ export const CONTRACT_ABI = [
 						"components": [
 							{
 								"internalType": "address",
-								"name": "_id",
+								"name": "userId",
 								"type": "address"
 							},
 							{
@@ -1227,7 +1227,7 @@ export const CONTRACT_ABI = [
 						"components": [
 							{
 								"internalType": "address",
-								"name": "_id",
+								"name": "userId",
 								"type": "address"
 							},
 							{
@@ -1990,4 +1990,4 @@ export const CONTRACT_ABI = [
 		"type": "function"
 	}
 ];
-export const CONTRACT_ABI_ADDRESS = "0xBAb48bC48447ccfe427E01A1Db35d54459FA8799";
+export const CONTRACT_ABI_ADDRESS = "0x6846a8F638a4da4aa21617f36140C207BC8aF81c";

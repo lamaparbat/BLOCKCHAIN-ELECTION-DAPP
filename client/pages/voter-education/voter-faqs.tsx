@@ -12,6 +12,8 @@ import { BiSend } from 'react-icons/bi';
 import CommentCard from '../../components/CommentCard';
 
 const defaultFaqDetails = { title: null, description: null, file: null };
+let replyComment = { userId: null, replyMsg: null }
+
 const VoterFaqs = () => {
   const [openAddQuestionModal, setOpenAddQuestionModal] = useState(false);
   const [faqList, setFaqList] = useState([]);
@@ -48,15 +50,23 @@ const VoterFaqs = () => {
           new Date()
         ).send({ from: loggedInAccountAddress }) : toast.error("Failed to upload File !");
         toast.success("Faq successfully uploaded !");
-        getFaqsList();
+        await getFaqsList();
       }
     } catch (error) {
       console.error(error)
     }
   }
 
-  const replyComment = () => {
-
+  const postComment = async () => {
+    try {
+      const { userId, replyMsg } = replyComment;
+      await SmartContract.methods.addFaqComment(userId, replyMsg, new Date().toISOString()).send({ from: loggedInAccountAddress });
+      await getFaqsList();
+      toast.success("Comment posted successfully.");
+    } catch (error) {
+      toast.error("Failed to post comment !");
+      console.error(error);
+    }
   }
 
   return (
@@ -119,26 +129,24 @@ const VoterFaqs = () => {
                             <input
                               type='text'
                               className='form-control rounded-1 border-0 shadow-none'
-                              placeholder='Reply your opinions' />
-                            <button className='btn btn-primary rounded-0 px-4'><BiSend /></button>
+                              placeholder='Reply your opinions'
+                              onChange={(e) => (replyComment = { ...replyComment, userId: faq._id, replyMsg: e.target.value })}
+                            />
+                            <button className='btn btn-primary rounded-0 px-4' onClick={postComment}><BiSend /></button>
                           </div>
                           <div className='replies my-3'>
                             <h5>Comments</h5>
-                            <CommentCard
-                              address="a0231knsfvk443239lm23n223"
-                              comment="Lorem ipsum dolor sit amet consectetur adipisicing elit.Minus vel delectus ullam illo, iusto suscipit dolor veniamreiciendis aperiam ipsa necessitatibus, reprehenderit et quibusdamincidunt quidem obcaecati rem accusantium impedit."
-                              date="12th Dec, 2023 12:00 pm"
-                            />
-                            <CommentCard
-                              address="a0231knsfvk443239lm23n223"
-                              comment="Lorem ipsum dolor sit amet consectetur adipisicing elit.Minus vel delectus ullam illo, iusto suscipit dolor veniamreiciendis aperiam ipsa necessitatibus, reprehenderit et quibusdamincidunt quidem obcaecati rem accusantium impedit."
-                              date="12th Dec, 2023 12:00 pm"
-                            />
-                            <CommentCard
-                              address="a0231knsfvk443239lm23n223"
-                              comment="Lorem ipsum dolor sit amet consectetur adipisicing elit.Minus vel delectus ullam illo, iusto suscipit dolor veniamreiciendis aperiam ipsa necessitatibus, reprehenderit et quibusdamincidunt quidem obcaecati rem accusantium impedit."
-                              date="12th Dec, 2023 12:00 pm"
-                            />
+                            {
+                              faq?.comments?.map((comment: any, i: number) => {
+                                console.log({ comment })
+                                return <CommentCard
+                                  key={i}
+                                  address={comment.userId}
+                                  comment={comment.replyMsg}
+                                  date={comment.createdAt}
+                                />
+                              })
+                            }
                           </div>
                         </Accordion.Body>
                       </Accordion.Item>
