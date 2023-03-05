@@ -206,7 +206,7 @@ contract Election is Structure{
         address _id = msg.sender;
         ReplyComment memory reply = ReplyComment(_id, replyMsg, createdAt);
 
-        faqs[_id].comments.push(reply);
+        faqs[faqId].comments.push(reply);
 
         for(uint i=0;i<faqList.length;i++){
             if(faqList[i]._id == faqId){
