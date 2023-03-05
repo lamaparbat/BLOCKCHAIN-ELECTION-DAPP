@@ -18,7 +18,7 @@ contract Structure {
     }
 
     struct ReplyComment {
-        address _id;
+        address userId;
         string replyMsg;
         string createdAt;
     }
