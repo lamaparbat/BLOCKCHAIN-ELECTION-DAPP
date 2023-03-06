@@ -145,7 +145,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className='days lg:w-[140px] sm:w-[100px] mx-3 text-center'>
-                    <h5 className='my-3 text-slate-300'>HOURSE</h5>
+                    <h5 className='my-3 text-slate-300'>HOURS</h5>
                     <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-6xl bg-[url("https://t3.ftcdn.net/jpg/03/05/45/96/240_F_305459609_qqNT6Sk6DZGhcEexcAbs9xfq2iI3yl2e.jpg")] card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
                       <div className={`animate__animated ${timer.id === "hours" && timer.play && "animate__slideInUp"}`}>{countDown.hours}</div>
                     </div>
