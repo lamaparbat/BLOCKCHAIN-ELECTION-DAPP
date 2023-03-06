@@ -10,7 +10,7 @@ import _ from 'lodash';
 import Web3 from 'web3';
 import ElectionModal from './ElectionModal';
 import Avatar from './Avatar';
-import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style } from '../constants/index';
+import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style, METAMASK_EXT_LINK } from '../constants/index';
 import { LanguageStruct } from '../interfaces';
 import { getStorage, setStorage } from '../services';
 import Dropdown from './Dropdown';
@@ -32,6 +32,7 @@ const Navbar: React.FC = (): ReactElement => {
   const [loading, setLoading] = useState(false);
   const [openProfileDropdown, setOpenProfileDropdown] = useState(false);
   const [isAddressCopied, setIsAddressCopied] = useState(false);
+  const [isEthereumEnabled, setIsEthereumEnabled] = useState(false);
 
 
   const route = useRouter();
@@ -44,6 +45,7 @@ const Navbar: React.FC = (): ReactElement => {
       setLoggedInAccountAddress(getStorage("loggedInAccountAddress"));
       window.ethereum.enable().then(handleLogin);
     }
+    setIsEthereumEnabled(window.ethereum);
   }, [])
 
   // redirect to gmail
@@ -135,7 +137,7 @@ const Navbar: React.FC = (): ReactElement => {
         {/*  */}
         <div className='items w-[600px] justify-around items-center text-slate-600 lg:flex sm:hidden'>
           <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={onCreateElection}>CREATE ELECTION</span>
-          <span className='pr-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/FAQ")}>FAQ</span>
+          <span className='pr-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/voter-education/voter-faqs")}>FAQ</span>
           <select className='text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0' onChange={onLanguageChange}>
             {LANGUAGES.map((d, i) => <option key={i} value={d.value}>{d.label}</option>)}
           </select>
@@ -152,7 +154,13 @@ const Navbar: React.FC = (): ReactElement => {
                 onClick={handleLogin}
               >
                 <img className='mx-1' src={"/images/metamask.png"} height="20" width="20" />
-                <span className='mr-2 text-light text-[14px]'>{loading ? "Connecting" : "Connect Wallet"}</span>
+                <a
+                  href={!isEthereumEnabled && METAMASK_EXT_LINK}
+                  className='no-underline mr-2 text-light text-[14px] mt-[1px]'
+                  target={!isEthereumEnabled && "_blank"}
+                >
+                  {loading ? "Connecting" : isEthereumEnabled ? "Connect Wallet" : "Install Metamask"}
+                </a>
               </button>
           }
           {

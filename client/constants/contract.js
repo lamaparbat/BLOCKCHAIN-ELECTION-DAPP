@@ -1990,4 +1990,4 @@ export const CONTRACT_ABI = [
 		"type": "function"
 	}
 ];
-export const CONTRACT_ABI_ADDRESS = "0x6846a8F638a4da4aa21617f36140C207BC8aF81c";
+export const CONTRACT_ABI_ADDRESS = "0x379e1Ae9E788f5424E41F010A758de87ceE5E64C";

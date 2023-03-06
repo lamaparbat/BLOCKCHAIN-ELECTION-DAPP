@@ -194,13 +194,15 @@ const sub_navbar_items = {
 const web3 = new Web3(Web3.givenProvider);
 const SmartContract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ABI_ADDRESS);
 
+const METAMASK_EXT_LINK = "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en"
+
 export {
   LANGUAGES,
   PARTIES,
   responsive, BTM_BORDER_STYLE, ELECTION_TYPE,
   sub_navbar_style, sub_navbar_items_style, sub_navbar_items,
   PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, StateProvinceOffices, DistrictOffices,
-  web3, SmartContract
+  web3, SmartContract, METAMASK_EXT_LINK
 };
 
 
