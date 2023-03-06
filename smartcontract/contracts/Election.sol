@@ -3,8 +3,9 @@ pragma solidity ^0.8.0;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/math/SafeMath.sol";
 import "./Structure.sol";
+import "./Constants.sol";
 
-contract Election is Structure{
+contract Election is Structure, Constants{
     using SafeMath for uint;
     address adminAddress;
     
@@ -37,6 +38,9 @@ contract Election is Structure{
     uint public totalParty = 0;
     uint public totalElection = 0;
     uint public voteCount = 0;
+    uint public totalMaleVoters = 0;
+    uint public totalFemaleVoters = 0;
+    uint public totalOtherVoters = 0;
 
     // Event
     event PartyCreated(Party party);
@@ -102,7 +106,7 @@ contract Election is Structure{
 
     function addCandidate(string memory _name, uint _citizenshipNo, uint _age, string memory _agenda, string memory _dob,
         string memory _email, string memory _profile, string memory _partyName, string memory _province, string memory _district, 
-        string memory _municipality, string memory _ward
+        string memory _municipality, string memory _ward, string memory _gender
     ) public payable {
         address[] memory votedVoterLists;
         address _id = msg.sender;
@@ -112,8 +116,10 @@ contract Election is Structure{
             revert("Candidate already registered !");
         }
 
+        updateCounter(_gender);
+
         Candidate memory candidate = Candidate(
-            User(_id, _name, _citizenshipNo, _age, _dob, _email, _profile, _province, _district, _municipality, _ward),
+            User(_id, _name, _citizenshipNo, _age, _gender, _dob, _email, _profile, _province, _district, _municipality, _ward),
              _partyName, _agenda, 0, votedVoterLists
         );
 
@@ -127,7 +133,7 @@ contract Election is Structure{
 
     function addVoter(string memory _name, uint _citizenshipNo, uint _age, string memory _dob,
         string memory _email, string memory _profile,string memory _province,
-        string memory _district, string memory _municipality, string memory _ward
+        string memory _district, string memory _municipality, string memory _ward, string memory _gender
     ) public payable {
         address _id = msg.sender;
 
@@ -136,9 +142,11 @@ contract Election is Structure{
             revert("Voter already registered !");
         }
         
+        updateCounter(_gender);
+
         address[] memory votedCandidateList;
         Voter memory voter = Voter(
-            User(_id, _name, _citizenshipNo, _age, _dob, _email, _profile, _province, _district, _municipality, _ward), 
+            User(_id, _name, _citizenshipNo, _age, _gender, _dob, _email, _profile, _province, _district, _municipality, _ward), 
             votedCandidateList, 0
         );
         
@@ -216,6 +224,15 @@ contract Election is Structure{
         }
     }
 
+    function updateCounter(string memory _gender) public {
+        if(keccak256(bytes(_gender)) == keccak256(bytes(gender_list[0]))){
+            totalMaleVoters = totalMaleVoters.add(1);
+        }else if(keccak256(bytes(_gender)) == keccak256(bytes(gender_list[1]))){
+            totalFemaleVoters = totalFemaleVoters.add(1);
+        }else if(keccak256(bytes(_gender)) == keccak256(bytes(gender_list[2]))){
+            totalOtherVoters = totalOtherVoters.add(1);
+        }
+    }
 
     // getter functions
     function getAllParties() public view returns (Party[] memory){
