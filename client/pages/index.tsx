@@ -197,7 +197,7 @@ export default function Home() {
                 <ElectionUserCard label="Others" value={totalDataCount.otherVoters} Icon={<FaTransgender className='text-4xl text-blue-900' />} />
 
                 <ElectionUserCard label="Total Election" value={totalDataCount.elections} Icon={<FaVoteYea className='text-4xl text-blue-900' />} />
-                <ElectionUserCard label="Male Parties" value={totalDataCount.parties} Icon={<BiMale className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label="Total Parties" value={totalDataCount.parties} Icon={<BiMale className='text-4xl text-blue-900' />} />
               </div>
             </div>
 
