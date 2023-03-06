@@ -55,6 +55,9 @@
 ## Election Offices Page
 <img width="1440" alt="Screen Shot 2023-02-04 at 12 20 01" src="https://user-images.githubusercontent.com/64581460/216752957-86d7d634-48dc-4563-8218-183e9dcffbe2.png">
 
+## Election data overview
+<img width="1440" alt="Screen Shot 2023-03-06 at 15 55 42" src="https://user-images.githubusercontent.com/64581460/223080647-59152b75-3c0e-4eb6-8f6e-fae0afcd91e2.png">
+
 ### Workflow overview
 ![Blockchain Voting Interaction](https://user-images.githubusercontent.com/64581460/200596235-cba703b8-ac91-4600-9a02-d271a6ad8ed6.png)
 
