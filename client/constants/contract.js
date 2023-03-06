@@ -33,6 +33,11 @@ export const CONTRACT_ABI = [
 							},
 							{
 								"internalType": "string",
+								"name": "gender",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
 								"name": "dob",
 								"type": "string"
 							},
@@ -237,6 +242,11 @@ export const CONTRACT_ABI = [
 							},
 							{
 								"internalType": "string",
+								"name": "gender",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
 								"name": "dob",
 								"type": "string"
 							},
@@ -331,6 +341,11 @@ export const CONTRACT_ABI = [
 								"internalType": "uint256",
 								"name": "age",
 								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "gender",
+								"type": "string"
 							},
 							{
 								"internalType": "string",
@@ -498,6 +513,11 @@ export const CONTRACT_ABI = [
 				"internalType": "string",
 				"name": "_ward",
 				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
 			}
 		],
 		"name": "addCandidate",
@@ -653,6 +673,11 @@ export const CONTRACT_ABI = [
 				"internalType": "string",
 				"name": "_ward",
 				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
 			}
 		],
 		"name": "addVoter",
@@ -691,6 +716,11 @@ export const CONTRACT_ABI = [
 						"internalType": "uint256",
 						"name": "age",
 						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "gender",
+						"type": "string"
 					},
 					{
 						"internalType": "string",
@@ -801,6 +831,11 @@ export const CONTRACT_ABI = [
 						"internalType": "uint256",
 						"name": "age",
 						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "gender",
+						"type": "string"
 					},
 					{
 						"internalType": "string",
@@ -1080,6 +1115,11 @@ export const CONTRACT_ABI = [
 							},
 							{
 								"internalType": "string",
+								"name": "gender",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
 								"name": "dob",
 								"type": "string"
 							},
@@ -1329,6 +1369,11 @@ export const CONTRACT_ABI = [
 							},
 							{
 								"internalType": "string",
+								"name": "gender",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
 								"name": "dob",
 								"type": "string"
 							},
@@ -1419,6 +1464,11 @@ export const CONTRACT_ABI = [
 								"internalType": "uint256",
 								"name": "age",
 								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "gender",
+								"type": "string"
 							},
 							{
 								"internalType": "string",
@@ -1573,6 +1623,11 @@ export const CONTRACT_ABI = [
 								"internalType": "uint256",
 								"name": "age",
 								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "gender",
+								"type": "string"
 							},
 							{
 								"internalType": "string",
@@ -1758,6 +1813,45 @@ export const CONTRACT_ABI = [
 	},
 	{
 		"inputs": [],
+		"name": "totalFemaleVoters",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "totalMaleVoters",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "totalOtherVoters",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "totalParty",
 		"outputs": [
 			{
@@ -1780,6 +1874,19 @@ export const CONTRACT_ABI = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"name": "updateCounter",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -1839,6 +1946,11 @@ export const CONTRACT_ABI = [
 						"internalType": "uint256",
 						"name": "age",
 						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "gender",
+						"type": "string"
 					},
 					{
 						"internalType": "string",
@@ -1942,6 +2054,11 @@ export const CONTRACT_ABI = [
 					},
 					{
 						"internalType": "string",
+						"name": "gender",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
 						"name": "dob",
 						"type": "string"
 					},
@@ -1990,4 +2107,4 @@ export const CONTRACT_ABI = [
 		"type": "function"
 	}
 ];
-export const CONTRACT_ABI_ADDRESS = "0x379e1Ae9E788f5424E41F010A758de87ceE5E64C";
+export const CONTRACT_ABI_ADDRESS = "0x51dAD78236CBF3edc1043429b99A0D7832cC1FF9";

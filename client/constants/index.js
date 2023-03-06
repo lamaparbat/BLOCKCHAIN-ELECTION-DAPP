@@ -13,6 +13,12 @@ const PARTIES = [
   "Swatantra"
 ]
 
+const GENDER_OPTIONS = [
+  { label: "Male", value: "MALE" },
+  { label: "Female", value: "FEMALE" },
+  { label: "Others", value: "OTHERS" },
+]
+
 const PROVINCE = [
   { label: "Province 1", value: "province1" },
   { label: "Madhesh Province", value: "province2" },
@@ -199,7 +205,7 @@ const METAMASK_EXT_LINK = "https://chrome.google.com/webstore/detail/metamask/nk
 export {
   LANGUAGES,
   PARTIES,
-  responsive, BTM_BORDER_STYLE, ELECTION_TYPE,
+  responsive, BTM_BORDER_STYLE, ELECTION_TYPE, GENDER_OPTIONS,
   sub_navbar_style, sub_navbar_items_style, sub_navbar_items,
   PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, StateProvinceOffices, DistrictOffices,
   web3, SmartContract, METAMASK_EXT_LINK

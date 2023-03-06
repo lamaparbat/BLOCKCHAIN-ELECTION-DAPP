@@ -5,21 +5,48 @@ import ElectionCard from '../components/LiveCounterCard/ElectionCard';
 import { getElectionList } from '../utils';
 import _ from 'lodash';
 import Marquee from 'react-fast-marquee';
-import { FaRegNewspaper } from 'react-icons/fa';
+import Select from "react-select";
+import { FaRegNewspaper, FaTransgender, FaVoteYea } from 'react-icons/fa';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { Fade } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import 'animate.css';
+import { BiFemale, BiGroup, BiMale } from 'react-icons/bi';
+import ElectionUserCard from '../components/ElectionUserCard';
+import { PROVINCE } from '../constants';
+import { getFemaleVotersCount, getMaleVotersCount, getOthersVotersCount, getTotalCandidateCount, getTotalElectionCount, getTotalPartiesCount, getTotalVotersCount } from '../utils/web3';
 
 export default function Home() {
   const [electionLists, setElectionLists] = useState([]);
   const [countDown, setCountDown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [timer, setTimer] = useState({ id: "seconds", play: false });
+  const [totalDataCount, setTotalDataCount] = useState({
+    candidates: 0, voters: 0, parties: 0, elections: 0,
+    maleVoters: 0, femaleVoters: 0, otherVoters: 0
+  });
 
   useEffect(() => {
     (async () => {
       const electionList = await getElectionList();
+      const totalCandidatesCount = await getTotalCandidateCount();
+      const totalVotersCount = await getTotalVotersCount();
+      const totalMaleVotersCount = await getMaleVotersCount();
+      const totalFemaleVotersCount = await getFemaleVotersCount();
+      const totalOthersVotersCount = await getOthersVotersCount();
+      const totalPartiesCount = await getTotalPartiesCount();
+      const totalElectionCount = await getTotalElectionCount();
+
       setElectionLists(electionList);
+      setTotalDataCount({
+        ...totalDataCount,
+        candidates: totalCandidatesCount,
+        voters: totalVotersCount,
+        parties: totalPartiesCount,
+        elections: totalElectionCount,
+        maleVoters: totalMaleVotersCount,
+        femaleVoters: totalFemaleVotersCount,
+        otherVoters: totalOthersVotersCount
+      });
     })();
 
     return () => {
@@ -142,6 +169,7 @@ export default function Home() {
             <div className='my-5 sm:px-2'>
               <h4 className='font-bold'>Election Gallery</h4>
               <div className='flex lg:justify-between md:justify-between flex-wrap sm:justify-center'>
+                {electionLists?.length === 0 && <span className='ml-2'>No election gallery found !</span>}
                 {
                   electionLists?.map((election, i) => {
                     return (
@@ -157,10 +185,19 @@ export default function Home() {
             </div>
 
 
-            <div className='my-4 sm:px-2'>
-              <h5 className='font-bold'>Overall Elections Data</h5>
-              <div className='w-full'>
+            <div className='my-4 sm:px-2 mb-3 lg:h-[400px] sm:h-fit'>
+              <div className='flex justify-between items-center py-3'>
+                <h5 className='font-bold mb-3'>Overall Elections Data</h5>
+                <Select className='' options={PROVINCE} placeholder="Select province" />
+              </div>
+              <div className='w-full flex justify-between sm:flex-wrap'>
+                <ElectionUserCard label="Total Voters" value={totalDataCount.voters} Icon={<BiGroup className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label="Male Voters" value={totalDataCount.maleVoters} Icon={<BiMale className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label="Female Voters" value={totalDataCount.femaleVoters} Icon={<BiFemale className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label="Others" value={totalDataCount.otherVoters} Icon={<FaTransgender className='text-4xl text-blue-900' />} />
 
+                <ElectionUserCard label="Total Election" value={totalDataCount.elections} Icon={<FaVoteYea className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label="Male Parties" value={totalDataCount.parties} Icon={<BiMale className='text-4xl text-blue-900' />} />
               </div>
             </div>
 
