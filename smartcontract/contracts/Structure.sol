@@ -8,6 +8,7 @@ contract Structure {
         string fullName;
         uint citizenshipNumber;
         uint age;
+        string gender;
         string dob;
         string email;
         string profile;
