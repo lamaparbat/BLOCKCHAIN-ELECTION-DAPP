@@ -1,4 +1,4 @@
-# Blockchain E-Voting System (WEB 3.O)
+# Blockchain Election System (WEB 3.O)
 
 ### Landing page UI
 <img width="1440" alt="Screen Shot 2023-03-02 at 22 57 10" src="https://user-images.githubusercontent.com/64581460/222502200-97d92d19-3219-4c51-8681-c3f3bd719d5e.png">
