@@ -3,6 +3,11 @@
 ### Landing page UI
 <img width="1440" alt="Screen Shot 2023-03-02 at 22 57 10" src="https://user-images.githubusercontent.com/64581460/222502200-97d92d19-3219-4c51-8681-c3f3bd719d5e.png">
 
+### If metamask is not installed, then homepage will look like this
+<img width="1440" alt="Screen Shot 2023-03-10 at 22 24 00" src="https://user-images.githubusercontent.com/64581460/224372616-8faaec90-ec62-46aa-b8bf-b9b1ffc989e5.png">
+
+<img width="1440" alt="Screen Shot 2023-03-02 at 22 57 10" src="https://user-images.githubusercontent.com/64581460/222502200-97d92d19-3219-4c51-8681-c3f3bd719d5e.png">
+
 ### Live Election Starting CountDown Timer
 <img width="1440" alt="Screen Shot 2023-02-20 at 21 31 26" src="https://user-images.githubusercontent.com/64581460/220151007-c36e57fb-9bda-4baa-9e9a-21faf6b0aad9.png">
 
