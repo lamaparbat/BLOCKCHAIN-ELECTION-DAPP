@@ -44,14 +44,17 @@ const VoterFaqs = () => {
       const response = await getHostedUrl(formData);
       if (response) {
         const { data: { url } } = response;
-        url ? await SmartContract.methods.addFaqs(
-          newFaq.title,
-          newFaq.description,
-          url,
-          new Date()
-        ).send({ from: loggedInAccountAddress }) : toast.error("Failed to upload File !");
+        let resp = null;
+        if (url)
+          resp = await SmartContract.methods.addFaqs(
+            newFaq.title,
+            newFaq.description,
+            url,
+            new Date()
+          ).send({ from: loggedInAccountAddress })
+        else toast.error("Failed to upload File !");
         toast.success("Faq successfully uploaded !");
-        await getFaqsList();
+        resp && await getFaqsList();
       }
     } catch (error) {
       console.error(error)
@@ -61,8 +64,8 @@ const VoterFaqs = () => {
   const postComment = async () => {
     try {
       const { userId, replyMsg } = replyComment;
-      await SmartContract.methods.addFaqComment(userId, replyMsg, new Date().toISOString()).send({ from: loggedInAccountAddress });
-      await getFaqsList();
+      const resp = await SmartContract.methods.addFaqComment(userId, replyMsg, new Date().toISOString()).send({ from: loggedInAccountAddress });
+      resp && await getFaqsList();
       toast.success("Comment posted successfully.");
     } catch (error) {
       toast.error("Failed to post comment !");
