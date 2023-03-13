@@ -266,6 +266,10 @@ contract Election is Structure, Constants{
     function getAllFAQs() public view returns (FAQ[] memory) {
         return faqList;
     }
+    
+    function isAdmin(address _id) public view returns (bool){
+        return _id == adminAddress;
+    }
 }
 
 
