@@ -67,3 +67,8 @@ export const getTotalElectionCount = async () => {
   if (!window.ethereum) return 0;
   return await SmartContract.methods.totalElection().call();
 }
+
+export const isAdmin = async (address) => {
+  if (!window.ethereum) return 0;
+  return await SmartContract.methods.isAdmin(address).call();
+}
