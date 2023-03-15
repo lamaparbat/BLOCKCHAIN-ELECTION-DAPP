@@ -10,6 +10,7 @@ import _ from 'lodash';
 import Web3 from 'web3';
 import ElectionModal from './ElectionModal';
 import Avatar from './Avatar';
+import { isAdmin } from '../utils/web3';
 import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style, METAMASK_EXT_LINK } from '../constants/index';
 import { LanguageStruct } from '../interfaces';
 import { getStorage, setStorage } from '../services';
@@ -33,6 +34,7 @@ const Navbar: React.FC = (): ReactElement => {
   const [openProfileDropdown, setOpenProfileDropdown] = useState(false);
   const [isAddressCopied, setIsAddressCopied] = useState(false);
   const [isEthereumEnabled, setIsEthereumEnabled] = useState(false);
+  const [isAdminAddress, setIsAdminAddress] = useState(false);
 
 
   const route = useRouter();
@@ -77,9 +79,13 @@ const Navbar: React.FC = (): ReactElement => {
           method: "eth_requestAccounts"
         });
         const loggedInAccountAddress = Web3.utils.toChecksumAddress(accounts[0]);
+        const isAdminAddress = await isAdmin(loggedInAccountAddress);
+
         setLoggedInAccountAddress(loggedInAccountAddress);
+        setIsAdminAddress(isAdminAddress)
         setIsLoggedIn(true);
         setStorage("loggedInAccountAddress", loggedInAccountAddress);
+        setStorage("isAdmin", isAdminAddress);
       } catch (error) {
         console.error(error);
       }
@@ -123,7 +129,7 @@ const Navbar: React.FC = (): ReactElement => {
         {/*  vertical-top-navbar */}
         <div className={`vertical__navbar absolute left-0 ml-[25px] mt-[40px] shadow-inner z-50 flex lg:hidden ${openTopVerticalNavbar ? 'block' : 'hidden'}`}>
           <div className={`px-4 pt-3 pb-4 w-[220px] h-[240px] bg-slate-100 absolute rounded-b-[5px] text-slate-600 text-[16px]`}>
-            <div onClick={() => navigate("/")}>CREATE ELECTION</div>
+            {isAdminAddress && <div onClick={() => navigate("/")}>CREATE ELECTION</div>}
             <div className="my-[18px]" onClick={() => navigate("/FAQ")}>FAQ</div>
             <select className='form-control py-1 cursor-pointer hover:opacity-70 outline-0' onChange={onLanguageChange}>
               {LANGUAGES.map((d, i) => <option className='text-[14px]' key={i} value={d.value}>{d.label}</option>)}
@@ -135,22 +141,22 @@ const Navbar: React.FC = (): ReactElement => {
 
 
         {/*  */}
-        <div className='items w-[600px] justify-around items-center text-slate-600 lg:flex sm:hidden'>
-          <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={onCreateElection}>CREATE ELECTION</span>
-          <span className='pr-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/voter-education/voter-faqs")}>FAQ</span>
-          <select className='text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0' onChange={onLanguageChange}>
+        <div className='items w-[600px] justify-end items-center text-slate-600 lg:flex sm:hidden'>
+          {isAdminAddress && <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={onCreateElection}>CREATE ELECTION</span>}
+          <span className='px-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/voter-education/voter-faqs")}>FAQ</span>
+          <select className='mx-4 text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0' onChange={onLanguageChange}>
             {LANGUAGES.map((d, i) => <option key={i} value={d.value}>{d.label}</option>)}
           </select>
           <span className='px-4 cursor-pointer hover:opacity-70 border-r-2 border-slate-400 border-l-2 border-slate-400' onClick={() => navigate("mail")}><AiOutlineMail className='text-lg' /></span>
-          <span className='pl-1 pr-4 cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={openSearchModal}><AiOutlineSearch className='text-xl' /></span>
+          <span className='px-4 cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={openSearchModal}><AiOutlineSearch className='text-xl' /></span>
           {
             isLoggedIn ?
-              <div className='flex items-center cursor-pointer hover:opacity-60' onClick={openProfile}>
+              <div className='px-3 flex items-center cursor-pointer hover:opacity-60' onClick={openProfile}>
                 {/* <Avatar className='avatar' src="/images/parbat.png" alt="profile" size='sm' border={1} /> */}
                 <span className=''>{trimAddress(loggedInAccountAddress)}</span>
               </div> :
               <button
-                className='px-1 py-[3px] rounded-1 border-light flex items-center bg-blue-900 text-light text-sm'
+                className='mx-4 py-[3px] rounded-1 border-light flex items-center bg-blue-900 text-light text-sm'
                 onClick={handleLogin}
               >
                 <img className='mx-1' src={"/images/metamask.png"} height="20" width="20" />
