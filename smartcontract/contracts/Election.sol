@@ -32,7 +32,7 @@ contract Election is Structure, Constants{
 
 
 
-    // static variables
+    // counter varirables
     uint public totalCandidate = 0;
     uint public totalVoter = 0;
     uint public totalParty = 0;
@@ -42,7 +42,7 @@ contract Election is Structure, Constants{
     uint public totalFemaleVoters = 0;
     uint public totalOtherVoters = 0;
 
-    // Event
+    // Event abstractions
     event PartyCreated(Party party);
     event CandidateCreated(Candidate candidate);
     event VoterCreated(Voter voter);
