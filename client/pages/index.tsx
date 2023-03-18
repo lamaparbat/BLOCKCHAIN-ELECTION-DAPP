@@ -15,16 +15,19 @@ import { BiFemale, BiGroup, BiMale } from 'react-icons/bi';
 import ElectionUserCard from '../components/ElectionUserCard';
 import { PROVINCE } from '../constants';
 import { getVoterList, getFemaleVotersCount, getMaleVotersCount, getOthersVotersCount, getTotalCandidateCount, getTotalElectionCount, getTotalPartiesCount, getTotalVotersCount } from '../utils/web3';
+import { getCurrentElection } from '../utils/common';
 
 export default function Home() {
   const [electionLists, setElectionLists] = useState([]);
   const [allVoters, setAllVoters] = useState([]);
+  const [currentElection, setCurrentElection] = useState(null);
   const [countDown, setCountDown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [timer, setTimer] = useState({ id: "seconds", play: false });
   const [totalDataCount, setTotalDataCount] = useState({
     candidates: 0, voters: 0, parties: 0, elections: 0,
     maleVoters: 0, femaleVoters: 0, otherVoters: 0
   });
+
 
   useEffect(() => {
     (async () => {
@@ -38,6 +41,7 @@ export default function Home() {
       const totalPartiesCount = await getTotalPartiesCount();
       const totalElectionCount = await getTotalElectionCount();
 
+      setCurrentElection(getCurrentElection(electionList));
       setElectionLists(electionList);
       setAllVoters(totalVoters);
       setTotalDataCount({
@@ -161,7 +165,7 @@ export default function Home() {
               </Fade>
             </div>
 
-            <div>
+            <div className={`${!currentElection && "hidden"}`}>
               <div className='countdown_timer py-4 my-3 min-h-[320px] sm:h-fit bg-[url("https://t4.ftcdn.net/jpg/02/83/57/05/360_F_283570582_3J78GC9E5OesLLgG5lUkQLGEoyN2ijmc.jpg")] rounded-1 text-slate-100 flex flex-column items-center'>
                 <h3 className='my-4 mb-3 text-slate-300 text-center'>Election Nepal 2024 Happening</h3>
                 <div className='flex justify-evenly flex-wrap lg:w-[70vw] mt-3'>
