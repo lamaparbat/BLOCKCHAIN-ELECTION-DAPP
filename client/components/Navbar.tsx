@@ -11,7 +11,7 @@ import Web3 from 'web3';
 import ElectionModal from './ElectionModal';
 import Avatar from './Avatar';
 import { isAdmin } from '../utils/web3';
-import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style, METAMASK_EXT_LINK } from '../constants/index';
+import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style, METAMASK_EXT_LINK, ADMIN_ROUTES } from '../constants/index';
 import { LanguageStruct } from '../interfaces';
 import { getStorage, setStorage } from '../services';
 import Dropdown from './Dropdown';
@@ -46,6 +46,8 @@ const Navbar: React.FC = (): ReactElement => {
     if (window.ethereum) {
       setLoggedInAccountAddress(getStorage("loggedInAccountAddress"));
       window.ethereum.enable().then(handleLogin);
+
+      if(isAdminAddress) sub_navbar_items.politicalItems = [...sub_navbar_items.politicalItems.filter((item) =>  !ADMIN_ROUTES.includes(item.value) )];
     }
     setIsEthereumEnabled(window.ethereum);
   }, [])
