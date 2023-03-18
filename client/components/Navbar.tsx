@@ -141,7 +141,7 @@ const Navbar: React.FC = (): ReactElement => {
 
 
         {/*  */}
-        <div className='items w-[600px] justify-end items-center text-slate-600 lg:flex sm:hidden'>
+        <div className='items w-[650px] justify-end items-center text-slate-600 lg:flex sm:hidden'>
           {isAdminAddress && <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={onCreateElection}>CREATE ELECTION</span>}
           <span className='px-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/voter-education/voter-faqs")}>FAQ</span>
           <select className='mx-4 text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0' onChange={onLanguageChange}>
