@@ -200,7 +200,9 @@ const sub_navbar_items = {
 const web3 = new Web3(Web3.givenProvider);
 const SmartContract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ABI_ADDRESS);
 
-const METAMASK_EXT_LINK = "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en"
+const METAMASK_EXT_LINK = "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en";
+
+const ADMIN_ROUTES = ["/party/party-registration"];
 
 export {
   LANGUAGES,
@@ -208,7 +210,8 @@ export {
   responsive, BTM_BORDER_STYLE, ELECTION_TYPE, GENDER_OPTIONS,
   sub_navbar_style, sub_navbar_items_style, sub_navbar_items,
   PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, StateProvinceOffices, DistrictOffices,
-  web3, SmartContract, METAMASK_EXT_LINK
+  web3, SmartContract, METAMASK_EXT_LINK,
+  ADMIN_ROUTES
 };
 
 
