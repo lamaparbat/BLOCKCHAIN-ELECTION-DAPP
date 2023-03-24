@@ -1692,6 +1692,25 @@ export const CONTRACT_ABI = [
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "_id",
+				"type": "address"
+			}
+		],
+		"name": "isAdmin",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "",
 				"type": "address"
 			}
@@ -2107,4 +2126,4 @@ export const CONTRACT_ABI = [
 		"type": "function"
 	}
 ];
-export const CONTRACT_ABI_ADDRESS = "0x2e3e9af3d7B85a1c5dD6905F5A89e196604176E8";
+export const CONTRACT_ABI_ADDRESS = "0x2EEdCF5003625607a200040dfb4c6663c28ADD0e";

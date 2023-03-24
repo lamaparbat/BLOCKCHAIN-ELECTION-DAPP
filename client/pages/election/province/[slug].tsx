@@ -1,22 +1,23 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
-import { GoPrimitiveDot } from 'react-icons/go';
-import Navbar from '../../components/Navbar';
-import LiveCounterCard from '../../components/LiveCounterCard/LiveCounterCard';
-import electionChannel from "../../services/pusher-events";
-import { getCandidateList, getElectionList, getElectionStatus, getFormattedErrorMessage, getSortedCandidatesList, getVoterList } from '../../utils';
+import Navbar from '../../../components/Navbar';
+import electionChannel from "../../../services/pusher-events";
+import { getCandidateList, getElectionList, getElectionStatus, getFormattedErrorMessage, getSortedCandidatesList, getVoterList } from '../../../utils';
 import _ from 'lodash';
-import { SmartContract } from '../../constants';
-import { setCandidateList } from '../../redux/reducers/candidateReducer';
+import { PROVINCE, SmartContract } from '../../../constants';
+import { setCandidateList } from '../../../redux/reducers/candidateReducer';
 import { toast } from 'react-toastify';
+import UserCard from '../../../components/UserCard';
 
-export default function Home() {
+export default function Home({provinceNo}) {
   const [electionStatus, setElectionStatus] = useState(null);
   const [electionList, setElectionList] = useState([]);
   const [candidateLists, setCandidateLists] = useState([]);
   const [currentElection, setCurrentElection] = useState<any>({});
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
+
   let voteCastEvent = null;
 
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ export default function Home() {
       const electionList = await getElectionList();
       const candidateLists = await getCandidateList();
       const electionStatus = getElectionStatus("Province", electionList);
-      const { currentElection, electionCandidatesArray } = getSortedCandidatesList(electionList, candidateLists);
+      const { currentElection, electionCandidatesArray } = getSortedCandidatesList(electionList, candidateLists); 
 
       setElectionStatus(electionStatus);
       setCandidateLists(electionCandidatesArray);
@@ -78,6 +79,7 @@ export default function Home() {
     }
   }
 
+  const provinceIndex = provinceNo === 0 ? 0 : provinceNo - 1;
   return (
     <div>
       <Head>
@@ -92,24 +94,25 @@ export default function Home() {
           {/* province level elections */}
           <div className='lg:w-[1100px] w-full lg:px-2 max-[1100px]:px-1'>
 
-            {/* hotlist */}
-            <div className='flex items-center'>
-              <div className='py-1 pl-3 pr-5 mr-5 flex items-center bg-red-700 rounded-tr-full'>
-                <span className='text-slate-100'>Province Election</span>
-              </div>
-              <span className='ml-2 text-lg font-bold text-black'>Hot Seats</span>
-              <GoPrimitiveDot className={`text-4xl ml-5 mr-1 ${electionStatus === 'LIVE' && "text-danger"}`} />
-              <span className='text-[17px]'>{electionStatus}</span>
+          <div className='flex items-center h-fit mt-3 mb-4'>
+            <div className='w-fit py-1 pl-3 pr-10 mr-5 flex items-center bg-red-700 rounded-tr-full'>
+              <span className='text-slate-100'>{PROVINCE[provinceIndex]?.label}</span>
             </div>
-            <div className='flex flex-wrap'>
-              {currentElection.electionType === "Province" && electionStatus && electionList?.length > 0 && candidateLists.length > 0 && candidateLists?.map(([key, value]: any) =>
-                <LiveCounterCard type={key} data={_.orderBy(value, ["votedVoterLists.length"], ["desc"])} key={key} electionStatus={electionStatus} casteVote={casteVote} />
-              )}
-            </div>
+            <span className='ml-2 text-lg font-bold text-black'>Total Candidates: {candidateLists[provinceIndex][1]?.length ?? 0}</span>
+          </div>
 
             {/* candidate lists */}
-            <div className='flex flex-wrap'>
-             
+            <div className='flex flex-wrap justify-between'>
+              {
+              candidateLists[provinceIndex] ?
+                candidateLists[provinceIndex][1]?.map((candidateDetails: any, i) =>
+                  <UserCard
+                    details={candidateDetails}
+                    type="candidate"
+                    key={i}
+                    currentElection={electionList[electionList.length - 1]}
+                  />) : "No Candidates Available !"
+              }
             </div>
 
           </div>
@@ -117,4 +120,22 @@ export default function Home() {
       </div>
     </div>
   )
+}
+
+export const getServerSideProps = async ({params}) => {
+  const {slug} = params;
+  const provinceNo = parseInt(slug);
+
+  if(isNaN(provinceNo)){
+    return {
+        redirect: {
+          permanent:false,
+          destination:"/"
+        }
+    }
+  }
+
+  return {
+    props: {provinceNo}
+  }
 }

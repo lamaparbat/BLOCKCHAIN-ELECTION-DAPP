@@ -1,7 +1,6 @@
 export const getStorage = (key) => {
-  if (typeof window !== "undefined") {
-    return localStorage?.getItem(key);
-  }
+  if (typeof window !== "undefined") return localStorage?.getItem(key);
+  return null;
 }
 
 export const setStorage = (key, value) => {

@@ -59,3 +59,15 @@ export const getSortedCandidatesList = (electionList: Array<any>, candidateLists
   console.log(currentElection, electionCandidatesArray)
   return { currentElection, electionCandidatesArray };
 }
+
+export const getCurrentElection = (electionArray: Array<ElectionStruct>): object => {
+  if(!electionArray?.length) return null;
+
+  const currentElection = electionArray?.at(-1);
+  const current_date = moment(Date.now());
+  const election_start_date = moment(currentElection.startDate);
+
+  if(current_date.isBefore(election_start_date)) return null;
+
+  return currentElection;
+}
