@@ -1,4 +1,4 @@
-# Blockchain Election System (WEB 3.O)
+# WEB 3.0 BLOCKCHAIN ELECTION SYSTEM
 
 ### Landing page UI
 <img width="1440" alt="Screen Shot 2023-03-02 at 22 57 10" src="https://user-images.githubusercontent.com/64581460/222502200-97d92d19-3219-4c51-8681-c3f3bd719d5e.png">
@@ -57,6 +57,9 @@
 ## FAQs List Page
 <img width="1440" alt="Screen Shot 2023-02-03 at 23 47 45" src="https://user-images.githubusercontent.com/64581460/216675055-37ab0a47-1592-4be9-b229-ffc951400c1c.png">
 <img width="993" alt="Screen Shot 2023-03-04 at 23 18 47" src="https://user-images.githubusercontent.com/64581460/222920487-6f45d152-6967-4b74-a78e-2c456ed6e100.png">
+
+## FAQ Form Component [Collapse]
+<img width="1440" alt="Screen Shot 2023-03-22 at 22 47 40" src="https://user-images.githubusercontent.com/64581460/226982213-99504fcb-6d8f-4f3d-90d1-521d98f90a03.png">
 
 ## Election Offices Page
 <img width="1440" alt="Screen Shot 2023-02-04 at 12 20 01" src="https://user-images.githubusercontent.com/64581460/216752957-86d7d634-48dc-4563-8218-183e9dcffbe2.png">

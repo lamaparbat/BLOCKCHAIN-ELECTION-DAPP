@@ -1,4 +1,4 @@
-# Blockchain e-voting system (WEB 3.O)
+# Blockchain Election Backend System (WEB 3.O)
 
 ## Folder Structure
 
