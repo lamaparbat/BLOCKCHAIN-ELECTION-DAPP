@@ -8,6 +8,7 @@ import { getStorage } from '../../services';
 import _ from 'lodash';
 import { getFormattedErrorMessage, getPartyList } from '../../utils';
 import Head from 'next/head';
+import { isAdmin } from '../../utils/web3';
 
 const defaultPartyDetails = { partyName: "", totalMembers: '', agenda: "", partyLogo: null }
 const VoterRegistration = () => {
@@ -140,5 +141,23 @@ const VoterRegistration = () => {
     </div>
   )
 }
+
+export const getServerSideProps = async (ctx) => {
+  if(typeof window !== 'undefined'){
+    const loggedInAccountAddress = getStorage("loggedInAccountAddress");
+    const isAdminAddress = await isAdmin(loggedInAccountAddress);
+
+    if(!isAdminAddress) 
+      return {
+        redirect: {
+          permanent:false,
+          destination:"/"
+        }
+      }
+  }
+  return {
+    props: {},
+  };
+};
 
 export default VoterRegistration;
