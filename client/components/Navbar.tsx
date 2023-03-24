@@ -35,6 +35,7 @@ const Navbar: React.FC = (): ReactElement => {
   const [isAddressCopied, setIsAddressCopied] = useState(false);
   const [isEthereumEnabled, setIsEthereumEnabled] = useState(false);
   const [isAdminAddress, setIsAdminAddress] = useState(false);
+  const [politicalItems, setPoliticalItems] = useState([...sub_navbar_items.politicalItems]);
 
 
   const route = useRouter();
@@ -46,8 +47,6 @@ const Navbar: React.FC = (): ReactElement => {
     if (window.ethereum) {
       setLoggedInAccountAddress(getStorage("loggedInAccountAddress"));
       window.ethereum.enable().then(handleLogin);
-
-      if(isAdminAddress) sub_navbar_items.politicalItems = [...sub_navbar_items.politicalItems.filter((item) =>  !ADMIN_ROUTES.includes(item.value) )];
     }
     setIsEthereumEnabled(window.ethereum);
   }, [])
@@ -82,7 +81,7 @@ const Navbar: React.FC = (): ReactElement => {
         });
         const loggedInAccountAddress = Web3.utils.toChecksumAddress(accounts[0]);
         const isAdminAddress = await isAdmin(loggedInAccountAddress);
-
+        if(!isAdminAddress) setPoliticalItems(politicalItems.filter((item) =>  !ADMIN_ROUTES.includes(item.value) ));
         setLoggedInAccountAddress(loggedInAccountAddress);
         setIsAdminAddress(isAdminAddress)
         setIsLoggedIn(true);
@@ -143,7 +142,7 @@ const Navbar: React.FC = (): ReactElement => {
 
 
         {/*  */}
-        <div className='items w-[650px] justify-end items-center text-slate-600 lg:flex sm:hidden'>
+        <div className='items w-[700px] justify-end items-center text-slate-600 lg:flex sm:hidden'>
           {isAdminAddress && <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={onCreateElection}>CREATE ELECTION</span>}
           <span className='px-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/voter-education/voter-faqs")}>FAQ</span>
           <select className='mx-4 text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0' onChange={onLanguageChange}>
@@ -210,7 +209,7 @@ const Navbar: React.FC = (): ReactElement => {
           <div><Dropdown title="About us" items={sub_navbar_items.aboutItems} /></div>
           <div><Dropdown title="Electoral Framework" items={sub_navbar_items.electoralItems} /></div>
           <div><Dropdown title="Voter Education" items={sub_navbar_items.voterItems} /></div>
-          <div><Dropdown title="Political Party" items={sub_navbar_items.politicalItems} /></div>
+          <div><Dropdown title="Political Party" items={politicalItems} /></div>
           <div><Dropdown title="Election Result" items={sub_navbar_items.electionResultTypes} /></div>
         </div>
       </div>
@@ -220,7 +219,7 @@ const Navbar: React.FC = (): ReactElement => {
           <div className={sub_navbar_items_style}><Dropdown title="About us" items={sub_navbar_items.aboutItems} /></div>
           <div className={sub_navbar_items_style}><Dropdown title="Electoral Framework" items={sub_navbar_items.electoralItems} /></div>
           <div className={sub_navbar_items_style}><Dropdown title="Voter Education" items={sub_navbar_items.voterItems} /></div>
-          <div className={sub_navbar_items_style}><Dropdown title="Political Party" items={sub_navbar_items.politicalItems} /></div>
+          <div className={sub_navbar_items_style}><Dropdown title="Political Party" items={politicalItems} /></div>
           <div className={sub_navbar_items_style}><Dropdown title="Election Result" items={sub_navbar_items.electionResultTypes} /></div>
         </div>
       </div>
