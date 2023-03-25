@@ -53,18 +53,22 @@ interface VoterDetails extends UserDetails {
   voted: boolean
 };
 
+interface CasteVoteInterface {
+  (userId: string):Promise<void | any>
+}
+
 interface LiveCounterCardStruct {
   type: string,
   data: Array<CandidateDetails>,
   electionStatus: string,
-  casteVote: (citizenshipNumber: string) => void
+  casteVote: CasteVoteInterface
 }
 
 interface CandidateCardStruct {
   details: CandidateDetails,
   border: string,
   ishighlighted: boolean,
-  casteVote: (citizenshipNumber: string) => void,
+  casteVote: CasteVoteInterface,
   voted: boolean
 }
 
@@ -73,7 +77,8 @@ interface UserCardStruct {
   type: string,
   onCandidateSelected?: (checked: boolean, details: CandidateDetails) => void,
   currentElection?: Array<Object>,
-  isElected?: boolean
+  isElected?: boolean,
+  casteVote?: CasteVoteInterface,
 }
 interface ElectionStruct {
   title: string;
