@@ -8,15 +8,17 @@ import { getStorage } from '../../services';
 import _ from 'lodash';
 import { getFormattedErrorMessage, getPartyList } from '../../utils';
 import Head from 'next/head';
-import { isAdmin } from '../../utils/web3';
+import { useRouter } from 'next/router';
 
 const defaultPartyDetails = { partyName: "", totalMembers: '', agenda: "", partyLogo: null }
+
 const VoterRegistration = () => {
   const [partyDetails, setPartyDetails] = useState({ ...defaultPartyDetails });
   const [partyList, setPartyList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -142,22 +144,27 @@ const VoterRegistration = () => {
   )
 }
 
-export const getServerSideProps = async (ctx) => {
-  if(typeof window !== 'undefined'){
-    const loggedInAccountAddress = getStorage("loggedInAccountAddress");
-    const isAdminAddress = await isAdmin(loggedInAccountAddress);
+export default VoterRegistration;
 
-    if(!isAdminAddress) 
+
+export const getServerSideProps = async (ctx) => {
+  try {
+    const {cookie} = ctx.req.headers
+    const isAdmin = cookie.split(";")?.find((d:string) => d.includes("isAdmin"))?.split("=")[1] ?? "false";
+
+    if(isAdmin === "false") {
       return {
-        redirect: {
-          permanent:false,
+        redirect: { 
+          parmanent: false,
           destination:"/"
         }
       }
+    }
+  
+  } catch (error) {
+    return {props: {}}
   }
-  return {
-    props: {},
-  };
-};
+  return {props: {}}
+}
 
-export default VoterRegistration;
+
