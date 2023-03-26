@@ -203,6 +203,9 @@ const METAMASK_EXT_LINK = "https://chrome.google.com/webstore/detail/metamask/nk
 
 const ADMIN_ROUTES = ["/party/party-registration"];
 
+const VOTE_ELIBILITY_AGE = 18;
+const CANDIDATE_ELIGIBILITY_AGE = 21;
+
 export {
   LANGUAGES,
   PARTIES,
@@ -210,6 +213,7 @@ export {
   sub_navbar_style, sub_navbar_items_style, sub_navbar_items,
   PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, StateProvinceOffices, DistrictOffices,
   web3, SmartContract, METAMASK_EXT_LINK,
+  VOTE_ELIBILITY_AGE, CANDIDATE_ELIGIBILITY_AGE,
   ADMIN_ROUTES
 };
 
@@ -830,87 +834,5 @@ const MUNICIPALITY = {
   "Eastern": [
   ]
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
