@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { setCandidateDetails } from '../../redux/reducers/candidateReducer';
@@ -38,7 +38,8 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
           <h3 className='mr-5 mt-2' id='count'>{details?.votedVoterLists?.length ?? 0}</h3>
           <button
             className={`relative flex justify-center items-center bg-slate-100 ${!voted && "shadow-md"} pt-2 pb-2 px-4 rounded-pill text-sm ${voted && "text-slate-500 cursor-default"}`}
-            onClick={() => casteVote(details?.user?._id)}
+            onClick={() => !voted && casteVote(details?.user?._id)}
+            disabled={voted}
           >
             {
               voted && <span className='absolute -top-1 -left-2 p-1 rounded-circle bg-slate-200 shadow-md cursor-default'>
