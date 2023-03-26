@@ -68,7 +68,7 @@ const VoterRegistration = () => {
       } else throw new Error();
     } catch (error) {
       const erroMsg = getFormattedErrorMessage(error.message);
-      console.log(erroMsg);
+      console.error(erroMsg);
       toast.error(`Failed to register !, ${erroMsg}`, { toastId: 2 });
     }
     setLoading(false);
