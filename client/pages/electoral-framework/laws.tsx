@@ -17,12 +17,12 @@ const ElectionLaws = () => {
         <div className={`${responsive} flex flex-col justify-between rounded-1 flex-wrap lg:px-3`}>
           <h4 className='my-4'>Electoral Framework Overview</h4>
           {
-            Object.keys(ElectionFrameworkLaws).map((key:string, i:number) => {
+            Object.keys(ElectionFrameworkLaws).map((id:string, i:number) => {
               return (
                 <div className='my-3'>
-                  <h4 key={i}>{i+1}. {key}</h4>
+                  <h4 key={i}>{i+1}. {id}</h4>
                   <ul className='list-group'>
-                    {ElectionFrameworkLaws[key].map((d:string, i:number) => {
+                    {ElectionFrameworkLaws[id].map((d:string, i:number) => {
                       return (<li key={i} className='list-group-item py-3'>{d}</li>)
                     })}
                   </ul>
