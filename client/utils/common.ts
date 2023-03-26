@@ -67,7 +67,7 @@ export const getCurrentElection = (electionArray: Array<ElectionStruct>): object
   const current_date = moment(Date.now());
   const election_start_date = moment(currentElection.startDate);
 
-  if(current_date.isBefore(election_start_date)) return null;
+  if(current_date.isAfter(election_start_date)) return null;
 
   return currentElection;
 }
