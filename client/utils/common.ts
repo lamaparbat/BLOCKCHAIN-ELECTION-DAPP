@@ -56,7 +56,7 @@ export const getSortedCandidatesList = (electionList: Array<any>, candidateLists
   const currentElection = filteredElectionsList?.length > 0 && filteredElectionsList?.at(-1);
   const electionCandidates = currentElection ? _.groupBy(currentElection?.selectedCandidates, (candidate) => candidate.user.province) : [];
   const electionCandidatesArray = electionCandidates ? Object.entries(electionCandidates) : [];
-  console.log(currentElection, electionCandidatesArray)
+
   return { currentElection, electionCandidatesArray };
 }
 
@@ -67,7 +67,7 @@ export const getCurrentElection = (electionArray: Array<ElectionStruct>): object
   const current_date = moment(Date.now());
   const election_start_date = moment(currentElection.startDate);
 
-  if(current_date.isBefore(election_start_date)) return null;
+  if(current_date.isAfter(election_start_date)) return null;
 
   return currentElection;
 }

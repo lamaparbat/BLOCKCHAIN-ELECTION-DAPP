@@ -70,7 +70,8 @@ export default function Home() {
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        setCountDown({ ...countDown, days, hours, minutes, seconds })
+
+        setCountDown({days,hours, minutes, seconds});
       }, 1000);
     }
   }
@@ -126,6 +127,7 @@ export default function Home() {
       otherVoters: others ?? 0
     });
   }
+
 
   return (
     <div>

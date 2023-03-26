@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { useSelector } from 'react-redux';
 import BreadCrumb from '../../components/BreadCrumb';
 import Navbar from '../../components/Navbar';
-import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, SmartContract, GENDER_OPTIONS } from '../../constants';
+import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, SmartContract, GENDER_OPTIONS, VOTE_ELIBILITY_AGE } from '../../constants';
 import { registerVoter } from '../../utils/action';
 import { toast } from 'react-toastify';
 import { getConvertedAge, getFormattedErrorMessage } from '../../utils';
@@ -42,6 +42,10 @@ const VoterRegistration = () => {
 
       const { profile }: any = await registerVoter(formData);
       const age = getConvertedAge(dob);
+
+      // age eligibility check
+      if(age < VOTE_ELIBILITY_AGE) return toast.error(`Voter age must be greater or equal to ${VOTE_ELIBILITY_AGE}`);
+
       await SmartContract.methods.addVoter(
         fullName,
         citizenshipNumber,

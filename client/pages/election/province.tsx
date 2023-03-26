@@ -10,6 +10,7 @@ import _ from 'lodash';
 import { SmartContract } from '../../constants';
 import { setCandidateList } from '../../redux/reducers/candidateReducer';
 import { toast } from 'react-toastify';
+import { getVoterDetails } from '../../utils/web3';
 
 export default function Home() {
   const [electionStatus, setElectionStatus] = useState(null);
@@ -64,6 +65,11 @@ export default function Home() {
 
   const casteVote = async (_candidateID: string) => {
     try {
+      const voterDetails = await getVoterDetails(loggedInAccountAddress);
+
+      // vote limit count
+      if(voterDetails.voteLimitCount === "3") return toast.info("You've exceed the vote limit count !");
+
       const casteCandidateDetails = _.find(candidateLists, (elections) => {
         elections[1].find(((candidate: any) => candidate.user._id === _candidateID))
       });

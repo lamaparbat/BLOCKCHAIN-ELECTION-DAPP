@@ -11,6 +11,7 @@ import { SmartContract } from '../../constants';
 import { getStorage } from '../../services';
 import { setCandidateList } from '../../redux/reducers/candidateReducer';
 import { toast } from 'react-toastify';
+import { getVoterDetails } from '../../utils/web3';
 
 export default function Home() {
   const [electionStatus, setElectionStatus] = useState(null);
@@ -67,6 +68,10 @@ export default function Home() {
 
   const casteVote = async (_candidateID: string) => {
     try {
+      const voterDetails = await getVoterDetails(loggedInAccountAddress);
+
+      // vote limit count
+      if(voterDetails.voteLimitCount === "3") return toast.info("You've exceed the vote limit count !");
       const casteCandidateDetails = _.find(candidateLists, (candidate) => candidate.user._id === _candidateID);
       const isAlreadyVoted = casteCandidateDetails?.votedVoterLists?.includes(loggedInAccountAddress);
       if (isAlreadyVoted) return toast.info("You've already casted vote !");

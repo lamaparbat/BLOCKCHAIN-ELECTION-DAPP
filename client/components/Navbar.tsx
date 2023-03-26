@@ -13,7 +13,7 @@ import Avatar from './Avatar';
 import { isAdmin } from '../utils/web3';
 import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style, METAMASK_EXT_LINK, ADMIN_ROUTES } from '../constants/index';
 import { LanguageStruct } from '../interfaces';
-import { getStorage, setStorage } from '../services';
+import { getStorage, setStorage, setCookie } from '../services';
 import Dropdown from './Dropdown';
 import MarqueeBar from './MarqueeBar';
 import SearchModal from './SearchModal';
@@ -46,6 +46,7 @@ const Navbar: React.FC = (): ReactElement => {
   useEffect(() => {
     if (window.ethereum) {
       setLoggedInAccountAddress(getStorage("loggedInAccountAddress"));
+
       window.ethereum.enable().then(handleLogin);
     }
     setIsEthereumEnabled(window.ethereum);
@@ -82,11 +83,13 @@ const Navbar: React.FC = (): ReactElement => {
         const loggedInAccountAddress = Web3.utils.toChecksumAddress(accounts[0]);
         const isAdminAddress = await isAdmin(loggedInAccountAddress);
         if(!isAdminAddress) setPoliticalItems(politicalItems.filter((item) =>  !ADMIN_ROUTES.includes(item.value) ));
+
         setLoggedInAccountAddress(loggedInAccountAddress);
         setIsAdminAddress(isAdminAddress)
         setIsLoggedIn(true);
         setStorage("loggedInAccountAddress", loggedInAccountAddress);
         setStorage("isAdmin", isAdminAddress);
+        setCookie("isAdmin", isAdminAddress);
       } catch (error) {
         console.error(error);
       }
@@ -100,7 +103,7 @@ const Navbar: React.FC = (): ReactElement => {
         const currentAccount = window.ethereum.selectedAddress;
 
         dispatch(setLoggedInAddress(currentAccount));
-        setStorage(currentAccount)
+        setStorage("loggedInAccountAddress", loggedInAccountAddress);
         setLoggedInAccountAddress(currentAccount);
       } catch (error) {
         console.error(error);

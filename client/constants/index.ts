@@ -1,5 +1,5 @@
 import Web3 from "web3";
-import { CONTRACT_ABI, CONTRACT_ABI_ADDRESS } from "../constants/contract";
+import { CONTRACT_ABI, CONTRACT_ABI_ADDRESS } from "./contract";
 
 const LANGUAGES = [
   { value: 'nepali', label: 'NEPALI' },
@@ -147,11 +147,10 @@ const aboutItems = [
 
 const electoralItems = [
   { label: "Electoral Framework Overview", value: '/electoral-framework/overview' },
-  { label: 'Election Related Laws', value: '/electoral-framework/laws' },
-  { label: 'Election Legislation', value: '/electoral-framework/legislation' }]
+  { label: 'Election Related Laws', value: '/electoral-framework/laws' }
+]
 
 const politicalItems = [
-  { label: "Party Registration Guide", value: '/party/party-registration-guide' },
   { label: 'Register Party Form', value: '/party/party-registration' },
   { label: 'Register Candidate', value: '/party/candidate-registration' },
   { label: 'Candidate Lists', value: '/party/candidate-roll' },
@@ -204,6 +203,51 @@ const METAMASK_EXT_LINK = "https://chrome.google.com/webstore/detail/metamask/nk
 
 const ADMIN_ROUTES = ["/party/party-registration"];
 
+const VOTE_ELIBILITY_AGE = 18;
+const CANDIDATE_ELIGIBILITY_AGE = 21;
+
+const ElectionFrameworkOverview = [
+  "Constitution of Nepal,",
+  "Election Commission Act, 2017 ",
+  "Electoral Roll Act, 2017",
+  "Election (Offence and Punishment) Act, 2017",
+  "Political Party Registration Act,",
+  "Local Level Election  Act, 2017",
+  "Other Rules and Directives"
+]
+const ElectionFrameworkLaws = {
+  "ऐन": [
+    "निर्वाचन आयोग ऐन, २०७३",
+    "मतदाता नामावली ऐन, २०७३",
+    "निर्वाचन (कसूर तथा सजाय) ऐन, २०७३",
+    "स्थानीय तह निर्वाचन ऐन, २०७३",
+    "निर्वाचन क्षेत्र निर्धारण ऐन, २०७३",
+    "राजनीतिक दल सम्बन्धी ऐन, २०७३",
+    "प्रतिनिधि सभा सदस्य निर्वाचन ऐन, २०७४",
+    "प्रदेश सभा सदस्य निर्वाचन ऐन, २०७४",
+    "राष्ट्रपति तथा उपराष्ट्रपतिको निर्वाचन सम्बन्धी ऐन, २०७४",
+    "राष्ट्रिय सभा सदस्य निर्वाचन ऐन, २०७५"
+  ],
+  "नियमावली":[
+   " मतदाता नामावली सम्बन्धी नियमावली, २०६८",
+    "निर्वाचन आयोग नियमावली, २०७३",
+    "स्थानीय तह निर्वाचन नियमावली, २०७३",
+    "राजनीतिक दल सम्बन्धी नियमावली, २०७४",
+    "प्रतिनिधि सभा सदस्य निर्वाचन नियमावली, २०७४",
+    "प्रदेश सभा सदस्य निर्वाचन नियमावली, २०७४",
+    "राष्टपति तथा उपराष्टपतिको निर्वाचन सम्बन्धी नियमावली, २०७४",
+    "राष्ट्रिय सभा सदस्य निर्वाचन नियमावली, २०७६"
+  ],
+  "आचारसंहिता":[
+    "निर्वाचन आचारसंहिता, २०७२",
+    "स्थानीय तह निर्वाचन आचार संहिता, २०७३",
+    "राष्ट्रिय प्रर्यवेक्षकका लागि स्थानीय तह निर्वाचन पर्यवेक्षण आचारसंहिता, २०७३",
+    "राष्ट्रिय प्रर्यवेक्षकका लागि प्रतिनिधिसभा तथा प्रदेशसभा सदस्य निर्वाचन पर्यवेक्षण आचारसंहिता, २०७४",
+    "निर्वाचन आयोगका पदाधिकारीहरुको आचारसंहिता, २०७७",
+    "निर्वाचन आयोगमा कार्यरत कर्मचारीहरुको आचारसंहिता, २०७७"
+  ]
+}
+
 export {
   LANGUAGES,
   PARTIES,
@@ -211,6 +255,8 @@ export {
   sub_navbar_style, sub_navbar_items_style, sub_navbar_items,
   PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, StateProvinceOffices, DistrictOffices,
   web3, SmartContract, METAMASK_EXT_LINK,
+  VOTE_ELIBILITY_AGE, CANDIDATE_ELIGIBILITY_AGE,
+  ElectionFrameworkOverview,ElectionFrameworkLaws,
   ADMIN_ROUTES
 };
 
@@ -829,17 +875,7 @@ const MUNICIPALITY = {
 
 
   "Eastern": [
-  ],
-  "Eastern": [
-  ],
-  "Eastern": [
-  ],
-  "Eastern": [
-  ],
-  "Eastern": [
-  ],
-  "Eastern": [
-  ],
+  ]
 }
 
 

@@ -10,6 +10,7 @@ import { PROVINCE, SmartContract } from '../../../constants';
 import { setCandidateList } from '../../../redux/reducers/candidateReducer';
 import { toast } from 'react-toastify';
 import UserCard from '../../../components/UserCard';
+import { getVoterDetails } from '../../../utils/web3';
 
 export default function Home({provinceNo}) {
   const [electionStatus, setElectionStatus] = useState(null);
@@ -20,6 +21,7 @@ export default function Home({provinceNo}) {
 
   let voteCastEvent = null;
 
+  const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -62,16 +64,20 @@ export default function Home({provinceNo}) {
   });
 
 
-
-  const casteVote = async (_candidateID: string) => {
+  const casteVote = async (_candidateID:string) => {
     try {
+      const voterDetails = await getVoterDetails(loggedInAccountAddress);
+
+      // vote limit count
+      if(voterDetails.voteLimitCount === "3") return toast.info("You've exceed the vote limit count !");
+
       const casteCandidateDetails = _.find(candidateLists, (elections) => {
         elections[1].find(((candidate: any) => candidate.user._id === _candidateID))
       });
       const isAlreadyVoted = casteCandidateDetails?.votedVoterLists?.includes(loggedInAccountAddress);
       if (isAlreadyVoted) return toast.info("You've already casted vote !");
 
-      await SmartContract.methods.vote(_candidateID).send({ from: loggedInAccountAddress });
+      // await SmartContract.methods.vote(_candidateID).send({ from: loggedInAccountAddress });
       toast.success("Vote caste successfully.");
     } catch (error) {
       console.log(error)
@@ -79,7 +85,10 @@ export default function Home({provinceNo}) {
     }
   }
 
+  const navigateTo = () => router.push("/election/province");
+
   const provinceIndex = provinceNo === 0 ? 0 : provinceNo - 1;
+
   return (
     <div>
       <Head>
@@ -95,10 +104,11 @@ export default function Home({provinceNo}) {
           <div className='lg:w-[1100px] w-full lg:px-2 max-[1100px]:px-1'>
 
           <div className='flex items-center h-fit mt-3 mb-4'>
-            <div className='w-fit py-1 pl-3 pr-10 mr-5 flex items-center bg-red-700 rounded-tr-full'>
-              <span className='text-slate-100'>{PROVINCE[provinceIndex]?.label}</span>
+            <div className='w-fit py-1 pl-3 pr-10 mr-5 flex items-center bg-red-700 rounded-tr-full text-slate-100'>
+              <span className='text-slate-100 mr-2 cursor-pointer' onClick={navigateTo}>Province</span> /
+              <span className='text-slate-100 ml-2'>{PROVINCE[provinceIndex]?.label}</span>
             </div>
-            <span className='ml-2 text-lg font-bold text-black'>Total Candidates: {candidateLists[provinceIndex][1]?.length ?? 0}</span>
+            <span className='ml-2 text-lg font-bold text-black'>Total Candidates: {candidateLists[provinceIndex] && (candidateLists[provinceIndex][1]?.length ?? 0)}</span>
           </div>
 
             {/* candidate lists */}
@@ -111,6 +121,7 @@ export default function Home({provinceNo}) {
                     type="candidate"
                     key={i}
                     currentElection={electionList[electionList.length - 1]}
+                    casteVote={casteVote}
                   />) : "No Candidates Available !"
               }
             </div>
@@ -130,7 +141,7 @@ export const getServerSideProps = async ({params}) => {
     return {
         redirect: {
           permanent:false,
-          destination:"/"
+          destination:""
         }
     }
   }
