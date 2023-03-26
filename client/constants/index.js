@@ -1,5 +1,5 @@
 import Web3 from "web3";
-import { CONTRACT_ABI, CONTRACT_ABI_ADDRESS } from "../constants/contract";
+import { CONTRACT_ABI, CONTRACT_ABI_ADDRESS } from "./contract";
 
 const LANGUAGES = [
   { value: 'nepali', label: 'NEPALI' },
@@ -151,7 +151,6 @@ const electoralItems = [
   { label: 'Election Legislation', value: '/electoral-framework/legislation' }]
 
 const politicalItems = [
-  { label: "Party Registration Guide", value: '/party/party-registration-guide' },
   { label: 'Register Party Form', value: '/party/party-registration' },
   { label: 'Register Candidate', value: '/party/candidate-registration' },
   { label: 'Candidate Lists', value: '/party/candidate-roll' },
@@ -829,17 +828,7 @@ const MUNICIPALITY = {
 
 
   "Eastern": [
-  ],
-  "Eastern": [
-  ],
-  "Eastern": [
-  ],
-  "Eastern": [
-  ],
-  "Eastern": [
-  ],
-  "Eastern": [
-  ],
+  ]
 }
 
 
