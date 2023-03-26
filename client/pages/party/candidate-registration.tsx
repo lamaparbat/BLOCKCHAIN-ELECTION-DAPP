@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Select from 'react-select';
 import Navbar from '../../components/Navbar';
-import { PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, GENDER_OPTIONS } from '../../constants';
+import { PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, GENDER_OPTIONS, CANDIDATE_ELIGIBILITY_AGE } from '../../constants';
 import { registerCandidate, getConvertedAge, getPartyList, getCandidateList } from '../../utils/index';
 import { toast } from 'react-toastify';
 import { SmartContract } from '../../constants';
@@ -56,6 +56,10 @@ const CandidateRegistration = () => {
       if (isExits) return toast.error("Candidate already exists on given citizenship nuber !");
 
       const age = getConvertedAge(dob);
+
+      // age eligibility check
+      if(age < CANDIDATE_ELIGIBILITY_AGE) return toast.error(`Candidate age must be greater or equal to ${CANDIDATE_ELIGIBILITY_AGE}`);
+
       const formData = new FormData();
       formData.append("fullName", fullName);
       formData.append("citizenshipNumber", citizenshipNumber);
@@ -65,7 +69,7 @@ const CandidateRegistration = () => {
       formData.append("ward", ward);
       formData.append("email", email);
       formData.append("profile", profile);
-      console.log(loggedInAccountAddress)
+
       const { profile: profileUrl } = await registerCandidate(formData);
 
       if (!profile) throw new Error("Failed to upload image !");
