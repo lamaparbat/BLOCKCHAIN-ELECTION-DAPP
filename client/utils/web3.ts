@@ -33,6 +33,11 @@ export const getFaqs = async () => {
   return await SmartContract.methods.getAllFAQs().call();
 }
 
+export const getVoterDetails = async (voterAddress:string) => {
+  if (!window.ethereum) return [];
+  return await SmartContract.methods.getVoterDetails(voterAddress).call();
+}
+
 export const getTotalVotersCount = async () => {
   if (!window.ethereum) return 0;
   return await SmartContract.methods.totalVoter().call();
