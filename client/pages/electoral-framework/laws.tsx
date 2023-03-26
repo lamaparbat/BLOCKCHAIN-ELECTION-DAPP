@@ -20,7 +20,7 @@ const ElectionLaws = () => {
             Object.keys(ElectionFrameworkLaws).map((key:string, i:number) => {
               return (
                 <div className='my-3'>
-                  <h4>{i+1}. {key}</h4>
+                  <h4 key={i}>{i+1}. {key}</h4>
                   <ul className='list-group'>
                     {ElectionFrameworkLaws[key].map((d:string, i:number) => {
                       return (<li key={i} className='list-group-item py-3'>{d}</li>)
