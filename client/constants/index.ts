@@ -248,6 +248,80 @@ const ElectionFrameworkLaws = {
   ]
 }
 
+
+const GLOBAL_SEARCH_KEYWORD = [
+  {
+    keywords: ["Homepage", "Election Gallery", "Overall Elections Data"], 
+    link: "/"
+  },
+  {
+    keywords: ["About us", "Constitutional Provision", "Election Commission", "Functions duties and, powers of Election Commission",
+      "Necessary Cooperation to be Extended"
+    ], 
+    link: "/about/constitutional-provision"
+  },
+  {
+    keywords: ["About us", "Election offices", "State Election Offices", "District Election Offices",], 
+    link: "/about/election-office"
+  },
+  {
+    keywords: ["About us", "Privacy Policy"], 
+    link: "/about/privacy-policy"
+  },
+  {
+    keywords: ["Electoral Framework Overview", "Constitution of Nepal, Election Commission Act, 2017, ....."],
+    link: "/electoral-framework/overview"
+  },
+  {
+    keywords: ["Election related laws", "1. ऐन ,  2. नियमावली,  3. आचारसंहिता"],
+    link: "/electoral-framework/laws"
+  },
+  {
+    keywords: ["About Voter Registration", "Voter education"],
+    link:"/voter-education/voter-eligibility"
+  },
+  {
+    keywords: ["Voter Roll", "Voter List"],
+    link:"/voter-education/voter-roll"
+  },
+  {
+    keywords: ["Voter Registration", "Voter Signup"],
+    link:"/voter-education/voter-registration"
+  },
+  {
+    keywords: ["Voter Faqs", "Faqs list","Frequently Asked Question (FAQs)"],
+    link:"/voter-education/voter-faqs"
+  },
+  {
+    keywords: ["Political Party", "Party registration / Signup form"],
+    link:"/party/party-registration"
+  },
+  {
+    keywords: ["Political Party", "Candidate registration / Signup form "],
+    link:"/party/candidate-registration"
+  },
+  {
+    keywords: ["Political Party", "Candidate Roll / Lists"],
+    link:"/party/candidate-roll"
+  },
+  {
+    keywords: ["Political Party", "Party Roll / Lists"],
+    link:"/party/party-list"
+  },
+  {
+    keywords: ["Election Result", "Parliament / Province election result"],
+    link:"/election/province"
+  },
+  {
+    keywords: ["Election Result", "District election result"],
+    link:"/election/district"
+  },
+  {
+    keywords: ["Election Result", "Local election result"],
+    link:"/election/local"
+  }
+]
+
 export {
   LANGUAGES,
   PARTIES,
@@ -257,6 +331,7 @@ export {
   web3, SmartContract, METAMASK_EXT_LINK,
   VOTE_ELIBILITY_AGE, CANDIDATE_ELIGIBILITY_AGE,
   ElectionFrameworkOverview,ElectionFrameworkLaws,
+  GLOBAL_SEARCH_KEYWORD,
   ADMIN_ROUTES
 };
 

@@ -139,7 +139,11 @@ const Navbar: React.FC = (): ReactElement => {
               {LANGUAGES.map((d, i) => <option className='text-[14px]' key={i} value={d.value}>{d.label}</option>)}
             </select>
             <div className='my-[18px] cursor-pointer hover:opacity-70 flex items-center' onClick={() => navigate("mail")}>Gmail <AiOutlineMail className='text-lg ml-3' /></div>
-            <div className='cursor-pointer hover:opacity-70 flex items-center' onClick={openSearchModal}>Search <AiOutlineSearch className='text-xl ml-3' /></div>
+            <div 
+              className='cursor-pointer hover:opacity-70 flex items-center' 
+              onClick={openSearchModal}
+            >Search <AiOutlineSearch className='text-xl ml-3' />
+            </div>
           </div>
         </div>
 
