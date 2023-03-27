@@ -251,6 +251,10 @@ const ElectionFrameworkLaws = {
 
 const GLOBAL_SEARCH_KEYWORD = [
   {
+    keywords: ["Homepage", "Election Gallery", "Overall Elections Data"], 
+    link: "/"
+  },
+  {
     keywords: ["About us", "Constitutional Provision", "Election Commission", "Functions duties and, powers of Election Commission",
       "Necessary Cooperation to be Extended"
     ], 
