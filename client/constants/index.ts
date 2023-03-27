@@ -248,12 +248,21 @@ const ElectionFrameworkLaws = {
   ]
 }
 
+
 const GLOBAL_SEARCH_KEYWORD = [
   {
-    keywords: ["About us","Constitutional Provision", "Election Commission", "Functions duties and, powers of Election Commission",
+    keywords: ["About us", "Constitutional Provision", "Election Commission", "Functions duties and, powers of Election Commission",
       "Necessary Cooperation to be Extended"
     ], 
     link: "/about/constitutional-provision"
+  },
+  {
+    keywords: ["About us", "Election offices", "State Election Offices", "District Election Offices",], 
+    link: "/about/election-office"
+  },
+  {
+    keywords: ["About us", "Privacy Policy"], 
+    link: "/about/privacy-policy"
   },
   {
     keywords: ["Electoral Framework Overview", "Constitution of Nepal, Election Commission Act, 2017, ....."],
@@ -275,6 +284,38 @@ const GLOBAL_SEARCH_KEYWORD = [
     keywords: ["Voter Registration", "Voter Signup"],
     link:"/voter-education/voter-registration"
   },
+  {
+    keywords: ["Voter Faqs", "Faqs list","Frequently Asked Question (FAQs)"],
+    link:"/voter-education/voter-faqs"
+  },
+  {
+    keywords: ["Political Party", "Party registration / Signup form"],
+    link:"/party/party-registration"
+  },
+  {
+    keywords: ["Political Party", "Candidate registration / Signup form "],
+    link:"/party/candidate-registration"
+  },
+  {
+    keywords: ["Political Party", "Candidate Roll / Lists"],
+    link:"/party/candidate-roll"
+  },
+  {
+    keywords: ["Political Party", "Party Roll / Lists"],
+    link:"/party/party-list"
+  },
+  {
+    keywords: ["Election Result", "Parliament / Province election result"],
+    link:"/election/province"
+  },
+  {
+    keywords: ["Election Result", "District election result"],
+    link:"/election/district"
+  },
+  {
+    keywords: ["Election Result", "Local election result"],
+    link:"/election/local"
+  }
 ]
 
 export {
