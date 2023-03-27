@@ -16,6 +16,8 @@ import ElectionUserCard from '../components/ElectionUserCard';
 import { PROVINCE } from '../constants';
 import { getVoterList, getFemaleVotersCount, getMaleVotersCount, getOthersVotersCount, getTotalCandidateCount, getTotalElectionCount, getTotalPartiesCount, getTotalVotersCount } from '../utils/web3';
 import { getCurrentElection } from '../utils/common';
+import { Modal } from 'react-bootstrap';
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function Home() {
   const [electionLists, setElectionLists] = useState([]);
@@ -23,6 +25,7 @@ export default function Home() {
   const [currentElection, setCurrentElection] = useState(null);
   const [countDown, setCountDown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [timer, setTimer] = useState({ id: "seconds", play: false });
+  const [openInfoModal, setOpenInfoModal] = useState(false);
   const [totalDataCount, setTotalDataCount] = useState({
     candidates: 0, voters: 0, parties: 0, elections: 0,
     maleVoters: 0, femaleVoters: 0, otherVoters: 0
@@ -55,6 +58,17 @@ export default function Home() {
         otherVoters: totalOthersVotersCount
       });
     })();
+    
+    const browserZoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
+    if(!(browserZoomLevel === 102)){
+      setTimeout(() => {
+        toast.info("Please, Unzoom your browser screen to 80% for better view. Thanks !", {
+          className:"w-[600px]",
+          toastId:123, 
+          position:"top-center"
+        })
+      }, 1000);
+    }
 
     return () => {
       window.removeEventListener("resize", null);
@@ -216,7 +230,6 @@ export default function Home() {
                 }
               </div>
             </div>
-
 
             <div className='my-4 sm:px-2 mb-3 lg:h-[400px] sm:h-fit'>
               <div className='flex justify-between items-center py-3'>
