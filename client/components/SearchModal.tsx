@@ -10,6 +10,7 @@ import { GLOBAL_SEARCH_KEYWORD } from '../constants';
 const SearchModal = ({ show, setOpenSearchModal }) => {
   const [loading, setLoading] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
+  const [isDefaulSearchResultShows, setDefaultSearchShows] = useState(true);
   const modalRef = useRef(null);
   const router = useRouter();
 
@@ -26,21 +27,25 @@ const SearchModal = ({ show, setOpenSearchModal }) => {
 
   useEffect(() => {
     const e = {target: {value:"a"}};
-    if(show) onChange(e)
+    if(show) onChange(e);
+    setDefaultSearchShows(true);
   }, [show])
 
   const onChange = (e:any) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      const keyword = e?.target?.value?.toLocaleLowerCase();
+      const keyword = e?.target?.value?.toLocaleLowerCase().trim();
       const filterArray = _.filter(GLOBAL_SEARCH_KEYWORD, (result) => { return _.includes(_.toLower(result.keywords.join()), keyword)})
 
       setSearchResult(filterArray?.slice(0,6))  
     },1000)
   }
 
-  const onTyping = (e) => setLoading(e.target.value.length > 0 ?? false);
+  const onTyping = (e) => {
+    setLoading(e.target.value.length > 0 ?? false)
+    setDefaultSearchShows(!(e.target.value.length > 0));
+  }
 
   const navigate = (url:string) => {
     router.push(url);
@@ -60,7 +65,7 @@ const SearchModal = ({ show, setOpenSearchModal }) => {
           <AiOutlineSearch className='text-xl mr-5' />
         </div>
         <hr />
-        {!loading && searchResult?.length > 0 && <h5>Search Result: {searchResult?.length}</h5>}
+        {!loading && !isDefaulSearchResultShows && searchResult?.length > 0 && <h5>Search Result: {searchResult?.length}</h5>}
         {loading ?
           <SkeletonTheme baseColor="#f8f9fa" highlightColor="#e5eaef" >
             <Skeleton count={1} height={25} width={120} /><br />
