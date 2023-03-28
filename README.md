@@ -124,7 +124,7 @@ f. Data Dictionery
    iv). Ballot Data Dictionery
       <img width="1410" alt="Ballot Data Dictionery" src="https://user-images.githubusercontent.com/64581460/214894162-5d921fdf-dc53-4033-894e-5ba1523f0629.png">
 
-   v). Eleciton Data Dictionery
+   v). Election Data Dictionery
      <img width="1398" alt="Election Data Dictionery" src="https://user-images.githubusercontent.com/64581460/214894281-71115682-d062-47be-a3c5-9a66586de00c.png">
 
 
