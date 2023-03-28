@@ -133,8 +133,8 @@ const Navbar: React.FC = (): ReactElement => {
         {/*  vertical-top-navbar */}
         <div className={`vertical__navbar absolute left-0 ml-[25px] mt-[40px] shadow-inner z-50 flex lg:hidden ${openTopVerticalNavbar ? 'block' : 'hidden'}`}>
           <div className={`px-4 pt-3 pb-4 w-[220px] h-[240px] bg-slate-100 absolute rounded-b-[5px] text-slate-600 text-[16px]`}>
-            {isAdminAddress && <div onClick={() => navigate("/")}>CREATE ELECTION</div>}
-            <div className="my-[18px]" onClick={() => navigate("/FAQ")}>FAQ</div>
+            {isAdminAddress && <div onClick={() => navigate("/")}>{selectedLanguage.label === 'ENGLISH' ? "CREATE ELECTION":"चुनाव सिर्जना गर्नुहोस्"}</div>}
+            <div className="my-[18px]" onClick={() => navigate("/FAQ")}>{selectedLanguage.label === 'ENGLISH' ? "FAQ":"सोधिने प्रश्नहरू"}</div>
             <select className='form-control py-1 cursor-pointer hover:opacity-70 outline-0' onChange={onLanguageChange}>
               {LANGUAGES.map((d, i) => <option className='text-[14px]' key={i} value={d.value}>{d.label}</option>)}
             </select>
@@ -150,8 +150,8 @@ const Navbar: React.FC = (): ReactElement => {
 
         {/*  */}
         <div className='items w-[700px] justify-end items-center text-slate-600 lg:flex sm:hidden'>
-          {isAdminAddress && <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={onCreateElection}>CREATE ELECTION</span>}
-          <span className='px-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/voter-education/voter-faqs")}>FAQ</span>
+          {isAdminAddress && <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={onCreateElection}>{selectedLanguage.label === 'ENGLISH' ? "CREATE ELECTION":"चुनाव सिर्जना गर्नुहोस्"}</span>}
+          <span className='px-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/voter-education/voter-faqs")}>{selectedLanguage.label === 'ENGLISH' ? "FAQ":"सोधिने प्रश्नहरू"}</span>
           <select className='mx-4 text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0' onChange={onLanguageChange}>
             {LANGUAGES.map((d, i) => <option key={i} value={d.value}>{d.label}</option>)}
           </select>
@@ -194,8 +194,8 @@ const Navbar: React.FC = (): ReactElement => {
         <div className={`navbar__bottom ${responsive} w-full flex items-center justify-content-between pt-2 md:px-3 sm:p-0`}>
           <Image className='cursor-pointer sm:p-3' src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
           <div className='center__content text-center text-red-700 -ml-[15px]'>
-            <h4 className='lg:text-3xl sm:text-2xl'>{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Election Commission Nepal' : 'निर्वाचन आयोग नेपाल'}</h4>
-            <h6 className='lg:text-lg sm:text-lg'>{selectedLanguage && selectedLanguage.label === 'ENGLISH' ? 'Kantipath, Kathmandu' : 'कान्तिपथ, काठमाण्डौ'}</h6>
+            <h4 className='lg:text-3xl sm:text-2xl'>{selectedLanguage.label === 'ENGLISH' ? 'Election Commission Nepal' : 'निर्वाचन आयोग नेपाल'}</h4>
+            <h6 className='lg:text-lg sm:text-lg'>{selectedLanguage.label === 'ENGLISH' ? 'Kantipath, Kathmandu' : 'कान्तिपथ, काठमाण्डौ'}</h6>
           </div>
           <Image className='sm:p-1' src='/images/flag.png' height={40} width={50} alt="nepal-flag" />
         </div>
@@ -212,18 +212,18 @@ const Navbar: React.FC = (): ReactElement => {
         </div>
 
         <div className={`${sub_navbar_style} ${responsive} lg:flex sm:hidden text-slate-200`}>
-          <div onClick={() => navigate("/")}>Home</div>
-          <div><Dropdown title="About us" items={sub_navbar_items.aboutItems} /></div>
-          <div><Dropdown title="Electoral Framework" items={sub_navbar_items.electoralItems} /></div>
-          <div><Dropdown title="Voter Education" items={sub_navbar_items.voterItems} /></div>
-          <div><Dropdown title="Political Party" items={politicalItems} /></div>
-          <div><Dropdown title="Election Result" items={sub_navbar_items.electionResultTypes} /></div>
+          <div onClick={() => navigate("/")}>{selectedLanguage.label === 'ENGLISH' ? "Home":"गृहपृष्ठ"}</div>
+          <div><Dropdown title={selectedLanguage.label === 'ENGLISH' ? "About us":"हाम्रोबारे"} items={sub_navbar_items.aboutItems} /></div>
+          <div><Dropdown title={selectedLanguage.label === 'ENGLISH' ? "Electoral Framework":"निर्वाचन कानून"} items={sub_navbar_items.electoralItems} /></div>
+          <div><Dropdown title={selectedLanguage.label === 'ENGLISH' ? "Voter Education":"मतदाता शिक्षा"} items={sub_navbar_items.voterItems} /></div>
+          <div><Dropdown title={selectedLanguage.label === 'ENGLISH' ? "Political Party":"राजनितिक पार्टि"} items={politicalItems} /></div>
+          <div><Dropdown title={selectedLanguage.label === 'ENGLISH' ? "Election Result":"निर्वाचन परिणाम"} items={sub_navbar_items.electionResultTypes} /></div>
         </div>
       </div>
       <div className={`absolute h-full w-full flex z-40 lg:hidden ${openVerticalNavbar ? 'block' : 'hidden'}`}>
         <div className={`py-3 ${sub_navbar_style} w-[240px] h-[350px] bg-blue-900 flex-col justify-around absolute rounded-b-[5px]`}>
-          <div className={sub_navbar_items_style} onClick={() => navigate("/")}>Home</div>
-          <div className={sub_navbar_items_style}><Dropdown title="About us" items={sub_navbar_items.aboutItems} /></div>
+          <div className={sub_navbar_items_style} onClick={() => navigate("/")}>{selectedLanguage.label === 'ENGLISH' ? "Home":""}</div>
+          <div className={sub_navbar_items_style}><Dropdown title={selectedLanguage.label === 'ENGLISH' ?"About us":"हाम्रोबारे"}items={sub_navbar_items.aboutItems} /></div>
           <div className={sub_navbar_items_style}><Dropdown title="Electoral Framework" items={sub_navbar_items.electoralItems} /></div>
           <div className={sub_navbar_items_style}><Dropdown title="Voter Education" items={sub_navbar_items.voterItems} /></div>
           <div className={sub_navbar_items_style}><Dropdown title="Political Party" items={politicalItems} /></div>
