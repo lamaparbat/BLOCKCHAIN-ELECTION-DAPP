@@ -4,6 +4,7 @@ import electionReducer from './reducers/electionReducer';
 import partyReducer from './reducers/partyReducer';
 import voterReducer from './reducers/voterReducer';
 import loggedInUserReducer from './reducers/loggedInUserReducer';
+import commonReducer from './reducers/commonReducer';
 
 export default configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export default configureStore({
     voterReducer,
     partyReducer,
     electionReducer,
-    loggedInUserReducer
+    loggedInUserReducer,
+    commonReducer
   },
 })
