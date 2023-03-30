@@ -5,6 +5,10 @@ const nextConfig = {
   images: {
     domains: ['storage.googleapis.com'],
   },
+  i18n: {
+    locales: ['en', 'ne'],
+    defaultLocale: 'en',
+  }
 }
 
 module.exports = nextConfig
