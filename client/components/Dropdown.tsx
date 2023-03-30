@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { useTranslations } from 'next-intl';
 
 const Dropdown = ({ title, items }) => {
    const [openModal, setOpenModal] = useState(false);
    const router = useRouter();
+   const t = useTranslations("navbar");
 
    useEffect(() => {
       !window || window.addEventListener("click", (e: any) => {
@@ -37,7 +39,7 @@ const Dropdown = ({ title, items }) => {
                         onMouseOver={() => setOpenModal(true)}
                         onMouseOut={() => setOpenModal(false)}
                      >
-                        {item.label}
+                        {t(item.id)}
                      </a>)
                }
             </div>

@@ -1,0 +1,43 @@
+{
+  "navbar": {
+    "faq": "FAQ",
+    "install_metamsk": "Install Metamask",
+    "create_election": "CREATE ELECTION",
+    "title": "Election Commission Nepal",
+    "location": "Kantipath, Kathmandu",
+    "home": "Home",
+    "about_us": "About Us",
+    "constitutional_provision": "Constitutional Provision",
+    "election_office": "Election Offices",
+    "privacy": "Privacy Policy",
+    "electoral_framework": "Electoral Framework",
+    "electoral_framework_overview": "Electoral Framework Overview",
+    "election_laws": "Election Related Laws",
+    "voter_education": "Voter Education",
+    "voter_eligibility": "Voter Eligibility",
+    "voter_roll": "Voter Roll",
+    "voter_registration": "Voter Registration",
+    "faqs": "Frequently Asked Questions (FAQ)",
+    "political_party": "Policy Party",
+    "register_party_form": "Register Party Form",
+    "register_candidate_form": "Register Candidate Form",
+    "candidate_lists": "Candidate Lists",
+    "party_lists": "Party Lists",
+    "election_result": "Election Result",
+    "parliament_election": "Parliament Election",
+    "district_election": "District election",
+    "local_election": "Local election"
+  },
+  "homepage": {
+    "latest_update": "Latest Update",
+    "election_gallery": "Election Gallery",
+    "no_election_found": "No election gallery found !",
+    "overall_election_data": "Overall Election Data",
+    "total_voters": "Total Voters",
+    "male_voters": "Male Voters",
+    "female_voters": "Female Voters",
+    "others": "Others",
+    "total_election": "Total Election",
+    "total_parties": "Total Parties"
+  }
+}

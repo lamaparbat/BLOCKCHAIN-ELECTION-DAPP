@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
+import { GetServerSidePropsContext } from 'next';
+import { useRouter } from 'next/router';
 import Navbar from '../../components/Navbar';
 import { registerParty } from '../../utils/action';
 import { SmartContract } from '../../constants';
 import { toast } from 'react-toastify';
 import { PulseLoader } from 'react-spinners';
-import { getStorage } from '../../services';
+import { getCookieValue, getStorage } from '../../services';
 import _ from 'lodash';
 import { getFormattedErrorMessage, getPartyList } from '../../utils';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
 
 const defaultPartyDetails = { partyName: "", totalMembers: '', agenda: "", partyLogo: null }
 
@@ -147,24 +148,24 @@ const VoterRegistration = () => {
 export default VoterRegistration;
 
 
-export const getServerSideProps = async (ctx) => {
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   try {
-    const {cookie} = ctx.req.headers
-    const isAdmin = cookie.split(";")?.find((d:string) => d.includes("isAdmin"))?.split("=")[1] ?? "false";
+    const { cookie } = ctx.req.headers
+    const isAdmin = getCookieValue(cookie, "isAdmin");
 
-    if(isAdmin === "false") {
+    if (isAdmin === "false") {
       return {
-        redirect: { 
+        redirect: {
           parmanent: false,
-          destination:"/"
+          destination: "/"
         }
       }
     }
-  
+
   } catch (error) {
-    return {props: {}}
+    return { props: {} }
   }
-  return {props: {}}
+  return { props: {} }
 }
 
 

@@ -1,0 +1,43 @@
+{
+  "navbar": {
+    "faq": "सोधिने प्रश्नहरू",
+    "install_metamsk": "इन्स्टल मेटामस्क",
+    "create_election": "चुनाव सिर्जना गर्नुहोस्",
+    "title": "निर्वाचन आयोग नेपाल",
+    "location": "कान्तिपथ, काठमाण्डौ",
+    "home": "होम",
+    "about_us": "हाम्रो बारे",
+    "constitutional_provision": "आयोग सम्बन्धी संवैधानिक प्रावधान",
+    "election_office": "निर्वाचन कार्यालयहरू",
+    "privacy": "गोपनीयता नीति",
+    "electoral_framework": "निर्वाचन ढाँचा",
+    "electoral_framework_overview": "निर्वाचन ढाँचा अवलोकन",
+    "election_laws": "निर्वाचन सम्बन्धी कानुन",
+    "voter_education": "मतदाता शिक्षा",
+    "voter_eligibility": "मतदाता योग्यता",
+    "voter_roll": "मतदाता नामावली",
+    "voter_registration": "मतदाता दर्ता",
+    "faqs": "बारम्बार सोधिने प्रश्नहरू",
+    "political_party": "नीति पार्टी",
+    "register_party_form": "पार्टी दर्ता फारम",
+    "register_candidate_form": "उम्मेदवार फारम दर्ता",
+    "candidate_lists": "उम्मेदवार सूची",
+    "party_lists": "पार्टी सूचीहरू",
+    "election_result": "निर्वाचन परिणाम",
+    "parliament_election": "संसदीय निर्वाचन",
+    "district_election": "जिल्ला निर्वाचन",
+    "local_election": "स्थानीय निर्वाचन"
+  },
+  "homepage": {
+    "latest_update": "ताजा अपडेटहरू",
+    "election_gallery": "निर्वाचन ग्यालरी",
+    "no_election_found": "चुनावी ग्यालेरी भेटिएन!",
+    "overall_election_data": "समग्र निर्वाचन डाटा",
+    "total_voters": "कुल मतदाता",
+    "male_voters": "पुरुष मतदाता",
+    "female_voters": "महिला मतदाता",
+    "others": "अन्य मतदाता",
+    "total_election": "कुल निर्वाचन",
+    "total_parties": "कुल दलहरू"
+  }
+}
