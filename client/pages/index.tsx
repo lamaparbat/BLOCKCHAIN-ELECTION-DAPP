@@ -17,6 +17,7 @@ import { PROVINCE } from '../constants';
 import { getVoterList, getFemaleVotersCount, getMaleVotersCount, getOthersVotersCount, getTotalCandidateCount, getTotalElectionCount, getTotalPartiesCount, getTotalVotersCount } from '../utils/web3';
 import { getCurrentElection } from '../utils/common';
 import { toast } from 'react-toastify';
+import { useTranslations } from 'next-intl';
 
 export default function Home() {
   const [electionLists, setElectionLists] = useState([]);
@@ -28,6 +29,9 @@ export default function Home() {
     candidates: 0, voters: 0, parties: 0, elections: 0,
     maleVoters: 0, femaleVoters: 0, otherVoters: 0
   });
+
+  const t = useTranslations("homepage");
+
 
   useEffect(() => {
     (async () => {
@@ -156,7 +160,7 @@ export default function Home() {
               <div className='w-full flex'>
                 <div className='shrink-0 w-[170px] px-3 py-[5px] flex items-center bg-red-600 rounded-tr-[10px] text-slate-100 shadow-inner'>
                   <FaRegNewspaper className='text-2xl mr-2' />
-                  Latest update
+                  {t("latest_update")}
                 </div>
                 <Marquee pauseOnHover={true} gradient={false} className="tracking-wider text-blue-900">
                   निर्वाचनका सम्पूर्ण गतिविधिहरूलाई आम जनताको सहज पहुँचसम्म पुर्याउन निर्वाचन आयोग अन्तर्गत ७ वटा प्रदेशमा प्रदेश निर्वाचन कार्यालय रहेका छन जसमा नेपाल सरकारको प्रशासन सेवा, सामान्य प्रशासन समूह, राजपत्रांकित द्वित्तीय श्रेणीको प्रदेश निर्वाचन अधिकारी कार्यालय प्रमुखका रूपमा रहने व्यवस्था गरिएको छ । सम्बन्धित प्रदेश निर्वाचन कार्यालयको वेबसाइटमा जानको लागि प्रदेश छनौट गर्नुहोस :
@@ -212,9 +216,9 @@ export default function Home() {
             </div>
 
             <div className='my-5 sm:px-2'>
-              <h4 className='font-bold'>Election Gallery</h4>
+              <h4 className='font-bold'>{t("election_gallery")}</h4>
               <div className='flex lg:justify-between md:justify-between flex-wrap sm:justify-center'>
-                {electionLists?.length === 0 && <span className='ml-2'>No election gallery found !</span>}
+                {electionLists?.length === 0 && <span className='ml-2'>{t("no_election_found")}</span>}
                 {
                   electionLists?.map((election, i) => {
                     return (
@@ -231,7 +235,7 @@ export default function Home() {
 
             <div className='my-4 sm:px-2 mb-3 lg:h-[400px] sm:h-fit'>
               <div className='flex justify-between items-center py-3'>
-                <h5 className='font-bold mb-3'>Overall Elections Data</h5>
+                <h5 className='font-bold mb-3'>{t("overall_election_data")}</h5>
                 <Select
                   className=''
                   options={PROVINCE}
@@ -239,12 +243,12 @@ export default function Home() {
                   onChange={handleOverviewCountSort} />
               </div>
               <div className='w-full flex justify-between sm:flex-wrap'>
-                <ElectionUserCard label="Total Voters" value={totalDataCount.voters} Icon={<BiGroup className='text-4xl text-blue-900' />} />
-                <ElectionUserCard label="Male Voters" value={totalDataCount.maleVoters} Icon={<BiMale className='text-4xl text-blue-900' />} />
-                <ElectionUserCard label="Female Voters" value={totalDataCount.femaleVoters} Icon={<BiFemale className='text-4xl text-blue-900' />} />
-                <ElectionUserCard label="Others" value={totalDataCount.otherVoters} Icon={<FaTransgender className='text-4xl text-blue-900' />} />
-                <ElectionUserCard label="Total Election" value={totalDataCount.elections} Icon={<FaVoteYea className='text-4xl text-blue-900' />} />
-                <ElectionUserCard label="Total Parties" value={totalDataCount.parties} Icon={<BiMale className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={t("total_voters")} value={totalDataCount.voters} Icon={<BiGroup className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={t("male_voters")} value={totalDataCount.maleVoters} Icon={<BiMale className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={t("female_voters")} value={totalDataCount.femaleVoters} Icon={<BiFemale className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={t("others")} value={totalDataCount.otherVoters} Icon={<FaTransgender className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={t("total_election")} value={totalDataCount.elections} Icon={<FaVoteYea className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={t("total_parties")} value={totalDataCount.parties} Icon={<BiMale className='text-4xl text-blue-900' />} />
               </div>
             </div>
 
