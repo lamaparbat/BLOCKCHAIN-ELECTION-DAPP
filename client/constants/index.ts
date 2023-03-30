@@ -2,8 +2,8 @@ import Web3 from "web3";
 import { CONTRACT_ABI, CONTRACT_ABI_ADDRESS } from "./contract";
 
 const LANGUAGES = [
-  { value: 'nepali', label: 'NEPALI' },
-  { value: 'english', label: 'ENGLISH' },
+  { value: 'en', label: 'ENGLISH' },
+  { value: 'ne', label: 'NEPALI' },
 ];
 
 const PARTIES = [
@@ -140,34 +140,34 @@ const sub_navbar_items_style = "text-start w-full pl-4 hover:text-red-500";
 
 
 const aboutItems = [
-  { label: "Constitutional Provision", value: '/about/constitutional-provision' },
-  { label: 'Election Offices', value: '/about/election-office' },
-  { label: 'Privacy Policy', value: '/about/privacy-policy' },
+  { label: "Constitutional Provision", value: '/about/constitutional-provision', id: "constitutional_provision" },
+  { label: 'Election Offices', value: '/about/election-office', id: "election_office" },
+  { label: 'Privacy Policy', value: '/about/privacy-policy', id: "privacy" },
 ]
 
 const electoralItems = [
-  { label: "Electoral Framework Overview", value: '/electoral-framework/overview' },
-  { label: 'Election Related Laws', value: '/electoral-framework/laws' }
+  { label: "Electoral Framework Overview", value: '/electoral-framework/overview', id: "electoral_framework_overview" },
+  { label: 'Election Related Laws', value: '/electoral-framework/laws', id: "election_laws" }
 ]
 
 const politicalItems = [
-  { label: 'Register Party Form', value: '/party/party-registration' },
-  { label: 'Register Candidate', value: '/party/candidate-registration' },
-  { label: 'Candidate Lists', value: '/party/candidate-roll' },
-  { label: 'Party Lists', value: '/party/party-list' },
+  { label: 'Register Party Form', value: '/party/party-registration', id: "register_party_form" },
+  { label: 'Register Candidate', value: '/party/candidate-registration', id: "register_candidate_form" },
+  { label: 'Candidate Lists', value: '/party/candidate-roll', id: "candidate_lists" },
+  { label: 'Party Lists', value: '/party/party-list', id: "party_lists" },
 ]
 
 const electionResultTypes = [
-  { label: "Parliament Election", value: '/election/province' },
-  { label: 'District Election', value: '/election/district' },
-  { label: 'Local Election', value: '/election/local' }
+  { label: "Parliament Election", value: '/election/province', id: "parliament_election" },
+  { label: 'District Election', value: '/election/district', id: "district_election" },
+  { label: 'Local Election', value: '/election/local', id: "local_election" }
 ]
 
 const voterItems = [
-  { label: 'Voter Eligibility', value: '/voter-education/voter-eligibility' },
-  { label: 'Voter Roll', value: '/voter-education/voter-roll' },
-  { label: 'Voter Registration', value: '/voter-education/voter-registration' },
-  { label: 'FAQs on Voter Registration', value: '/voter-education/voter-faqs' }]
+  { label: 'Voter Eligibility', value: '/voter-education/voter-eligibility', id: "voter_eligibility" },
+  { label: 'Voter Roll', value: '/voter-education/voter-roll', id: "voter_roll" },
+  { label: 'Voter Registration', value: '/voter-education/voter-registration', id: "voter_registration" },
+  { label: 'FAQs on Voter Registration', value: '/voter-education/voter-faqs', id: "faqs" }]
 
 const StateProvinceOffices = [
   "Sudurpaschim Province",
@@ -228,8 +228,8 @@ const ElectionFrameworkLaws = {
     "राष्ट्रपति तथा उपराष्ट्रपतिको निर्वाचन सम्बन्धी ऐन, २०७४",
     "राष्ट्रिय सभा सदस्य निर्वाचन ऐन, २०७५"
   ],
-  "नियमावली":[
-   " मतदाता नामावली सम्बन्धी नियमावली, २०६८",
+  "नियमावली": [
+    " मतदाता नामावली सम्बन्धी नियमावली, २०६८",
     "निर्वाचन आयोग नियमावली, २०७३",
     "स्थानीय तह निर्वाचन नियमावली, २०७३",
     "राजनीतिक दल सम्बन्धी नियमावली, २०७४",
@@ -238,7 +238,7 @@ const ElectionFrameworkLaws = {
     "राष्टपति तथा उपराष्टपतिको निर्वाचन सम्बन्धी नियमावली, २०७४",
     "राष्ट्रिय सभा सदस्य निर्वाचन नियमावली, २०७६"
   ],
-  "आचारसंहिता":[
+  "आचारसंहिता": [
     "निर्वाचन आचारसंहिता, २०७२",
     "स्थानीय तह निर्वाचन आचार संहिता, २०७३",
     "राष्ट्रिय प्रर्यवेक्षकका लागि स्थानीय तह निर्वाचन पर्यवेक्षण आचारसंहिता, २०७३",
@@ -251,21 +251,21 @@ const ElectionFrameworkLaws = {
 
 const GLOBAL_SEARCH_KEYWORD = [
   {
-    keywords: ["Homepage", "Election Gallery", "Overall Elections Data"], 
+    keywords: ["Homepage", "Election Gallery", "Overall Elections Data"],
     link: "/"
   },
   {
     keywords: ["About us", "Constitutional Provision", "Election Commission", "Functions duties and, powers of Election Commission",
       "Necessary Cooperation to be Extended"
-    ], 
+    ],
     link: "/about/constitutional-provision"
   },
   {
-    keywords: ["About us", "Election offices", "State Election Offices", "District Election Offices",], 
+    keywords: ["About us", "Election offices", "State Election Offices", "District Election Offices",],
     link: "/about/election-office"
   },
   {
-    keywords: ["About us", "Privacy Policy"], 
+    keywords: ["About us", "Privacy Policy"],
     link: "/about/privacy-policy"
   },
   {
@@ -278,47 +278,47 @@ const GLOBAL_SEARCH_KEYWORD = [
   },
   {
     keywords: ["About Voter Registration", "Voter education"],
-    link:"/voter-education/voter-eligibility"
+    link: "/voter-education/voter-eligibility"
   },
   {
     keywords: ["Voter Roll", "Voter List"],
-    link:"/voter-education/voter-roll"
+    link: "/voter-education/voter-roll"
   },
   {
     keywords: ["Voter Registration", "Voter Signup"],
-    link:"/voter-education/voter-registration"
+    link: "/voter-education/voter-registration"
   },
   {
-    keywords: ["Voter Faqs", "Faqs list","Frequently Asked Question (FAQs)"],
-    link:"/voter-education/voter-faqs"
+    keywords: ["Voter Faqs", "Faqs list", "Frequently Asked Question (FAQs)"],
+    link: "/voter-education/voter-faqs"
   },
   {
     keywords: ["Political Party", "Party registration / Signup form"],
-    link:"/party/party-registration"
+    link: "/party/party-registration"
   },
   {
     keywords: ["Political Party", "Candidate registration / Signup form "],
-    link:"/party/candidate-registration"
+    link: "/party/candidate-registration"
   },
   {
     keywords: ["Political Party", "Candidate Roll / Lists"],
-    link:"/party/candidate-roll"
+    link: "/party/candidate-roll"
   },
   {
     keywords: ["Political Party", "Party Roll / Lists"],
-    link:"/party/party-list"
+    link: "/party/party-list"
   },
   {
     keywords: ["Election Result", "Parliament / Province election result"],
-    link:"/election/province"
+    link: "/election/province"
   },
   {
     keywords: ["Election Result", "District election result"],
-    link:"/election/district"
+    link: "/election/district"
   },
   {
     keywords: ["Election Result", "Local election result"],
-    link:"/election/local"
+    link: "/election/local"
   }
 ]
 
@@ -330,7 +330,7 @@ export {
   PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, StateProvinceOffices, DistrictOffices,
   web3, SmartContract, METAMASK_EXT_LINK,
   VOTE_ELIBILITY_AGE, CANDIDATE_ELIGIBILITY_AGE,
-  ElectionFrameworkOverview,ElectionFrameworkLaws,
+  ElectionFrameworkOverview, ElectionFrameworkLaws,
   GLOBAL_SEARCH_KEYWORD,
   ADMIN_ROUTES
 };
