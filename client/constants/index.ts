@@ -3,7 +3,7 @@ import { CONTRACT_ABI, CONTRACT_ABI_ADDRESS } from "./contract";
 
 const LANGUAGES = [
   { value: 'en', label: 'ENGLISH' },
-  { value: 'ne', label: 'NEPALI' },
+  { value: 'ne', label: 'नेपाली' },
 ];
 
 const PARTIES = [
