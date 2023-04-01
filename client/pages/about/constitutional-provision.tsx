@@ -28,13 +28,6 @@ const ConstitutionalProvision = () => {
               <p>{t("description2_point2")}</p>
               <p>{t("description2_point3")}</p>
               <p>{t("description3_point4")}</p>
-
-
-
-
-
-
-
               <div className='pl-10 -mt-3 mb-3 flex flex-column'>
                 <span>{t("description4_point4_a")}</span>
                 <span>{t("description4_point4_b")}</span>

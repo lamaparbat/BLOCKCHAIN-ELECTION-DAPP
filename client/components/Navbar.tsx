@@ -37,7 +37,7 @@ const Navbar: React.FC = (): ReactElement => {
   const [isAdminAddress, setIsAdminAddress] = useState(false);
   const [translatedLanguageOptions, setTranslateLanguageOptions] = useState([]);
   const [politicalItems, setPoliticalItems] = useState([...sub_navbar_items.politicalItems]);
-  const [currentLanguage, setCurrentLanguage] = useState(t(LANGUAGES[0].value));
+  const [currentLanguage, setCurrentLanguage] = useState(t(getStorage("lang") ?? "en"));
 
 
   const router = useRouter();
@@ -47,10 +47,10 @@ const Navbar: React.FC = (): ReactElement => {
   // on mount
   useEffect(() => {
     const lngCode = getStorage("lang");
-    const translatedOptions = LANGUAGES.map((langugage: any) => ({ label: t(langugage.value), value: langugage.value }))
+    const translatedOptions = _.uniqBy(LANGUAGES.map((langugage: any) => ({ label: t(langugage.value), value: langugage.value })), "value")
 
     if (lngCode) {
-      setCurrentLanguage(translatedOptions.find(option => option.value === lngCode).label);
+      setCurrentLanguage(translatedOptions?.find(option => option.value === lngCode)?.label);
     } else setStorage("lang", "en");
 
     if (window.ethereum) {
@@ -215,13 +215,13 @@ const Navbar: React.FC = (): ReactElement => {
 
 
       <div className='flex justify-center'>
-        <div className={`navbar__bottom ${responsive} w-full flex items-center justify-content-between pt-2 md:px-3 sm:p-0`}>
-          <Image className='cursor-pointer sm:p-3' src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
+        <div className={`navbar__bottom ${responsive} w-full flex items-center justify-content-between pt-2 md:px-5 sm:px-4 xsm:px-2 sm:p-0`}>
+          <Image className='cursor-pointer sm:p-3 sm:h-[90px] sm:w-[100px] xsm:h-[50px] xsm:w-[60px]' src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
           <div className='center__content text-center text-red-700 -ml-[15px]'>
-            <h4 className='lg:text-3xl sm:text-2xl'>{t("title")}</h4>
-            <h6 className='lg:text-lg sm:text-lg'>{t("location")}</h6>
+            <h4 className='min-sm:text-3xl position-relative xsm:top-[5px] xsm:text-[16px]'>{t("title")}</h4>
+            <h6 className='min-sm:text-3xl xsm:text-[13px]'>{t("location")}</h6>
           </div>
-          <Image className='sm:p-1' src='/images/animateFlag.gif' height={40} width={50} alt="nepal-flag" />
+          <Image className='sm:p-1 sm:h-[70px] sm:w-[60px] xsm:h-[45px] xsm:w-[35px]' src='/images/animateFlag.gif' height={40} width={50} alt="nepal-flag" />
         </div>
       </div>
 
