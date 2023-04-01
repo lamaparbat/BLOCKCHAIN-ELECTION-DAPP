@@ -53,6 +53,7 @@ contract Structure {
         string endDate;
         string electionType;
         address[] selectedCandidates;
+        string[] galleryImagesUrl;
     }
 
     struct FAQ {
