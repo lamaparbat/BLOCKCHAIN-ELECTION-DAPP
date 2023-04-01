@@ -1,10 +1,12 @@
 import moment from 'moment';
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import { FcGallery } from 'react-icons/fc';
 
 const ElectionCard = ({ details, src }) => {
   const [showIcon, setShowIcon] = useState(false);
   const { title, startDate, endDate, description, selectedCandidates } = details ?? {};
+  const t = useTranslations("election_gallery_card");
 
   const mouseOver = () => {
     setShowIcon(true)
@@ -29,10 +31,10 @@ const ElectionCard = ({ details, src }) => {
       </div>
       <div className='flex flex-column pt-2 pb-4 px-3'>
         <span className='text-[18px] mb-1 font-bold text-black select-none'>{title}</span>
-        <span className='select-none'><span className='font-bold'>Held:</span> {moment(startDate).format("lll")}</span>
-        <span className='select-none my-1'><span className='font-bold'>Ended:</span> {moment(endDate).format("lll")}</span>
-        <span className='mb-1 select-none'><span className='font-bold select-none'>Total Candidates:</span> {selectedCandidates?.length}</span>
-        <span className='select-none'><span className='font-bold select-none'>Total Votes:</span> 1203</span>
+        <span className='select-none'><span className='font-bold'>{t("held")}:</span> {moment(startDate).format("lll")}</span>
+        <span className='select-none my-1'><span className='font-bold'>{t("ended")}:</span> {moment(endDate).format("lll")}</span>
+        <span className='mb-1 select-none'><span className='font-bold select-none'>{t("total_candidate")}:</span> {selectedCandidates?.length}</span>
+        <span className='select-none'><span className='font-bold select-none'>{t("total_vote")}:</span> 1203</span>
       </div>
     </div>
   )

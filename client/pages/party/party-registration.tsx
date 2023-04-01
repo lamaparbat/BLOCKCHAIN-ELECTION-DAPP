@@ -153,7 +153,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const { cookie } = ctx.req.headers
     const isAdmin = getCookieValue(cookie, "isAdmin");
 
-    if (isAdmin === "false") {
+    if (isAdmin.toString() === "false" || !isAdmin) {
       return {
         redirect: {
           parmanent: false,

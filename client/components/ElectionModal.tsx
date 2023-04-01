@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import Select from "react-select";
-import { ELECTION_TYPE, SmartContract } from '../constants';
 import { toast } from 'react-toastify';
-import { createElection } from '../utils/action';
+import { ELECTION_TYPE, SmartContract } from '../constants';
+import { getHostedUrl } from '../utils/action';
 
 const currentDate = new Date();
 const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -13,7 +13,8 @@ const defaultElectionData = {
   description: "",
   startDate: defaultDate,
   endDate: defaultDate,
-  electionType: ELECTION_TYPE[0].value
+  electionType: ELECTION_TYPE[0].value,
+  electionImages: null
 }
 
 
@@ -36,15 +37,23 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const onCreate = async () => {
     setLoading(true);
     try {
-      const { title, description, startDate, endDate, electionType } = election;
+      const { title, description, startDate, endDate, electionType, electionImages } = election;
+      const formData = new FormData();
 
-      await createElection({ title, description, startDate, endDate });
+      Array.from(electionImages).forEach((file: any) => {
+        formData.append("images", file);
+      })
+
+      const { url }: any = await getHostedUrl(formData);
+      const galleryImagesUrl = url;
+      console.log(url)
       await SmartContract.methods.createElection(
         title,
         description,
         startDate,
         endDate,
-        electionType
+        electionType,
+        galleryImagesUrl
       ).send({ from: loggedInAccountAddress });
       toast.success("Election created successfully.");
     } catch (error) {
@@ -94,14 +103,26 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
                 onChange={(e) => onChange("endDate", e.target.value)} />
             </div>
           </div>
-          <div className='w-full flex flex-column mt-4 mb-3'>
-            <label>Election Type</label>
-            <Select
-              options={ELECTION_TYPE}
-              className="w-[220px] mr-2 mt-1"
-              placeholder={<div>Select Type</div>}
-              onChange={(item: any) => onChange("electionType", item.value)}
-              isDisabled={election?.electionType ? false : true}
+          <div className='w-full mt-4 mb-3'>
+            <div className='w-100'>
+              <label>Election Type</label>
+              <Select
+                options={ELECTION_TYPE}
+                className="mr-2 mt-1"
+                placeholder={<div>Select Type</div>}
+                onChange={(item: any) => onChange("electionType", item.value)}
+                isDisabled={election?.electionType ? false : true}
+              />
+            </div>
+          </div>
+          <div className='w-full'>
+            <label>Choose election images</label>
+            <input
+              className='form-control mt-1'
+              type="file"
+              name='files'
+              multiple
+              onChange={(e: any) => setElection({ ...election, electionImages: e.target.files })}
             />
           </div>
           <div className='flex mt-4 mb-3'>

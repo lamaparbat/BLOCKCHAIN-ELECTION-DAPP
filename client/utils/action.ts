@@ -71,9 +71,10 @@ const createElection = async (payload: Object) => {
 
 
 // file upload and get hosted url
-const getHostedUrl = async (payload: Object) => {
+const getHostedUrl = async (payload: Object): Promise<any> => {
   try {
-    return await Http("post", "/upload/uploadFile", payload);
+    const res = await Http("post", "/upload/uploadFile", payload);
+    return res?.data;
   } catch (error) {
     return console.error(error);
   }

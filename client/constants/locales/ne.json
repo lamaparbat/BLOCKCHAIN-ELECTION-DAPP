@@ -50,7 +50,12 @@
     "province5": "लुम्बिनी प्रदेश",
     "province6": "कर्णाली प्रदेश",
     "province7": "सुदूरपश्चिम प्रदेश",
-    "selecte_province_placeholder": "प्रदेश छनोट"
+    "selecte_province_placeholder": "प्रदेश छनोट",
+    "countdown_title": "नेपालमा चुनाव हुँदैछ",
+    "countdown_days": "दिन",
+    "countdown_hours": "घण्टा",
+    "countdown_minutes": "मिनेट",
+    "countdown_seconds": "सेकेन्ड"
   },
   "constitutional_provision": {
     "constitutional_provision": "संवैधानिक प्रावधान",
@@ -83,5 +88,11 @@
     "description13": "5. निर्वाचन आयोगको अन्य काम, कर्तव्य र अधिकार र कार्यविधि कानून बमोजिम हुनेछ ।",
     "neccessary_cooperation": "आवश्यक सहयोग विस्तार गरिनेछ",
     "description14": "यस संविधानबमोजिम निर्वाचन आयोगको काम गर्न नेपाल सरकार, प्रदेश सरकार र स्थानीय सरकारले आवश्यक कर्मचारी उपलब्ध गराउने र आवश्यक पर्ने अन्य सहयोग गर्नेछन् ।"
+  },
+  "election_gallery_card": {
+    "held": "आयोजित मिति",
+    "ended": "समाप्त मिति",
+    "total_candidate": "कुल उम्मेदवारहरू",
+    "total_vote": "कुल मत"
   }
 }

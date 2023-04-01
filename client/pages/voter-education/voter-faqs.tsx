@@ -39,17 +39,17 @@ const VoterFaqs = () => {
     try {
       setFaqList([...faqList, newFaq]);
       const formData = new FormData();
-      formData.append("faqFile", newFaq.file);
+      formData.append("images", newFaq.file);
 
       const response = await getHostedUrl(formData);
       if (response) {
-        const { data: { url } } = response;
+        const { url } = response;
         let resp = null;
-        if (url)
+        if (url?.length > 0)
           resp = await SmartContract.methods.addFaqs(
             newFaq.title,
             newFaq.description,
-            url,
+            url[0],
             new Date()
           ).send({ from: loggedInAccountAddress })
         else toast.error("Failed to upload File !");

@@ -1,270 +1,4 @@
-export const CONTRACT_ABI:any = [
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_citizenshipNo",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_agenda",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_dob",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_email",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_profile",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_partyName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_province",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_district",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_municipality",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_ward",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_gender",
-				"type": "string"
-			}
-		],
-		"name": "addCandidate",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "faqId",
-				"type": "address"
-			},
-			{
-				"internalType": "string",
-				"name": "replyMsg",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "createdAt",
-				"type": "string"
-			}
-		],
-		"name": "addFaqComment",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "title",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "description",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "fileUrl",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "createdAt",
-				"type": "string"
-			}
-		],
-		"name": "addFaqs",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_totalMember",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_agenda",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_logoUrl",
-				"type": "string"
-			}
-		],
-		"name": "addParty",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address[]",
-				"name": "_selectedCandidates",
-				"type": "address[]"
-			},
-			{
-				"internalType": "string",
-				"name": "electionAddress",
-				"type": "string"
-			}
-		],
-		"name": "addSelectedCandidates",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_citizenshipNo",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_dob",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_email",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_profile",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_province",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_district",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_municipality",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_ward",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_gender",
-				"type": "string"
-			}
-		],
-		"name": "addVoter",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_title",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_description",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_startDate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_endDate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_electionType",
-				"type": "string"
-			}
-		],
-		"name": "createElection",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
+export const CONTRACT_ABI: any = [
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
@@ -707,6 +441,11 @@ export const CONTRACT_ABI:any = [
 						"internalType": "address[]",
 						"name": "selectedCandidates",
 						"type": "address[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "galleryImagesUrl",
+						"type": "string[]"
 					}
 				],
 				"indexed": false,
@@ -722,24 +461,231 @@ export const CONTRACT_ABI:any = [
 		"inputs": [
 			{
 				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_citizenshipNo",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_agenda",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_dob",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_profile",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_partyName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_province",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_district",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_municipality",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_ward",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
 				"name": "_gender",
 				"type": "string"
 			}
 		],
-		"name": "updateCounter",
+		"name": "addCandidate",
 		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_candidateId",
+				"name": "faqId",
 				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "replyMsg",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "createdAt",
+				"type": "string"
 			}
 		],
-		"name": "vote",
+		"name": "addFaqComment",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "title",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "description",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "fileUrl",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "createdAt",
+				"type": "string"
+			}
+		],
+		"name": "addFaqs",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_totalMember",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_agenda",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_logoUrl",
+				"type": "string"
+			}
+		],
+		"name": "addParty",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "_selectedCandidates",
+				"type": "address[]"
+			},
+			{
+				"internalType": "string",
+				"name": "electionAddress",
+				"type": "string"
+			}
+		],
+		"name": "addSelectedCandidates",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_citizenshipNo",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_dob",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_profile",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_province",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_district",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_municipality",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_ward",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"name": "addVoter",
 		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"
@@ -953,6 +899,44 @@ export const CONTRACT_ABI:any = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_title",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_description",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_startDate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_endDate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_electionType",
+				"type": "string"
+			},
+			{
+				"internalType": "string[]",
+				"name": "galleryImagesUrl",
+				"type": "string[]"
+			}
+		],
+		"name": "createElection",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -1248,6 +1232,11 @@ export const CONTRACT_ABI:any = [
 						"internalType": "address[]",
 						"name": "selectedCandidates",
 						"type": "address[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "galleryImagesUrl",
+						"type": "string[]"
 					}
 				],
 				"internalType": "struct Structure.Election[]",
@@ -1922,6 +1911,32 @@ export const CONTRACT_ABI:any = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"name": "updateCounter",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_candidateId",
+				"type": "address"
+			}
+		],
+		"name": "vote",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "voteCount",
 		"outputs": [
@@ -2126,4 +2141,4 @@ export const CONTRACT_ABI:any = [
 		"type": "function"
 	}
 ];
-export const CONTRACT_ABI_ADDRESS:string = "0x63028039809d13df567D1e4F3498572D9882D3E7";
+export const CONTRACT_ABI_ADDRESS: string = "0xe8A4DA2B6df198670fa39bb20DF44fC79023E2cf";
