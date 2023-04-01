@@ -32,7 +32,7 @@ contract Election is Structure, Constants{
 
 
 
-    // static variables
+    // counter varirables
     uint public totalCandidate = 0;
     uint public totalVoter = 0;
     uint public totalParty = 0;
@@ -42,7 +42,7 @@ contract Election is Structure, Constants{
     uint public totalFemaleVoters = 0;
     uint public totalOtherVoters = 0;
 
-    // Event
+    // Event abstractions
     event PartyCreated(Party party);
     event CandidateCreated(Candidate candidate);
     event VoterCreated(Voter voter);
@@ -53,7 +53,6 @@ contract Election is Structure, Constants{
     // updators
     function vote(address _candidateId) public payable{
         address _voterId = msg.sender;
-        Candidate storage selectedCandidate = candidates[_candidateId];
 
         // restrict admin for vote casting
         if(_voterId == adminAddress){
@@ -61,23 +60,13 @@ contract Election is Structure, Constants{
         }
 
         // verify vote limit count
-        if(voters[_voterId].voteLimitCount == 3){
+        if(voters[_voterId].voteLimitCount > 3){
             revert("You have exceed the vote caste limit.");
         }
 
-        // verify if a voter already voted
-        bool isAlreadyVote = false;
-        for(uint i=0;i<selectedCandidate.votedVoterLists.length;i++){
-            if(selectedCandidate.votedVoterLists[i] == _voterId){
-                isAlreadyVote = true;
-                break;
-            }
-        }
-        require(!isAlreadyVote,  "You have already voted !");
-
-        selectedCandidate.votedVoterLists.push(_voterId);
+        candidates[_candidateId].votedVoterLists.push(_voterId);
         voters[_voterId].votedCandidateList.push(_candidateId);
-        selectedCandidate.voteCount = candidates[_candidateId].voteCount.add(1);
+        candidates[_candidateId].voteCount = candidates[_candidateId].voteCount.add(1);
         voteCount = voteCount.add(1); 
 
         for(uint i=0;i<candidateList.length;i++){
@@ -174,14 +163,15 @@ contract Election is Structure, Constants{
         string memory _description,
         string memory _startDate,
         string memory _endDate,
-        string memory _electionType
+        string memory _electionType,
+        string[] memory galleryImagesUrl
     ) public payable{
         if(msg.sender != adminAddress){
             revert("Only admin is allow to create election !");
         }
 
         address[] memory selectedCandidates;
-        Election memory election = Election(_title, _description, _startDate, _endDate, _electionType, selectedCandidates);
+        Election memory election = Election(_title, _description, _startDate, _endDate, _electionType, selectedCandidates, galleryImagesUrl);
 
         elections[_startDate] = election;
         electionList.push(election);
@@ -297,6 +287,3 @@ contract Election is Structure, Constants{
 // add faq & reply
 // UI design issues, please maintain your desing, https://file.png, 2023-23-23T1-23-12
 // 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, yes it caused problem, 2023-34-23T2-34-23
-
-
-
