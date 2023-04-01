@@ -50,7 +50,12 @@
     "province5": "Lumbini Province",
     "province6": "Karnali Province",
     "province7": "Sudurpashchim Province",
-    "selecte_province_placeholder": "Select province"
+    "selecte_province_placeholder": "Select province",
+    "countdown_title": "Election Nepal Happening: ",
+    "countdown_days": "Days",
+    "countdown_hours": "Hours",
+    "countdown_minutes": "Minutes",
+    "countdown_seconds": "Seconds"
   },
   "constitutional_provision": {
     "constitutional_provision": "Constitutional Provision",
@@ -83,5 +88,11 @@
     "description13": "5. Other functions, duties and powers and working procedures of the Election Commission shall be as regulated by law.",
     "neccessary_cooperation": "Necessary Cooperation to be Extended",
     "description14": "The Government of Nepal, provincial government and local government shall provide necessary employees and extend other cooperation as may be required to perform the functions of the Election Commission in accordance with this Constitution."
+  },
+  "election_gallery_card": {
+    "held": "Held",
+    "ended": "Ended",
+    "total_candidate": "Total Candidates",
+    "total_vote": "Total Votes"
   }
 }
