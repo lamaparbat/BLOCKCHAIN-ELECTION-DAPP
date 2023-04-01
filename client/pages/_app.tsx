@@ -19,7 +19,9 @@ export default function App({ Component, pageProps }: AppProps) {
       const currentLanguage = getCookieValue(document.cookie, "lang");
       const langFiles = (await import(`../constants/locales/${currentLanguage ?? 'en'}.json`)).default;
 
-      setLangFiles(langFiles);
+      setTimeout(() => {
+        setLangFiles(langFiles);
+      }, 1000)
     })();
   }, []);
 
