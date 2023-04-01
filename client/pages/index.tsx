@@ -161,8 +161,8 @@ export default function Home() {
           <div className='lg:w-[1065px] w-[100vw] overflow-hidden'>
             <div className='flex items-center'>
               <div className='w-full flex'>
-                <div className='shrink-0 min-sm:w-[170px] xsm:w-[150px] px-3 py-[5px] flex items-center bg-red-600 rounded-tr-[10px] text-slate-100 min-sm:text-3xl xsm:text-[14px] shadow-inner'>
-                  <FaRegNewspaper className='min-sm:text-2xl xsm:text-[16px] mr-2' />
+                <div className='shrink-0 w-[155px] px-2 py-[5px] flex items-center bg-red-600 rounded-tr-[10px] text-slate-100 text-md shadow-inner'>
+                  <FaRegNewspaper className='text-2xl mr-2' />
                   {homepageTranslate("latest_update")}
                 </div>
                 <Marquee pauseOnHover={true} gradient={false} className="tracking-wider text-blue-900">
@@ -188,28 +188,28 @@ export default function Home() {
 
             <div className={`${!currentElection && "hidden"}`}>
               <div className='countdown_timer py-4 my-3 min-h-[320px] sm:h-fit bg-[url("https://t4.ftcdn.net/jpg/02/83/57/05/360_F_283570582_3J78GC9E5OesLLgG5lUkQLGEoyN2ijmc.jpg")] rounded-1 text-slate-100 flex flex-column items-center'>
-                <h3 className='my-4 mb-3 text-slate-300 text-center'>Election Nepal 2024 Happening</h3>
+                <h3 className='my-4 mb-3 text-slate-300 text-md text-center'>{homepageTranslate("countdown_title")}</h3>
                 <div className='flex justify-evenly flex-wrap lg:w-[70vw] mt-3'>
                   <div className='days lg:w-[140px] sm:w-[100px] mx-3 text-center'>
-                    <h5 className='my-3 text-slate-300'>DAYS</h5>
+                    <h5 className='my-3 text-slate-300'>{homepageTranslate("countdown_days")}</h5>
                     <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-6xl bg-[url("https://t3.ftcdn.net/jpg/03/05/45/96/240_F_305459609_qqNT6Sk6DZGhcEexcAbs9xfq2iI3yl2e.jpg")] card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
                       <div className={`animate__animated ${timer.id === "days" && timer.play && "animate__slideInUp"}`}>{countDown.days}</div>
                     </div>
                   </div>
                   <div className='days lg:w-[140px] sm:w-[100px] mx-3 text-center'>
-                    <h5 className='my-3 text-slate-300'>HOURSE</h5>
+                    <h5 className='my-3 text-slate-300'>{homepageTranslate("countdown_hours")}</h5>
                     <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-6xl bg-[url("https://t3.ftcdn.net/jpg/03/05/45/96/240_F_305459609_qqNT6Sk6DZGhcEexcAbs9xfq2iI3yl2e.jpg")] card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
                       <div className={`animate__animated ${timer.id === "hours" && timer.play && "animate__slideInUp"}`}>{countDown.hours}</div>
                     </div>
                   </div>
                   <div className='days lg:w-[140px] sm:w-[100px] mx-3 text-center'>
-                    <h5 className='my-3 text-slate-300'>MINUTES</h5>
+                    <h5 className='my-3 text-slate-300'>{homepageTranslate("countdown_minutes")}</h5>
                     <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-6xl bg-[url("https://t3.ftcdn.net/jpg/03/05/45/96/240_F_305459609_qqNT6Sk6DZGhcEexcAbs9xfq2iI3yl2e.jpg")] card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
                       <div className={`animate__animated ${timer.id === "minutes" && timer.play && "animate__slideInUp"}`}>{countDown.minutes}</div>
                     </div>
                   </div>
                   <div className='days lg:w-[140px] sm:w-[100px] mx-3 text-center'>
-                    <h5 className='my-3 text-slate-300'>SECONDS</h5>
+                    <h5 className='my-3 text-slate-300'>{homepageTranslate("countdown_seconds")}</h5>
                     <div className='px-0 lg:py-[10px] sm:py-2 lg:text-8xl sm:text-6xl bg-[url("https://t3.ftcdn.net/jpg/03/05/45/96/240_F_305459609_qqNT6Sk6DZGhcEexcAbs9xfq2iI3yl2e.jpg")] card__box__shadow rounded-1 countdown_timer_count overflow-hidden'>
                       <div className={`animate__animated ${timer.id === "seconds" && timer.play && "animate__slideInUp"}`}>{countDown.seconds}</div>
                     </div>
@@ -219,7 +219,7 @@ export default function Home() {
             </div>
 
             <div className='my-5 sm:px-2 xsm:px-2'>
-              <h4 className='font-bold min-sm:text-3xl xsm:text-[16px]'>{homepageTranslate("election_gallery")}</h4>
+              <h4 className='font-bold text-md'>{homepageTranslate("election_gallery")}</h4>
               <div className='flex lg:justify-between md:justify-between flex-wrap sm:justify-center'>
                 {electionLists?.length === 0 && <span className='ml-2'>{homepageTranslate("no_election_found")}</span>}
                 {
@@ -238,9 +238,9 @@ export default function Home() {
 
             <div className='my-4 sm:px-3 mb-3 lg:h-[400px] sm:h-fit xsm:px-2'>
               <div className='flex justify-between items-center py-3'>
-                <h5 className='font-bold mt-2 min-sm:text-3xl xsm:text-[16px]'>{homepageTranslate("overall_election_data")}</h5>
+                <h4 className='font-bold mt-2 text-md'>{homepageTranslate("overall_election_data")}</h4>
                 <Select
-                  className='min-sm:text-3xl xsm:text-[14px]'
+                  className='text-md'
                   options={translateProvinceOptions}
                   placeholder={homepageTranslate("selecte_province_placeholder")}
                   onChange={handleOverviewCountSort} />
