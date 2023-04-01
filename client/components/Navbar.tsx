@@ -37,7 +37,7 @@ const Navbar: React.FC = (): ReactElement => {
   const [isAdminAddress, setIsAdminAddress] = useState(false);
   const [translatedLanguageOptions, setTranslateLanguageOptions] = useState([]);
   const [politicalItems, setPoliticalItems] = useState([...sub_navbar_items.politicalItems]);
-  const [currentLanguage, setCurrentLanguage] = useState(t(LANGUAGES[0].value));
+  const [currentLanguage, setCurrentLanguage] = useState(t(getStorage("lang") ?? "en"));
 
 
   const router = useRouter();
@@ -47,10 +47,10 @@ const Navbar: React.FC = (): ReactElement => {
   // on mount
   useEffect(() => {
     const lngCode = getStorage("lang");
-    const translatedOptions = LANGUAGES.map((langugage: any) => ({ label: t(langugage.value), value: langugage.value }))
+    const translatedOptions = _.uniqBy(LANGUAGES.map((langugage: any) => ({ label: t(langugage.value), value: langugage.value })), "value")
 
     if (lngCode) {
-      setCurrentLanguage(translatedOptions.find(option => option.value === lngCode).label);
+      setCurrentLanguage(translatedOptions?.find(option => option.value === lngCode)?.label);
     } else setStorage("lang", "en");
 
     if (window.ethereum) {
