@@ -9,9 +9,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react';
 import { getCookieValue } from '../services';
+import FullPageLoader from '../components/FullPageLoader';
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [langFiles, setLangFiles] = useState({});
+  const [langFiles, setLangFiles] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -24,11 +25,17 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      <ToastContainer></ToastContainer>
-      <NextIntlProvider messages={langFiles}>
-        <Component {...pageProps} />
-      </NextIntlProvider>
-      <Analytics />
+      {!langFiles ? <FullPageLoader /> :
+        (
+          <>
+            <ToastContainer></ToastContainer>
+            <NextIntlProvider messages={langFiles}>
+              <Component {...pageProps} />
+            </NextIntlProvider>
+            <Analytics />
+          </>
+        )
+      }
     </Provider>
   )
 }
