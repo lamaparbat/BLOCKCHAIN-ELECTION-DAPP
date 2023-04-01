@@ -210,7 +210,7 @@ const Navbar: React.FC = (): ReactElement => {
             <h4 className='lg:text-3xl sm:text-2xl'>{t("title")}</h4>
             <h6 className='lg:text-lg sm:text-lg'>{t("location")}</h6>
           </div>
-          <Image className='sm:p-1' src='/images/flag.png' height={40} width={50} alt="nepal-flag" />
+          <Image className='sm:p-1' src='/images/animateFlag.gif' height={40} width={50} alt="nepal-flag" />
         </div>
       </div>
 
