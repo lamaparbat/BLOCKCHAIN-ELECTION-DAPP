@@ -5,8 +5,16 @@ const { uploadFileToFirebaseStorage } = require("../../../domain/services/index"
 
 const uploadFile = async (req: Request, res: Response) => {
   try {
-    const firebaseStorageResponse = await uploadFileToFirebaseStorage(UPLOAD_FOLDER_PATH, req?.file?.filename, "uploads");
-    const imgHostedURL = firebaseStorageResponse[0]?.metadata?.mediaLink;
+    const arr = req?.files as Express.Multer.File[];
+
+    const promises = arr.map(async (d: any) => {
+      const firebaseStorageResponse = await uploadFileToFirebaseStorage(UPLOAD_FOLDER_PATH, d.filename, "uploads");
+
+      return firebaseStorageResponse[0]?.metadata?.mediaLink;
+    });
+
+    const imgHostedURL = await Promise.all(promises);
+
     res.status(200).send({
       message: "File uploaded successfully",
       url: imgHostedURL,
@@ -16,6 +24,7 @@ const uploadFile = async (req: Request, res: Response) => {
     console.error(error)
     res.status(500).send({
       message: "Internal Server Error.",
+      url: null,
       statusCode: 500
     });
   }

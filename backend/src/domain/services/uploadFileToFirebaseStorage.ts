@@ -2,6 +2,7 @@ const { firebaseStorageRef } = require("../../infrastructure/index");
 const { v4: uuidv4 } = require("uuid");
 
 module.exports = async (path: string, filename: string, storageName: string): Promise<Object> => {
+  console.log({ path, filename, storageName })
   try {
     return await firebaseStorageRef.upload(path + filename, {
       public: true,
