@@ -28,7 +28,9 @@
     "district_election": "District election",
     "local_election": "Local election",
     "gmail": "Gmail",
-    "search": "Search"
+    "search": "Search",
+    "en": "ENGLISH",
+    "ne": "NEPALI"
   },
   "homepage": {
     "latest_update": "Latest Update",
@@ -40,6 +42,46 @@
     "female_voters": "Female Voters",
     "others": "Others",
     "total_election": "Total Election",
-    "total_parties": "Total Parties"
+    "total_parties": "Total Parties",
+    "province1": "Province 1",
+    "province2": "Madhesh Province",
+    "province3": "Bagmati Province",
+    "province4": "Gandaki Province",
+    "province5": "Lumbini Province",
+    "province6": "Karnali Province",
+    "province7": "Sudurpashchim Province",
+    "selecte_province_placeholder": "Select province"
+  },
+  "constitutional_provision": {
+    "constitutional_provision": "Constitutional Provision",
+    "description1": "Election Commission of Nepal is a constitutional Election Management Body in Nepal. Constitution of Nepal has made arrangements about the Election Commission in Section 24, article 245 to 247. The constitution has embraced the competitive multiparty democratic system, adult franchise and periodic elections as fundamental guiding principles of democracy. Depending on the constitutional provisions, the Commission has the responsibility to conduct the elections of different tires – federal, provincial and local bodies – as per the stipulated electoral systems.",
+    "election_commission": "Election Commission",
+    "description2_point1": "1. There shall be an Election Commission in Nepal consisting of a Chief Election Commissioner and four other Election Commissioners. The Chief Election Commissioner shall act as the Chairperson of the Election Commission.",
+    "description2_point2": "2. The President shall, on the recommendation of the Constitutional Council, appoint the Chief Election Commissioner and the Election Commissioners.",
+    "description2_point3": "3. The term of office of the Chief Election Commissioner and the Election Commissioners shall be six years from the date of appointment.",
+    "description3_point4": "4. Notwithstanding anything mentioned in Clause (3), the office of the Chief Election Commissioner and Election Commissioner shall be deemed vacant in the following circumstances:",
+    "description4_point4_a": "a. if she/he submits a written resignation to the President",
+    "description4_point4_b": "b. if she/he attains the age of sixty-five,",
+    "description4_point4_c": "c. if a resolution of impeachment is passed against her/him as per Article 101,",
+    "description4_point4_d": "d. If she/he is removed by the President on the recommendation of Constitutional Council for being unable to discharge the duties of her/his office due to physical or mental illness.",
+    "description4_point4_e": "e. if she/he dies.",
+    "description5": "5. The Chief Commissioner and commissioner appointed pursuant to clause (2) shall not be eligible for reappointment.",
+    "description6": "6. Provided that nothing in this Clause shall be deemed to be a bar to the appointment of a commissioner of the Election Commission as Chief Commissioner thereof, and when a Commissioner is so appointed as the Chief Commissioner, her/his term of office shall be computed so as to include her/his tenure as Commissioner as well.",
+    "description7": "7. Any person who possesses the following qualifications is eligible to be appointed as the Chief Election Commissioner or an Election Commissioner:-",
+    "description7_point1": "a. holds a Bachelor's Degree from a recognized university,",
+    "description7_point2": "b. is not a member of any political party immediately before the appointment;",
+    "description7_point3": "c. has attained the age of forty five, and",
+    "description7_point4": "d. possesses high moral character.",
+    "description8": "8. The remuneration and other conditions of service of the Chief Election Commissioner and the Election Commissioners shall be as determined by law. The remuneration and other conditions of service of the Chief Election Commissioner and the Election Commissioners shall not, so long as they hold office, be altered to their disadvantage.",
+    "description8_a": "A person who has been the Chief Election Commissioner or the Election Commissioner shall not be eligible for appointment in other Government Services.",
+    "description8_b": "Provided that, nothing in this Clause shall be deemed to be a bar to the appointment to any political position or to any position which has the responsibility of making investigations, inquiries or findings on any subject, or to any position which has the responsibility of submitting advice, opinion or recommendation after carrying out a study or research on any subject.",
+    "function_duties_power": "Functions duties and, powers of Election Commission",
+    "description9": "1. The Election Commission shall, subject to this Constitution and other laws, conduct, supervise, direct and control the election of the President, the Vice-President, Federal Parliament, Provincial assemblies, and local bodies. The Election Commission shall be responsible for preparing the voters’ list for the purpose of election.",
+    "description10": "2. The Election Commission shall hold referendum on subject of national importance as per this Constitution and Federal laws.",
+    "description11": "3. If candidacy nominations have been registered for the election of the President, the Vice-President, the member of Federal Parliament and Provincial Assembly but a question arises before the completion of the election about the illegitimacy of a candidate, a final decision thereon shall be made by the Election Commission.",
+    "description12": "4. The Election Commission may delegate any of its functions, duties and powers to the Chief Election Commissioner, Election Commissioner or any employee of the Government of Nepal to be exercised and followed in compliance with the conditions specified.",
+    "description13": "5. Other functions, duties and powers and working procedures of the Election Commission shall be as regulated by law.",
+    "neccessary_cooperation": "Necessary Cooperation to be Extended",
+    "description14": "The Government of Nepal, provincial government and local government shall provide necessary employees and extend other cooperation as may be required to perform the functions of the Election Commission in accordance with this Constitution."
   }
 }

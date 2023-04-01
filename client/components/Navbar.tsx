@@ -11,8 +11,7 @@ import ElectionModal from './ElectionModal';
 import Avatar from './Avatar';
 import { isAdmin } from '../utils/web3';
 import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style, METAMASK_EXT_LINK, ADMIN_ROUTES } from '../constants/index';
-import { LanguageStruct } from '../interfaces';
-import { getStorage, setStorage, setCookie, getCookieValue } from '../services';
+import { getStorage, setStorage, setCookie } from '../services';
 import Dropdown from './Dropdown';
 import MarqueeBar from './MarqueeBar';
 import SearchModal from './SearchModal';
@@ -23,6 +22,8 @@ import { useTranslations } from 'next-intl';
 declare var window: any;
 
 const Navbar: React.FC = (): ReactElement => {
+  const t = useTranslations("navbar");
+
   const [openVerticalNavbar, setOpenVerticalNavbar] = useState(false);
   const [openTopVerticalNavbar, setOpenTopVerticalNavbar] = useState(false);
   const [showCreateElectionModal, setShowCreateElectionModal] = useState(false);
@@ -34,27 +35,31 @@ const Navbar: React.FC = (): ReactElement => {
   const [isAddressCopied, setIsAddressCopied] = useState(false);
   const [isEthereumEnabled, setIsEthereumEnabled] = useState(false);
   const [isAdminAddress, setIsAdminAddress] = useState(false);
+  const [translatedLanguageOptions, setTranslateLanguageOptions] = useState([]);
   const [politicalItems, setPoliticalItems] = useState([...sub_navbar_items.politicalItems]);
-  const [currentLanguage, setCurrentLanguage] = useState("en");
+  const [currentLanguage, setCurrentLanguage] = useState(t(LANGUAGES[0].value));
 
 
   const router = useRouter();
   const dispatch = useDispatch();
   const electionData = useSelector((state: any) => state?.electionReducer);
-  const t = useTranslations("navbar");
 
   // on mount
   useEffect(() => {
-    const lngCode = getCookieValue(document.cookie, "lang");
+    const lngCode = getStorage("lang");
+    const translatedOptions = LANGUAGES.map((langugage: any) => ({ label: t(langugage.value), value: langugage.value }))
+
     if (lngCode) {
-      setCurrentLanguage(lngCode)
-    } else setCookie("lang", "en");
+      setCurrentLanguage(translatedOptions.find(option => option.value === lngCode).label);
+    } else setStorage("lang", "en");
 
     if (window.ethereum) {
       setLoggedInAccountAddress(getStorage("loggedInAccountAddress"));
 
       window.ethereum.enable().then(handleLogin);
     }
+    translatedOptions.map((d) => console.log(d.label, currentLanguage))
+    setTranslateLanguageOptions(translatedOptions.filter((d) => d.label != currentLanguage))
     setIsEthereumEnabled(window.ethereum);
   }, [])
 
@@ -71,10 +76,11 @@ const Navbar: React.FC = (): ReactElement => {
     setOpenProfileDropdown(!openProfileDropdown)
   }
 
-  const onLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    const val: LanguageStruct | undefined = _.find(LANGUAGES, { value: e.target.value });
+  const onLanguageChange = (value: string): void => {
+    const key = translatedLanguageOptions.find((language: any) => language.label === value)?.value;
+    setStorage("lang", key);
+    setCurrentLanguage(t(key));
 
-    setCookie("lang", e.target.value);
     router.reload();
   };
 
@@ -143,9 +149,12 @@ const Navbar: React.FC = (): ReactElement => {
           <div className={`px-4 pt-3 pb-4 w-[220px] h-[240px] bg-slate-100 absolute rounded-b-[5px] text-slate-600 text-[16px]`}>
             {isAdminAddress && <div onClick={() => navigate("/")}>{t("create_election")}</div>}
             <div className="my-[18px]" onClick={() => navigate("/FAQ")}>{t("faq")}</div>
-            <select className='form-control py-1 cursor-pointer hover:opacity-70 outline-0 ' onChange={onLanguageChange} id="lngSelectField">
-              <option value={currentLanguage} selected>{LANGUAGES.find(d => d.value === currentLanguage)?.label}</option>
-              {LANGUAGES.map((d, i) => <option className='text-[14px]' key={i} value={d.value}>{d.label}</option>)}
+            <select
+              className='form-control py-1 cursor-pointer hover:opacity-70 outline-0 '
+              onChange={(e: any) => onLanguageChange(e.target.value)}
+            >
+              <option defaultValue={currentLanguage} selected>{currentLanguage}</option>
+              {translatedLanguageOptions.map((d, i) => <option className='text-[14px]' key={i}>{d.label}</option>)}
             </select>
             <div className='my-[18px] cursor-pointer hover:opacity-70 flex items-center' onClick={() => navigate("mail")}>{t("gmail")} <AiOutlineMail className='text-lg ml-3' /></div>
             <div
@@ -161,11 +170,13 @@ const Navbar: React.FC = (): ReactElement => {
         <div className='items w-[700px] justify-end items-center text-slate-600 lg:flex sm:hidden xsm:hidden'>
           {isAdminAddress && <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={onCreateElection}>{t("create_election")}</span>}
           <span className='px-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/voter-education/voter-faqs")}>{t("faq")}</span>
-          <select className='mx-4 text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0' onChange={onLanguageChange} id="lngSelectField">
-            <option value={currentLanguage} selected>{LANGUAGES.find(d => d.value === currentLanguage)?.label}</option>
-            {LANGUAGES.map((d, i) => {
-              if (d.value === currentLanguage) return;
-              return (<option key={i} value={d.value}>{d.label}</option>)
+          <select
+            className='mx-4 text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0'
+            onChange={(e: any) => onLanguageChange(e.target.value)}
+          >
+            <option defaultValue={currentLanguage} selected>{currentLanguage}</option>
+            {translatedLanguageOptions.map((d, i) => {
+              return (<option key={i}>{d.label}</option>)
             })}
           </select>
           <span className='px-4 cursor-pointer hover:opacity-70 border-r-2 border-slate-400 border-l-2 border-slate-400' onClick={() => navigate("mail")}><AiOutlineMail className='text-lg' /></span>
@@ -245,7 +256,7 @@ const Navbar: React.FC = (): ReactElement => {
       </div>
       <ElectionModal show={showCreateElectionModal} setShowCreateElectionModal={setShowCreateElectionModal} />
       <SearchModal show={isSearchModalOpen} setOpenSearchModal={setOpenSearchModal} />
-    </div>
+    </div >
   )
 }
 

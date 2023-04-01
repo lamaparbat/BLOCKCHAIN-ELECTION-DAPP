@@ -8,7 +8,7 @@ import '../styles/globals.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react';
-import { getCookieValue } from '../services';
+import { getStorage, setStorage } from '../services';
 import FullPageLoader from '../components/FullPageLoader';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -16,10 +16,18 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     (async () => {
-      const currentLanguage = getCookieValue(document.cookie, "lang");
+      let currentLanguage = getStorage("lang");
+
+      if (!(currentLanguage === "en" || currentLanguage === "ne")) {
+        currentLanguage = "en";
+        setStorage("lang", currentLanguage)
+      }
+
       const langFiles = (await import(`../constants/locales/${currentLanguage ?? 'en'}.json`)).default;
 
-      setLangFiles(langFiles);
+      setTimeout(() => {
+        setLangFiles(langFiles);
+      }, 1000)
     })();
   }, []);
 
