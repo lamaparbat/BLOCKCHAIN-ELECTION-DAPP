@@ -19,7 +19,6 @@ import SearchModal from './SearchModal';
 import { trimAddress } from '../utils';
 import { setLoggedInAddress } from '../redux/reducers/loggedInUserReducer';
 import { useTranslations } from 'next-intl';
-import { GetServerSidePropsContext } from 'next';
 
 declare var window: any;
 
@@ -145,20 +144,21 @@ const Navbar: React.FC = (): ReactElement => {
             {isAdminAddress && <div onClick={() => navigate("/")}>{t("create_election")}</div>}
             <div className="my-[18px]" onClick={() => navigate("/FAQ")}>{t("faq")}</div>
             <select className='form-control py-1 cursor-pointer hover:opacity-70 outline-0 ' onChange={onLanguageChange} id="lngSelectField">
+              <option value={currentLanguage} selected>{LANGUAGES.find(d => d.value === currentLanguage)?.label}</option>
               {LANGUAGES.map((d, i) => <option className='text-[14px]' key={i} value={d.value}>{d.label}</option>)}
             </select>
-            <div className='my-[18px] cursor-pointer hover:opacity-70 flex items-center' onClick={() => navigate("mail")}>Gmail <AiOutlineMail className='text-lg ml-3' /></div>
+            <div className='my-[18px] cursor-pointer hover:opacity-70 flex items-center' onClick={() => navigate("mail")}>{t("gmail")} <AiOutlineMail className='text-lg ml-3' /></div>
             <div
               className='cursor-pointer hover:opacity-70 flex items-center'
               onClick={openSearchModal}
-            >Search <AiOutlineSearch className='text-xl ml-3' />
+            >{t("search")} <AiOutlineSearch className='text-xl ml-3' />
             </div>
           </div>
         </div>
 
 
         {/*  */}
-        <div className='items w-[700px] justify-end items-center text-slate-600 lg:flex sm:hidden'>
+        <div className='items w-[700px] justify-end items-center text-slate-600 lg:flex sm:hidden xsm:hidden'>
           {isAdminAddress && <span className='pr-5 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={onCreateElection}>{t("create_election")}</span>}
           <span className='px-4 text-sm cursor-pointer hover:opacity-70 border-r-2 border-slate-400' onClick={() => navigate("/voter-education/voter-faqs")}>{t("faq")}</span>
           <select className='mx-4 text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0' onChange={onLanguageChange} id="lngSelectField">
@@ -210,7 +210,7 @@ const Navbar: React.FC = (): ReactElement => {
             <h4 className='lg:text-3xl sm:text-2xl'>{t("title")}</h4>
             <h6 className='lg:text-lg sm:text-lg'>{t("location")}</h6>
           </div>
-          <Image className='sm:p-1' src='/images/flag.png' height={40} width={50} alt="nepal-flag" />
+          <Image className='sm:p-1' src='/images/animateFlag.gif' height={40} width={50} alt="nepal-flag" />
         </div>
       </div>
 
@@ -224,7 +224,7 @@ const Navbar: React.FC = (): ReactElement => {
           <GiHamburgerMenu className='text-white text-lg cursor-pointer ml-3' />
         </div>
 
-        <div className={`${sub_navbar_style} ${responsive} lg:flex sm:hidden text-slate-200`}>
+        <div className={`${sub_navbar_style} ${responsive} lg:flex sm:hidden xsm:hidden text-slate-200`}>
           <div onClick={() => navigate("/")}>{t("home")}</div>
           <div><Dropdown title={t("about_us")} items={sub_navbar_items.aboutItems} /></div>
           <div><Dropdown title={t("electoral_framework")} items={sub_navbar_items.electoralItems} /></div>

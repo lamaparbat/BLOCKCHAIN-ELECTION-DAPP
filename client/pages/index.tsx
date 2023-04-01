@@ -215,7 +215,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='my-5 sm:px-2'>
+            <div className='my-5 sm:px-2 xsm:px-2'>
               <h4 className='font-bold'>{t("election_gallery")}</h4>
               <div className='flex lg:justify-between md:justify-between flex-wrap sm:justify-center'>
                 {electionLists?.length === 0 && <span className='ml-2'>{t("no_election_found")}</span>}
@@ -233,7 +233,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='my-4 sm:px-2 mb-3 lg:h-[400px] sm:h-fit'>
+            <div className='my-4 sm:px-3 mb-3 lg:h-[400px] sm:h-fit xsm:px-2'>
               <div className='flex justify-between items-center py-3'>
                 <h5 className='font-bold mb-3'>{t("overall_election_data")}</h5>
                 <Select
@@ -242,7 +242,7 @@ export default function Home() {
                   placeholder="Select province"
                   onChange={handleOverviewCountSort} />
               </div>
-              <div className='w-full flex justify-between sm:flex-wrap'>
+              <div className='w-full flex justify-between sm:flex-wrap xsm:flex-wrap'>
                 <ElectionUserCard label={t("total_voters")} value={totalDataCount.voters} Icon={<BiGroup className='text-4xl text-blue-900' />} />
                 <ElectionUserCard label={t("male_voters")} value={totalDataCount.maleVoters} Icon={<BiMale className='text-4xl text-blue-900' />} />
                 <ElectionUserCard label={t("female_voters")} value={totalDataCount.femaleVoters} Icon={<BiFemale className='text-4xl text-blue-900' />} />
