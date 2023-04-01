@@ -161,8 +161,8 @@ export default function Home() {
           <div className='lg:w-[1065px] w-[100vw] overflow-hidden'>
             <div className='flex items-center'>
               <div className='w-full flex'>
-                <div className='shrink-0 w-[170px] px-3 py-[5px] flex items-center bg-red-600 rounded-tr-[10px] text-slate-100 shadow-inner'>
-                  <FaRegNewspaper className='text-2xl mr-2' />
+                <div className='shrink-0 min-sm:w-[170px] xsm:w-[150px] px-3 py-[5px] flex items-center bg-red-600 rounded-tr-[10px] text-slate-100 min-sm:text-3xl xsm:text-[14px] shadow-inner'>
+                  <FaRegNewspaper className='min-sm:text-2xl xsm:text-[16px] mr-2' />
                   {homepageTranslate("latest_update")}
                 </div>
                 <Marquee pauseOnHover={true} gradient={false} className="tracking-wider text-blue-900">
@@ -219,7 +219,7 @@ export default function Home() {
             </div>
 
             <div className='my-5 sm:px-2 xsm:px-2'>
-              <h4 className='font-bold'>{homepageTranslate("election_gallery")}</h4>
+              <h4 className='font-bold min-sm:text-3xl xsm:text-[16px]'>{homepageTranslate("election_gallery")}</h4>
               <div className='flex lg:justify-between md:justify-between flex-wrap sm:justify-center'>
                 {electionLists?.length === 0 && <span className='ml-2'>{homepageTranslate("no_election_found")}</span>}
                 {
@@ -238,9 +238,9 @@ export default function Home() {
 
             <div className='my-4 sm:px-3 mb-3 lg:h-[400px] sm:h-fit xsm:px-2'>
               <div className='flex justify-between items-center py-3'>
-                <h5 className='font-bold mb-3'>{homepageTranslate("overall_election_data")}</h5>
+                <h5 className='font-bold mt-2 min-sm:text-3xl xsm:text-[16px]'>{homepageTranslate("overall_election_data")}</h5>
                 <Select
-                  className=''
+                  className='min-sm:text-3xl xsm:text-[14px]'
                   options={translateProvinceOptions}
                   placeholder={homepageTranslate("selecte_province_placeholder")}
                   onChange={handleOverviewCountSort} />
