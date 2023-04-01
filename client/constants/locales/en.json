@@ -28,7 +28,9 @@
     "district_election": "District election",
     "local_election": "Local election",
     "gmail": "Gmail",
-    "search": "Search"
+    "search": "Search",
+    "en": "ENGLISH",
+    "ne": "NEPALI"
   },
   "homepage": {
     "latest_update": "Latest Update",
@@ -40,6 +42,14 @@
     "female_voters": "Female Voters",
     "others": "Others",
     "total_election": "Total Election",
-    "total_parties": "Total Parties"
+    "total_parties": "Total Parties",
+    "province1": "Province 1",
+    "province2": "Madhesh Province",
+    "province3": "Bagmati Province",
+    "province4": "Gandaki Province",
+    "province5": "Lumbini Province",
+    "province6": "Karnali Province",
+    "province7": "Sudurpashchim Province",
+    "selecte_province_placeholder": "Select province"
   }
 }
