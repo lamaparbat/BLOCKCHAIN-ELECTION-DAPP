@@ -58,7 +58,7 @@ const Navbar: React.FC = (): ReactElement => {
 
       window.ethereum.enable().then(handleLogin);
     }
-    translatedOptions.map((d) => console.log(d.label, currentLanguage))
+
     setTranslateLanguageOptions(translatedOptions.filter((d) => d.label != currentLanguage))
     setIsEthereumEnabled(window.ethereum);
   }, [])
