@@ -28,7 +28,9 @@
     "district_election": "जिल्ला निर्वाचन",
     "local_election": "स्थानीय निर्वाचन",
     "gmail": "जिमेल",
-    "search": "खोज्नुहोस्"
+    "search": "खोज्नुहोस्",
+    "en": "अंग्रेजी",
+    "ne": "नेपाली"
   },
   "homepage": {
     "latest_update": "ताजा अपडेटहरू",
@@ -40,6 +42,14 @@
     "female_voters": "महिला मतदाता",
     "others": "अन्य मतदाता",
     "total_election": "कुल निर्वाचन",
-    "total_parties": "कुल दलहरू"
+    "total_parties": "कुल दलहरू",
+    "province1": "प्रदेश १",
+    "province2": "मधेश प्रदेश",
+    "province3": "वाग्मती प्रदेश",
+    "province4": "गण्डकी प्रदेश",
+    "province5": "लुम्बिनी प्रदेश",
+    "province6": "कर्णाली प्रदेश",
+    "province7": "सुदूरपश्चिम प्रदेश",
+    "selecte_province_placeholder": "प्रदेश छनोट"
   }
 }
