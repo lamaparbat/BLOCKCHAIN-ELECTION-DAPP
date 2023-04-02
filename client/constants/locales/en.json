@@ -168,6 +168,13 @@
     "kailali": "Kailali",
     "kanchanpur": "Kanchanpur"
   },
+  "privacy": {
+    "title": "Privacy Policy",
+    "para1": "The ECN web App provides election related information and updates to users of this app. We do not collect, share, and use any personal information of user.",
+    "para2": "We ask for your information solely to provide you with your personal details as per the official ECN's voter details record. None of the information you provide are stored in our server, used for any purpose or shared with other organizations/entities.",
+    "para3": "If you have any queries regarding this policy, you can contact us by sending email at :",
+    "footer_title": "Election Commission, nepal"
+  },
   "election_gallery_card": {
     "held": "Held",
     "ended": "Ended",
