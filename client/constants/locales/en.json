@@ -180,5 +180,31 @@
     "ended": "Ended",
     "total_candidate": "Total Candidates",
     "total_vote": "Total Votes"
+  },
+  "electoral_framework": {
+    "title": "Electoral Framework Overview",
+    "item1": "Constitution of Nepal",
+    "item2": "Election Commission Act, 2017",
+    "item3": "Electoral Roll Act, 2017",
+    "item4": "Election (Offence and Punishment) Act, 2017",
+    "item5": "Political Party Registration Act,",
+    "item6": "Local Level Election Act, 2017",
+    "item7": "Other Rules and Directives"
+  },
+  "election_laws": {
+    "title": "Election Related Laws"
+  },
+  "voter": {
+    "title": "About Voter Registration eligibility",
+    "intro": "Voter registration is one of the main functions of the Commission. The registration is fully based on technology and biometrics. ECN has the following features for voter registration:",
+    "para1": "Voter registration is continuous throughout the year.",
+    "para2": "Nepalese citizen aged 16 or above can register their names in the voter roll in all the 77 District Election Offices and District Administration Offices and voter registration mobile teams as announced by the Commission. However, to be eligible voters, they have to be at the age of 18 or above.Citizenship certificate is required document for the registration,",
+    "para3": "Special registration programs are also conducted depending on the need assessment,",
+    "para4": "Name list of registered voters are integrated and de-duplicated in the central server in the ECN headquarters and segregated data is distributed to the District Election Offices,",
+    "para5": "The matured data, after undergoing all the processes including verification, claims and objection, is produced as the voter roll.",
+    "para6": "Voter's Identity Card is produced and distributed on the basis of the voter roll.",
+    "breadcumb1": "Home",
+    "breadcumb2": "Voter Education",
+    "breadcumb3": "Voter Eligibility"
   }
 }
