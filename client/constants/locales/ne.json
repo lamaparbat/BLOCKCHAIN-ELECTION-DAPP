@@ -206,5 +206,21 @@
     "breadcumb1": "होम",
     "breadcumb2": "मतदाता शिक्षा",
     "breadcumb3": "मतदाता योग्यता"
+  },
+  "voter_roll": {
+    "title": "मतदाता नामावली"
+  },
+  "sortComp": {
+    "sort": "क्रमबद्ध",
+    "address": "ठेगाना",
+    "result": "नतिजा",
+    "reset": "रिसेट",
+    "select_province": "प्रान्त छान्नुहोस्",
+    "select_district": "जिल्ला छान्नुहोस्",
+    "select_municipality": "नगरपालिका छान्नुहोस्",
+    "select_ward": "वार्ड चयन गर्नुहोस्",
+    "party": "पार्टी",
+    "select_party": "पार्टी छान्नुहोस्",
+    "cancel": "रद्द गर्नुहोस्"
   }
 }
