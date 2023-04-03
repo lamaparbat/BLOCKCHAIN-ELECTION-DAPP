@@ -8,6 +8,7 @@ import UserCard from '../../components/UserCard';
 import { getVoterList } from '../../utils';
 import { setCandidateList } from '../../redux/reducers/candidateReducer';
 import Sortbar from '../../components/Sortbar';
+import { useTranslations } from 'next-intl';
 
 let originalVoterList = [];
 let voterEvent: any = null;
@@ -18,6 +19,8 @@ const Details: React.FC = (): React.ReactElement => {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+  const voterT = useTranslations("voter");
+  const voterRollT = useTranslations("voter_roll");
 
   useEffect(() => {
     (async () => {
@@ -49,9 +52,9 @@ const Details: React.FC = (): React.ReactElement => {
       <Navbar /><br />
       <div className='w-full flex justify-center px-5'>
         <div className={`${responsive} flex-col justify-start rounded-1`}>
-          <BreadCrumb routes={["Voter Education", ["Voter Roll"]]} />
+          <BreadCrumb routes={[voterT("breadcumb2"), voterRollT("title")]} />
           <div className='flex items-center justify-between'>
-            <p className='text-2xl text-black mt-4'>Voter Roll</p>
+            <p className='text-2xl text-black mt-4'>{voterRollT("title")}</p>
             <Sortbar
               openSortModal={openSortModal}
               setOpenSortModal={setOpenSortModal}

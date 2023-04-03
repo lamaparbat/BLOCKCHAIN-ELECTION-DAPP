@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { useSelector } from 'react-redux';
 import BreadCrumb from '../../components/BreadCrumb';
@@ -8,14 +8,36 @@ import { registerVoter } from '../../utils/action';
 import { toast } from 'react-toastify';
 import { getConvertedAge, getFormattedErrorMessage } from '../../utils';
 import Head from 'next/head';
+import { useTranslations } from 'next-intl';
+
+const defaultOptions = { label: '', value: '' };
 
 const VoterRegistration = () => {
-  const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
+  const [translateProvinceOptions, setTranslateProvinceOptions] = useState([]);
+  const [districtProvinceOptions, setDistrictProvinceOptions] = useState([]);
+  const [municipalityOptions, setMunicipalityOptions] = useState([]);
+  const [selectedProvince, setSelectProvince] = useState(defaultOptions);
+  const [selectedDistrict, setSelectDistrict] = useState(defaultOptions);
+  const [selectedMunicipality, setSelectMunicipality] = useState(defaultOptions);
+  const [selectedWard, setSelectWard] = useState(defaultOptions);
   const [voterDetails, setVoterDetails] = useState({
     fullName: "", citizenshipNumber: "", province: "", district: "", municipality: "", ward: "",
     email: "", profileUrl: null, dob: null, gender: ""
   });
+
+
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
+  const voterT = useTranslations("voter");
+  const VoterRegistrationT = useTranslations("voter_registration");
+  const commonT = useTranslations("common");
+  const homepageTranslate = useTranslations("homepage");
+  const officesTranslate = useTranslations("election_offices");
+
+  useEffect(() => {
+    setTranslateProvinceOptions(PROVINCE.map((province: any) => ({ label: homepageTranslate(province.value), value: province.value })));
+    setDistrictProvinceOptions(DISTRICT[selectedProvince?.value]?.map((district: any) => ({ label: officesTranslate(district.value.toLowerCase()), value: district.value })));
+    setMunicipalityOptions(MUNICIPALITY[selectedDistrict?.value]?.map((municipality: any) => ({ label: officesTranslate(municipality.value.toLowerCase()), value: municipality.value })));
+  }, [selectedProvince, selectedDistrict])
 
   // upload voterDetails
   const onSubmit = async () => {
@@ -44,7 +66,7 @@ const VoterRegistration = () => {
       const age = getConvertedAge(dob);
 
       // age eligibility check
-      if(age < VOTE_ELIBILITY_AGE) return toast.error(`Voter age must be greater or equal to ${VOTE_ELIBILITY_AGE}`);
+      if (age < VOTE_ELIBILITY_AGE) return toast.error(`Voter age must be greater or equal to ${VOTE_ELIBILITY_AGE}`);
 
       await SmartContract.methods.addVoter(
         fullName,
@@ -77,45 +99,49 @@ const VoterRegistration = () => {
       <Navbar /><br />
       <div className='w-full flex justify-center'>
         <div className={`${responsive} flex justify-start rounded-1 px-2`}>
-          <BreadCrumb routes={["Voter Education", ["Voter Registration"]]} />
+          <BreadCrumb routes={[voterT("breadcumb2"), voterT("breadcumb4")]} />
         </div>
       </div><br /><br />
       <div className='w-full flex justify-center'>
         <div className={`px-5 pt-4 pb-5 w-[550px] h-fit flex-col justify-between rounded-[2px] flex-wrap text-[15px] bg-slate-100 shadow-sm`}>
-          <h4 className='mt-2 mb-4'>Fillup Details</h4>
+          <h4 className='mt-2 mb-4'>{VoterRegistrationT("form_title")}</h4>
           <div className='flex justify-between'>
             <div className='w-100 text-[15px]'>
-              <span>Full Name &nbsp; &nbsp;(Acc. to Citizenship)</span>
+              <span>{VoterRegistrationT("fullname_label")}</span>
               <input
                 className='overrideInputStyle form-control px-3 py-[10px] rounded-1 mt-1'
                 type="text"
-                placeholder="E.g  John Doe"
+                placeholder={commonT("uname_placeholder")}
                 onChange={(e) => setVoterDetails({ ...voterDetails, fullName: e.target.value })}
               />
             </div>
           </div>
           <div className='flex justify-between items-center mt-4'>
             <div className='w-[60%]'>
-              <span>Enter Citizenship Number</span>
+              <span>{VoterRegistrationT("citizenship_label")}</span>
               <input
                 className='overrideInputStyle form-control px-3 py-[10px] rounded-1 mt-1 shadow-none outline-0'
                 type="number"
-                placeholder="E.g  0054-2334"
+                placeholder={commonT("citizenship_placholder")}
                 onChange={(e) => setVoterDetails({ ...voterDetails, citizenshipNumber: e.target.value })}
               />
             </div>
             <div className='w-[35%]'>
-              <span>Select Gender</span>
-              <Select className='mt-1' options={GENDER_OPTIONS} onChange={(option) => setVoterDetails({ ...voterDetails, gender: option.value })} placeholder="Gender" />
+              <span>{VoterRegistrationT("gender_label")}</span>
+              <Select
+                className='mt-1'
+                options={GENDER_OPTIONS}
+                onChange={(option) => setVoterDetails({ ...voterDetails, gender: option.value })}
+                placeholder={commonT("gender_placeholder")} />
             </div>
           </div>
           <div className='flex justify-between my-4'>
             <div>
-              <span>Province</span>
+              <span>{VoterRegistrationT("province_label")}</span>
               <Select
-                options={PROVINCE}
+                options={translateProvinceOptions}
                 className="w-[220px] mr-2 mt-1"
-                placeholder={<div>Select Province</div>}
+                placeholder={<div>{commonT("province_placeholder")}</div>}
                 onChange={(item) => {
                   setSelectProvince(item);
                   setVoterDetails({ ...voterDetails, province: item.label })
@@ -123,13 +149,13 @@ const VoterRegistration = () => {
               />
             </div>
             <div>
-              <span>District</span>
+              <span>{VoterRegistrationT("district_label")}</span>
               <Select
-                options={DISTRICT[selectedProvince.value]}
+                options={districtProvinceOptions}
                 className="w-[220px] mt-1"
-                placeholder={<div>Select District</div>}
+                placeholder={<div>{commonT("district_placeholder")}</div>}
                 onChange={(item: any) => {
-                  setSelectProvince(item);
+                  setSelectDistrict(item);
                   setVoterDetails({ ...voterDetails, district: item.label })
                 }}
                 isDisabled={selectedProvince?.label ? false : true}
@@ -138,26 +164,26 @@ const VoterRegistration = () => {
           </div>
           <div className='flex justify-between'>
             <div>
-              <span>Municipality</span>
+              <span>{VoterRegistrationT("municipality_label")}</span>
               <Select
-                options={MUNICIPALITY[selectedProvince.value]}
+                options={municipalityOptions}
                 className="w-[220px] mr-2 mt-1"
-                placeholder={<div>Select Municipality</div>}
+                placeholder={<div>{commonT("municipality_placeholder")}</div>}
                 onChange={(item: any) => {
-                  setSelectProvince(item);
+                  setSelectMunicipality(item);
                   setVoterDetails({ ...voterDetails, municipality: item.label })
                 }}
                 isDisabled={voterDetails?.district ? false : true}
               />
             </div>
             <div>
-              <span>Ward Number</span>
+              <span>{VoterRegistrationT("ward_label")}</span>
               <Select
                 options={WARD_NO}
                 className="w-[220px] mt-1"
-                placeholder={<div>Select Ward</div>}
+                placeholder={<div>{commonT("ward_placeholder")}</div>}
                 onChange={(item: any) => {
-                  setSelectProvince(item);
+                  setSelectWard(item);
                   setVoterDetails({ ...voterDetails, ward: item.label })
                 }}
                 isDisabled={voterDetails?.municipality ? false : true}
@@ -166,7 +192,7 @@ const VoterRegistration = () => {
           </div>
           <div className='flex justify-between mt-4'>
             <div className='w-100'>
-              <span>DOB</span>
+              <span>{VoterRegistrationT("dob_label")}</span>
               <input
                 className='form-control shadow-none outline-0 font-monospace'
                 type="datetime-local"
@@ -176,7 +202,7 @@ const VoterRegistration = () => {
           </div>
           <div className='flex justify-between mt-4'>
             <div className='w-100'>
-              <span>Email Address</span>
+              <span>{VoterRegistrationT("email_label")}</span>
               <input
                 className='overrideInputStyle form-control py-[10px] rounded-1 mt-1'
                 type="email"
@@ -186,7 +212,7 @@ const VoterRegistration = () => {
           </div>
           <div className='flex justify-between mt-4'>
             <div className='w-100'>
-              <span>Choose Voter Photo</span>
+              <span>{VoterRegistrationT("photo_label")}</span>
               <input
                 className='overrideInputStyle form-control py-[10px] rounded-1 mt-1'
                 type="file"
@@ -197,7 +223,7 @@ const VoterRegistration = () => {
             </div>
           </div>
           <div className='flex justify-between mt-[30px] mb-1'>
-            <button className='bg-blue-900 text-light py-2 w-100 rounded-[5px] hover:opacity-75' onClick={onSubmit}>Register</button>
+            <button className='bg-blue-900 text-light py-2 w-100 rounded-[5px] hover:opacity-75' onClick={onSubmit}>{VoterRegistrationT("button_label")}</button>
           </div>
         </div>
       </div>

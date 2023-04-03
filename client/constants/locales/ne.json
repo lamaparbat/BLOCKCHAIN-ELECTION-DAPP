@@ -168,6 +168,67 @@
     "kailali": "कैलाली",
     "kanchanpur": "कंचनपुर"
   },
+  "municipality": {
+    "sakela": "Sakela Rural",
+    "khotehang": "Khotehang Rural",
+    "barahapokhari": "Barahapokhari Rural",
+    "ainselukhark": "Ainselukhark Rural",
+    "rawa besi": "Rawa Besi Rural",
+    "kepilasagadhi": "Kepilasagadhi Rural",
+    "jantedhunga": "Jantedhunga Rural",
+    "diprung chuichumma": "Diprung Chuichumma Rural",
+    "halesi tuwachung": "Halesi Tuwachung",
+    "diktel rupakot majhuwagadhi": "Diktel Rupakot Majhuwagadhi",
+    "jahada": "Jahada Rural Municipality",
+    "katahari": "Katahari Rural Municipality",
+    "gramthan": "Gramthan Rural Municipality",
+    "dhanpalthan": "Dhanpalthan Rural Municipality",
+    "kerabari": "Kerabari Rural Municipality",
+    "budhiganga": "Budhiganga Rural Municipality",
+    "kanepokhari": "Kanepokhari Rural Municipality",
+    "miklajung": "Miklajung Rural Municipality",
+    "letang": "Letang Municipality",
+    "sunwarshi": "Sunwarshi Municipality",
+    "rangeli": "Rangeli Municipality",
+    "patahrishanishchare": "Patahrishanishchare Municipality",
+    "biratnagar metropolitian city": "Biratnagar Metropolitian City",
+    "uralabari": "Uralabari Municipality",
+    "belbari": "Belbari Municipality",
+    "sundarharaicha": "Sundarharaicha Municipality",
+    "ratuwamai": "Ratuwamai Municipality",
+    "likhu": "Likhu Rural Municipality",
+    "molung": "Molung Rural Municipality",
+    "sunkoshi": "Sunkoshi Rural Municipality",
+    "champadevi": "Champadevi Rural Municipality",
+    "chisankhugadhi": "Chisankhugadhi Rural Municipality",
+    "khijidemba": "Khijidemba Rural Municipality",
+    "manebhanjyang": "Manebhanjyang Rural Municipality",
+    "siddhicharan": "Siddhicharan Municipality",
+    "yangwarak": "Yangwarak Rural Municipality",
+    "hilihang": "Hilihang Rural Municipality",
+    "tumbewa": "Tumbewa Rural Municipality",
+    "kummayak": "Kummayak Rural Municipality",
+    "falgunanda": "Falgunanda Rural Municipality",
+    "phidim": "Phidim Municipality",
+    "simle": "Simle Rural",
+    "jubitha": "Jubitha Rural",
+    "mandre": "Mandre Rural",
+    "pangma": "Pangma Rural",
+    "ghunsa": "Ghunsa Rural",
+    "yamphudin": "Yamphudin Rural",
+    "sidingwa": "Sidingwa Rural",
+    "thora": "Thora Rural",
+    "mangtewa": "Mangtewa Rural",
+    "lelep": "Lelep Rural",
+    "falelung": "Falelung Rural",
+    "phaktanglung": "Phaktanglung Rural",
+    "kadari": "Kadari Rural",
+    "lalikharka": "Lalikharka Rural",
+    "papung": "Papung Rural",
+    "yashok": "Yashok Rural",
+    "tapethok": "Tapethok Rural",
+    "omarbari": "Omarbari Rural"
+  },
   "privacy": {
     "title": "गोपनीयता नीति",
     "para1": "ECN वेब एपले यस एपका प्रयोगकर्ताहरूलाई चुनाव सम्बन्धी जानकारी र अद्यावधिकहरू प्रदान गर्दछ। हामी प्रयोगकर्ताको कुनै पनि व्यक्तिगत जानकारी सङ्कलन, साझेदारी र प्रयोग गर्दैनौं।",
@@ -205,6 +266,80 @@
     "para6": "मतदाता नामावलीको आधारमा मतदाता परिचयपत्र उत्पादन र वितरण गरिन्छ।",
     "breadcumb1": "होम",
     "breadcumb2": "मतदाता शिक्षा",
-    "breadcumb3": "मतदाता योग्यता"
+    "breadcumb3": "मतदाता योग्यता",
+    "breadcumb4": "मतदाता दर्ता"
+  },
+  "voter_roll": {
+    "title": "मतदाता नामावली"
+  },
+  "voter_registration": {
+    "title": "मतदाता दर्ता",
+    "form_title": "विवरण भर्नुहोस्",
+    "fullname_label": "पुरा नाम (नागरिकता अनुसार)",
+    "citizenship_label": "नागरिकता नम्बर प्रविष्ट गर्नुहोस्",
+    "gender_label": "लिङ्ग छान्नुहोस्",
+    "province_label": "प्रदेश",
+    "district_label": "जिल्ला",
+    "municipality_label": "नगरपालिका",
+    "ward_label": "वडा नम्बर",
+    "dob_label": "जन्म मिति",
+    "email_label": "इमेल ठेगाना",
+    "photo_label": "मतदाता फोटो छान्नुहोस्",
+    "button_label": "दर्ता गर्नुहोस्"
+  },
+  "candidate_registration": {
+    "title": "उम्मेदवार दर्ता",
+    "party_label": "दल",
+    "party_placeholder": "दल छान्नुहोस्",
+    "agenda_label": "एजेण्डा",
+    "register_btn": "दर्ता गर्नुहोस्",
+    "registering_label": "दर्ता हुँदै"
+  },
+  "party": {
+    "title": "पार्टी सूची",
+    "search_placeholder": "पार्टी खोज्नुहोस्"
+  },
+  "province_result": {
+    "title": "प्रदेश निर्वाचन",
+    "hot_seats": "तातो सिटहरू"
+  },
+  "district_result": {
+    "title": "जिल्ला निर्वाचन",
+    "hot_seats": "तातो सिटहरू"
+  },
+  "local_result": {
+    "title": "स्थानीय चुनाव",
+    "hot_seats": "तातो सिटहरू"
+  },
+  "sortComp": {
+    "sort": "क्रमबद्ध",
+    "address": "ठेगाना",
+    "result": "नतिजा",
+    "reset": "रिसेट",
+    "select_province": "प्रान्त छान्नुहोस्",
+    "select_district": "जिल्ला छान्नुहोस्",
+    "select_municipality": "नगरपालिका छान्नुहोस्",
+    "select_ward": "वार्ड चयन गर्नुहोस्",
+    "party": "पार्टी",
+    "select_party": "पार्टी छान्नुहोस्",
+    "cancel": "रद्द गर्नुहोस्"
+  },
+  "faq": {
+    "title": "धेरै पूछिएका प्रश्नहरू (FAQs)",
+    "accordian_title": "नयाँ प्रश्न थप्नुहोस्",
+    "title_placeholder": "शीर्षक",
+    "description_placeholder": "वर्णन",
+    "submit_btn": "पेश गर्नुहोस्",
+    "comment_title": "टिप्पणी",
+    "reply_placeholder": "आफ्नो राय जानकारी दिनुहोस्"
+  },
+  "common": {
+    "uname_placeholder": "जस्तै, जोन डो",
+    "citizenship_placholder": "जस्तै, ००५४-२३३४",
+    "gender_placeholder": "लिङ्ग",
+    "province_placeholder": "प्रदेश छान्नुहोस्",
+    "district_placeholder": "जिल्ला छान्नुहोस्",
+    "municipality_placeholder": "नगरपालिका छान्नुहोस्",
+    "ward_placeholder": "वडा छान्नुहोस्"
   }
 }
