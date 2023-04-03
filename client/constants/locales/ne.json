@@ -287,6 +287,7 @@
     "photo_label": "मतदाता फोटो छान्नुहोस्",
     "button_label": "दर्ता गर्नुहोस्"
   },
+<<<<<<< HEAD
   "candidate_registration": {
     "title": "उम्मेदवार दर्ता",
     "party_label": "दल",
@@ -311,6 +312,8 @@
     "title": "स्थानीय चुनाव",
     "hot_seats": "तातो सिटहरू"
   },
+=======
+>>>>>>> 202e7374bb10e6d77750518315e4537ef14063d8
   "sortComp": {
     "sort": "क्रमबद्ध",
     "address": "ठेगाना",

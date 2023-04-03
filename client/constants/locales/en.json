@@ -226,6 +226,7 @@
     "photo_label": "Choose Voter Photo",
     "button_label": "Register"
   },
+<<<<<<< HEAD
   "candidate_registration": {
     "title": "Candidate Registration",
     "party_label": "Party",
@@ -250,6 +251,8 @@
     "title": "Local Election",
     "hot_seats": "Hot seats"
   },
+=======
+>>>>>>> 202e7374bb10e6d77750518315e4537ef14063d8
   "sortComp": {
     "sort": "Sort",
     "address": "Address",

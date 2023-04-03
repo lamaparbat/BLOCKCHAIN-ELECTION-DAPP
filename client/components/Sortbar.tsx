@@ -25,6 +25,8 @@ const Sortbar = ({
   const homepageTranslate = useTranslations("homepage");
   const officesTranslate = useTranslations("election_offices");
 
+  const t = useTranslations("sortComp");
+
   useEffect(() => {
     (async () => {
       const partyList = await getPartyList();
