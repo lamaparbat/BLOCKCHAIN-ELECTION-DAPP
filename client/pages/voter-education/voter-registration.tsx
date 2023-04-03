@@ -9,11 +9,8 @@ import { toast } from 'react-toastify';
 import { getConvertedAge, getFormattedErrorMessage } from '../../utils';
 import Head from 'next/head';
 import { useTranslations } from 'next-intl';
-<<<<<<< HEAD
 
 const defaultOptions = { label: '', value: '' };
-=======
->>>>>>> 202e7374bb10e6d77750518315e4537ef14063d8
 
 const VoterRegistration = () => {
   const [translateProvinceOptions, setTranslateProvinceOptions] = useState([]);
@@ -28,15 +25,10 @@ const VoterRegistration = () => {
     email: "", profileUrl: null, dob: null, gender: ""
   });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 202e7374bb10e6d77750518315e4537ef14063d8
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
   const voterT = useTranslations("voter");
   const VoterRegistrationT = useTranslations("voter_registration");
   const commonT = useTranslations("common");
-<<<<<<< HEAD
   const homepageTranslate = useTranslations("homepage");
   const officesTranslate = useTranslations("election_offices");
 
@@ -45,8 +37,6 @@ const VoterRegistration = () => {
     setDistrictProvinceOptions(DISTRICT[selectedProvince?.value]?.map((district: any) => ({ label: officesTranslate(district.value.toLowerCase()), value: district.value })));
     setMunicipalityOptions(MUNICIPALITY[selectedDistrict?.value]?.map((municipality: any) => ({ label: officesTranslate(municipality.value.toLowerCase()), value: municipality.value })));
   }, [selectedProvince, selectedDistrict])
-=======
->>>>>>> 202e7374bb10e6d77750518315e4537ef14063d8
 
   // upload voterDetails
   const onSubmit = async () => {
