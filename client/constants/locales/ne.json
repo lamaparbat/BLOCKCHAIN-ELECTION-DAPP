@@ -205,10 +205,26 @@
     "para6": "मतदाता नामावलीको आधारमा मतदाता परिचयपत्र उत्पादन र वितरण गरिन्छ।",
     "breadcumb1": "होम",
     "breadcumb2": "मतदाता शिक्षा",
-    "breadcumb3": "मतदाता योग्यता"
+    "breadcumb3": "मतदाता योग्यता",
+    "breadcumb4": "मतदाता दर्ता"
   },
   "voter_roll": {
     "title": "मतदाता नामावली"
+  },
+  "voter_registration": {
+    "title": "मतदाता दर्ता",
+    "form_title": "विवरण भर्नुहोस्",
+    "fullname_label": "पुरा नाम (नागरिकता अनुसार)",
+    "citizenship_label": "नागरिकता नम्बर प्रविष्ट गर्नुहोस्",
+    "gender_label": "लिङ्ग छान्नुहोस्",
+    "province_label": "प्रदेश",
+    "district_label": "जिल्ला",
+    "municipality_label": "नगरपालिका",
+    "ward_label": "वडा नम्बर",
+    "dob_label": "जन्म मिति",
+    "email_label": "इमेल ठेगाना",
+    "photo_label": "मतदाता फोटो छान्नुहोस्",
+    "button_label": "दर्ता गर्नुहोस्"
   },
   "sortComp": {
     "sort": "क्रमबद्ध",
@@ -222,5 +238,23 @@
     "party": "पार्टी",
     "select_party": "पार्टी छान्नुहोस्",
     "cancel": "रद्द गर्नुहोस्"
+  },
+  "faq": {
+    "title": "धेरै पूछिएका प्रश्नहरू (FAQs)",
+    "accordian_title": "नयाँ प्रश्न थप्नुहोस्",
+    "title_placeholder": "शीर्षक",
+    "description_placeholder": "वर्णन",
+    "submit_btn": "पेश गर्नुहोस्",
+    "comment_title": "टिप्पणी",
+    "reply_placeholder": "आफ्नो राय जानकारी दिनुहोस्"
+  },
+  "common": {
+    "uname_placeholder": "जस्तै, जोन डो",
+    "citizenship_placholder": "जस्तै, ००५४-२३३४",
+    "gender_placeholder": "लिङ्ग",
+    "province_placeholder": "प्रदेश छान्नुहोस्",
+    "district_placeholder": "जिल्ला छान्नुहोस्",
+    "municipality_placeholder": "नगरपालिका छान्नुहोस्",
+    "ward_placeholder": "वडा छान्नुहोस्"
   }
 }
