@@ -206,5 +206,21 @@
     "breadcumb1": "Home",
     "breadcumb2": "Voter Education",
     "breadcumb3": "Voter Eligibility"
+  },
+  "voter_roll": {
+    "title": "Voter Roll"
+  },
+  "sortComp": {
+    "sort": "Sort",
+    "address": "Address",
+    "result": "Result",
+    "reset": "Reset",
+    "select_province": "Select Province",
+    "select_district": "Select District",
+    "select_municipality": "Select Municipality",
+    "select_ward": "Select Ward",
+    "party": "Party",
+    "select_party": "Select Party",
+    "cancel": "Cancel"
   }
 }
