@@ -4,6 +4,7 @@ import { BsFilter } from 'react-icons/bs';
 import Select from 'react-select';
 import { DISTRICT, MUNICIPALITY, PROVINCE, WARD_NO } from '../constants';
 import { getPartyList, getPartyListOptions } from '../utils';
+import { useTranslations } from 'next-intl';
 
 const defaultOptions = { label: '', value: '' };
 
@@ -16,6 +17,8 @@ const Sortbar = ({
   const [selectedMunicipality, setSelectMunicipality] = useState(defaultOptions);
   const [selectedWard, setSelectWard] = useState(defaultOptions);
   const [selectedParty, setSelectedParty] = useState(defaultOptions);
+
+  const t = useTranslations("sortComp");
 
   useEffect(() => {
     (async () => {
@@ -65,16 +68,16 @@ const Sortbar = ({
         className={`px-3 py-2 flex items-center rounded-[2px] ${openSortModal ? "bg-red-500 text-slate-100" : "bg-slate-100"} shadow-md hover:cursor-pointer hover:opacity-70`}
         onClick={() => setOpenSortModal(!openSortModal)}
       >
-        {!openSortModal ? <>Sort <BsFilter className='text-2xl ml-2' /></> :
-          <>Cancel <AiOutlineClose className='text-1xl ml-2' /></>}
+        {!openSortModal ? <>{t("sort")} <BsFilter className='text-2xl ml-2' /></> :
+          <>{t("cancel")} <AiOutlineClose className='text-1xl ml-2' /></>}
       </div>
       <div className={`absolute px-3 py-2 flex flex-column bg-white shadow-lg mt-3 w-[500px] -ml-[400px] z-50 ${!openSortModal && "hidden"}`}>
-        <h5 className='mt-3 mb-3'>Address</h5>
+        <h5 className='mt-3 mb-3'>{t("address")}</h5>
         <div className='flex'>
           <Select
             options={PROVINCE}
             className="w-50"
-            placeholder={<div>Select Province</div>}
+            placeholder={<div>{t("select_province")}</div>}
             onChange={(item) => {
               setSelectProvince(item);
             }}
@@ -82,7 +85,7 @@ const Sortbar = ({
           <Select
             options={DISTRICT[selectedProvince?.value]}
             className="w-50 mx-2"
-            placeholder={<div>Select District</div>}
+            placeholder={<div>{t("select_district")}</div>}
             onChange={(item: any) => {
               setSelectDistrict(item);
             }}
@@ -93,7 +96,7 @@ const Sortbar = ({
           <Select
             options={MUNICIPALITY[selectedDistrict.value]}
             className="w-50"
-            placeholder={<div>Select Municip...</div>}
+            placeholder={<div>{t("select_municipality")}</div>}
             onChange={(item: any) => {
               setSelectMunicipality(item);
             }}
@@ -102,7 +105,7 @@ const Sortbar = ({
           <Select
             options={WARD_NO}
             className="w-50 mx-2"
-            placeholder={<div>Select Ward</div>}
+            placeholder={<div>{t("select_ward")}</div>}
             onChange={(item: any) => {
               setSelectWard(item);
             }}
@@ -125,12 +128,12 @@ const Sortbar = ({
           </>}
 
         <div className=' px-2 my-3 flex justify-between items-center'>
-          {openSortModal && <span>Result: {stateLists.length}</span>}
+          {openSortModal && <span>{t("result")}: {stateLists.length}</span>}
           <button
             className='px-2 py-1 rounded-1 bg-blue-900 shadow-md text-slate-200 flex items-center justify-center'
             onClick={resetSorting}
           >
-            Reset <AiOutlineReload className='ml-2' />
+            {t("reset")} <AiOutlineReload className='ml-2' />
           </button>
         </div>
       </div>
