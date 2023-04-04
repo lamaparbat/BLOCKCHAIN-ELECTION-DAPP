@@ -206,7 +206,9 @@
     "breadcumb1": "Home",
     "breadcumb2": "Voter Education",
     "breadcumb3": "Voter Eligibility",
-    "breadcumb4": "Voter Registration"
+    "breadcumb4": "Voter Registration",
+    "breadcumb5": "Candidate",
+    "breadcumb6": "List"
   },
   "voter_roll": {
     "title": "Voter Roll"
@@ -233,6 +235,10 @@
     "agenda_label": "Agenda",
     "register_btn": "Register",
     "registering_label": "Registering"
+  },
+  "candidate_roll":{
+    "title":"Candidate List",
+    "search_placeholder":"Search Canddiate"
   },
   "party": {
     "title": "Party List",
@@ -280,5 +286,49 @@
     "district_placeholder": "Select District",
     "municipality_placeholder": "Select Municipality",
     "ward_placeholder": "Select Ward"
+  },
+  "municipalities": {
+    "sakela": "Sakela Rural",
+    "jahada": "Jahada Rural Municipality",
+    "likhu": "Likhu Rural Municipality",
+    "yangwarak": "Yangwarak Rural Municipality",
+    "makalu": "Makalu Rural Municipality",
+    "sotang": "Sotang Rural Municipality",
+    "sidingba": "Sidingba Rural Municipality",
+    "chhathar": "Chhathar Rural Municipality",
+    "katari": "Katari municipality",
+    "lahan": "Lahan",
+    "aurahi": "Aurahi",
+    "birgunj": "Birgunj Metropolitan",
+    "janakpur": "Janakpur Sub Metropolitan City",
+    "kalaiya": "Kalaiya Sub– Metropolitan City",
+    "bodebarsain": "Bodebarsain Municipality",
+    "baudhimai": "Baudhimai Municipality",
+    "bagmati": "Bagmati Municipality",
+    "kamalamai": "Kamalamai",
+    "manthali": "Manthali Urban",
+    "bhimeswor": "Bhimeswor",
+    "changunarayan": "Changunarayan Urban",
+    "lalitpur": "Lalitpur Metropolitan",
+    "nilkantha": "Nilkantha Urban",
+    "shankharapur": "Shankharapur Urban",
+    "dhulikhel": "Dhulikhel",
+    "bidur": "Bidur Urban",
+    "naukunda": "Naukunda Rural",
+    "chautara": "Chautara Sangachokgadhi",
+    "hetauda": "Hetauda Sub-Metropolitan",
+    "bharatpur": "Bharatpur Metropolitan City",
+    "jaimini": "Jaimini Urban",
+    "gorkha": "Gorkha",
+    "pokhara": "Pokhara Metropolitan City",
+    "besisahar": "Besisahar",
+    "bhakra": "Bhakra",
+    "gharpajhong": "Gharpajhong Rural",
+    "beni": "Beni Nagarpalika Urban",
+    "bulingtar": "Bulingtar Rural",
+    "kapilvastu": "Kapilvastu",
+    "butwal": "Butwal Sub-Metropolitan",
+    "malarani": "Malarani Rural",
+    "kaligandaki": "Kaligandaki Rural"
   }
 }
