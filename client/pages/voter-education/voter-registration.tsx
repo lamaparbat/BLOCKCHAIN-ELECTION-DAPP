@@ -30,6 +30,7 @@ const VoterRegistration = () => {
   const homepageTranslate = useTranslations("homepage");
   const officesTranslate = useTranslations("election_offices");
   const municipalityT = useTranslations("municipalities");
+  const wardT = useTranslations("ward");
 
   useEffect(() => {
     setTranslateProvinceOptions(PROVINCE.map((province: any) => ({ label: homepageTranslate(province.value), value: province.value })));
@@ -176,7 +177,7 @@ const VoterRegistration = () => {
             <div>
               <span>{VoterRegistrationT("ward_label")}</span>
               <Select
-                options={WARD_NO}
+                options={WARD_NO.map((d) => ({ label: wardT(`w${d.label}`), value: d.value }))}
                 className="w-[220px] mt-1"
                 placeholder={<div>{commonT("ward_placeholder")}</div>}
                 onChange={(item: any) => {
