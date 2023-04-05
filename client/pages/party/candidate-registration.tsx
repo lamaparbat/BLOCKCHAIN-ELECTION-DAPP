@@ -11,8 +11,14 @@ import _ from 'lodash';
 import Head from 'next/head';
 import { useTranslations } from 'next-intl';
 
+const defaultOptions = { label: '', value: '' };
+
 const CandidateRegistration = () => {
-  const [selectedProvince, setSelectProvince] = useState({ label: '', value: '' });
+  const [translateProvinceOptions, setTranslateProvinceOptions] = useState([]);
+  const [districtProvinceOptions, setDistrictProvinceOptions] = useState([]);
+  const [municipalityOptions, setMunicipalityOptions] = useState([]);
+  const [selectedProvince, setSelectProvince] = useState(defaultOptions);
+  const [selectedDistrict, setSelectDistrict] = useState(defaultOptions);
   const [candidateLists, setCandidateLists] = useState([]);
   const [candidateDetails, setCandidateDetails] = useState({
     fullName: "", citizenshipNumber: "", province: "", district: "", municipality: "", ward: "",
@@ -24,11 +30,21 @@ const CandidateRegistration = () => {
   const voterT = useTranslations("voter_registration");
   const candidateT = useTranslations("candidate_registration");
   const commonT = useTranslations("common");
+  const homepageTranslate = useTranslations("homepage");
+  const officesTranslate = useTranslations("election_offices");
+  const municipalityT = useTranslations("municipalities");
+  const wardT = useTranslations("ward");
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
 
   const partyListOption = partyList?.map((d) => {
     return { label: d.name, value: d.name }
   });
+
+  useEffect(() => {
+    setTranslateProvinceOptions(PROVINCE.map((province: any) => ({ label: homepageTranslate(province.value), value: province.value })));
+    setDistrictProvinceOptions(DISTRICT[selectedProvince?.value]?.map((district: any) => ({ label: officesTranslate(district.value.toLowerCase()), value: district.value })));
+    setMunicipalityOptions(MUNICIPALITY[selectedDistrict?.value]?.map((municipality: any) => ({ label: municipalityT(municipality.label?.split(" ")[0].toLowerCase()), value: municipality.value })));
+  }, [selectedProvince, selectedDistrict])
 
   useEffect(() => {
     (async () => {
@@ -136,14 +152,14 @@ const CandidateRegistration = () => {
             </div>
             <div className='w-[35%]'>
               <span>{voterT("fullname_label")}</span>
-              <Select className='mt-1' options={GENDER_OPTIONS} onChange={(option) => setCandidateDetails({ ...candidateDetails, gender: option.value })} placeholder={commonT("gender_placeholder")} />
+              <Select className='mt-1' options={GENDER_OPTIONS.map((d) => ({ label: commonT(d.label.toLocaleLowerCase()), value: d.value }))} onChange={(option) => setCandidateDetails({ ...candidateDetails, gender: option.value })} placeholder={commonT("gender_placeholder")} />
             </div>
           </div>
           <div className='flex justify-between my-4'>
             <div>
               <span>{voterT("province_label")}</span>
               <Select
-                options={PROVINCE}
+                options={translateProvinceOptions}
                 className="w-[220px] mr-2 mt-1"
                 placeholder={<div>{commonT("province_placeholder")}</div>}
                 onChange={(item) => {
@@ -155,11 +171,11 @@ const CandidateRegistration = () => {
             <div>
               <span>{voterT("district_label")}</span>
               <Select
-                options={DISTRICT[selectedProvince.value]}
+                options={districtProvinceOptions}
                 className="w-[220px] mt-1"
                 placeholder={<div>{commonT("district_placeholder")}</div>}
                 onChange={(item: any) => {
-                  setSelectProvince(item);
+                  setSelectDistrict(item);
                   setCandidateDetails({ ...candidateDetails, district: item.label })
                 }}
                 isDisabled={selectedProvince?.label ? false : true}
@@ -170,11 +186,10 @@ const CandidateRegistration = () => {
             <div>
               <span>{voterT("municipality_label")}</span>
               <Select
-                options={MUNICIPALITY[selectedProvince.value]}
+                options={municipalityOptions}
                 className="w-[220px] mr-2 mt-1"
                 placeholder={<div>{commonT("municipality_placeholder")}</div>}
                 onChange={(item: any) => {
-                  setSelectProvince(item);
                   setCandidateDetails({ ...candidateDetails, municipality: item.label })
                 }}
                 isDisabled={candidateDetails?.district ? false : true}
@@ -183,11 +198,10 @@ const CandidateRegistration = () => {
             <div>
               <span>{voterT("ward_label")}</span>
               <Select
-                options={WARD_NO}
+                options={WARD_NO.map((d) => ({ label: wardT(`w${d.label}`), value: d.value }))}
                 className="w-[220px] mt-1"
                 placeholder={<div>{commonT("ward_placeholder")}</div>}
                 onChange={(item: any) => {
-                  setSelectProvince(item);
                   setCandidateDetails({ ...candidateDetails, ward: item.label })
                 }}
                 isDisabled={candidateDetails?.municipality ? false : true}

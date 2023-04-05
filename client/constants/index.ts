@@ -269,11 +269,11 @@ const GLOBAL_SEARCH_KEYWORD = [
     link: "/about/privacy-policy"
   },
   {
-    keywords: ["Electoral Framework Overview", "Constitution of Nepal, Election Commission Act, 2017, ....."],
+    keywords: ["Electoral Framework Overview", "Constitution of Nepal, Election Commission Act, 2017"],
     link: "/electoral-framework/overview"
   },
   {
-    keywords: ["Election related laws", "1. ऐन ,  2. नियमावली,  3. आचारसंहिता"],
+    keywords: ["Election related laws", "Laws component"],
     link: "/electoral-framework/laws"
   },
   {
@@ -339,39 +339,39 @@ export {
 
 
 const MUNICIPALITY = {
-  "Bhojpur": [
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-  ],
-  "Dhankuta": [
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-  ],
-  "Ilam": [
-    { label: "", value: "" },
-  ],
-  "Jhapa": [
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-    { label: "", value: "" },
-  ],
+  // "Bhojpur": [
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  // ],
+  // "Dhankuta": [
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  // ],
+  // "Ilam": [
+  //   { label: "", value: "" },
+  // ],
+  // "Jhapa": [
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  //   { label: "", value: "" },
+  // ],
   "Khotang": [
     { label: "Sakela Rural", value: "Sakela Rural" },
     { label: "Khotehang Rural", value: "Khotehang Rural" },
@@ -933,24 +933,24 @@ const MUNICIPALITY = {
     { label: "Isma Rural", value: "Isma Rural" },
     { label: "Malika Rural", value: "Malika Rural" },
   ],
-  "Palpa": [
-  ],
-  "Dang": [
-  ],
-  "Pyuthan": [
-  ],
-  "Rolpa": [
-  ],
-  "Rukum": [
-  ],
-  "Banke": [
-  ],
-  "Bardiya": [
-  ],
+  // "Palpa": [
+  // ],
+  // "Dang": [
+  // ],
+  // "Pyuthan": [
+  // ],
+  // "Rolpa": [
+  // ],
+  // "Rukum": [
+  // ],
+  // "Banke": [
+  // ],
+  // "Bardiya": [
+  // ],
 
 
-  "Eastern": [
-  ]
+  // "Eastern": [
+  // ]
 }
 
 
