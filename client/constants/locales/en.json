@@ -168,128 +168,6 @@
     "kailali": "Kailali",
     "kanchanpur": "Kanchanpur"
   },
-  "privacy": {
-    "title": "Privacy Policy",
-    "para1": "The ECN web App provides election related information and updates to users of this app. We do not collect, share, and use any personal information of user.",
-    "para2": "We ask for your information solely to provide you with your personal details as per the official ECN's voter details record. None of the information you provide are stored in our server, used for any purpose or shared with other organizations/entities.",
-    "para3": "If you have any queries regarding this policy, you can contact us by sending email at :",
-    "footer_title": "Election Commission, nepal"
-  },
-  "election_gallery_card": {
-    "held": "Held",
-    "ended": "Ended",
-    "total_candidate": "Total Candidates",
-    "total_vote": "Total Votes"
-  },
-  "electoral_framework": {
-    "title": "Electoral Framework Overview",
-    "item1": "Constitution of Nepal",
-    "item2": "Election Commission Act, 2017",
-    "item3": "Electoral Roll Act, 2017",
-    "item4": "Election (Offence and Punishment) Act, 2017",
-    "item5": "Political Party Registration Act,",
-    "item6": "Local Level Election Act, 2017",
-    "item7": "Other Rules and Directives"
-  },
-  "election_laws": {
-    "title": "Election Related Laws"
-  },
-  "voter": {
-    "title": "About Voter Registration eligibility",
-    "intro": "Voter registration is one of the main functions of the Commission. The registration is fully based on technology and biometrics. ECN has the following features for voter registration:",
-    "para1": "Voter registration is continuous throughout the year.",
-    "para2": "Nepalese citizen aged 16 or above can register their names in the voter roll in all the 77 District Election Offices and District Administration Offices and voter registration mobile teams as announced by the Commission. However, to be eligible voters, they have to be at the age of 18 or above.Citizenship certificate is required document for the registration,",
-    "para3": "Special registration programs are also conducted depending on the need assessment,",
-    "para4": "Name list of registered voters are integrated and de-duplicated in the central server in the ECN headquarters and segregated data is distributed to the District Election Offices,",
-    "para5": "The matured data, after undergoing all the processes including verification, claims and objection, is produced as the voter roll.",
-    "para6": "Voter's Identity Card is produced and distributed on the basis of the voter roll.",
-    "breadcumb1": "Home",
-    "breadcumb2": "Voter Education",
-    "breadcumb3": "Voter Eligibility",
-    "breadcumb4": "Voter Registration",
-    "breadcumb5": "Candidate",
-    "breadcumb6": "List"
-  },
-  "voter_roll": {
-    "title": "Voter Roll"
-  },
-  "voter_registration": {
-    "title": "Voter Registration",
-    "form_title": "Fillup Details",
-    "fullname_label": "Full Name    (Acc. to Citizenship)",
-    "citizenship_label": "Enter Citizenship Number",
-    "gender_label": "Select Gender",
-    "province_label": "Province",
-    "district_label": "District",
-    "municipality_label": "Municipality",
-    "ward_label": "Ward Number",
-    "dob_label": "Date of Birth",
-    "email_label": "Email Address",
-    "photo_label": "Choose Voter Photo",
-    "button_label": "Register"
-  },
-  "candidate_registration": {
-    "title": "Candidate Registration",
-    "party_label": "Party",
-    "party_placeholder": "Select Party",
-    "agenda_label": "Agenda",
-    "register_btn": "Register",
-    "registering_label": "Registering"
-  },
-  "candidate_roll": {
-    "title": "Candidate List",
-    "search_placeholder": "Search Canddiate"
-  },
-  "party": {
-    "title": "Party List",
-    "search_placeholder": "Search Party"
-  },
-  "province_result": {
-    "title": "Province Election",
-    "hot_seats": "Hot seats"
-  },
-  "district_result": {
-    "title": "District Election",
-    "hot_seats": "Hot seats"
-  },
-  "local_result": {
-    "title": "Local Election",
-    "hot_seats": "Hot seats"
-  },
-  "sortComp": {
-    "sort": "Sort",
-    "address": "Address",
-    "result": "Result",
-    "reset": "Reset",
-    "select_province": "Select Province",
-    "select_district": "Select District",
-    "select_municipality": "Select Municipality",
-    "select_ward": "Select Ward",
-    "party": "Party",
-    "select_party": "Select Party",
-    "cancel": "Cancel"
-  },
-  "faq": {
-    "title": "Frequently Asked Question (FAQs)",
-    "accordian_title": "Add new question",
-    "title_placeholder": "Title",
-    "description_placeholder": "Description",
-    "submit_btn": "Submit",
-    "comment_title": "Comment",
-    "reply_placeholder": "Reply your opinion"
-  },
-  "common": {
-    "uname_placeholder": "E.g John Doe",
-    "citizenship_placholder": "E.g  0054-2334",
-    "gender_placeholder": "Gender",
-    "province_placeholder": "Select Province",
-    "district_placeholder": "Select District",
-    "municipality_placeholder": "Select Municipality",
-    "ward_placeholder": "Select Ward",
-    "male": "Male",
-    "female": "Female",
-    "others": "Others"
-  },
   "municipalities": {
     "sakela": "Sakela Rural",
     "khotehang": "Khotehang Rural",
@@ -726,5 +604,148 @@
     "gulmidarbar": "Gulmidarbar Rural",
     "chandrakot": "Chandrakot Rural",
     "isma": "Isma Rural"
+  },
+  "ward": {
+    "w1": "1",
+    "w2": "2",
+    "w3": "3",
+    "w4": "4",
+    "w5": "5",
+    "w6": "6",
+    "w7": "7",
+    "w8": "8",
+    "w9": "9",
+    "w10": "10",
+    "w11": "11",
+    "w12": "12",
+    "w13": "13",
+    "w14": "14",
+    "w15": "15",
+    "w16": "16",
+    "w17": "17",
+    "w18": "18",
+    "w19": "19"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "para1": "The ECN web App provides election related information and updates to users of this app. We do not collect, share, and use any personal information of user.",
+    "para2": "We ask for your information solely to provide you with your personal details as per the official ECN's voter details record. None of the information you provide are stored in our server, used for any purpose or shared with other organizations/entities.",
+    "para3": "If you have any queries regarding this policy, you can contact us by sending email at :",
+    "footer_title": "Election Commission, nepal"
+  },
+  "election_gallery_card": {
+    "held": "Held",
+    "ended": "Ended",
+    "total_candidate": "Total Candidates",
+    "total_vote": "Total Votes"
+  },
+  "electoral_framework": {
+    "title": "Electoral Framework Overview",
+    "item1": "Constitution of Nepal",
+    "item2": "Election Commission Act, 2017",
+    "item3": "Electoral Roll Act, 2017",
+    "item4": "Election (Offence and Punishment) Act, 2017",
+    "item5": "Political Party Registration Act,",
+    "item6": "Local Level Election Act, 2017",
+    "item7": "Other Rules and Directives"
+  },
+  "election_laws": {
+    "title": "Election Related Laws"
+  },
+  "voter": {
+    "title": "About Voter Registration eligibility",
+    "intro": "Voter registration is one of the main functions of the Commission. The registration is fully based on technology and biometrics. ECN has the following features for voter registration:",
+    "para1": "Voter registration is continuous throughout the year.",
+    "para2": "Nepalese citizen aged 16 or above can register their names in the voter roll in all the 77 District Election Offices and District Administration Offices and voter registration mobile teams as announced by the Commission. However, to be eligible voters, they have to be at the age of 18 or above.Citizenship certificate is required document for the registration,",
+    "para3": "Special registration programs are also conducted depending on the need assessment,",
+    "para4": "Name list of registered voters are integrated and de-duplicated in the central server in the ECN headquarters and segregated data is distributed to the District Election Offices,",
+    "para5": "The matured data, after undergoing all the processes including verification, claims and objection, is produced as the voter roll.",
+    "para6": "Voter's Identity Card is produced and distributed on the basis of the voter roll.",
+    "breadcumb1": "Home",
+    "breadcumb2": "Voter Education",
+    "breadcumb3": "Voter Eligibility",
+    "breadcumb4": "Voter Registration",
+    "breadcumb5": "Candidate",
+    "breadcumb6": "List"
+  },
+  "voter_roll": {
+    "title": "Voter Roll"
+  },
+  "voter_registration": {
+    "title": "Voter Registration",
+    "form_title": "Fillup Details",
+    "fullname_label": "Full Name    (Acc. to Citizenship)",
+    "citizenship_label": "Enter Citizenship Number",
+    "gender_label": "Select Gender",
+    "province_label": "Province",
+    "district_label": "District",
+    "municipality_label": "Municipality",
+    "ward_label": "Ward Number",
+    "dob_label": "Date of Birth",
+    "email_label": "Email Address",
+    "photo_label": "Choose Voter Photo",
+    "button_label": "Register"
+  },
+  "candidate_registration": {
+    "title": "Candidate Registration",
+    "party_label": "Party",
+    "party_placeholder": "Select Party",
+    "agenda_label": "Agenda",
+    "register_btn": "Register",
+    "registering_label": "Registering"
+  },
+  "candidate_roll": {
+    "title": "Candidate List",
+    "search_placeholder": "Search Canddiate"
+  },
+  "party": {
+    "title": "Party List",
+    "search_placeholder": "Search Party"
+  },
+  "province_result": {
+    "title": "Province Election",
+    "hot_seats": "Hot seats"
+  },
+  "district_result": {
+    "title": "District Election",
+    "hot_seats": "Hot seats"
+  },
+  "local_result": {
+    "title": "Local Election",
+    "hot_seats": "Hot seats"
+  },
+  "sortComp": {
+    "sort": "Sort",
+    "address": "Address",
+    "result": "Result",
+    "reset": "Reset",
+    "select_province": "Select Province",
+    "select_district": "Select District",
+    "select_municipality": "Select Municipality",
+    "select_ward": "Select Ward",
+    "party": "Party",
+    "select_party": "Select Party",
+    "cancel": "Cancel"
+  },
+  "faq": {
+    "title": "Frequently Asked Question (FAQs)",
+    "accordian_title": "Add new question",
+    "title_placeholder": "Title",
+    "description_placeholder": "Description",
+    "submit_btn": "Submit",
+    "comment_title": "Comment",
+    "reply_placeholder": "Reply your opinion"
+  },
+  "common": {
+    "uname_placeholder": "E.g John Doe",
+    "citizenship_placholder": "E.g  0054-2334",
+    "gender_placeholder": "Gender",
+    "province_placeholder": "Select Province",
+    "district_placeholder": "Select District",
+    "municipality_placeholder": "Select Municipality",
+    "ward_placeholder": "Select Ward",
+    "male": "Male",
+    "female": "Female",
+    "others": "Others"
   }
 }
