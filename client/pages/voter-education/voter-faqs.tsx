@@ -15,6 +15,7 @@ import { useTranslations } from 'next-intl';
 
 const defaultFaqDetails = { title: null, description: null, file: null };
 let replyComment = { userId: null, replyMsg: null }
+declare const window: any;
 
 const VoterFaqs = () => {
   const [openAddQuestionModal, setOpenAddQuestionModal] = useState(false);
@@ -40,6 +41,8 @@ const VoterFaqs = () => {
 
   const handleSubmit = async () => {
     try {
+      if (!window?.ethereum) return toast.warn("Please install metamask wallet.");
+
       setFaqList([...faqList, newFaq]);
       const formData = new FormData();
       formData.append("images", newFaq.file);
@@ -113,7 +116,7 @@ const VoterFaqs = () => {
                     <input type="file" name="file" className='form-control my-3' onChange={(e) => setNewFaq({ ...newFaq, file: e.target.files[0] })} />
                     <button
                       className='btn btn-primary rounded-1 px-3 my-3'
-                      disabled={!newFaq.title || !newFaq.description}
+                      disabled={!newFaq.title || !newFaq.description || !newFaq.file}
                       onClick={handleSubmit}
                     >{faqT("submit_btn")}</button>
                   </div>
@@ -126,7 +129,7 @@ const VoterFaqs = () => {
                       <Accordion.Item eventKey={`${i}`} className='shadow-md border-white-500 mb-3' key={i}>
                         <Accordion.Header>{faq.title}</Accordion.Header>
                         <Accordion.Body>
-                          <div className='h-[400px] w-100 overflow-hidden'>
+                          <div className={`h-[400px] w-100 overflow-hidden ${!faq?.fileUrl && "hidden"}`}>
                             <Image
                               src={faq.fileUrl}
                               alt={faq.title}
