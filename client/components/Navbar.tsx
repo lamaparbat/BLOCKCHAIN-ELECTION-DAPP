@@ -195,7 +195,7 @@ const Navbar: React.FC = (): ReactElement => {
                 <a
                   href={!isEthereumEnabled && METAMASK_EXT_LINK}
                   className='no-underline mr-2 text-light text-[14px] mt-[1px]'
-                  target={!isEthereumEnabled && "_blank"}
+                  target={!isEthereumEnabled ? "_blank" : "nul"}
                 >
                   {loading ? "Connecting" : isEthereumEnabled ? "Connect Wallet" : t("install_metamsk")}
                 </a>

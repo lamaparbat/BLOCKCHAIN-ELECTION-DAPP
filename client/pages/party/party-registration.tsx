@@ -12,6 +12,7 @@ import _ from 'lodash';
 import { getFormattedErrorMessage, getPartyList } from '../../utils';
 
 const defaultPartyDetails = { partyName: "", totalMembers: '', agenda: "", partyLogo: null }
+declare const window: any;
 
 const VoterRegistration = () => {
   const [partyDetails, setPartyDetails] = useState({ ...defaultPartyDetails });
@@ -37,6 +38,8 @@ const VoterRegistration = () => {
 
   // upload partyDetails
   const onSubmit = async () => {
+    if (!window?.ethereum) return toast.warn("Please install metamask wallet.");
+
     setLoading(true);
     try {
       // check if party already exists
