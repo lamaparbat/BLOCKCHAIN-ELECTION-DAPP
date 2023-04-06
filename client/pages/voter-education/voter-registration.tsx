@@ -11,6 +11,7 @@ import Head from 'next/head';
 import { useTranslations } from 'next-intl';
 
 const defaultOptions = { label: '', value: '' };
+declare const window: any;
 
 const VoterRegistration = () => {
   const [translateProvinceOptions, setTranslateProvinceOptions] = useState([]);
@@ -41,6 +42,8 @@ const VoterRegistration = () => {
   // upload voterDetails
   const onSubmit = async () => {
     try {
+      if (!window?.ethereum) return toast.warn("Please install metamask wallet.");
+
       const formData = new FormData();
       const {
         fullName,
