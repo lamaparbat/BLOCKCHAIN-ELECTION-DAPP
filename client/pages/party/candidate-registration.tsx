@@ -129,8 +129,8 @@ const CandidateRegistration = () => {
         <link rel="icon" href="/images/logo.png" />
       </Head>
       <Navbar /><br />
-      <div className='w-full flex justify-center'>
-        <div className={`px-5 pt-4 pb-5 w-[550px] h-fit flex-col justify-between rounded-[2px] flex-wrap text-[15px] bg-slate-100 shadow-sm`}>
+      <div className='w-full flex lg:justify-center sm:justify-center xsm:justify-start'>
+        <div className={`lg:px-5 sm:px-3 xsm:px-3 pt-4 pb-5 w-[550px] h-fit flex-col justify-between rounded-[2px] flex-wrap text-[15px] bg-slate-100 shadow-sm`}>
           <h4 className='mt-2 mb-4'>{voterT("form_title")}</h4>
           <div className='flex justify-between'>
             <div className='w-100 text-[15px]'>
@@ -143,8 +143,8 @@ const CandidateRegistration = () => {
               />
             </div>
           </div>
-          <div className='flex justify-between items-center mt-4'>
-            <div className='w-[60%]'>
+          <div className='flex lg:flex-row sm:flex-row xsm:flex-col justify-between items-center mt-4'>
+            <div className='lg:w-[60%] sm:w-[60%] xsm:w-full'>
               <span>Enter Citizenship Number</span>
               <input
                 className='overrideInputStyle form-control px-3 py-[10px] rounded-1 mt-1 shadow-none outline-0'
@@ -153,17 +153,17 @@ const CandidateRegistration = () => {
                 onChange={(e) => setCandidateDetails({ ...candidateDetails, citizenshipNumber: e.target.value })}
               />
             </div>
-            <div className='w-[35%]'>
+            <div className='lg:w-[35%] sm:w-[35%] xsm:w-full xsm:mt-4'>
               <span>{voterT("fullname_label")}</span>
               <Select className='mt-1' options={GENDER_OPTIONS.map((d) => ({ label: commonT(d.label.toLocaleLowerCase()), value: d.value }))} onChange={(option) => setCandidateDetails({ ...candidateDetails, gender: option.value })} placeholder={commonT("gender_placeholder")} />
             </div>
           </div>
-          <div className='flex justify-between my-4'>
+          <div className='flex lg:flex-row sm:flex-row xsm:flex-col justify-between my-4'>
             <div>
               <span>{voterT("province_label")}</span>
               <Select
                 options={translateProvinceOptions}
-                className="w-[220px] mr-2 mt-1"
+                className="lg:w-[220px] sm:w-[220px] xsm:w-full mr-2 mt-1"
                 placeholder={<div>{commonT("province_placeholder")}</div>}
                 onChange={(item) => {
                   setSelectProvince(item);
@@ -171,11 +171,11 @@ const CandidateRegistration = () => {
                 }}
               />
             </div>
-            <div>
+            <div className='lg:mt-1 sm:mt-1 xsm:mt-5'>
               <span>{voterT("district_label")}</span>
               <Select
                 options={districtProvinceOptions}
-                className="w-[220px] mt-1"
+                className="lg:w-[220px] sm:w-[220px] xsm:w-full mt-1"
                 placeholder={<div>{commonT("district_placeholder")}</div>}
                 onChange={(item: any) => {
                   setSelectDistrict(item);
@@ -185,12 +185,12 @@ const CandidateRegistration = () => {
               />
             </div>
           </div>
-          <div className='flex justify-between'>
+          <div className='flex lg:flex-row sm:flex-row xsm:flex-col'>
             <div>
               <span>{voterT("municipality_label")}</span>
               <Select
                 options={municipalityOptions}
-                className="w-[220px] mr-2 mt-1"
+                className="lg:w-[220px] sm:w-[220px] xsm:w-full mr-2 mt-1"
                 placeholder={<div>{commonT("municipality_placeholder")}</div>}
                 onChange={(item: any) => {
                   setCandidateDetails({ ...candidateDetails, municipality: item.label })
@@ -202,7 +202,7 @@ const CandidateRegistration = () => {
               <span>{voterT("ward_label")}</span>
               <Select
                 options={WARD_NO.map((d) => ({ label: wardT(`w${d.label}`), value: d.value }))}
-                className="w-[220px] mt-1"
+                className="lg:w-[220px] sm:w-[220px] xsm:w-full mt-1"
                 placeholder={<div>{commonT("ward_placeholder")}</div>}
                 onChange={(item: any) => {
                   setCandidateDetails({ ...candidateDetails, ward: item.label })
@@ -221,8 +221,8 @@ const CandidateRegistration = () => {
               />
             </div>
           </div>
-          <div className='flex justify-between items-center my-4'>
-            <div className='w-[220px]'>
+          <div className='flex lg:flex-row sm:flex-row xsm:flex-col justify-between items-center my-4'>
+            <div className='lg:w-[220px] sm:w-[220px] xsm:w-full'>
               <span>{voterT("fullname_label")}</span>
               <input
                 className='form-control shadow-none outline-0 font-monospace'
@@ -230,11 +230,11 @@ const CandidateRegistration = () => {
                 onChange={(e) => setCandidateDetails({ ...candidateDetails, dob: e.target.value })}
               />
             </div>
-            <div className='w-full ml-2'>
+            <div className='w-full ml-2 lg:mt-1 sm:mt-1 xsm:mt-5'>
               <span>{candidateT("party_label")}</span>
               <Select
                 options={partyListOption}
-                className="w-[220px]"
+                className="lg:w-[220px] sm:w-[220px] xsm:w-full"
                 placeholder={<div>{candidateT("party_placeholder")}</div>}
                 onChange={(item: any) => {
                   setSelectProvince(item);

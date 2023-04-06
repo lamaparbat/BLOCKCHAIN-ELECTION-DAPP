@@ -50,7 +50,7 @@ const Details: React.FC = (): React.ReactElement => {
   return (
     <div className='mb-[50px]'>
       <Navbar /><br />
-      <div className='w-full flex justify-center px-5'>
+      <div className='w-full flex lg:justify-center lg:px-5 sm:justify-start xsm:px-3'>
         <div className={`${responsive} flex-col justify-start rounded-1`}>
           <BreadCrumb routes={[voterT("breadcumb2"), voterRollT("title")]} />
           <div className='flex items-center justify-between'>

@@ -88,7 +88,7 @@ const VoterFaqs = () => {
       </Head>
       <div className='constitutional--provision--container'>
         <Navbar />
-        <div className='flex justify-center mt-3 mb-5 px-3 lg:px-0'>
+        <div className='flex lg:justify-center sm:justify-center xsm:justify-start mt-3 mb-5 px-3 lg:px-0'>
           <div className={`${responsive} flex justify-between rounded-1 flex-wrap lg:px-3`}>
             <div className='w-full'>
               <h4 className='mt-2 mb-4'>{faqT("title")}</h4>

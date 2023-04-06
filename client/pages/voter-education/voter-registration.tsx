@@ -99,13 +99,13 @@ const VoterRegistration = () => {
         <link rel="icon" href="/images/logo.png" />
       </Head>
       <Navbar /><br />
-      <div className='w-full flex justify-center'>
+      <div className='w-full flex lg:justify-center xsm:justify-start'>
         <div className={`${responsive} flex justify-start rounded-1 px-2`}>
           <BreadCrumb routes={[voterT("breadcumb2"), voterT("breadcumb4")]} />
         </div>
       </div><br /><br />
       <div className='w-full flex justify-center'>
-        <div className={`px-5 pt-4 pb-5 w-[550px] h-fit flex-col justify-between rounded-[2px] flex-wrap text-[15px] bg-slate-100 shadow-sm`}>
+        <div className={`lg:px-5 md:px-5 sm:px-3 xsm:px-3 pt-4 pb-5 lg:w-[550px] md:w-[550px] sm:w-full xsm:w-full h-fit flex-col justify-between rounded-[2px] flex-wrap text-[15px] bg-slate-100 shadow-sm`}>
           <h4 className='mt-2 mb-4'>{VoterRegistrationT("form_title")}</h4>
           <div className='flex justify-between'>
             <div className='w-100 text-[15px]'>
@@ -118,8 +118,8 @@ const VoterRegistration = () => {
               />
             </div>
           </div>
-          <div className='flex justify-between items-center mt-4'>
-            <div className='w-[60%]'>
+          <div className='flex lg:flex-row md:flex-row sm:flex-row xsm:flex-col justify-between items-center mt-4'>
+            <div className='lg:w-[60%] sm:w-[60%] xsm:w-full'>
               <span>{VoterRegistrationT("citizenship_label")}</span>
               <input
                 className='overrideInputStyle form-control px-3 py-[10px] rounded-1 mt-1 shadow-none outline-0'
@@ -128,7 +128,7 @@ const VoterRegistration = () => {
                 onChange={(e) => setVoterDetails({ ...voterDetails, citizenshipNumber: e.target.value })}
               />
             </div>
-            <div className='w-[35%]'>
+            <div className='lg:w-[35%] sm:w-[35%] xsm:w-full xsm:mt-4'>
               <span>{VoterRegistrationT("gender_label")}</span>
               <Select
                 className='mt-1'
@@ -137,12 +137,12 @@ const VoterRegistration = () => {
                 placeholder={commonT("gender_placeholder")} />
             </div>
           </div>
-          <div className='flex justify-between my-4'>
+          <div className='flex lg:flex-row sm:flex-row xsm:flex-col justify-between my-4'>
             <div>
               <span>{VoterRegistrationT("province_label")}</span>
               <Select
                 options={translateProvinceOptions}
-                className="w-[220px] mr-2 mt-1"
+                className="lg:w-[220px] sm:w-[220px] xsm:w-full mr-2 mt-1"
                 placeholder={<div>{commonT("province_placeholder")}</div>}
                 onChange={(item) => {
                   setSelectProvince(item);
@@ -150,11 +150,11 @@ const VoterRegistration = () => {
                 }}
               />
             </div>
-            <div>
+            <div className='lg:mt-1 sm:mt-1 xsm:mt-5'>
               <span>{VoterRegistrationT("district_label")}</span>
               <Select
                 options={districtProvinceOptions}
-                className="w-[220px] mt-1"
+                className="lg:w-[220px] sm:w-[220px] xsm:w-full mt-1"
                 placeholder={<div>{commonT("district_placeholder")}</div>}
                 onChange={(item: any) => {
                   setSelectDistrict(item);
@@ -164,12 +164,12 @@ const VoterRegistration = () => {
               />
             </div>
           </div>
-          <div className='flex justify-between'>
+          <div className='flex lg:flex-row sm:flex-row xsm:flex-col'>
             <div>
               <span>{VoterRegistrationT("municipality_label")}</span>
               <Select
                 options={municipalityOptions}
-                className="w-[220px] mr-2 mt-1"
+                className="lg:w-[220px] sm:w-[220px] xsm:w-full mr-2 mt-1"
                 placeholder={<div>{commonT("municipality_placeholder")}</div>}
                 onChange={(item: any) => {
                   setVoterDetails({ ...voterDetails, municipality: item.label })
@@ -177,11 +177,11 @@ const VoterRegistration = () => {
                 isDisabled={voterDetails?.district ? false : true}
               />
             </div>
-            <div>
+            <div className='lg:mt-1 sm:mt-1 xsm:mt-5'>
               <span>{VoterRegistrationT("ward_label")}</span>
               <Select
                 options={WARD_NO.map((d) => ({ label: wardT(`w${d.label}`), value: d.value }))}
-                className="w-[220px] mt-1"
+                className="lg:w-[220px] sm:w-[220px] xsm:w-full mt-1"
                 placeholder={<div>{commonT("ward_placeholder")}</div>}
                 onChange={(item: any) => {
                   setVoterDetails({ ...voterDetails, ward: item.label })
