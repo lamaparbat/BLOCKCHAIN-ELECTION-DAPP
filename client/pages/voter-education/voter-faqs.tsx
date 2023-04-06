@@ -141,7 +141,7 @@ const VoterFaqs = () => {
                             <input
                               type='text'
                               className='form-control rounded-1 border-0 shadow-none'
-                              placeholder={faqT("reply_placholder")}
+                              placeholder={faqT("reply_placeholder")}
                               onChange={(e) => (replyComment = { ...replyComment, userId: faq._id, replyMsg: e.target.value })}
                             />
                             <button className='btn btn-primary rounded-0 px-4' onClick={postComment}><BiSend /></button>
@@ -150,7 +150,6 @@ const VoterFaqs = () => {
                             <h5>{faqT("comment_title")}</h5>
                             {
                               faq?.comments?.map((comment: any, i: number) => {
-                                console.log({ comment })
                                 return <CommentCard
                                   key={i}
                                   address={comment.userId}
