@@ -24,6 +24,10 @@ const Sortbar = ({
   const t = useTranslations("sortComp");
   const homepageTranslate = useTranslations("homepage");
   const officesTranslate = useTranslations("election_offices");
+  const municipalyTranslate = useTranslations("municipalities");
+  const wardT = useTranslations("ward")
+  const sortCompT = useTranslations("sortComp");
+  const partyT = useTranslations("party");
 
   useEffect(() => {
     (async () => {
@@ -59,10 +63,7 @@ const Sortbar = ({
   useEffect(() => {
     setTranslateProvinceOptions(PROVINCE.map((province: any) => ({ label: homepageTranslate(province.value), value: province.value })));
     setDistrictProvinceOptions(DISTRICT[selectedProvince?.value]?.map((district: any) => ({ label: officesTranslate(district.value.toLowerCase()), value: district.value })));
-    setMunicipalityOptions(MUNICIPALITY[selectedDistrict?.value]?.map((municipality: any) => {
-      console.log(municipality)
-      return ({ label: officesTranslate(municipality.value.toLowerCase()), value: municipality.value })
-    }));
+    setMunicipalityOptions(MUNICIPALITY[selectedDistrict?.value]?.map((municipality: any) => ({ label: municipalyTranslate(municipality.label?.split(" ")[0].toLowerCase()), value: municipality.value })));
   }, [selectedProvince, selectedDistrict])
 
   const resetSorting = () => {
@@ -116,7 +117,7 @@ const Sortbar = ({
             isDisabled={selectedDistrict?.label ? false : true}
           />
           <Select
-            options={WARD_NO}
+            options={WARD_NO.map((d) => ({ label: wardT(`w${d.label}`), value: d.value }))}
             className="w-50 mx-2"
             placeholder={<div>{t("select_ward")}</div>}
             onChange={(item: any) => {
@@ -127,12 +128,12 @@ const Sortbar = ({
         </div>
         {showPartyOptions &&
           <>
-            <h5 className='mt-3 mb-3'>Party</h5>
+            <h5 className='mt-3 mb-3'>{partyT("title")}</h5>
             <div className='flex'>
               <Select
                 options={getPartyListOptions(partyList)}
                 className="w-50"
-                placeholder={<div>Select Party</div>}
+                placeholder={<div>{sortCompT("select_party")}</div>}
                 onChange={(item: any) => {
                   setSelectedParty(item);
                 }}
