@@ -20,7 +20,7 @@
 ### Live Election Starting CountDown Timer
 <img width="1440" alt="Screen Shot 2023-02-20 at 21 31 26" src="https://user-images.githubusercontent.com/64581460/220151007-c36e57fb-9bda-4baa-9e9a-21faf6b0aad9.png">
 
-### Before Connecting Metamask wallet [Navbar]
+### Before Connecting Metamask wallet
 <img width="1440" alt="Screen Shot 2023-02-13 at 22 32 24" src="https://user-images.githubusercontent.com/64581460/218519876-a822631a-b9c5-464c-871d-82b6a31eaf00.png">
 
 ### After connecting Metamask wallet 
