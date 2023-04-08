@@ -1,10 +1,5 @@
 export const CONTRACT_ABI: any = [
 	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -2141,4 +2136,4 @@ export const CONTRACT_ABI: any = [
 		"type": "function"
 	}
 ];
-export const CONTRACT_ABI_ADDRESS: string = "0xb70700c2Dd40C7b2C2292Adfa447D93850952876";
+export const CONTRACT_ABI_ADDRESS: string = "0xc26962e277d4ebd1C5b424A30CeF43E06678354C";

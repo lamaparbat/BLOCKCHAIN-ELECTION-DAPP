@@ -153,7 +153,7 @@ const Navbar: React.FC = (): ReactElement => {
               className='form-control py-1 cursor-pointer hover:opacity-70 outline-0 '
               onChange={(e: any) => onLanguageChange(e.target.value)}
             >
-              <option defaultValue={currentLanguage} selected>{currentLanguage}</option>
+              <option defaultValue={currentLanguage} disabled>{currentLanguage}</option>
               {translatedLanguageOptions.map((d, i) => <option className='text-[14px]' key={i}>{d.label}</option>)}
             </select>
             <div className='my-[18px] cursor-pointer hover:opacity-70 flex items-center' onClick={() => navigate("mail")}>{t("gmail")} <AiOutlineMail className='text-lg ml-3' /></div>
@@ -174,7 +174,7 @@ const Navbar: React.FC = (): ReactElement => {
             className='mx-4 text-sm cursor-pointer hover:opacity-70 bg-slate-100 outline-0'
             onChange={(e: any) => onLanguageChange(e.target.value)}
           >
-            <option defaultValue={currentLanguage} selected>{currentLanguage}</option>
+            <option defaultValue={currentLanguage} disabled>{currentLanguage}</option>
             {translatedLanguageOptions.map((d, i) => {
               return (<option key={i}>{d.label}</option>)
             })}
@@ -193,7 +193,7 @@ const Navbar: React.FC = (): ReactElement => {
               >
                 <img className='mx-1' src={"/images/metamask.png"} height="20" width="20" />
                 <a
-                  href={!isEthereumEnabled && METAMASK_EXT_LINK}
+                  href={!isEthereumEnabled ? METAMASK_EXT_LINK : ""}
                   className='no-underline mr-2 text-light text-[14px] mt-[1px]'
                   target={!isEthereumEnabled ? "_blank" : "nul"}
                 >

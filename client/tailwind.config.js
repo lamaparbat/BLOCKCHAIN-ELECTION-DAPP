@@ -14,6 +14,9 @@ module.exports = {
     extend: {
       backgroundImage: {
         'celebrationGif': "url('/images/giphy.gif')"
+      },
+      colors: {
+        btnColor: "#1f398a !important"
       }
     },
   },

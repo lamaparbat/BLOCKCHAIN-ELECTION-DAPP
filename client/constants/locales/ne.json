@@ -700,7 +700,11 @@
   },
   "party": {
     "title": "पार्टी सूची",
-    "search_placeholder": "पार्टी खोज्नुहोस्"
+    "search_placeholder": "पार्टी खोज्नुहोस्",
+    "party_registration":"पार्टी दर्ता",
+    "party_agenda":"पार्टी एजेन्डा",
+    "choose_party_logo":"पार्टी लोगो छान्नुहोस्",
+    "total_members": "कुल सदस्यहरू"
   },
   "province_result": {
     "title": "प्रदेश निर्वाचन",

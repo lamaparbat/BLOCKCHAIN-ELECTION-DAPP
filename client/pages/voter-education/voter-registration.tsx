@@ -146,7 +146,7 @@ const VoterRegistration = () => {
                 placeholder={<div>{commonT("province_placeholder")}</div>}
                 onChange={(item) => {
                   setSelectProvince(item);
-                  setVoterDetails({ ...voterDetails, province: item.label })
+                  setVoterDetails({ ...voterDetails, province: item.value })
                 }}
               />
             </div>
@@ -158,7 +158,7 @@ const VoterRegistration = () => {
                 placeholder={<div>{commonT("district_placeholder")}</div>}
                 onChange={(item: any) => {
                   setSelectDistrict(item);
-                  setVoterDetails({ ...voterDetails, district: item.label })
+                  setVoterDetails({ ...voterDetails, district: item.value })
                 }}
                 isDisabled={selectedProvince?.label ? false : true}
               />
@@ -172,7 +172,7 @@ const VoterRegistration = () => {
                 className="lg:w-[220px] sm:w-[220px] xsm:w-full mr-2 mt-1"
                 placeholder={<div>{commonT("municipality_placeholder")}</div>}
                 onChange={(item: any) => {
-                  setVoterDetails({ ...voterDetails, municipality: item.label })
+                  setVoterDetails({ ...voterDetails, municipality: item.value })
                 }}
                 isDisabled={voterDetails?.district ? false : true}
               />
@@ -184,7 +184,7 @@ const VoterRegistration = () => {
                 className="lg:w-[220px] sm:w-[220px] xsm:w-full mt-1"
                 placeholder={<div>{commonT("ward_placeholder")}</div>}
                 onChange={(item: any) => {
-                  setVoterDetails({ ...voterDetails, ward: item.label })
+                  setVoterDetails({ ...voterDetails, ward: item.value })
                 }}
                 isDisabled={voterDetails?.municipality ? false : true}
               />

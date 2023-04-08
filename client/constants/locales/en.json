@@ -700,7 +700,11 @@
   },
   "party": {
     "title": "Party List",
-    "search_placeholder": "Search Party"
+    "search_placeholder": "Search Party",
+    "party_registration": "Party Registration",
+    "party_agenda":"Party Agenda",
+    "choose_party_logo":"Choose Party Logo",
+    "total_members": "Total Members"
   },
   "province_result": {
     "title": "Province Election",
