@@ -3,11 +3,11 @@ pragma solidity ^0.8.0;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/math/SafeMath.sol";
 import "./Structure.sol";
-import "./Constants.sol";
 import "./Candidate.sol";
 import "./Voter.sol";
+import "./Auth.sol";
 
-contract Election is Structure, Constants, Candidate, Voter{
+contract Election is Structure, Constants, Candidate, Voter, Auth{
     using SafeMath for uint;
     
     // Mapping 
@@ -200,10 +200,6 @@ contract Election is Structure, Constants, Candidate, Voter{
 
     function getAllFAQs() public view returns (FAQ[] memory) {
         return faqList;
-    }
-    
-    function isAdmin(address _id) public view returns (bool){
-        return _id == adminAddress;
     }
 }
 
