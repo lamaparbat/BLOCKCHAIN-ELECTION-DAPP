@@ -2,9 +2,8 @@
 pragma solidity ^0.8.0;
 
 import "./Structure.sol";
-import "./Constants.sol";
 
-contract Candidate is Structure, Constants{
+contract Candidate is Structure{
     // Mapping 
     mapping (address => Candidate) public candidates;
 
