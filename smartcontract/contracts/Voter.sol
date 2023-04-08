@@ -3,16 +3,11 @@ pragma solidity ^0.8.0;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/math/SafeMath.sol";
 import "./Structure.sol";
-import "./Constants.sol";
 import "./Candidate.sol";
+import "./Auth.sol";
 
-contract Voter is Structure, Constants, Candidate{
+contract Voter is Structure, Candidate, Auth{
     using SafeMath for uint;
-    address adminAddress;
-    
-    constructor(){
-        adminAddress = msg.sender;
-    }
 
     // Mapping 
     mapping (address => Voter) public voters;
