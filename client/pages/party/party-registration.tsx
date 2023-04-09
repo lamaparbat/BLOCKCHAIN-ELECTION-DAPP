@@ -12,7 +12,7 @@ import _ from 'lodash';
 import { getFormattedErrorMessage, getPartyList } from '../../utils';
 import { useTranslations } from 'next-intl';
 
-const defaultPartyDetails = { partyName: "", totalMembers: '', agenda: "", partyLogo: null }
+const defaultPartyDetails = { partyName: null, totalMembers: null, agenda: null, partyLogo: null }
 declare const window: any;
 
 const VoterRegistration = () => {
@@ -21,7 +21,6 @@ const VoterRegistration = () => {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
-  const router = useRouter();
 
   const voterT = useTranslations("voter_registration");
   const partyT = useTranslations("party");
@@ -32,12 +31,11 @@ const VoterRegistration = () => {
       const res = await getPartyList();
       setPartyList(res);
     })();
-
-    (!partyDetails.partyName || !partyDetails.totalMembers
-      || !partyDetails.agenda) ? setDisabled(true) : setDisabled(false);
   }, [partyDetails]);
 
   const onChange = (name, value) => {
+    (!partyDetails.partyName || !partyDetails.totalMembers
+      || !partyDetails.agenda) ? setDisabled(true) : setDisabled(false);
     setPartyDetails({ ...partyDetails, [name]: value })
   }
 
@@ -139,12 +137,14 @@ const VoterRegistration = () => {
           </div>
           <div className='flex justify-between mt-[30px] mb-1'>
             <button
-              className={`bg-blue-900 text-light py-2 w-100 rounded-[5px] hover:opacity-75 flex justify-center items-center ${(disabled || loading) && 'opacity-75 cursor-default'}`}
+              className={`btn bg-btnColor text-light py-2 w-100 fke rounded-[5px] hover:opacity-75 flex justify-center items-center ${(disabled || loading) && 'opacity-75 cursor-default'}`}
               onClick={onSubmit}
-              disabled={disabled || loading}
+              disabled={disabled}
             >
-              {loading ? candidateT("registering_label") : candidateT("register_btn")}
-              {loading && <PulseLoader color='white' size={9} className='ml-4' />}
+              <span className='text-slate-100'>
+                {loading ? candidateT("registering_label") : candidateT("register_btn")}
+                {loading && <PulseLoader color='white' size={9} className='ml-4' />}
+              </span>
             </button>
           </div>
         </div>
