@@ -38,6 +38,7 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       const electionList = await getElectionList();
+console.log(electionList)
       const totalCandidatesCount = await getTotalCandidateCount();
       const totalVoters = await getVoterList();
       const totalVotersCount = await getTotalVotersCount();
@@ -80,8 +81,9 @@ export default function Home() {
     }
   }, []);
 
-  if (electionLists.length > 0) {
-    const { startDate, endDate } = electionLists.at(-1);
+  if (electionLists?.length > 0) {
+    const { startDate, endDate } = electionLists?.at(-1);
+console.log({startDate, endDate})
     if (new Date() < new Date(startDate)) {
       setInterval(() => {
         const diff = new Date(startDate).getTime() - new Date().getTime();
@@ -124,7 +126,7 @@ export default function Home() {
   }, [countDown.seconds]);
 
   const handleOverviewCountSort = (option: any) => {
-    const voters = allVoters.filter((d: any) => d.user.province === option.label);
+    const voters = allVoters.filter((d: any) => d.user.province === option.value);
     const result = _.chain(voters)
       .map('user')
       .groupBy('province')
@@ -137,7 +139,7 @@ export default function Home() {
         }
       })
       .value();
-    const { MALE, FEMALE, others } = result[option.label] ?? {};
+    const { MALE, FEMALE, others } = result[option.value] ?? {};
 
     setTotalDataCount({
       ...totalDataCount,
@@ -246,12 +248,12 @@ export default function Home() {
                   onChange={handleOverviewCountSort} />
               </div>
               <div className='w-full flex justify-between sm:flex-wrap xsm:flex-wrap'>
-                <ElectionUserCard label={homepageTranslate("total_voters")} value={totalDataCount.voters} Icon={<BiGroup className='text-4xl text-blue-900' />} />
-                <ElectionUserCard label={homepageTranslate("male_voters")} value={totalDataCount.maleVoters} Icon={<BiMale className='text-4xl text-blue-900' />} />
-                <ElectionUserCard label={homepageTranslate("female_voters")} value={totalDataCount.femaleVoters} Icon={<BiFemale className='text-4xl text-blue-900' />} />
-                <ElectionUserCard label={homepageTranslate("others")} value={totalDataCount.otherVoters} Icon={<FaTransgender className='text-4xl text-blue-900' />} />
-                <ElectionUserCard label={homepageTranslate("total_election")} value={totalDataCount.elections} Icon={<FaVoteYea className='text-4xl text-blue-900' />} />
-                <ElectionUserCard label={homepageTranslate("total_parties")} value={totalDataCount.parties} Icon={<BiMale className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={homepageTranslate("total_voters")} value={totalDataCount.voters ?? 0} Icon={<BiGroup className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={homepageTranslate("male_voters")} value={totalDataCount.maleVoters ?? 0} Icon={<BiMale className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={homepageTranslate("female_voters")} value={totalDataCount.femaleVoters ?? 0} Icon={<BiFemale className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={homepageTranslate("others")} value={totalDataCount.otherVoters ?? 0} Icon={<FaTransgender className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={homepageTranslate("total_election")} value={totalDataCount.elections ?? 0} Icon={<FaVoteYea className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={homepageTranslate("total_parties")} value={totalDataCount.parties ?? 0} Icon={<BiMale className='text-4xl text-blue-900' />} />
               </div>
             </div>
 
