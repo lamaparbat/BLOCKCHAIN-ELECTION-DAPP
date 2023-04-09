@@ -11,6 +11,7 @@ import _ from 'lodash';
 import Head from 'next/head';
 import { useTranslations } from 'next-intl';
 import { isAdmin } from '../../utils/web3';
+import { getStorage } from '../../services';
 
 const defaultOptions = { label: '', value: '' };
 declare const window: any;
@@ -37,7 +38,6 @@ const CandidateRegistration = () => {
   const officesTranslate = useTranslations("election_offices");
   const municipalityT = useTranslations("municipalities");
   const wardT = useTranslations("ward");
-  const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
 
   const partyListOption = partyList?.map((d) => {
     return { label: d.name, value: d.name }
@@ -80,6 +80,7 @@ const CandidateRegistration = () => {
   // upload candidateDetails
   const onSubmit = async () => {
     if (!window?.ethereum) return toast.warn("Please install metamask wallet.");
+    const loggedInAccountAddress = getStorage("loggedInAccountAddress");
 
     try {
       setLoading(true);
@@ -142,8 +143,9 @@ const CandidateRegistration = () => {
       toast.success("New candidate registered successfully");
       setLoading(false);
     } catch (error) {
-      const errorMsg = getFormattedErrorMessage(error.message);
-      console.error(errorMsg)
+      let errorMsg = getFormattedErrorMessage(error.message);
+      errorMsg = errorMsg.length > 0 ? errorMsg : error.message;
+      console.error({errorMsg})
 
       setLoading(false);
       toast.error(errorMsg, { toastId: 2 });
