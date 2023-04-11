@@ -219,7 +219,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='my-5 sm:px-2 xsm:px-2'>
+            <div className='my-5 sm:px-0 xsm:px-2'>
               <h4 className='font-bold text-md'>{homepageTranslate("election_gallery")}</h4>
               <div className='flex lg:justify-between md:justify-between flex-wrap sm:justify-center'>
                 {electionLists?.length === 0 && <span className='ml-2'>{homepageTranslate("no_election_found")}</span>}
@@ -237,7 +237,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='my-4 sm:px-3 mb-3 lg:h-[400px] sm:h-fit xsm:px-2'>
+            <div className='my-4 sm:px-0 mb-3 lg:h-[400px] sm:h-fit xsm:px-2'>
               <div className='flex justify-between items-center py-3'>
                 <h4 className='font-bold mt-2 text-md'>{homepageTranslate("overall_election_data")}</h4>
                 <Select
