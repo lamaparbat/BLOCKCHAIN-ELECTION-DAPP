@@ -148,11 +148,7 @@ const CandidateRegistration = () => {
     } catch (error) {
       let errorMsg = getFormattedErrorMessage(error.message);
       errorMsg = errorMsg.length > 0 ? errorMsg : error.message;
-<<<<<<< HEAD
       console.error({ errorMsg })
-=======
-      console.error({errorMsg})
->>>>>>> 89a815a3063ae740653007c85bfdf6dc499f174b
 
       setLoading(false);
       toast.error(errorMsg, { toastId: 2 });
