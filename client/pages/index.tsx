@@ -38,7 +38,7 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       const electionList = await getElectionList();
-console.log(electionList)
+      console.log(electionList)
       const totalCandidatesCount = await getTotalCandidateCount();
       const totalVoters = await getVoterList();
       const totalVotersCount = await getTotalVotersCount();
@@ -66,7 +66,7 @@ console.log(electionList)
 
     const browserZoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
 
-    if (!(browserZoomLevel === 80 || browserZoomLevel === 102)) {
+    if (!(browserZoomLevel === 80 || browserZoomLevel === 102) && browserZoomLevel < 170) {
       setTimeout(() => {
         toast.info("Please, Unzoom your browser screen to 80% for better view. Thanks !", {
           className: "w-[600px]",
@@ -83,7 +83,6 @@ console.log(electionList)
 
   if (electionLists?.length > 0) {
     const { startDate, endDate } = electionLists?.at(-1);
-console.log({startDate, endDate})
     if (new Date() < new Date(startDate)) {
       setInterval(() => {
         const diff = new Date(startDate).getTime() - new Date().getTime();
