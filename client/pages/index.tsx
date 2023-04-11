@@ -38,11 +38,6 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       const electionList = await getElectionList();
-<<<<<<< HEAD
-=======
-      console.log(electionList)
-      const totalCandidatesCount = await getTotalCandidateCount();
->>>>>>> 89a815a3063ae740653007c85bfdf6dc499f174b
       const totalVoters = await getVoterList();
 
       setTranslateProvinceOptions(PROVINCE.map((province: any) => ({ label: homepageTranslate(province.value), value: province.value })))
