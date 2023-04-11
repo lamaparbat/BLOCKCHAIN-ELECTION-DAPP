@@ -1338,6 +1338,51 @@ export const CONTRACT_ABI: any = [
 	},
 	{
 		"inputs": [],
+		"name": "getAllParties",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalMember",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "agenda",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "logoUrl",
+						"type": "string"
+					},
+					{
+						"internalType": "address[]",
+						"name": "members",
+						"type": "address[]"
+					}
+				],
+				"internalType": "struct Structure.Party[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "getAllVoters",
 		"outputs": [
 			{
@@ -1529,6 +1574,57 @@ export const CONTRACT_ABI: any = [
 					}
 				],
 				"internalType": "struct Structure.Candidate",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			}
+		],
+		"name": "getPartyDetails",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalMember",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "agenda",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "logoUrl",
+						"type": "string"
+					},
+					{
+						"internalType": "address[]",
+						"name": "members",
+						"type": "address[]"
+					}
+				],
+				"internalType": "struct Structure.Party",
 				"name": "",
 				"type": "tuple"
 			}
@@ -2072,4 +2168,4 @@ export const CONTRACT_ABI: any = [
 		"type": "function"
 	}
 ];
-export const CONTRACT_ABI_ADDRESS: string = "0x2C4D01ef9aC05dBa356b9d3fE6bd4cbBD7E2B416";
+export const CONTRACT_ABI_ADDRESS: string = "0x399380379E098154724C1a400893E67A5DcAF951";

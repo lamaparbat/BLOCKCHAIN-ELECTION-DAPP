@@ -182,8 +182,7 @@ const StateProvinceOffices = [
 const ELECTION_TYPE = [
   { label: "Province", value: "Province" },
   { label: "District", value: "District" },
-  { label: "Municipaliy", value: "Municipaliy" },
-  { label: "Ward", value: "Ward" },
+  { label: "Local", value: "Local" },
 ]
 
 let DistrictOffices = [];

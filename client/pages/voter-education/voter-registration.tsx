@@ -6,14 +6,17 @@ import Navbar from '../../components/Navbar';
 import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, SmartContract, GENDER_OPTIONS, VOTE_ELIBILITY_AGE } from '../../constants';
 import { registerVoter } from '../../utils/action';
 import { toast } from 'react-toastify';
-import { getConvertedAge, getFormattedErrorMessage } from '../../utils';
+import { getConvertedAge, getFormattedErrorMessage, getVoterList } from '../../utils';
 import Head from 'next/head';
 import { useTranslations } from 'next-intl';
+import _ from 'lodash';
+import { PulseLoader } from 'react-spinners';
 
 const defaultOptions = { label: '', value: '' };
 declare const window: any;
 
 const VoterRegistration = () => {
+  const [voterLists, setVoterLists] = useState([]);
   const [translateProvinceOptions, setTranslateProvinceOptions] = useState([]);
   const [districtProvinceOptions, setDistrictProvinceOptions] = useState([]);
   const [municipalityOptions, setMunicipalityOptions] = useState([]);
@@ -23,6 +26,8 @@ const VoterRegistration = () => {
     fullName: "", citizenshipNumber: "", province: "", district: "", municipality: "", ward: "",
     email: "", profileUrl: null, dob: null, gender: ""
   });
+  const [loading, setLoading] = useState(false);
+  const [isSubmitBtnDisabled, setIsSubmitBtnDisabled] = useState(true);
 
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
   const voterT = useTranslations("voter");
@@ -34,15 +39,43 @@ const VoterRegistration = () => {
   const wardT = useTranslations("ward");
 
   useEffect(() => {
+    (async () => {
+      const voterlists = await getVoterList();
+
+      setVoterLists(voterlists);
+    })();
+  }, []);
+
+  useEffect(() => {
     setTranslateProvinceOptions(PROVINCE.map((province: any) => ({ label: homepageTranslate(province.value), value: province.value })));
     setDistrictProvinceOptions(DISTRICT[selectedProvince?.value]?.map((district: any) => ({ label: officesTranslate(district.value.toLowerCase()), value: district.value })));
     setMunicipalityOptions(MUNICIPALITY[selectedDistrict?.value]?.map((municipality: any) => ({ label: municipalityT(municipality.label?.split(" ")[0].toLowerCase()), value: municipality.value })));
-  }, [selectedProvince, selectedDistrict])
+  }, [selectedProvince, selectedDistrict]);
+
+  useEffect(() => {
+    // form validation
+    const {
+      fullName,
+      citizenshipNumber,
+      province,
+      district,
+      municipality,
+      ward, email,
+      dob, gender
+    } = voterDetails;
+
+    if (!fullName || !citizenshipNumber || !province || !district ||
+      !municipality || !ward || !email || !dob || !gender) setIsSubmitBtnDisabled(true);
+    else setIsSubmitBtnDisabled(false);
+  }, [voterDetails]);
 
   // upload voterDetails
   const onSubmit = async () => {
     try {
       if (!window?.ethereum) return toast.warn("Please install metamask wallet.");
+
+      setLoading(true);
+      setIsSubmitBtnDisabled(true);
 
       const formData = new FormData();
       const {
@@ -64,11 +97,20 @@ const VoterRegistration = () => {
       formData.append("email", email);
       formData.append("profile", profileUrl);
 
-      const { profile }: any = await registerVoter(formData);
       const age = getConvertedAge(dob);
 
       // age eligibility check
       if (age < VOTE_ELIBILITY_AGE) return toast.error(`Voter age must be greater or equal to ${VOTE_ELIBILITY_AGE}`);
+
+      // check if candidate already exists
+      const isExits = voterLists?.find((d: any) => d.user?.citizenshipNumber?.includes(citizenshipNumber));
+      if (isExits) throw new Error("Voter already exists on given citizenship nuber !");
+
+      // check if duplicate email
+      const isDuplicate = voterLists?.find((d: any) => d.user?.email?.toLowerCase()?.includes(email?.toLowerCase()));
+      if (isDuplicate) throw new Error("Given email address is already registered !");
+
+      const { profile }: any = await registerVoter(formData);
 
       await SmartContract.methods.addVoter(
         fullName,
@@ -85,8 +127,16 @@ const VoterRegistration = () => {
       ).send({ from: loggedInAccountAddress });
 
       toast.success("New Voter registered successfully");
+      setLoading(false);
+      setIsSubmitBtnDisabled(true);
     } catch (error) {
-      toast.error(`Failed to register !, ${getFormattedErrorMessage(error.message)}`, { toastId: 2 });
+      let errorMsg = getFormattedErrorMessage(error.message);
+      errorMsg = errorMsg.length > 0 ? errorMsg : error.message;
+      console.error({ errorMsg })
+
+      toast.error(errorMsg, { toastId: 2 });
+      setLoading(false);
+      setIsSubmitBtnDisabled(true);
     }
 
   }
@@ -128,7 +178,7 @@ const VoterRegistration = () => {
                 onChange={(e) => setVoterDetails({ ...voterDetails, citizenshipNumber: e.target.value })}
               />
             </div>
-            <div className='lg:w-[35%] sm:w-[35%] xsm:w-full xsm:mt-4'>
+            <div className='lg:w-[35%] sm:w-[35%] xsm:w-full sm:mt-0 xsm:mt-4'>
               <span>{VoterRegistrationT("gender_label")}</span>
               <Select
                 className='mt-1'
@@ -223,7 +273,18 @@ const VoterRegistration = () => {
             </div>
           </div>
           <div className='flex justify-between mt-[30px] mb-1'>
-            <button className='bg-blue-900 text-light py-2 w-100 rounded-[5px] hover:opacity-75' onClick={onSubmit}>{VoterRegistrationT("button_label")}</button>
+            <button
+              className={`btn bg-btnColor text-light h-[45px] w-100 rounded-[5px] ${!loading ? "hover:opacity-75" : "bg-blue-600"}`}
+              onClick={onSubmit}
+              disabled={isSubmitBtnDisabled}
+            >
+              {loading ?
+                <span className='text-slate-300 flex justify-center items-center'>
+                  <PulseLoader color='#dedede' size={9} className='mr-3' /> {VoterRegistrationT("registering_label")}
+                </span> :
+                <>{VoterRegistrationT("button_label")}</>
+              }
+            </button>
           </div>
         </div>
       </div>

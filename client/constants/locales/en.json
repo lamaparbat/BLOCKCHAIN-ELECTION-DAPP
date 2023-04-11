@@ -684,7 +684,8 @@
     "dob_label": "Date of Birth",
     "email_label": "Email Address",
     "photo_label": "Choose Voter Photo",
-    "button_label": "Register"
+    "button_label": "Register",
+    "registering_label": "Registering"
   },
   "candidate_registration": {
     "title": "Candidate Registration",
@@ -702,8 +703,8 @@
     "title": "Party List",
     "search_placeholder": "Search Party",
     "party_registration": "Party Registration",
-    "party_agenda":"Party Agenda",
-    "choose_party_logo":"Choose Party Logo",
+    "party_agenda": "Party Agenda",
+    "choose_party_logo": "Choose Party Logo",
     "total_members": "Total Members"
   },
   "province_result": {

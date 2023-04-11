@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import Select from 'react-select';
 import Navbar from '../../components/Navbar';
 import { PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, GENDER_OPTIONS, CANDIDATE_ELIGIBILITY_AGE } from '../../constants';
@@ -11,6 +10,7 @@ import _ from 'lodash';
 import Head from 'next/head';
 import { useTranslations } from 'next-intl';
 import { isAdmin } from '../../utils/web3';
+import { getStorage } from '../../services';
 
 const defaultOptions = { label: '', value: '' };
 declare const window: any;
@@ -37,7 +37,6 @@ const CandidateRegistration = () => {
   const officesTranslate = useTranslations("election_offices");
   const municipalityT = useTranslations("municipalities");
   const wardT = useTranslations("ward");
-  const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
 
   const partyListOption = partyList?.map((d) => {
     return { label: d.name, value: d.name }
@@ -59,7 +58,7 @@ const CandidateRegistration = () => {
     })();
   }, []);
 
- useEffect(() => {
+  useEffect(() => {
     // form validation
     const {
       fullName,
@@ -72,7 +71,7 @@ const CandidateRegistration = () => {
       partyName, agenda, gender
     } = candidateDetails;
 
-    if(!fullName || !citizenshipNumber || !province || !district ||
+    if (!fullName || !citizenshipNumber || !province || !district ||
       !municipality || !ward || !email || !profile || !dob || !partyName || !agenda || !gender) setIsSubmitBtnDisabled(true);
     else setIsSubmitBtnDisabled(false);
   }, [candidateDetails]);
@@ -80,6 +79,7 @@ const CandidateRegistration = () => {
   // upload candidateDetails
   const onSubmit = async () => {
     if (!window?.ethereum) return toast.warn("Please install metamask wallet.");
+    const loggedInAccountAddress = getStorage("loggedInAccountAddress");
 
     try {
       setLoading(true);
@@ -97,11 +97,15 @@ const CandidateRegistration = () => {
       // restrict admin
       const isAdminAddress = await isAdmin(loggedInAccountAddress);
 
-      if(isAdminAddress) throw new Error("Admin are not allowed to add candidates !");
+      if (isAdminAddress) throw new Error("Admin are not allowed to add candidates !");
 
       // check if candidate already exists
       const isExits = _.includes(candidateLists, (candidate: any) => candidate.user.citizenshipNumber === citizenshipNumber);
       if (isExits) throw new Error("Candidate already exists on given citizenship nuber !");
+
+      // check if duplicate email
+      const isDuplicate = candidateLists?.find((d: any) => d.user?.email?.toLowerCase()?.includes(email?.toLowerCase()));
+      if (isDuplicate) throw new Error("Given email address is already registered !");
 
       const age = getConvertedAge(dob);
 
@@ -142,8 +146,9 @@ const CandidateRegistration = () => {
       toast.success("New candidate registered successfully");
       setLoading(false);
     } catch (error) {
-      const errorMsg = getFormattedErrorMessage(error.message);
-      console.error(errorMsg)
+      let errorMsg = getFormattedErrorMessage(error.message);
+      errorMsg = errorMsg.length > 0 ? errorMsg : error.message;
+      console.error({ errorMsg })
 
       setLoading(false);
       toast.error(errorMsg, { toastId: 2 });

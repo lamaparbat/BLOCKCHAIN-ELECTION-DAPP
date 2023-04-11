@@ -14,7 +14,7 @@ import 'animate.css';
 import { BiFemale, BiGroup, BiMale } from 'react-icons/bi';
 import ElectionUserCard from '../components/ElectionUserCard';
 import { PROVINCE } from '../constants';
-import { getVoterList, getFemaleVotersCount, getMaleVotersCount, getOthersVotersCount, getTotalCandidateCount, getTotalElectionCount, getTotalPartiesCount, getTotalVotersCount } from '../utils/web3';
+import { getVoterList, getTotalCandidateCount, getTotalElectionCount, getTotalPartiesCount, getTotalVotersCount } from '../utils/web3';
 import { getCurrentElection } from '../utils/common';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
@@ -38,35 +38,18 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       const electionList = await getElectionList();
-console.log(electionList)
-      const totalCandidatesCount = await getTotalCandidateCount();
       const totalVoters = await getVoterList();
-      const totalVotersCount = await getTotalVotersCount();
-      const totalMaleVotersCount = await getMaleVotersCount();
-      const totalFemaleVotersCount = await getFemaleVotersCount();
-      const totalOthersVotersCount = await getOthersVotersCount();
-      const totalPartiesCount = await getTotalPartiesCount();
-      const totalElectionCount = await getTotalElectionCount();
 
       setTranslateProvinceOptions(PROVINCE.map((province: any) => ({ label: homepageTranslate(province.value), value: province.value })))
       setCurrentElection(getCurrentElection(electionList));
       setElectionLists(electionList);
       setAllVoters(totalVoters);
-      setTotalDataCount({
-        ...totalDataCount,
-        candidates: totalCandidatesCount,
-        voters: totalVotersCount,
-        parties: totalPartiesCount,
-        elections: totalElectionCount,
-        maleVoters: totalMaleVotersCount,
-        femaleVoters: totalFemaleVotersCount,
-        otherVoters: totalOthersVotersCount
-      });
+      await handleOverviewCountSort("province1");
     })();
 
     const browserZoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
 
-    if (!(browserZoomLevel === 80 || browserZoomLevel === 102)) {
+    if (!(browserZoomLevel === 80 || browserZoomLevel === 102) && browserZoomLevel < 170) {
       setTimeout(() => {
         toast.info("Please, Unzoom your browser screen to 80% for better view. Thanks !", {
           className: "w-[600px]",
@@ -83,7 +66,6 @@ console.log(electionList)
 
   if (electionLists?.length > 0) {
     const { startDate, endDate } = electionLists?.at(-1);
-console.log({startDate, endDate})
     if (new Date() < new Date(startDate)) {
       setInterval(() => {
         const diff = new Date(startDate).getTime() - new Date().getTime();
@@ -125,8 +107,15 @@ console.log({startDate, endDate})
     }, 900);
   }, [countDown.seconds]);
 
-  const handleOverviewCountSort = (option: any) => {
-    const voters = allVoters.filter((d: any) => d.user.province === option.value);
+  const handleOverviewCountSort = async (provinceNo: string, _otherCount?: any | undefined | null) => {
+    const totalCandidatesCount = await getTotalCandidateCount();
+    const totalPartiesCount = await getTotalPartiesCount();
+    const totalElectionCount = await getTotalElectionCount();
+
+    const voters = allVoters.filter((d: any) => {
+      return d.user.province === provinceNo
+    });
+
     const result = _.chain(voters)
       .map('user')
       .groupBy('province')
@@ -139,14 +128,17 @@ console.log({startDate, endDate})
         }
       })
       .value();
-    const { MALE, FEMALE, others } = result[option.value] ?? {};
+    const { MALE, FEMALE, others } = result[provinceNo] ?? {};
 
     setTotalDataCount({
       ...totalDataCount,
       voters: voters?.length,
       maleVoters: MALE ?? 0,
       femaleVoters: FEMALE ?? 0,
-      otherVoters: others ?? 0
+      otherVoters: others ?? 0,
+      candidates: totalCandidatesCount ?? 0,
+      parties: totalPartiesCount ?? 0,
+      elections: totalElectionCount ?? 0
     });
   }
 
@@ -220,7 +212,7 @@ console.log({startDate, endDate})
               </div>
             </div>
 
-            <div className='my-5 sm:px-2 xsm:px-2'>
+            <div className='my-5 sm:px-0 xsm:px-2'>
               <h4 className='font-bold text-md'>{homepageTranslate("election_gallery")}</h4>
               <div className='flex lg:justify-between md:justify-between flex-wrap sm:justify-center'>
                 {electionLists?.length === 0 && <span className='ml-2'>{homepageTranslate("no_election_found")}</span>}
@@ -238,23 +230,23 @@ console.log({startDate, endDate})
               </div>
             </div>
 
-            <div className='my-4 sm:px-3 mb-3 lg:h-[400px] sm:h-fit xsm:px-2'>
+            <div className='my-4 sm:px-0 mb-3 lg:h-[400px] sm:h-fit xsm:px-2'>
               <div className='flex justify-between items-center py-3'>
                 <h4 className='font-bold mt-2 text-md'>{homepageTranslate("overall_election_data")}</h4>
                 <Select
                   className='text-md'
                   options={translateProvinceOptions}
                   placeholder={homepageTranslate("selecte_province_placeholder")}
-                  onChange={handleOverviewCountSort} />
+                  onChange={({ value }) => handleOverviewCountSort(value)} />
               </div>
-              <div className='w-full flex justify-between sm:flex-wrap xsm:flex-wrap'>
+              {totalDataCount && <div className='w-full flex justify-between sm:flex-wrap xsm:flex-wrap'>
                 <ElectionUserCard label={homepageTranslate("total_voters")} value={totalDataCount.voters ?? 0} Icon={<BiGroup className='text-4xl text-blue-900' />} />
                 <ElectionUserCard label={homepageTranslate("male_voters")} value={totalDataCount.maleVoters ?? 0} Icon={<BiMale className='text-4xl text-blue-900' />} />
                 <ElectionUserCard label={homepageTranslate("female_voters")} value={totalDataCount.femaleVoters ?? 0} Icon={<BiFemale className='text-4xl text-blue-900' />} />
                 <ElectionUserCard label={homepageTranslate("others")} value={totalDataCount.otherVoters ?? 0} Icon={<FaTransgender className='text-4xl text-blue-900' />} />
                 <ElectionUserCard label={homepageTranslate("total_election")} value={totalDataCount.elections ?? 0} Icon={<FaVoteYea className='text-4xl text-blue-900' />} />
                 <ElectionUserCard label={homepageTranslate("total_parties")} value={totalDataCount.parties ?? 0} Icon={<BiMale className='text-4xl text-blue-900' />} />
-              </div>
+              </div>}
             </div>
 
           </div>

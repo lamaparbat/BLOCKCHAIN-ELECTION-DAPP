@@ -684,7 +684,8 @@
     "dob_label": "जन्म मिति",
     "email_label": "इमेल ठेगाना",
     "photo_label": "मतदाता फोटो छान्नुहोस्",
-    "button_label": "दर्ता गर्नुहोस्"
+    "button_label": "दर्ता गर्नुहोस्",
+    "registering_label": "दर्ता हुँदै"
   },
   "candidate_registration": {
     "title": "उम्मेदवार दर्ता",
@@ -701,9 +702,9 @@
   "party": {
     "title": "पार्टी सूची",
     "search_placeholder": "पार्टी खोज्नुहोस्",
-    "party_registration":"पार्टी दर्ता",
-    "party_agenda":"पार्टी एजेन्डा",
-    "choose_party_logo":"पार्टी लोगो छान्नुहोस्",
+    "party_registration": "पार्टी दर्ता",
+    "party_agenda": "पार्टी एजेन्डा",
+    "choose_party_logo": "पार्टी लोगो छान्नुहोस्",
     "total_members": "कुल सदस्यहरू"
   },
   "province_result": {

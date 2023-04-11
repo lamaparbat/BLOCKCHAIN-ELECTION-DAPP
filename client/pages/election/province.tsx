@@ -94,20 +94,22 @@ export default function Home() {
         <link rel="icon" href="/images/logo.png" />
       </Head>
       <Navbar />
-      <div className='px-4 py-3 flex justify-center mt-1'>
-        <div className='flex flex-column justify-between'>
+      <div className='lg:px-4 sm:px-4 xsm:px-1 py-3 flex lg:justify-center sm:justify-start xsm:justify-start mt-1'>
+        <div className='flex flex-column'>
 
           {/* province level elections */}
-          <div className='lg:w-[1100px] w-full lg:px-2 max-[1100px]:px-1'>
+          <div className='lg:w-[1100px] xsm:w-full sm:px-4 xsm:px-2'>
 
             {/* hotlist */}
-            <div className='flex items-center'>
+            <div className='flex lg:flex-row lg:items-center sm:items-center xsm:items-start sm:flex-row xsm:flex-col'>
               <div className='py-1 pl-3 pr-5 mr-5 flex items-center bg-red-700 rounded-tr-full'>
                 <span className='text-slate-100'>{provinceResultT("title")}</span>
               </div>
-              <span className='ml-2 text-lg font-bold text-black'>{provinceResultT("hot_seats")}</span>
-              <GoPrimitiveDot className={`text-4xl ml-5 mr-1 ${electionStatus === 'LIVE' && "text-danger"}`} />
-              <span className='text-[17px]'>{electionStatus}</span>
+              <div className='flex items-center sm:mt-1 xsm:mt-3'>
+                <span className='ml-2 text-lg font-bold text-black'>{provinceResultT("hot_seats")}</span>
+                <GoPrimitiveDot className={`text-4xl ml-5 mr-1 ${electionStatus === 'LIVE' && "text-danger"}`} />
+                <span className='text-[17px]'>{electionStatus}</span>
+              </div>
             </div>
             <div className='flex flex-wrap'>
               {currentElection.electionType === "Province" && electionStatus && electionList?.length > 0 && candidateLists.length > 0 && candidateLists?.map(([key, value]: any) =>

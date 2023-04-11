@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import _ from 'lodash';
 import { FaRegDotCircle } from 'react-icons/fa';
 import AnimatedAvatar from '../AnimatedAvatar';
@@ -11,7 +11,7 @@ import TickCircleIcon from '../TickCircleIcon';
 import { PROVINCE } from '../../constants';
 
 const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, electionStatus, casteVote }): ReactElement => {
-  const router =  useRouter();
+  const router = useRouter();
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
   const isElectionStart = electionStatus === "LIVE";
   const isElectionEnd = electionStatus === "ENDED";
@@ -20,15 +20,15 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, election
   const isAlreadyVoted2 = data[1]?.votedVoterLists.includes(loggedInAccountAddress);
   const isAlreadyVoted3 = data[2]?.votedVoterLists.includes(loggedInAccountAddress);
 
-  const navigateTo = (route:string) => {
-    const provinceNo = _.findIndex(PROVINCE, {label: route}) ?? 0;
-    router.push(`/election/province/${provinceNo+1}`)
+  const navigateTo = (route: string) => {
+    const provinceNo = _.findIndex(PROVINCE, { label: route }) ?? 0;
+    router.push(`/election/province/${provinceNo + 1}`)
   }
 
   return (
     <div
-      className={`card__container ${isElectionEnd && 'bg-celebrationGif'} h-fit min-[1140px]:w-[530px] max-[1140px]:w-full mt-3 border border-1 border-slate-300 rounded-1 overflow-hidden mr-3`}>
-      <div 
+      className={`card__container ${isElectionEnd && 'bg-celebrationGif'} h-fit sm:w-[520px] max-[1140px]:w-full mt-3 border border-1 border-slate-300 rounded-1 overflow-hidden mr-3`}>
+      <div
         className='card__title pl-4 pt-2 flex items-center bg-slate-100 border-l-0 border-r-0 border-t-0 border-b-2 border-black-500 cursor-pointer'
         onClick={() => navigateTo(type)}
       >

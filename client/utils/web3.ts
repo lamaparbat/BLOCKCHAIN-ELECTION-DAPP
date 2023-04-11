@@ -33,11 +33,6 @@ export const getFaqs = async () => {
   return await SmartContract.methods.getAllFAQs().call();
 }
 
-export const getVoterDetails = async (voterAddress:string) => {
-  if (!window.ethereum) return [];
-  return await SmartContract.methods.getVoterDetails(voterAddress).call();
-}
-
 export const getTotalVotersCount = async () => {
   if (!window.ethereum) return 0;
   return await SmartContract.methods.totalVoter().call();
@@ -73,10 +68,29 @@ export const getTotalElectionCount = async () => {
   return await SmartContract.methods.totalElection().call();
 }
 
-export const isAdmin = async (address:string) => {
+export const isAdmin = async (address: string) => {
   try {
     if (!window?.ethereum) return 0;
     return await SmartContract.methods.isAdmin(address).call();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+export const getCandidateDetails = async (address: string) => {
+  try {
+    if (!window?.ethereum) return 0;
+    return await SmartContract.methods.getCandidateDetails(address).call();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export const getVoterDetails = async (address: string) => {
+  try {
+    if (!window?.ethereum) return 0;
+    return await SmartContract.methods.getVoterDetails(address).call();
   } catch (error) {
     console.error(error);
   }
