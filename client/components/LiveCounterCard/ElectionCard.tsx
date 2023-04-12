@@ -34,7 +34,7 @@ const ElectionCard = ({ details, src }) => {
         <span className='select-none'><span className='font-bold'>{t("held")}:</span> {moment(startDate).format("lll")}</span>
         <span className='select-none my-1'><span className='font-bold'>{t("ended")}:</span> {moment(endDate).format("lll")}</span>
         <span className='mb-1 select-none'><span className='font-bold select-none'>{t("total_candidate")}:</span> {selectedCandidates?.length}</span>
-        <span className='select-none'><span className='font-bold select-none'>{t("total_vote")}:</span> 1203</span>
+        <span className='select-none'><span className='font-bold select-none'>{t("total_vote")}:</span></span>
       </div>
     </div>
   )
