@@ -14,7 +14,7 @@ import 'animate.css';
 import { BiFemale, BiGroup, BiMale } from 'react-icons/bi';
 import ElectionUserCard from '../components/ElectionUserCard';
 import { PROVINCE } from '../constants';
-import { getVoterList, getTotalCandidateCount, getTotalElectionCount, getTotalPartiesCount, getTotalVotersCount } from '../utils/web3';
+import { getVoterList, getTotalCandidateCount, getTotalElectionCount, getTotalPartiesCount, getTotalVotersCount, getAllBlocks } from '../utils/web3';
 import { getCurrentElection } from '../utils/common';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
@@ -45,6 +45,7 @@ export default function Home() {
       setElectionLists(electionList);
       setAllVoters(totalVoters);
       await handleOverviewCountSort("province1");
+      console.log(getAllBlocks());
     })();
 
     const browserZoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
@@ -107,7 +108,7 @@ export default function Home() {
     }, 900);
   }, [countDown.seconds]);
 
-  const handleOverviewCountSort = async (provinceNo: string, _otherCount?: any | undefined | null) => {
+  const handleOverviewCountSort = async (provinceNo: string) => {
     const totalCandidatesCount = await getTotalCandidateCount();
     const totalPartiesCount = await getTotalPartiesCount();
     const totalElectionCount = await getTotalElectionCount();
@@ -115,7 +116,7 @@ export default function Home() {
     const voters = allVoters.filter((d: any) => {
       return d.user.province === provinceNo
     });
-
+    console.log(voters, allVoters, provinceNo)
     const result = _.chain(voters)
       .map('user')
       .groupBy('province')
