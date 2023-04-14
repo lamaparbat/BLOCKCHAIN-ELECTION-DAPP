@@ -9,6 +9,7 @@ import { getVoterList } from '../../utils';
 import { setCandidateList } from '../../redux/reducers/candidateReducer';
 import Sortbar from '../../components/Sortbar';
 import { useTranslations } from 'next-intl';
+import _ from 'lodash';
 
 let originalVoterList = [];
 let voterEvent: any = null;
@@ -34,6 +35,12 @@ const Details: React.FC = (): React.ReactElement => {
         }
 
         voterEvent = SmartContract.events?.VoterCreated().on("data", (event: any) => {
+          let tempArray = [...voterLists, event.returnValues[0]];
+
+          tempArray = _.uniqBy(tempArray, (candidate) => {
+            return candidate.user.citizenshipNumber;
+          });
+          setVoterLists(tempArray);
           dispatch(setCandidateList([...voterLists, event.returnValues[0]]));
         }).on("error", () => console.error("VoterCreated Event Error !"));
       } catch (error) {
@@ -51,7 +58,7 @@ const Details: React.FC = (): React.ReactElement => {
     <div className='mb-[50px]'>
       <Navbar /><br />
       <div className='w-full flex lg:justify-center lg:px-5 sm:justify-start xsm:px-3'>
-        <div className={`${responsive} flex-col justify-start rounded-1`}>
+        <div className={`${responsive} flex-col justify-start rounded-1 sm:w-full xsm:w-full`}>
           <BreadCrumb routes={[voterT("breadcumb2"), voterRollT("title")]} />
           <div className='flex items-center justify-between'>
             <p className='text-2xl text-black mt-4'>{voterRollT("title")}</p>
