@@ -104,7 +104,7 @@ const Details: React.FC = (): React.ReactElement => {
       toast.error("Fail to add selected candidates !");
     }
   }
-
+console.log({electionList})
   return (
     <div className='mb-[50px]'>
       <Head>
@@ -167,7 +167,7 @@ const Details: React.FC = (): React.ReactElement => {
               />
             </div>
           </div><br />
-          <div className='voter__container flex flex-wrap justify-between'>
+          <div className='voter__container flex flex-wrap md:justify-between sm:justify-center xsm:justify-center'>
             {loading && <VoterCardSkeleton repeatCount={12} />}
             {
               candidateLists ?
