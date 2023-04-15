@@ -45,6 +45,7 @@ export default function Home() {
       setElectionLists(electionList);
       setAllVoters(totalVoters);
       await handleOverviewCountSort("province1");
+      console.log(getAllBlocks());
     })();
 
     const browserZoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
@@ -65,6 +66,7 @@ export default function Home() {
   }, []);
   if (electionLists?.length > 0) {
     const { startDate, endDate } = electionLists?.at(-1);
+
     if (new Date() < new Date(startDate)) {
       const interval = setInterval(() => {
         const diff = new Date(startDate).getTime() - new Date().getTime();

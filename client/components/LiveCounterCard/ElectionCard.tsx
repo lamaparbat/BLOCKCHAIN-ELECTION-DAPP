@@ -11,7 +11,6 @@ const ElectionCard = ({ details, src }) => {
   const { title, startDate, endDate, description, candidates } = details ?? {};
   let totalVotes = 0; 
   candidates?.forEach((d) => {
-    console.log(d)
     totalVotes += parseInt(d?.voteCount);
   });
   const t = useTranslations("election_gallery_card");
@@ -24,7 +23,7 @@ const ElectionCard = ({ details, src }) => {
   const mouseOut = () => {
     setShowIcon(false)
   }
-console.log({totalVotes})
+
   return (
     <div className='relative bg-slate-50 sm:w-[340px] xsm:w-full h-fit rounded-t-[5px] overflow-hidden shadow-md mr-2 mb-3'>
       <div className='w-full h-[180px] overflow-hidden' onMouseOver={mouseOver} onMouseOut={mouseOut}>
