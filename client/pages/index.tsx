@@ -14,7 +14,7 @@ import 'animate.css';
 import { BiFemale, BiGroup, BiMale } from 'react-icons/bi';
 import ElectionUserCard from '../components/ElectionUserCard';
 import { PROVINCE } from '../constants';
-import { getVoterList, getTotalCandidateCount, getTotalElectionCount, getTotalPartiesCount, getTotalVotersCount } from '../utils/web3';
+import { getVoterList, getTotalCandidateCount, getTotalElectionCount, getTotalPartiesCount, getTotalVotersCount, getAllBlocks } from '../utils/web3';
 import { getCurrentElection } from '../utils/common';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
@@ -63,16 +63,17 @@ export default function Home() {
       window.removeEventListener("resize", null);
     }
   }, []);
-
   if (electionLists?.length > 0) {
     const { startDate, endDate } = electionLists?.at(-1);
     if (new Date() < new Date(startDate)) {
-      setInterval(() => {
+      const interval = setInterval(() => {
         const diff = new Date(startDate).getTime() - new Date().getTime();
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        if(minutes < 0 || diff < 0 || days < 0 || seconds < 0) return clearInterval(interval);      
 
         setCountDown({ days, hours, minutes, seconds });
       }, 1000);
@@ -107,12 +108,12 @@ export default function Home() {
     }, 900);
   }, [countDown.seconds]);
 
-  const handleOverviewCountSort = async (provinceNo: string, _otherCount?: any | undefined | null) => {
+  const handleOverviewCountSort = async (provinceNo: string) => {
     const totalCandidatesCount = await getTotalCandidateCount();
     const totalPartiesCount = await getTotalPartiesCount();
     const totalElectionCount = await getTotalElectionCount();
 
-    const voters = allVoters.filter((d: any) => {
+    const voters = allVoters?.filter((d: any) => {
       return d.user.province === provinceNo
     });
 
@@ -141,7 +142,6 @@ export default function Home() {
       elections: totalElectionCount ?? 0
     });
   }
-
   return (
     <div>
       <Head>
@@ -212,7 +212,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='my-5 sm:px-0 xsm:px-2'>
+            <div className='my-5 lg:px-0 sm:px-2 xsm:px-2'>
               <h4 className='font-bold text-md'>{homepageTranslate("election_gallery")}</h4>
               <div className='flex lg:justify-between md:justify-between flex-wrap sm:justify-center'>
                 {electionLists?.length === 0 && <span className='ml-2'>{homepageTranslate("no_election_found")}</span>}
@@ -230,7 +230,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='my-4 sm:px-0 mb-3 lg:h-[400px] sm:h-fit xsm:px-2'>
+            <div className='my-4 lg:px-0 sm:px-2 mb-3 lg:h-[400px] sm:h-fit xsm:px-2'>
               <div className='flex justify-between items-center py-3'>
                 <h4 className='font-bold mt-2 text-md'>{homepageTranslate("overall_election_data")}</h4>
                 <Select

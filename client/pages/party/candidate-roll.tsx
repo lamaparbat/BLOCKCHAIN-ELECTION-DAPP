@@ -104,7 +104,7 @@ const Details: React.FC = (): React.ReactElement => {
       toast.error("Fail to add selected candidates !");
     }
   }
-
+console.log({electionList})
   return (
     <div className='mb-[50px]'>
       <Head>
@@ -113,10 +113,10 @@ const Details: React.FC = (): React.ReactElement => {
         <link rel="icon" href={"/images/logo.png"} />
       </Head>
       <Navbar /><br />
-      <div className='w-full flex justify-center px-5'>
-        <div className={`${responsive} flex-col justify-start rounded-1`}>
+      <div className='w-full flex justify-center sm:px-6 xsm:px-2'>
+        <div className={`${responsive} flex-col justify-start rounded-1 sm:px-3 xsm:px-0 xsm:w-full`}>
           <BreadCrumb routes={[voterT("breadcumb5"), voterT("breadcumb6")]} />
-          <div className='flex items-center justify-between'>
+          <div className='flex items-center sm:flex-row xsm:flex-col sm:justify-between xsm:justify-start'>
             <div className='text-2xl text-black mt-4 relative'>
               {t("title")}
               {true &&
@@ -125,7 +125,7 @@ const Details: React.FC = (): React.ReactElement => {
                 </span>
               }
             </div>
-            <div className='flex items-center'>
+            <div className='flex items-center mt-4'>
               {electedCandidatesList && electedCandidatesList.selectedCandidates.length > 0 &&
                 <div className='flex items-center'>
                   {/* <button
@@ -167,7 +167,7 @@ const Details: React.FC = (): React.ReactElement => {
               />
             </div>
           </div><br />
-          <div className='voter__container flex flex-wrap justify-between'>
+          <div className='voter__container flex flex-wrap md:justify-between sm:justify-center xsm:justify-center'>
             {loading && <VoterCardSkeleton repeatCount={12} />}
             {
               candidateLists ?

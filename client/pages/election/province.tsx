@@ -43,7 +43,8 @@ export default function Home() {
           return d.user._id === votedCandidateDetails.user._id ? { ...votedCandidateDetails } : { ...d };
         });
         const { electionCandidatesArray } = getSortedCandidatesList(electionList, filterCandidates);
-        setCandidateLists(electionCandidatesArray);
+
+        // setCandidateLists(electionCandidatesArray);
       });
     })();
 
@@ -68,24 +69,38 @@ export default function Home() {
   const casteVote = async (_candidateID: string) => {
     try {
       const voterDetails = await getVoterDetails(loggedInAccountAddress);
+      const electionAddress =  electionList?.at(-1)?.startDate;
+      let selectedCandidates = null;
 
       // vote limit count
       if (voterDetails.voteLimitCount === "3") return toast.info("You've exceed the vote limit count !");
 
-      const casteCandidateDetails = _.find(candidateLists, (elections) => {
-        elections[1].find(((candidate: any) => candidate.user._id === _candidateID))
-      });
-      const isAlreadyVoted = casteCandidateDetails?.votedVoterLists?.includes(loggedInAccountAddress);
-      if (isAlreadyVoted) return toast.info("You've already casted vote !");
+      for(let i = 0; i <candidateLists.length; i++) {
+        for(let j = 0; j <candidateLists[i][1].length; j++) {
+          if(candidateLists[i][1][j].user._id === _candidateID){
+            selectedCandidates = candidateLists[i][1][j];
+            break;
+          }
+          if(selectedCandidates) break;
+        }
+      }
+      const isAlreadyVoted = selectedCandidates?.votedVoterLists?.includes(loggedInAccountAddress) ?? false;
 
-      await SmartContract.methods.vote(_candidateID).send({ from: loggedInAccountAddress });
+      if (isAlreadyVoted) return toast.error("You've already casted vote !");
+
+      await SmartContract.methods.vote(_candidateID, electionAddress).send({ from: loggedInAccountAddress });
+
+      const _candidateLists = await getCandidateList();
+      const { electionCandidatesArray } = getSortedCandidatesList(electionList, _candidateLists);
+      setCandidateLists(electionCandidatesArray);
+
       toast.success("Vote caste successfully.");
     } catch (error) {
       console.log(error)
       toast.error(`Failed to caste vote !, ${getFormattedErrorMessage(error.message)}`, { toastId: 2 });
     }
   }
-
+console.log({electionList})
   return (
     <div>
       <Head>

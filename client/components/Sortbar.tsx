@@ -5,6 +5,7 @@ import Select from 'react-select';
 import { DISTRICT, MUNICIPALITY, PROVINCE, WARD_NO } from '../constants';
 import { getPartyList, getPartyListOptions } from '../utils';
 import { useTranslations } from 'next-intl';
+import _ from 'lodash';
 
 const defaultOptions = { label: '', value: '' };
 
@@ -42,19 +43,19 @@ const Sortbar = ({
       let sortResult = originalList;
 
       if (selectedProvince.label.length > 0)
-        sortResult = originalList.filter((candidate: any) => candidate.user.province.toUpperCase().includes(selectedProvince.label.toUpperCase()));
+        sortResult = originalList.filter((candidate: any) => candidate.user.province.toUpperCase().includes(selectedProvince.value.toUpperCase()));
 
-      if (selectedDistrict.label.length > 0)
-        sortResult = sortResult.filter((candidate: any) => candidate.user.district.toUpperCase().includes(selectedDistrict.label.toUpperCase()));
+      if (selectedDistrict.value.length > 0)
+        sortResult = sortResult.filter((candidate: any) => candidate.user.district.toUpperCase().includes(selectedDistrict.value.toUpperCase()));
 
-      if (selectedMunicipality.label.length > 0)
-        sortResult = sortResult.filter((candidate: any) => candidate.user.municipality.toUpperCase().includes(selectedMunicipality.label.toUpperCase()));
+      if (selectedMunicipality.value.length > 0)
+        sortResult = sortResult.filter((candidate: any) => candidate.user.municipality.toUpperCase().includes(selectedMunicipality.value.toUpperCase()));
 
-      if (selectedWard.label.length > 0)
-        sortResult = sortResult.filter((candidate: any) => candidate.user.ward.toUpperCase().includes(selectedWard.label.toUpperCase()));
+      if (selectedWard.value.length > 0)
+        sortResult = sortResult.filter((candidate: any) => candidate.user.ward.toUpperCase().includes(selectedWard.value.toUpperCase()));
 
-      if (selectedParty.label.length > 0)
-        sortResult = sortResult.filter((candidate: any) => candidate.partyName.toUpperCase().includes(selectedParty.label.toUpperCase()));
+      if (selectedParty.value.length > 0)
+        sortResult = sortResult.filter((candidate: any) => candidate.partyName.toUpperCase().includes(selectedParty.value.toUpperCase()));
 
       setStateList(sortResult);
     })();
@@ -75,7 +76,6 @@ const Sortbar = ({
     setStateList(originalList);
   }
 
-
   return (
     <div className='filter--section'>
       <div
@@ -85,12 +85,12 @@ const Sortbar = ({
         {!openSortModal ? <>{t("sort")} <BsFilter className='text-2xl ml-2' /></> :
           <>{t("cancel")} <AiOutlineClose className='text-1xl ml-2' /></>}
       </div>
-      <div className={`absolute px-3 py-2 flex flex-column bg-white shadow-lg mt-3 w-[500px] -ml-[400px] z-50 ${!openSortModal && "hidden"}`}>
+      <div className={`absolute px-3 py-2 flex flex-column bg-white shadow-lg mt-3 sm:w-[500px] xsm:w-[350px] sm:-ml-[400px] xsm:-ml-[230px] z-50 ${!openSortModal && "hidden"}`}>
         <h5 className='mt-3 mb-3'>{t("address")}</h5>
-        <div className='flex'>
+        <div className='flex justify-center items-center sm:flex-row xsm:flex-col'>
           <Select
             options={translateProvinceOptions}
-            className="w-50"
+            className="w-100"
             placeholder={<div>{t("select_province")}</div>}
             onChange={(item) => {
               setSelectProvince(item);
@@ -98,7 +98,7 @@ const Sortbar = ({
           />
           <Select
             options={districtProvinceOptions}
-            className="w-50 mx-2"
+            className="w-100 mx-2 sm:mt-0 xsm:mt-3"
             placeholder={<div>{t("select_district")}</div>}
             onChange={(item: any) => {
               setSelectDistrict(item);
@@ -106,10 +106,10 @@ const Sortbar = ({
             isDisabled={selectedProvince?.label ? false : true}
           />
         </div>
-        <div className='flex my-3'>
+        <div className='flex my-3 sm:flex-row xsm:flex-col'>
           <Select
             options={municipalityOptions}
-            className="w-50"
+            className="sm:w-50 xsm:w-100"
             placeholder={<div>{t("select_municipality")}</div>}
             onChange={(item: any) => {
               setSelectMunicipality(item);
@@ -118,7 +118,7 @@ const Sortbar = ({
           />
           <Select
             options={WARD_NO.map((d) => ({ label: wardT(`w${d.label}`), value: d.value }))}
-            className="w-50 mx-2"
+            className="sm:w-50 xsm:w-100 sm:mx-2 xsm:mx-0 sm:mt-0 xsm:mt-3"
             placeholder={<div>{t("select_ward")}</div>}
             onChange={(item: any) => {
               setSelectWard(item);
@@ -131,7 +131,7 @@ const Sortbar = ({
             <h5 className='mt-3 mb-3'>{partyT("title")}</h5>
             <div className='flex'>
               <Select
-                options={getPartyListOptions(partyList)}
+                options={_.unionBy(getPartyListOptions(partyList), "value")}
                 className="w-50"
                 placeholder={<div>{sortCompT("select_party")}</div>}
                 onChange={(item: any) => {

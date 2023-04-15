@@ -38,9 +38,7 @@ const CandidateRegistration = () => {
   const municipalityT = useTranslations("municipalities");
   const wardT = useTranslations("ward");
 
-  const partyListOption = partyList?.map((d) => {
-    return { label: d.name, value: d.name }
-  });
+  const partyListOption = _.unionBy(partyList?.map((d) => ({ label: d.name, value: d.name })), "value");
 
   useEffect(() => {
     setTranslateProvinceOptions(PROVINCE.map((province: any) => ({ label: homepageTranslate(province.value), value: province.value })));
@@ -98,6 +96,12 @@ const CandidateRegistration = () => {
       const isAdminAddress = await isAdmin(loggedInAccountAddress);
 
       if (isAdminAddress) throw new Error("Admin are not allowed to add candidates !");
+
+      // email format validation
+      if(!(email.indexOf("@") > 0 &&  email.indexOf(".") > 0)){
+        setLoading(false);
+        return toast.error("Email format is wrong !");
+      }
 
       // check if candidate already exists
       const isExits = _.includes(candidateLists, (candidate: any) => candidate.user.citizenshipNumber === citizenshipNumber);

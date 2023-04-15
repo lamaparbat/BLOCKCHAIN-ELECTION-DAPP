@@ -95,3 +95,18 @@ export const getVoterDetails = async (address: string) => {
     console.error(error);
   }
 }
+
+export const getAllBlocks = () => {
+  try {
+    web3.eth.getBlockNumber((error, latestBlockNumber) => {
+      if (!error) {
+        console.log(`Latest block number: ${latestBlockNumber}`);
+      } else {
+        console.error(error);
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    return []
+  }
+}

@@ -15,8 +15,8 @@ const Overview = () => {
         <link rel="icon" href="/images/logo.png" />
       </Head>
       <Navbar />
-      <div className='flex justify-center mt-3 mb-5 px-3 lg:px-0'>
-        <div className={`${responsive} flex flex-col justify-between rounded-1 flex-wrap lg:px-3`}>
+      <div className='flex lg:justify-center mt-3 mb-5 px-3 lg:px-0'>
+        <div className={`${responsive} flex flex-col justify-between rounded-1 flex-wrap lg:px-3 sm:w-full`}>
           <h4 className='my-3'>{t("title")}</h4>
           <ul className='list-group'>
             {ElectionFrameworkOverview.map((d: string, i: number) => {

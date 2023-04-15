@@ -102,6 +102,13 @@ const VoterRegistration = () => {
       // age eligibility check
       if (age < VOTE_ELIBILITY_AGE) return toast.error(`Voter age must be greater or equal to ${VOTE_ELIBILITY_AGE}`);
 
+
+      // email format validation
+      if(!(email.indexOf("@") > 0 &&  email.indexOf(".") > 0)){
+        setLoading(false);
+        return toast.error("Email format is wrong !");
+      }
+
       // check if candidate already exists
       const isExits = voterLists?.find((d: any) => d.user?.citizenshipNumber?.includes(citizenshipNumber));
       if (isExits) throw new Error("Voter already exists on given citizenship nuber !");
@@ -204,7 +211,7 @@ const VoterRegistration = () => {
               <span>{VoterRegistrationT("district_label")}</span>
               <Select
                 options={districtProvinceOptions}
-                className="lg:w-[220px] sm:w-[220px] xsm:w-full mt-1"
+                className="lg:w-[220px] sm:w-[220px] xsm:w-full sm:mt-0 xsm:mt-1"
                 placeholder={<div>{commonT("district_placeholder")}</div>}
                 onChange={(item: any) => {
                   setSelectDistrict(item);
@@ -214,7 +221,7 @@ const VoterRegistration = () => {
               />
             </div>
           </div>
-          <div className='flex lg:flex-row sm:flex-row xsm:flex-col'>
+          <div className='flex lg:flex-row sm:flex-row xsm:flex-col justify-between'>
             <div>
               <span>{VoterRegistrationT("municipality_label")}</span>
               <Select
@@ -231,7 +238,7 @@ const VoterRegistration = () => {
               <span>{VoterRegistrationT("ward_label")}</span>
               <Select
                 options={WARD_NO.map((d) => ({ label: wardT(`w${d.label}`), value: d.value }))}
-                className="lg:w-[220px] sm:w-[220px] xsm:w-full mt-1"
+                className="lg:w-[220px] sm:w-[220px] xsm:w-full xsm:mt-1 sm:mt-0 xsm:mt-1"
                 placeholder={<div>{commonT("ward_placeholder")}</div>}
                 onChange={(item: any) => {
                   setVoterDetails({ ...voterDetails, ward: item.value })
