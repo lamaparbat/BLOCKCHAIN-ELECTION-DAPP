@@ -24,6 +24,7 @@ const Details: React.FC = (): React.ReactElement => {
   const [candidateLists, setCandidateLists] = useState([]);
   const [electionList, setElectionList] = useState([]);
   const [electedCandidatesList, setElectedCandidates] = useState(defaultElectedCandidates);
+  const [disabledSubmitBtn, setDisabledSubmitBtn] = useState(true);
 
   const [electionOptions, setElectionOptions] = useState([]);
   const [openSortModal, setOpenSortModal] = useState(false);
@@ -36,7 +37,7 @@ const Details: React.FC = (): React.ReactElement => {
   const dispatch = useDispatch();
   const t = useTranslations("candidate_roll");
   const voterT = useTranslations("voter");
-  const sortCompT = useTranslations("sortComp");
+  const commonT = useTranslations("common");
   const faqT = useTranslations("faq");
 
   useEffect(() => {
@@ -87,10 +88,24 @@ const Details: React.FC = (): React.ReactElement => {
   }
 
   const handleSelectElection = ({ value }) => {
+    setDisabledSubmitBtn(true);
+    const selectedElection = electionList?.find((d) => d?.startDate === value);
+
+    if (selectedElection?.electionType === "Local") {
+      const _electedCandidatesAddress = electedCandidatesList?.selectedCandidates;
+      const candidateA = candidateLists?.find((candidate) => candidate.user._id === _electedCandidatesAddress[0]);
+      const candidateB = candidateLists?.find((candidate) => candidate.user._id === _electedCandidatesAddress[1]);
+
+      if (_electedCandidatesAddress?.length > 2 || _electedCandidatesAddress?.length < 2) return toast.error("Please select 2 candidates for binary election !");
+      if (candidateA?.partyName === candidateB?.partyName) return toast.error("Oponent should be from another party !");
+    }
+
+
     setElectedCandidates({
       ...electedCandidatesList,
       electionAddress: value ?? electionList?.at(-1)?.startDate
     });
+    setDisabledSubmitBtn(false);
   }
 
   const handleSubmitSelection = async () => {
@@ -104,7 +119,7 @@ const Details: React.FC = (): React.ReactElement => {
       toast.error("Fail to add selected candidates !");
     }
   }
-console.log({electionList})
+  // console.log({ electionList })
   return (
     <div className='mb-[50px]'>
       <Head>
@@ -187,7 +202,7 @@ console.log({electionList})
       <Modal show={showSubmitModal} size="sm">
         <Modal.Body>
           <div className='my-2 mx-3'>
-            <label className='mb-2'>{sortCompT("select_party")}</label>
+            <label className='mb-2'>{commonT("select_election")}</label>
             <Select options={electionOptions} onChange={handleSelectElection} />
           </div>
         </Modal.Body>
@@ -196,7 +211,7 @@ console.log({electionList})
           <button
             className='btn btn-primary px-3 py-1 rounded-1'
             onClick={() => handleSubmitSelection()}
-            disabled={!electedCandidatesList.electionAddress}
+            disabled={!electedCandidatesList.electionAddress || disabledSubmitBtn}
           >{faqT("submit_btn")}</button>
         </Modal.Footer>
       </Modal>
