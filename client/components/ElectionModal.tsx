@@ -5,6 +5,7 @@ import Select from "react-select";
 import { toast } from 'react-toastify';
 import { ELECTION_TYPE, SmartContract } from '../constants';
 import { getHostedUrl } from '../utils/action';
+import { useTranslations } from 'next-intl';
 
 const currentDate = new Date();
 const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -24,6 +25,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const [isDisabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
+
 
   useEffect(() => {
     setDisabled(!isAgree || !election.title || !election.description || !election.startDate || !election.endDate);
@@ -71,6 +73,18 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
       </Modal.Header>
       <Modal.Body>
         <div className='px-2'>
+          <div className='w-full mb-4'>
+            <div className='w-100'>
+              <label>Election Type</label>
+              <Select
+                options={ELECTION_TYPE}
+                className="mr-2 mt-1"
+                placeholder={<div>Select Type</div>}
+                onChange={(item: any) => onChange("electionType", item.value)}
+                isDisabled={election?.electionType ? false : true}
+              />
+            </div>
+          </div>
           <div className='flex flex-column'>
             <label>Election Title</label>
             <input
@@ -103,19 +117,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
                 onChange={(e) => onChange("endDate", e.target.value)} />
             </div>
           </div>
-          <div className='w-full mt-4 mb-3'>
-            <div className='w-100'>
-              <label>Election Type</label>
-              <Select
-                options={ELECTION_TYPE}
-                className="mr-2 mt-1"
-                placeholder={<div>Select Type</div>}
-                onChange={(item: any) => onChange("electionType", item.value)}
-                isDisabled={election?.electionType ? false : true}
-              />
-            </div>
-          </div>
-          <div className='w-full'>
+          <div className='w-full mt-3'>
             <label>Choose election images</label>
             <input
               className='form-control mt-1'
