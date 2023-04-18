@@ -40,6 +40,8 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
   const onCreate = async () => {
     setLoading(true);
 
+    if (election?.electionType === "Local" && selectedCandidates?.length > 2) return toast.warning("Only 2 candidates are allow for binary election !!");
+
     try {
       const { title, description, startDate, endDate, electionType, electionImages } = election;
       const formData = new FormData();
@@ -92,6 +94,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
             {(candidateLists && candidateLists?.length > 0) ?
               candidateLists.map((details: any, i) => {
                 const formattedEmail = details?.user?.email.split("@")[0];
+                const isCandidateSelected = selectedCandidates?.find(candidate => candidate.user._id === details.user._id);
                 return (
                   <div className='user__card h-[180px] w-[340px] px-2 mb-3 mr-4 max-[500px]:w-[500px] max-[400px]:w-full bg-slate-100 rounded-[12px] hover:bg-red-20'>
                     <div className='absolute m-2 p-2 bg-white shadow-lg border-[1px] border-slate-500 rounded-circle h-[45px] w-[45px] flex justify-center items-center'>
@@ -102,7 +105,8 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
                           onCandidateSelected(e.target.checked, details);
                         }}
                         key={details?.user?.citizenshipNumber}
-                        checked={selectedCandidates?.find(candidate => candidate.user._id === details.user._id)}
+                        checked={isCandidateSelected}
+                        disabled={election?.electionType === "District" && selectedCandidates?.length >= 2 && !isCandidateSelected}
                       />
                     </div>
                     <div className='flex justify-around items-center mt-4'>
@@ -214,7 +218,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button className='me-4' onClick={() => handleClose}>Close</button>
+          <button className='me-4' onClick={handleClose}>Close</button>
           <button
             className={`bg-blue-900 text-light py-1 w-[130px] rounded-[5px] hover:opacity-75 flex justify-center items-center ${(isDisabled || loading) && 'opacity-75 cursor-default'}`}
             onClick={onCreate}
