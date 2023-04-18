@@ -5,7 +5,8 @@ import Select from "react-select";
 import { toast } from 'react-toastify';
 import { ELECTION_TYPE, SmartContract } from '../constants';
 import { getHostedUrl } from '../utils/action';
-import { useTranslations } from 'next-intl';
+import Avatar from './Avatar';
+import { BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs';
 
 const currentDate = new Date();
 const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -19,13 +20,14 @@ const defaultElectionData = {
 }
 
 
-const ElectionModal = ({ show, setShowCreateElectionModal }) => {
+const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => {
   const [election, setElection] = useState({ ...defaultElectionData });
   const [isAgree, setAgree] = useState(false);
   const [isDisabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
-
+  const [selectedCandidates, setSelectedCandidates] = useState([]);
+  const [openCandidateModal, setOpenCandidateModal] = useState(false);
 
   useEffect(() => {
     setDisabled(!isAgree || !election.title || !election.description || !election.startDate || !election.endDate);
@@ -33,11 +35,11 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
 
   const onChange = (name: string, value: string) => {
     setElection({ ...election, [name]: value });
-    console.log(election)
   };
 
   const onCreate = async () => {
     setLoading(true);
+
     try {
       const { title, description, startDate, endDate, electionType, electionImages } = election;
       const formData = new FormData();
@@ -48,7 +50,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
 
       const { url }: any = await getHostedUrl(formData);
       const galleryImagesUrl = url;
-      console.log(url)
+
       await SmartContract.methods.createElection(
         title,
         description,
@@ -65,88 +67,164 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
     setLoading(false);
   }
 
+  const onCandidateSelected = (checked: boolean, details: any) => {
+    let temp = [...selectedCandidates]
+    if (!checked) temp = selectedCandidates.filter((candidate: any) => candidate?.user?._id !== details?.user?._id);
+    else temp.push(details);
+    setSelectedCandidates(temp);
+  }
+
+  const onOpenCandidateModal = () => {
+    setOpenCandidateModal(!openCandidateModal);
+  }
+
+  const handleClose = () => {
+    setSelectedCandidates([]);
+    setShowCreateElectionModal(!show);
+  }
 
   return (
-    <Modal show={show} centered>
-      <Modal.Header className='pt-4 pb-3 px-4'>
-        <h5>Create new election</h5>
-      </Modal.Header>
-      <Modal.Body>
-        <div className='px-2'>
-          <div className='w-full mb-4'>
-            <div className='w-100'>
-              <label>Election Type</label>
-              <Select
-                options={ELECTION_TYPE}
-                className="mr-2 mt-1"
-                placeholder={<div>Select Type</div>}
-                onChange={(item: any) => onChange("electionType", item.value)}
-                isDisabled={election?.electionType ? false : true}
+    <>
+      <Modal show={openCandidateModal} size='xl'>
+        <Modal.Body className='px-4'>
+          <h4 className='my-3'>Candidate Selection</h4>
+          <div className='flex flex-wrap'>
+            {(candidateLists && candidateLists?.length > 0) ?
+              candidateLists.map((details: any, i) => {
+                const formattedEmail = details?.user?.email.split("@")[0];
+                return (
+                  <div className='user__card h-[180px] w-[340px] px-2 mb-3 mr-4 max-[500px]:w-[500px] max-[400px]:w-full bg-slate-100 rounded-[12px] hover:bg-red-20'>
+                    <div className='absolute m-2 p-2 bg-white shadow-lg border-[1px] border-slate-500 rounded-circle h-[45px] w-[45px] flex justify-center items-center'>
+                      <input
+                        className='h-[20px] w-[20px] cursor-pointer'
+                        type="checkbox"
+                        onClick={(e: any) => {
+                          onCandidateSelected(e.target.checked, details);
+                        }}
+                        key={details?.user?.citizenshipNumber}
+                        checked={selectedCandidates?.find(candidate => candidate.user._id === details.user._id)}
+                      />
+                    </div>
+                    <div className='flex justify-around items-center mt-4'>
+                      <div className='col1 flex-col'>
+                        <Avatar src={details?.user?.profile} className={''} alt={'img'} size={'xl'} border={0} />
+                        <div className='social__media flex justify-center mt-3'>
+                          <BsFacebook className='cursor-pointer hover:text-md hover:text-red-500 hover:animate-bounce' />
+                          <BsInstagram className='mx-4 cursor-pointer hover:text-md hover:text-red-500 hover:animate-bounce' />
+                          <BsTwitter className='cursor-pointer hover:text-md hover:text-red-500 hover:animate-bounce' />
+                        </div>
+                      </div>
+                      <div className='col2 pr-1 h-fit flex-xl-column text-[15px] ml-1'>
+                        <div>Name: {details?.user?.fullName}</div>
+                        <div>Citizenship No: {details?.user?.citizenshipNumber}</div>
+                        <div>Age: {details?.user?.age}</div>
+                        <div>Party: {details?.partyName}</div>
+                        <div>Email: {formattedEmail}</div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }) : "No Candidates Available !"}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn bg-btnColor px-4 text-light"
+            disabled={!(candidateLists && candidateLists?.length > 0)}
+            onClick={() => setOpenCandidateModal(false)}
+          >Done</button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={show} centered>
+        <Modal.Header className='pt-4 pb-3 px-4'>
+          <h5>Create new election</h5>
+        </Modal.Header>
+        <Modal.Body>
+          <div className='px-2'>
+            <div className='w-full mb-4'>
+              <div className='w-100'>
+                <label>Election Type</label>
+                <Select
+                  options={ELECTION_TYPE}
+                  className="mr-2 mt-1"
+                  placeholder={<div>Select Type</div>}
+                  onChange={(item: any) => onChange("electionType", item.value)}
+                  isDisabled={election?.electionType ? false : true}
+                />
+              </div>
+            </div>
+            <div className='flex flex-column'>
+              <label>Election Title</label>
+              <input
+                type="text"
+                className='form-control mt-2 mb-4 shadow-none'
+                onChange={(e) => onChange("title", e.target.value)} />
+            </div>
+            <div className='flex flex-column'>
+              <label>Short Election Description</label>
+              <textarea
+                className='form-control mt-2 mb-4 shadow-none h-[130px]'
+                onChange={(e) => onChange("description", e.target.value)}>
+              </textarea>
+            </div>
+            <div className='hold__date flex '>
+              <div className='w-50 mr-2'>
+                <span>Start Date & time</span>
+                <input
+                  type="datetime-local"
+                  className="form-control mt-1 shadow-none"
+                  value={election.startDate}
+                  onChange={(e) => onChange("startDate", e.target.value)} />
+              </div>
+              <div className='w-50 ml-2'>
+                <span>End Date & time</span>
+                <input
+                  type="datetime-local"
+                  value={election.endDate}
+                  className="form-control mt-1 shadow-none"
+                  onChange={(e) => onChange("endDate", e.target.value)} />
+              </div>
+            </div>
+            <div className='w-full mt-4'>
+              <label>Choose election images</label>
+              <input
+                className='form-control mt-2'
+                type="file"
+                name='files'
+                multiple
+                onChange={(e: any) => setElection({ ...election, electionImages: e.target.files })}
               />
             </div>
-          </div>
-          <div className='flex flex-column'>
-            <label>Election Title</label>
-            <input
-              type="text"
-              className='form-control mt-2 mb-4 shadow-none'
-              onChange={(e) => onChange("title", e.target.value)} />
-          </div>
-          <div className='flex flex-column'>
-            <label>Short Election Description</label>
-            <textarea
-              className='form-control mt-2 mb-4 shadow-none h-[200px]'
-              onChange={(e) => onChange("description", e.target.value)}>
-            </textarea>
-          </div>
-          <div className='hold__date flex '>
-            <div className='w-50 mr-2'>
-              <span>Start Date & time</span>
-              <input
-                type="datetime-local"
-                className="form-control mt-1 shadow-none"
-                value={election.startDate}
-                onChange={(e) => onChange("startDate", e.target.value)} />
+            <div
+              className='h-fit w-full flex items-center mt-4 rounded-3 border border-1 border-slate-400 bg-slate-200 hover:bg-slate-100 cursor-pointer'
+              onClick={onOpenCandidateModal}
+            >
+              <span className='flex-shrink px-[14px] text-dark'>Open modal</span>
+              <div className='bg-white flex-1 px-3 py-[8px] text-slate-800'>{
+                !selectedCandidates?.length ? "Choose candidates" : `Selected Candidates: ${selectedCandidates?.length}`
+              }</div>
             </div>
-            <div className='w-50 ml-2'>
-              <span>End Date & time</span>
+            <div className='flex mt-4 mb-3'>
               <input
-                type="datetime-local"
-                value={election.endDate}
-                className="form-control mt-1 shadow-none"
-                onChange={(e) => onChange("endDate", e.target.value)} />
+                type="checkbox"
+                className="mr-2 bg-blue-800"
+                onChange={() => setAgree(!isAgree)} />
+              <label>I agree terms and condition.</label>
             </div>
           </div>
-          <div className='w-full mt-3'>
-            <label>Choose election images</label>
-            <input
-              className='form-control mt-1'
-              type="file"
-              name='files'
-              multiple
-              onChange={(e: any) => setElection({ ...election, electionImages: e.target.files })}
-            />
-          </div>
-          <div className='flex mt-4 mb-3'>
-            <input
-              type="checkbox"
-              className="mr-2 bg-blue-800"
-              onChange={() => setAgree(!isAgree)} />
-            <label>I agree terms and condition.</label>
-          </div>
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <button className='me-4' onClick={() => setShowCreateElectionModal(false)}>Close</button>
-        <button
-          className={`bg-blue-900 text-light py-1 w-[130px] rounded-[5px] hover:opacity-75 flex justify-center items-center ${(isDisabled || loading) && 'opacity-75 cursor-default'}`}
-          onClick={onCreate}
-          disabled={isDisabled || loading}
-        >
-          {loading ? "Saving" : "Register"}
-        </button>
-      </Modal.Footer>
-    </Modal>
+        </Modal.Body>
+        <Modal.Footer>
+          <button className='me-4' onClick={() => handleClose}>Close</button>
+          <button
+            className={`bg-blue-900 text-light py-1 w-[130px] rounded-[5px] hover:opacity-75 flex justify-center items-center ${(isDisabled || loading) && 'opacity-75 cursor-default'}`}
+            onClick={onCreate}
+            disabled={isDisabled || loading}
+          >
+            {loading ? "Saving" : "Register"}
+          </button>
+        </Modal.Footer>
+      </Modal>
+    </>
   )
 }
 
