@@ -15,8 +15,9 @@ const defaultElectionData = {
   description: "",
   startDate: defaultDate,
   endDate: defaultDate,
-  electionType: ELECTION_TYPE[0].value,
-  electionImages: null
+  electionType: null,
+  electionImages: null,
+  selectedCandidates: []
 }
 
 
@@ -26,11 +27,13 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
   const [isDisabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
-  const [selectedCandidates, setSelectedCandidates] = useState([]);
   const [openCandidateModal, setOpenCandidateModal] = useState(false);
 
   useEffect(() => {
-    setDisabled(!isAgree || !election.title || !election.description || !election.startDate || !election.endDate);
+    setDisabled(
+      !isAgree || !election.title || !election.description
+      || !election.startDate || !election.endDate || !election.selectedCandidates?.length
+    );
   }, [isAgree, election.title, election.description, election.startDate, election.endDate]);
 
   const onChange = (name: string, value: string) => {
@@ -40,10 +43,10 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
   const onCreate = async () => {
     setLoading(true);
 
-    if (election?.electionType === "Local" && selectedCandidates?.length > 2) return toast.warning("Only 2 candidates are allow for binary election !!");
+    if (election?.electionType === "Local" && election.selectedCandidates?.length > 2) return toast.warning("Only 2 candidates are allow for binary election !!");
 
     try {
-      const { title, description, startDate, endDate, electionType, electionImages } = election;
+      const { title, description, startDate, endDate, electionType, electionImages, selectedCandidates } = election;
       const formData = new FormData();
 
       Array.from(electionImages).forEach((file: any) => {
@@ -59,7 +62,8 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
         startDate,
         endDate,
         electionType,
-        galleryImagesUrl
+        galleryImagesUrl,
+        selectedCandidates
       ).send({ from: loggedInAccountAddress });
       toast.success("Election created successfully.");
     } catch (error) {
@@ -70,10 +74,10 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
   }
 
   const onCandidateSelected = (checked: boolean, details: any) => {
-    let temp = [...selectedCandidates]
-    if (!checked) temp = selectedCandidates.filter((candidate: any) => candidate?.user?._id !== details?.user?._id);
+    let temp = [...election.selectedCandidates]
+    if (!checked) temp = election.selectedCandidates.filter((candidate: any) => candidate?.user?._id !== details?.user?._id);
     else temp.push(details);
-    setSelectedCandidates(temp);
+    setElection({ ...election, selectedCandidates: temp });
   }
 
   const onOpenCandidateModal = () => {
@@ -81,7 +85,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
   }
 
   const handleClose = () => {
-    setSelectedCandidates([]);
+    setElection(defaultElectionData);
     setShowCreateElectionModal(!show);
   }
 
@@ -94,19 +98,21 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
             {(candidateLists && candidateLists?.length > 0) ?
               candidateLists.map((details: any, i) => {
                 const formattedEmail = details?.user?.email.split("@")[0];
-                const isCandidateSelected = selectedCandidates?.find(candidate => candidate.user._id === details.user._id);
+                const isCandidateSelected = election.selectedCandidates?.find(candidate => candidate?.user?._id === details?.user?._id);
+                const isBinaryElection = election?.electionType === "Local" && election?.selectedCandidates?.length >= 2 && !isCandidateSelected;
+
                 return (
                   <div className='user__card h-[180px] w-[340px] px-2 mb-3 mr-4 max-[500px]:w-[500px] max-[400px]:w-full bg-slate-100 rounded-[12px] hover:bg-red-20'>
                     <div className='absolute m-2 p-2 bg-white shadow-lg border-[1px] border-slate-500 rounded-circle h-[45px] w-[45px] flex justify-center items-center'>
                       <input
-                        className='h-[20px] w-[20px] cursor-pointer'
+                        className={`h-[20px] w-[20px] ${!isBinaryElection && "cursor-pointer"}`}
                         type="checkbox"
                         onClick={(e: any) => {
                           onCandidateSelected(e.target.checked, details);
                         }}
                         key={details?.user?.citizenshipNumber}
                         checked={isCandidateSelected}
-                        disabled={election?.electionType === "District" && selectedCandidates?.length >= 2 && !isCandidateSelected}
+                        disabled={isBinaryElection}
                       />
                     </div>
                     <div className='flex justify-around items-center mt-4'>
@@ -134,7 +140,6 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
         <Modal.Footer>
           <button
             className="btn bg-btnColor px-4 text-light"
-            disabled={!(candidateLists && candidateLists?.length > 0)}
             onClick={() => setOpenCandidateModal(false)}
           >Done</button>
         </Modal.Footer>
@@ -153,7 +158,6 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
                   className="mr-2 mt-1"
                   placeholder={<div>Select Type</div>}
                   onChange={(item: any) => onChange("electionType", item.value)}
-                  isDisabled={election?.electionType ? false : true}
                 />
               </div>
             </div>
@@ -199,15 +203,20 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
                 onChange={(e: any) => setElection({ ...election, electionImages: e.target.files })}
               />
             </div>
-            <div
-              className='h-fit w-full flex items-center mt-4 rounded-3 border border-1 border-slate-400 bg-slate-200 hover:bg-slate-100 cursor-pointer'
+            <button
+              className={`h-fit w-full flex items-center mt-4 rounded-3 border border-1 border-slate-400 bg-slate-200 ${candidateLists?.length && election?.electionType && "cursor-pointer hover:bg-slate-100"}`}
               onClick={onOpenCandidateModal}
+              disabled={!candidateLists?.length || !election?.electionType}
+              onMouseOver={() => {
+                // if (!election?.electionType) showTooltip
+              }}
             >
               <span className='flex-shrink px-[14px] text-dark'>Open modal</span>
-              <div className='bg-white flex-1 px-3 py-[8px] text-slate-800'>{
-                !selectedCandidates?.length ? "Choose candidates" : `Selected Candidates: ${selectedCandidates?.length}`
+              <div className='bg-white flex-1 text-start px-3 py-[8px] text-slate-800'>{
+                !candidateLists?.length ? "Candidates not found !" :
+                  (!election?.selectedCandidates?.length ? "Choose candidates" : `Selected Candidates: ${election.selectedCandidates?.length}`)
               }</div>
-            </div>
+            </button>
             <div className='flex mt-4 mb-3'>
               <input
                 type="checkbox"
