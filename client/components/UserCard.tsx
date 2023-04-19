@@ -2,7 +2,6 @@ import React from 'react';
 import { BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs';
 import Avatar from './Avatar';
 import { UserCardStruct } from '../interfaces';
-import moment from 'moment';
 import { TiLockClosed } from 'react-icons/ti';
 import { getStorage } from '../services';
 
@@ -17,6 +16,7 @@ const UserCard: React.FC<UserCardStruct> = (props): React.ReactElement => {
   }: any = props;
   const formattedEmail = details?.user?.email.split("@")[0];
   const isVoted = details?.votedVoterLists?.includes(getStorage("loggedInAccountAddress"));
+  const isVoterRole = type === "voter";
 
   return (
     <div className='user__card h-[180px] w-[350px] px-2 mb-3  max-[500px]:w-[500px] max-[400px]:w-full bg-slate-100 rounded-[12px] hover:bg-red-20'>
@@ -61,8 +61,9 @@ const UserCard: React.FC<UserCardStruct> = (props): React.ReactElement => {
           <div>Name: {details?.user?.fullName}</div>
           <div>Citizenship No: {details?.user?.citizenshipNumber}</div>
           <div>Age: {details?.user?.age}</div>
-          <div>Party: {details?.partyName}</div>
+          {!isVoterRole && <div>Party: {details?.partyName}</div>}
           <div>Email: {formattedEmail}</div>
+          {isVoterRole && <div>Birth place: {details?.user?.district}</div> }
         </div>
       </div>
     </div>
