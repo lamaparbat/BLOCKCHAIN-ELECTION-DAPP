@@ -45,7 +45,6 @@ export default function Home() {
       setElectionLists(electionList);
       setAllVoters(totalVoters);
       await handleOverviewCountSort("province1");
-      console.log(getAllBlocks());
     })();
 
     const browserZoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
@@ -75,7 +74,7 @@ export default function Home() {
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        if(minutes < 0 || diff < 0 || days < 0 || seconds < 0) return clearInterval(interval);      
+        if (minutes < 0 || diff < 0 || days < 0 || seconds < 0) return clearInterval(interval);
 
         setCountDown({ days, hours, minutes, seconds });
       }, 1000);
@@ -144,6 +143,7 @@ export default function Home() {
       elections: totalElectionCount ?? 0
     });
   }
+
   return (
     <div>
       <Head>
