@@ -7,6 +7,7 @@ import { ELECTION_TYPE, SmartContract } from '../constants';
 import { getHostedUrl } from '../utils/action';
 import Avatar from './Avatar';
 import { BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs';
+import { setCandidateList } from '../redux/reducers/candidateReducer';
 
 const currentDate = new Date();
 const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -19,6 +20,11 @@ const defaultElectionData = {
   electionImages: null,
   selectedCandidates: []
 }
+const districtElectionPosition = [
+  { label: "Mayor", value: "mayor" },
+  { label: "Deputy Mayor", value: "deput_mayor" },
+  { label: "Ward Councilor", value: "ward_councilor" }
+]
 
 
 const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => {
@@ -28,6 +34,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
   const [loading, setLoading] = useState(false);
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
   const [openCandidateModal, setOpenCandidateModal] = useState(false);
+  const [selectedPosition, setSelectedPosition] = useState(null);
 
   useEffect(() => {
     setDisabled(
@@ -38,6 +45,9 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
 
   const onChange = (name: string, value: string) => {
     setElection({ ...election, [name]: value });
+    setSelectedPosition(null);
+    defaultElectionData.electionType = value;
+    setElection(defaultElectionData);
   };
 
   const onCreate = async () => {
@@ -74,9 +84,18 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
   }
 
   const onCandidateSelected = (checked: boolean, details: any) => {
-    let temp = [...election.selectedCandidates]
+    let temp = [...election.selectedCandidates];
+    const _details = { ...details, position: selectedPosition };
+
+    // only allow one person from specific party 
+    if (election?.electionType === "District") {
+      election.selectedCandidates.find((d) => {
+        return d?.partyName === details?.partyName && d?.position === details?.position;
+      })
+    }
+
     if (!checked) temp = election.selectedCandidates.filter((candidate: any) => candidate?.user?._id !== details?.user?._id);
-    else temp.push(details);
+    else temp.push(_details);
     setElection({ ...election, selectedCandidates: temp });
   }
 
@@ -94,25 +113,54 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
       <Modal show={openCandidateModal} size='xl'>
         <Modal.Body className='px-4'>
           <h4 className='my-3'>Candidate Selection</h4>
+          {election?.electionType === "District" &&
+            <div className='w-[300px] my-4'>
+              <span>Select Candidate Position</span>
+              <Select
+                className='mt-1'
+                options={districtElectionPosition}
+                placeholder="Select Position"
+                onChange={({ label, value }) => {
+                  setSelectedPosition(value);
+                }}
+              />
+            </div>
+          }
           <div className='flex flex-wrap'>
             {(candidateLists && candidateLists?.length > 0) ?
-              candidateLists.map((details: any, i) => {
+              candidateLists.map((details: any) => {
+                if (election.selectedCandidates?.find((d) => d.user._id === details.user._id && d.position !== selectedPosition)) return;
+
                 const formattedEmail = details?.user?.email.split("@")[0];
-                const isCandidateSelected = election.selectedCandidates?.find(candidate => candidate?.user?._id === details?.user?._id);
-                const isBinaryElection = election?.electionType === "Local" && election?.selectedCandidates?.length >= 2 && !isCandidateSelected;
+                const isLocalElection = election?.electionType === "Local";
+                const isCandidateSelected = () => {
+                  if (isLocalElection) return election.selectedCandidates?.find(candidate => candidate?.user?._id === details?.user?._id);
+                  return election.selectedCandidates?.find(candidate => candidate?.position === selectedPosition && candidate?.user?._id === details?.user?._id);
+                };
+                const isBinaryElection = isLocalElection && election?.selectedCandidates?.length >= 2 && !isCandidateSelected();
+                const isCheckboxDisabled = () => {
+                  if (!isLocalElection) {
+                    return !selectedPosition ||
+                      details?.position == selectedPosition ||
+                      (election?.selectedCandidates?.find((d) => d?.partyName === details?.partyName) &&
+                        !election?.selectedCandidates?.find((d) => d?.user._id === details?.user._id))
+
+                  } else { return isBinaryElection }
+                };
+
 
                 return (
                   <div className='user__card h-[180px] w-[340px] px-2 mb-3 mr-4 max-[500px]:w-[500px] max-[400px]:w-full bg-slate-100 rounded-[12px] hover:bg-red-20'>
                     <div className='absolute m-2 p-2 bg-white shadow-lg border-[1px] border-slate-500 rounded-circle h-[45px] w-[45px] flex justify-center items-center'>
                       <input
-                        className={`h-[20px] w-[20px] ${!isBinaryElection && "cursor-pointer"}`}
+                        className={`h-[20px] w-[20px] ${(!isBinaryElection || !isCheckboxDisabled()) && "cursor-pointer"}`}
                         type="checkbox"
                         onClick={(e: any) => {
                           onCandidateSelected(e.target.checked, details);
                         }}
                         key={details?.user?.citizenshipNumber}
-                        checked={isCandidateSelected}
-                        disabled={isBinaryElection}
+                        checked={isCandidateSelected()}
+                        disabled={isCheckboxDisabled()}
                       />
                     </div>
                     <div className='flex justify-around items-center mt-4'>
@@ -140,7 +188,9 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
         <Modal.Footer>
           <button
             className="btn bg-btnColor px-4 text-light"
-            onClick={() => setOpenCandidateModal(false)}
+            onClick={() => {
+              setOpenCandidateModal(false);
+            }}
           >Done</button>
         </Modal.Footer>
       </Modal>
@@ -217,13 +267,13 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
                   (!election?.selectedCandidates?.length ? "Choose candidates" : `Selected Candidates: ${election.selectedCandidates?.length}`)
               }</div>
             </button>
-            <div className='flex mt-4 mb-3'>
+            {/* <div className='flex mt-4 mb-3'>
               <input
                 type="checkbox"
                 className="mr-2 bg-blue-800"
                 onChange={() => setAgree(!isAgree)} />
               <label>I agree terms and condition.</label>
-            </div>
+            </div> */}
           </div>
         </Modal.Body>
         <Modal.Footer>
