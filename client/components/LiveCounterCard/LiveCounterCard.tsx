@@ -5,25 +5,22 @@ import _ from 'lodash';
 import { FaRegDotCircle } from 'react-icons/fa';
 import AnimatedAvatar from '../AnimatedAvatar';
 import CandidateCard from './CandidateCard';
-import { BTM_BORDER_STYLE } from '../../constants';
+import { BTM_BORDER_STYLE, DISTRICT } from '../../constants';
 import { LiveCounterCardStruct } from '../../interfaces/index';
 import TickCircleIcon from '../TickCircleIcon';
-import { PROVINCE } from '../../constants';
 
 const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, electionStatus, casteVote }): ReactElement => {
   const router = useRouter();
-  const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
+  const loggedInAccountAddress = useSelector((state: any) => state?.loggedInUserReducer?.address);
   const isElectionStart = electionStatus === "LIVE";
   const isElectionEnd = electionStatus === "ENDED";
 
-  const isAlreadyVoted1 = data[0]?.votedVoterLists.includes(loggedInAccountAddress);
-  const isAlreadyVoted2 = data[1]?.votedVoterLists.includes(loggedInAccountAddress);
-  const isAlreadyVoted3 = data[2]?.votedVoterLists.includes(loggedInAccountAddress);
-
   const navigateTo = (route: string) => {
-    const provinceNo = _.findIndex(PROVINCE, { label: route }) ?? 0;
-    router.push(`/election/province/${provinceNo + 1}`)
+    router.push(`/election/district/${route}`)
   }
+
+  // group candidate by positions
+  const candidatesByPositions = _.groupBy(data, (candidate: any) => candidate.position);
 
   return (
     <div
@@ -36,20 +33,35 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, election
       </div>
       <div className={`card__body pt-3 pb-2 ${isElectionStart && 'animatedBorder'}`}>
         <div className='card__body__hot px-4 mb-3 flex'>
-          <AnimatedAvatar src={data[0].user.profile} />
+          <AnimatedAvatar src={data[0]?.user?.profile} />
           <div className='details pt-2 pl-3 mx-3'>
             <div className='flex items-center'>
-              <span className='text-xl me-4'>{data[0].user.fullName}</span>
+              <span className='text-xl me-4'>{data[0]?.user?.fullName}</span>
               {isElectionEnd && <TickCircleIcon />}
               {isElectionStart && <FaRegDotCircle className='animate-ping text-danger absolute lg:ml-[200px] max-[1100px]:ml-[100px]' />}
             </div>
-            <h1 id='count'>{data[0].votedVoterLists?.length}</h1>
+            <h1 id='count'>{data[0]?.votedVoterLists?.length}</h1>
           </div>
         </div>
         <div className='candidate_row px-3'>
-          {data[0] && <CandidateCard details={data[0]} border={BTM_BORDER_STYLE} ishighlighted={true} casteVote={casteVote} voted={isAlreadyVoted1} />}
-          {data[1] && <CandidateCard details={data[1]} border={BTM_BORDER_STYLE} ishighlighted={false} casteVote={casteVote} voted={isAlreadyVoted2} />}
-          {data[2] && <CandidateCard details={data[2]} border={null} ishighlighted={false} casteVote={casteVote} voted={isAlreadyVoted3} />}
+          <h5 className='text-lg text-dark mt-3 ml-1'>Mayors</h5>
+          {
+            candidatesByPositions?.mayor?.map((candidate: any) =>
+              <CandidateCard details={candidate} border={BTM_BORDER_STYLE} ishighlighted={true} casteVote={casteVote} voted={candidate?.votedVoterLists?.includes(loggedInAccountAddress)} />
+            )
+          }
+          <h5 className='text-lg text-dark mt-3 ml-1'>Deputy Mayors</h5>
+          {
+            candidatesByPositions?.deput_mayor?.map((candidate: any) =>
+              <CandidateCard details={candidate} border={BTM_BORDER_STYLE} ishighlighted={true} casteVote={casteVote} voted={candidate?.votedVoterLists?.includes(loggedInAccountAddress)} />
+            )
+          }
+          <h5 className='text-lg text-dark mt-3 ml-1'>Ward Councilor</h5>
+          {
+            candidatesByPositions?.ward_councilor?.map((candidate: any) =>
+              <CandidateCard details={candidate} border={BTM_BORDER_STYLE} ishighlighted={true} casteVote={casteVote} voted={candidate?.votedVoterLists?.includes(loggedInAccountAddress)} />
+            )
+          }
         </div>
       </div>
     </div>

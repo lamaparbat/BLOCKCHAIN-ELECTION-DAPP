@@ -98,7 +98,7 @@ const CandidateRegistration = () => {
       if (isAdminAddress) throw new Error("Admin are not allowed to add candidates !");
 
       // email format validation
-      if(!(email.indexOf("@") > 0 &&  email.indexOf(".") > 0)){
+      if (!(email.indexOf("@") > 0 && email.indexOf(".") > 0)) {
         setLoading(false);
         return toast.error("Email format is wrong !");
       }
@@ -144,7 +144,7 @@ const CandidateRegistration = () => {
         province,
         district,
         municipality,
-        ward, gender
+        ward?.toString(), gender
       ).send({ from: loggedInAccountAddress });
 
       toast.success("New candidate registered successfully");

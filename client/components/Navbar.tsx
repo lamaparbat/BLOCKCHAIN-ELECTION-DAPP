@@ -9,7 +9,7 @@ import _ from 'lodash';
 import Web3 from 'web3';
 import ElectionModal from './ElectionModal';
 import Avatar from './Avatar';
-import { isAdmin } from '../utils/web3';
+import { getCandidateList, isAdmin } from '../utils/web3';
 import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style, METAMASK_EXT_LINK, ADMIN_ROUTES } from '../constants/index';
 import { getStorage, setStorage, setCookie } from '../services';
 import Dropdown from './Dropdown';
@@ -36,6 +36,7 @@ const Navbar: React.FC = (): ReactElement => {
   const [isEthereumEnabled, setIsEthereumEnabled] = useState(false);
   const [isAdminAddress, setIsAdminAddress] = useState(false);
   const [translatedLanguageOptions, setTranslateLanguageOptions] = useState([]);
+  const [candidateLists, setCandidateLists] = useState([]);
   const [politicalItems, setPoliticalItems] = useState([...sub_navbar_items.politicalItems]);
   const [currentLanguage, setCurrentLanguage] = useState(t(getStorage("lang") ?? "en"));
 
@@ -59,6 +60,11 @@ const Navbar: React.FC = (): ReactElement => {
 
       window.ethereum.enable().then(handleLogin);
     }
+
+    (async () => {
+      let list = await getCandidateList();
+      setCandidateLists(list);
+    })();
 
     setTranslateLanguageOptions(translatedOptions.filter((d) => d.label != currentLanguage))
   }, [])
@@ -216,7 +222,7 @@ const Navbar: React.FC = (): ReactElement => {
 
       <div className='flex justify-center'>
         <div className={`navbar__bottom ${responsive} w-full flex items-center justify-content-between pt-2 md:px-5 sm:px-4 xsm:px-2 sm:p-0`}>
-          <Image className='cursor-pointer sm:p-3 sm:h-[90px] sm:w-[100px] xsm:h-[50px] xsm:w-[60px]' src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
+          <Image className='cursor-pointer -ml-[30px] sm:p-3 sm:h-[90px] sm:w-[100px] xsm:h-[50px] xsm:w-[60px]' src='/images/logo.png' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
           <div className='center__content text-center text-red-700 -ml-[15px]'>
             <h4 className='lg:text-[25px] md:text-2xl sm:text-2xl xsm:text-lg position-relative xsm:top-[5px]'>{t("title")}</h4>
             <h6 className='lg:text-[20px] md:text-md xsm:text-md'>{t("location")}</h6>
@@ -254,7 +260,7 @@ const Navbar: React.FC = (): ReactElement => {
           <div className={sub_navbar_items_style}><Dropdown title={t("election_result")} items={sub_navbar_items.electionResultTypes} /></div>
         </div>
       </div>
-      <ElectionModal show={showCreateElectionModal} setShowCreateElectionModal={setShowCreateElectionModal} />
+      <ElectionModal show={showCreateElectionModal} setShowCreateElectionModal={setShowCreateElectionModal} candidateLists={candidateLists} />
       <SearchModal show={isSearchModalOpen} setOpenSearchModal={setOpenSearchModal} />
     </div >
   )

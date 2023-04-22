@@ -158,9 +158,9 @@ const politicalItems = [
 ]
 
 const electionResultTypes = [
-  { label: "Parliament Election", value: '/election/province', id: "parliament_election" },
+  // { label: "Parliament Election", value: '/election/province', id: "parliament_election" },
   { label: 'District Election', value: '/election/district', id: "district_election" },
-  { label: 'Local Election', value: '/election/local', id: "local_election" }
+  { label: 'Binary Election', value: '/election/binary-election', id: "local_election" }
 ]
 
 const voterItems = [
@@ -180,9 +180,9 @@ const StateProvinceOffices = [
 ]
 
 const ELECTION_TYPE = [
-  { label: "Province", value: "Province" },
-  { label: "District", value: "District" },
-  { label: "Local", value: "Local" },
+  // { label: "Province", value: "Province" },
+  { label: "District Election", value: "District" },
+  { label: "Binary Election", value: "Local" },
 ]
 
 let DistrictOffices = [];

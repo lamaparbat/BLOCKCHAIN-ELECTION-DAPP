@@ -26,7 +26,7 @@
     "election_result": "निर्वाचन परिणाम",
     "parliament_election": "संसदीय निर्वाचन",
     "district_election": "जिल्ला निर्वाचन",
-    "local_election": "स्थानीय निर्वाचन",
+    "local_election": "द्विसंख्याता निर्वाचन",
     "gmail": "जिमेल",
     "search": "खोज्नुहोस्",
     "en": "अंग्रेजी",
@@ -716,7 +716,7 @@
     "hot_seats": "तातो सिटहरू"
   },
   "local_result": {
-    "title": "स्थानीय चुनाव",
+    "title": "द्विसंख्याता चुनाव",
     "hot_seats": "तातो सिटहरू"
   },
   "sortComp": {
@@ -790,6 +790,7 @@
     "ward_placeholder": "वडा छान्नुहोस्",
     "male": "पुरुष",
     "female": "महिला",
-    "others": "अरु"
+    "others": "अरु",
+    "select_election": "चुनाव छनोट गर्नुहोस्"
   }
 }

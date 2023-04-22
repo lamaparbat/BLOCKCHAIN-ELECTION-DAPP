@@ -52,6 +52,9 @@ const Details: React.FC = (): React.ReactElement => {
 
   const handleClose = () => setOpenAgendaPreviewModal(false);
 
+  const handleSearch = (event: any) => {
+  }
+
   return (
     <div className='mb-[50px]'>
       <Head>
@@ -65,7 +68,7 @@ const Details: React.FC = (): React.ReactElement => {
           <div className='flex items-center justify-between'>
             <p className='text-2xl text-black mt-4'>{partyT("title")}</p>
             <div className='flex justify-between my-4'>
-              <input type='search' className='form-control' placeholder={partyT("search_placeholder")} />
+              <input type='search' className='form-control' placeholder={partyT("search_placeholder")} onKeyUp={handleSearch} />
             </div>
           </div><br />
           <div className='voter__container flex flex-wrap justify-between'>

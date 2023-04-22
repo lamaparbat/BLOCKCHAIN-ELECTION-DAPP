@@ -9,12 +9,12 @@ import { Fade } from 'react-slideshow-image';
 const ElectionCard = ({ details, src }) => {
   const [showIcon, setShowIcon] = useState(false);
   const { title, startDate, endDate, description, candidates } = details ?? {};
-  let totalVotes = 0; 
+  let totalVotes = 0;
   candidates?.forEach((d) => {
     totalVotes += parseInt(d?.voteCount);
   });
   const t = useTranslations("election_gallery_card");
-  const [selectedElections,setSelectedElection] = useState(null);
+  const [selectedElections, setSelectedElection] = useState(null);
 
   const mouseOver = () => {
     setShowIcon(true)
@@ -30,7 +30,7 @@ const ElectionCard = ({ details, src }) => {
         {
           showIcon &&
           <div className='absolute bg-red-100 animate-pulse z-10 w-100 h-[180px] flex items-center justify-center opacity-90'>
-            <button 
+            <button
               className='absolute p-2 animate-bounce bg-white m-3 z-40 rounded-circle hover:bg-red-500 transition ease-in-out delay-[100px] hover:-rotate-[10deg]'
               onClick={() => setSelectedElection(details)}
             >
@@ -49,23 +49,23 @@ const ElectionCard = ({ details, src }) => {
       </div>
       <Modal centered={true} show={selectedElections} size='lg' onHide={() => setSelectedElection(null)}>
         <Modal.Body>
-              <div className='py-3 px-1'>
-                <div className='flex'>
-                  <h4>{selectedElections?.title}</h4>
-                  <span className='text-sm text-light bg-red-600 px-[10px] h-fit rounded-5 -mt-[10px]'>{selectedElections?.electionType}</span>
-                </div>
-                <p>{selectedElections?.description}</p>
-              </div>
-              <Fade
-                autoplay={true}
-                nextArrow={<BsChevronRight className='absolute text-slate-100 text-4xl' />}
-                prevArrow={<BsChevronLeft className='absolute text-slate-100 text-4xl' />}>
-                {
-                  selectedElections?.galleryImagesUrl?.map((src, i) => <img 
-                    className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' 
-                    src={src} key={i} />)
-                }
-              </Fade>
+          <div className='py-3 px-1'>
+            <div className='flex'>
+              <h4>{selectedElections?.title}</h4>
+              <span className='text-sm text-light bg-red-600 px-[10px] h-fit rounded-5 -mt-[10px]'>{selectedElections?.electionType}</span>
+            </div>
+            <p>{selectedElections?.description}</p>
+          </div>
+          <Fade
+            autoplay={true}
+            nextArrow={<BsChevronRight className='absolute text-slate-100 text-4xl' />}
+            prevArrow={<BsChevronLeft className='absolute text-slate-100 text-4xl' />}>
+            {
+              selectedElections?.galleryImagesUrl?.map((src, i) => <img
+                className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100'
+                src={src} key={i} />)
+            }
+          </Fade>
         </Modal.Body>
       </Modal>
     </div>
