@@ -144,8 +144,11 @@ export default function Home() {
     });
   }
 
+<<<<<<< HEAD
   console.log({ electionLists })
 
+=======
+>>>>>>> 54a50d9b25ca1e3519643f35bdaeb867543c612c
   return (
     <div>
       <Head>

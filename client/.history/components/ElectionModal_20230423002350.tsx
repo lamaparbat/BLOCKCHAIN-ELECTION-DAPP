@@ -73,7 +73,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
         startDate,
         endDate,
         electionType,
-        galleryImagesUrl
+        galleryImagesUrl,
       ).send({ from: loggedInAccountAddress });
 
       setOpenCandidateModal(true);

@@ -119,6 +119,11 @@ const Details: React.FC = (): React.ReactElement => {
       toast.error("Fail to add selected candidates !");
     }
   }
+<<<<<<< HEAD
+
+=======
+  // console.log({ electionList })
+>>>>>>> 54a50d9b25ca1e3519643f35bdaeb867543c612c
   return (
     <div className='mb-[50px]'>
       <Head>
