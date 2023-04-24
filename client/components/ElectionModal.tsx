@@ -7,9 +7,9 @@ import { ELECTION_TYPE, SmartContract } from '../constants';
 import { getHostedUrl } from '../utils/action';
 import Avatar from './Avatar';
 import { BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs';
-import { setCandidateList } from '../redux/reducers/candidateReducer';
 import { getElectionList } from '../utils';
 import { getCurrentElection } from '../utils/common';
+import moment from 'moment';
 
 const currentDate = new Date();
 const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -36,6 +36,19 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
   const [openCandidateModal, setOpenCandidateModal] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState(null);
+  const [recentlyCreatedElection, setRecentlyCreatedElection] = useState(null);
+
+
+  const fetchData = async () => {
+    const elections = await getElectionList();
+    const currentElection = getCurrentElection(elections);
+
+    setRecentlyCreatedElection(currentElection);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   useEffect(() => {
     setDisabled(
@@ -60,6 +73,11 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
       let { title, description, startDate, endDate, electionType, electionImages } = election;
       const formData = new FormData();
 
+      if (moment(endDate).isBefore(moment(startDate))) {
+        setLoading(false);
+        return toast.error("Please give correct datetime !")
+      }
+
       Array.from(electionImages).forEach((file: any) => {
         formData.append("images", file);
       })
@@ -76,6 +94,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
         galleryImagesUrl
       ).send({ from: loggedInAccountAddress });
 
+      fetchData();
       setOpenCandidateModal(true);
       toast.success("Election created successfully.");
     } catch (error) {
@@ -117,6 +136,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
       const selectedCandidates = election?.selectedCandidates?.map((candidate) => ({ _id: candidate.user._id, position: candidate.position })).filter((candidate) => candidate.position === selectedPosition);
 
       if (election?.electionType === "Local" && election.selectedCandidates?.length > 2) return toast.warning("Only 2 candidates are allow for binary election !!");
+      console.log({ selectedCandidates })
 
       await SmartContract.methods.addSelectedCandidates(selectedCandidates, currentElection?.startDate).send({ from: loggedInAccountAddress });
 
@@ -127,24 +147,25 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
     }
   }
 
-
   return (
     <>
       <Modal show={openCandidateModal} size='xl'>
         <Modal.Body className='px-4'>
           <h4 className='my-3'>Candidate Selection</h4>
           {election?.electionType === "District" &&
-            <div className='w-[300px] my-4'>
-              <span>Select Candidate Position</span>
-              <Select
-                className='mt-1'
-                options={districtElectionPosition}
-                placeholder="Select Position"
-                onChange={({ label, value }) => {
-                  setSelectedPosition(value);
-                }}
-                isDisabled={election.selectedCandidates.filter(candidate => candidate.position === selectedPosition).length > 3}
-              />
+            <div className='flex sm:flex-row xsm:flex-col'>
+              <div className='w-[300px] my-4'>
+                <span>Select Candidate Position</span>
+                <Select
+                  className='mt-1'
+                  options={districtElectionPosition}
+                  placeholder="Select Position"
+                  onChange={({ label, value }) => {
+                    setSelectedPosition(value);
+                  }}
+                  isDisabled={election.selectedCandidates.filter(candidate => candidate.position === selectedPosition).length > 3}
+                />
+              </div>
             </div>
           }
           <div className='flex flex-wrap'>
@@ -278,10 +299,10 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
                 onChange={(e: any) => setElection({ ...election, electionImages: e.target.files })}
               />
             </div>
-            {/* <button
-              className={`h-fit w-full flex items-center mt-4 rounded-3 border border-1 border-slate-400 bg-slate-200 ${candidateLists?.length && election?.electionType && "cursor-pointer hover:bg-slate-100"}`}
+            <button
+              className={`h-fit w-full flex items-center mt-4 rounded-3 border border-1 border-slate-400 bg-slate-200 ${recentlyCreatedElection && election?.electionType && "cursor-pointer hover:bg-slate-100"}`}
               onClick={onOpenCandidateModal}
-              disabled={!candidateLists?.length || !election?.electionType}
+              disabled={!recentlyCreatedElection?.length || !election?.electionType}
               onMouseOver={() => {
                 // if (!election?.electionType) showTooltip
               }}
@@ -289,9 +310,9 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
               <span className='flex-shrink px-[14px] text-dark'>Open modal</span>
               <div className='bg-white flex-1 text-start px-3 py-[8px] text-slate-800'>{
                 !candidateLists?.length ? "Candidates not found !" :
-                  (!election?.selectedCandidates?.length ? "Choose candidates" : `Selected Candidates: ${election.selectedCandidates?.length}`)
+                  (!recentlyCreatedElection ? "Choose candidates" : `Selected Candidates: ${election.selectedCandidates?.length}`)
               }</div>
-            </button> */}
+            </button>
           </div >
         </Modal.Body >
         <Modal.Footer>
