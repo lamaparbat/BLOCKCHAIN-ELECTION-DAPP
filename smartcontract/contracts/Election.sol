@@ -63,7 +63,7 @@ contract Election is Candidate, Voter, Party {
                 for(uint256 j = 0; j< electionList[i].candidates.length;j++){
                     if(electionList[i].candidates[j].user._id == _candidateId){
                         electionList[i].candidates[j].votedVoterLists.push(_voterId);
-                        electionList[i].candidates[j].voteCount = elections[electionAddress].candidates[j].voteCount.add(1);
+                        electionList[i].candidates[j].voteCount = electionList[i].candidates[j].voteCount.add(1);
                     }
                 }
             }
