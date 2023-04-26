@@ -34,8 +34,8 @@ export default function Home() {
     const voterLists = await getVoterList();
     const electionStatus = getElectionStatus("District", electionList);
     const currentElection: any = getCurrentElection(electionList);
-    const groupByCandidates = _.groupBy(currentElection?.candidates, (candidate) => candidate.user.district);
-
+    const groupByCandidates = _.groupBy(currentElection?.candidates, (candidate) => candidate.boothPlace);
+console.log({currentElection})
     setElectionStatus(electionStatus);
     setCurrentElection(groupByCandidates);
     setVoterLists(voterLists);
@@ -88,6 +88,8 @@ export default function Home() {
         };
       })
 
+      console.log({ isExit })
+
       if (isExit) return;
 
       for (let i = 0; i < candidateLists.length; i++) {
@@ -113,6 +115,7 @@ export default function Home() {
     }
   }
 
+console.log({currentElection})
   return (
     <div>
       <Head>

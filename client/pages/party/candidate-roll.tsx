@@ -140,14 +140,14 @@ const Details: React.FC = (): React.ReactElement => {
               }
             </div>
             <div className='flex items-center mt-4'>
-              {electedCandidatesList && electedCandidatesList.selectedCandidates.length > 0 &&
+              {/* {electedCandidatesList && electedCandidatesList.selectedCandidates.length > 0 &&
                 <div className='flex items-center'>
-                  {/* <button
+                  <button
                     className='flex items-center bg-red-600 text-slate-100 px-2 py-1 mr-3 rounded-1 outline-0 relative'
                     onClick={undoSelection}>
                     <AiFillMinusSquare className='text-xl mx-1' />
                     Undo All
-                  </button> */}
+                  </button>
                   <button
                     className='bg-blue-900 text-slate-100 px-3 py-1 mr-3 rounded-1 outline-0 relative'
                     onClick={() => setShowSubmitModal(true)}
@@ -170,7 +170,7 @@ const Details: React.FC = (): React.ReactElement => {
                   onKeyDown={(e: any) => onHandleSearch(e.target.value)}
                 />
                 <BsSearch className='mx-3 text-xl' />
-              </div>
+              </div> */}
               <Sortbar
                 openSortModal={openSortModal}
                 setOpenSortModal={setOpenSortModal}
@@ -198,7 +198,7 @@ const Details: React.FC = (): React.ReactElement => {
           </div>
         </div>
       </div>
-      <Modal show={showSubmitModal} size="sm">
+      {/* <Modal show={showSubmitModal} size="sm">
         <Modal.Body>
           <div className='my-2 mx-3'>
             <label className='mb-2'>{commonT("select_election")}</label>
@@ -213,7 +213,7 @@ const Details: React.FC = (): React.ReactElement => {
             disabled={!electedCandidatesList.electionAddress || disabledSubmitBtn}
           >{faqT("submit_btn")}</button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </div>
   )
 }

@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import Select from "react-select";
 import { toast } from 'react-toastify';
-import { ELECTION_TYPE, SmartContract } from '../constants';
+import { DISTRICT, ELECTION_TYPE, SmartContract } from '../constants';
 import { getHostedUrl } from '../utils/action';
 import Avatar from './Avatar';
 import { BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs';
-import { setCandidateList } from '../redux/reducers/candidateReducer';
-import { getElectionList } from '../utils';
+import { getCandidateList, getElectionList } from '../utils';
 import { getCurrentElection } from '../utils/common';
+import moment from 'moment';
 
 const currentDate = new Date();
 const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -27,15 +27,33 @@ const districtElectionPosition = [
   { label: "Deputy Mayor", value: "deput_mayor" },
   { label: "Ward Councilor", value: "ward_councilor" }
 ]
+let originalCandidateList = [];
 
-
-const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => {
+const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const [election, setElection] = useState({ ...defaultElectionData });
+  const [_candidateLists, setCandidateList] = useState([])
   const [isDisabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
   const [openCandidateModal, setOpenCandidateModal] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState(null);
+  const [boothPlace, setBoothPlace] = useState(null);
+  const [recentlyCreatedElection, setRecentlyCreatedElection] = useState(null);
+
+
+  const fetchData = async () => {
+    const elections = await getElectionList();
+    const currentElection = getCurrentElection(elections);
+    const candidateLists = await getCandidateList();
+
+    originalCandidateList = [...candidateLists];
+    setRecentlyCreatedElection(currentElection);
+    setCandidateList(candidateLists);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   useEffect(() => {
     setDisabled(
@@ -60,6 +78,11 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
       let { title, description, startDate, endDate, electionType, electionImages } = election;
       const formData = new FormData();
 
+      if (!moment(startDate).isBefore(endDate)) {
+        setLoading(false);
+        return toast.error("Please give correct datetime !")
+      }
+
       Array.from(electionImages).forEach((file: any) => {
         formData.append("images", file);
       })
@@ -76,6 +99,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
         galleryImagesUrl
       ).send({ from: loggedInAccountAddress });
 
+      fetchData();
       setOpenCandidateModal(true);
       toast.success("Election created successfully.");
     } catch (error) {
@@ -107,26 +131,36 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
 
   const handleClose = () => {
     setElection(defaultElectionData);
-    setShowCreateElectionModal(!show);
+    setShowCreateElectionModal(!show);  
+    setCandidateList([...originalCandidateList]);
+    setBoothPlace(null);
   }
 
   const uploadSelectedCandidates = async () => {
     try {
       const electionList = await getElectionList();
       const currentElection: any = getCurrentElection(electionList);
-      const selectedCandidates = election?.selectedCandidates?.map((candidate) => ({ _id: candidate.user._id, position: candidate.position })).filter((candidate) => candidate.position === selectedPosition);
+      const selectedCandidates = election?.selectedCandidates?.map((candidate) => ({ _id: candidate?.user?._id, position: candidate?.position, votingBooth: boothPlace })).filter((candidate) => candidate.position === selectedPosition && candidate.votingBooth === boothPlace);
 
       if (election?.electionType === "Local" && election.selectedCandidates?.length > 2) return toast.warning("Only 2 candidates are allow for binary election !!");
+      console.log({ selectedCandidates })
 
       await SmartContract.methods.addSelectedCandidates(selectedCandidates, currentElection?.startDate).send({ from: loggedInAccountAddress });
 
+      const filterCandidates =_candidateLists.filter((candidate:any) => !election.selectedCandidates.some((_candidate) => _candidate.user._id === candidate.user._id))
+      setCandidateList([...filterCandidates]);
+
+      setBoothPlace(null);
       toast.success("Selected candidates added successfully.")
     } catch (error) {
       console.log(error)
+      setBoothPlace(null);
       toast.error("Fail to add selected candidates !");
     }
   }
 
+  const districtOptions = [];
+  Object.keys(DISTRICT).forEach((key) => DISTRICT[key].forEach((options: object) => districtOptions.push(options)));
 
   return (
     <>
@@ -134,22 +168,35 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
         <Modal.Body className='px-4'>
           <h4 className='my-3'>Candidate Selection</h4>
           {election?.electionType === "District" &&
-            <div className='w-[300px] my-4'>
-              <span>Select Candidate Position</span>
-              <Select
-                className='mt-1'
-                options={districtElectionPosition}
-                placeholder="Select Position"
-                onChange={({ label, value }) => {
-                  setSelectedPosition(value);
-                }}
-                isDisabled={election.selectedCandidates.filter(candidate => candidate.position === selectedPosition).length > 3}
-              />
+            <div className='flex sm:flex-row xsm:flex-col'>
+              <div className='w-[300px] my-4'>
+                <span>Select Candidate Position</span>
+                <Select
+                  className='mt-1'
+                  options={districtElectionPosition}
+                  placeholder="Select Position"
+                  onChange={({ label, value }) => {
+                    setSelectedPosition(value);
+                  }}
+                  isDisabled={election.selectedCandidates.filter(candidate => candidate.position === selectedPosition).length > 3 || !boothPlace}
+                />
+              </div>
+              <div className='w-[300px] my-4 ml-4'>
+                <span>Select District</span>
+                <Select
+                  className='mt-1'
+                  options={districtOptions}
+                  placeholder="Select District"
+                  onChange={({ label, value }) => {
+                    setBoothPlace(value);
+                  }}
+                />
+              </div>
             </div>
           }
           <div className='flex flex-wrap'>
-            {(candidateLists && candidateLists?.length > 0) ?
-              candidateLists.map((details: any) => {
+            {(_candidateLists && _candidateLists?.length > 0) ?
+              _candidateLists.map((details: any) => {
                 if (election.selectedCandidates?.find((d) => d?.user?._id === details?.user?._id && d?.position !== selectedPosition)) return;
 
                 const formattedEmail = details?.user?.email.split("@")[0];
@@ -162,7 +209,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
                 const isCheckboxDisabled = () => {
                   if (!isLocalElection) {
                     return !selectedPosition || election.selectedCandidates.find((candidate) => candidate.partyName === details.partyName
-                      && candidate.position === selectedPosition && candidate.user._id !== details.user._id);
+                      && candidate.position === selectedPosition && candidate.user._id !== details.user._id || details.boothPlace !== candidate.boothPlace);
 
                   } else { return isBinaryElection }
                 };
@@ -278,20 +325,20 @@ const ElectionModal = ({ show, setShowCreateElectionModal, candidateLists }) => 
                 onChange={(e: any) => setElection({ ...election, electionImages: e.target.files })}
               />
             </div>
-            {/* <button
-              className={`h-fit w-full flex items-center mt-4 rounded-3 border border-1 border-slate-400 bg-slate-200 ${candidateLists?.length && election?.electionType && "cursor-pointer hover:bg-slate-100"}`}
+            <button
+              className={`h-fit w-full flex items-center mt-4 rounded-3 border border-1 border-slate-400 bg-slate-200 ${recentlyCreatedElection && election?.electionType && "cursor-pointer hover:bg-slate-100"}`}
               onClick={onOpenCandidateModal}
-              disabled={!candidateLists?.length || !election?.electionType}
+              disabled={!recentlyCreatedElection?.length}
               onMouseOver={() => {
                 // if (!election?.electionType) showTooltip
               }}
             >
               <span className='flex-shrink px-[14px] text-dark'>Open modal</span>
               <div className='bg-white flex-1 text-start px-3 py-[8px] text-slate-800'>{
-                !candidateLists?.length ? "Candidates not found !" :
-                  (!election?.selectedCandidates?.length ? "Choose candidates" : `Selected Candidates: ${election.selectedCandidates?.length}`)
+                !_candidateLists?.length ? "Candidates not found !" :
+                  (!recentlyCreatedElection ? "Choose candidates" : `Selected Candidates: ${election.selectedCandidates?.length}`)
               }</div>
-            </button> */}
+            </button>
           </div >
         </Modal.Body >
         <Modal.Footer>
