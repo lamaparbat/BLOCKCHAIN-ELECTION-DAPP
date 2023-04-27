@@ -34,7 +34,7 @@ export default function Home() {
     const voterLists = await getVoterList();
     const electionStatus = getElectionStatus("District", electionList);
     const currentElection: any = getCurrentElection(electionList);
-    const groupByCandidates = _.groupBy(currentElection?.candidates, (candidate) => candidate.boothPlace);
+    const groupByCandidates = _.groupBy(currentElection?.candidates, (candidate) => candidate.votingBooth);
 console.log({currentElection})
     setElectionStatus(electionStatus);
     setCurrentElection(groupByCandidates);
@@ -115,7 +115,6 @@ console.log({currentElection})
     }
   }
 
-console.log({currentElection})
   return (
     <div>
       <Head>
