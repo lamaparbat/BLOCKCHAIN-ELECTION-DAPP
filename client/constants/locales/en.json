@@ -40,6 +40,8 @@
     "total_voters": "Total Voters",
     "male_voters": "Male Voters",
     "female_voters": "Female Voters",
+    "male_candidate":"Male candidate",
+    "female_candidate":"Female candidate",
     "others": "Others",
     "total_election": "Total Election",
     "total_parties": "Total Parties",

@@ -40,6 +40,8 @@
     "total_voters": "कुल मतदाता",
     "male_voters": "पुरुष मतदाता",
     "female_voters": "महिला मतदाता",
+    "male_candidate":"पुरुष उम्मेदवारहरू",
+    "female_candidate":"महिला उम्मेदवारहरू",
     "others": "अन्य मतदाता",
     "total_election": "कुल निर्वाचन",
     "total_parties": "कुल दलहरू",

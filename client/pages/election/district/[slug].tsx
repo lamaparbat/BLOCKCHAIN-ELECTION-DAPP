@@ -6,11 +6,12 @@ import Navbar from '../../../components/Navbar';
 import electionChannel from "../../../services/pusher-events";
 import { getCandidateList, getElectionList, getElectionStatus, getFormattedErrorMessage, getSortedCandidatesList, getVoterList } from '../../../utils';
 import _ from 'lodash';
-import { SmartContract } from '../../../constants';
+import { BTM_BORDER_STYLE, SmartContract } from '../../../constants';
 import { setCandidateList } from '../../../redux/reducers/candidateReducer';
 import { toast } from 'react-toastify';
 import UserCard from '../../../components/UserCard';
 import { getVoterDetails } from '../../../utils/web3';
+import CandidateCard from '../../../components/LiveCounterCard/CandidateCard';
 
 export default function Home({ districtName }) {
   const [electionStatus, setElectionStatus] = useState(null);
@@ -29,11 +30,10 @@ export default function Home({ districtName }) {
     const electionList = await getElectionList();
     const candidateLists = await getCandidateList();
     const electionStatus = getElectionStatus("Province", electionList);
-    const { currentElection, electionCandidatesArray } = getSortedCandidatesList(electionList, candidateLists);
-    const groupByCandidates = _.groupBy(currentElection?.candidates, (candidate) => candidate.user.district);
+    const groupByCandidates = _.groupBy(electionList.at(-1)?.candidates, (candidate) => candidate.votingBooth);
 
     setElectionStatus(electionStatus);
-    setCandidateLists(electionCandidatesArray);
+    setCandidateLists(groupByCandidates[districtName]);
     setCurrentElection(groupByCandidates);
     dispatch(setCandidateList(candidateLists));
     setElectionList(electionList);
@@ -74,7 +74,6 @@ export default function Home({ districtName }) {
     try {
       const voterDetails = await getVoterDetails(loggedInAccountAddress);
       const electionAddress = electionList?.at(-1)?.startDate;
-      let selectedCandidates = null;
 
       // vote limit count
       if (voterDetails.voteLimitCount === "3") return toast.info("You've exceed the vote limit count !");
@@ -95,15 +94,9 @@ export default function Home({ districtName }) {
 
       if (isExit) return;
 
-      for (let i = 0; i < candidateLists.length; i++) {
-        for (let j = 0; j < candidateLists[i][1].length; j++) {
-          if (candidateLists[i][1][j].user._id === _candidateID) {
-            selectedCandidates = candidateLists[i][1][j];
-            break;
-          }
-          if (selectedCandidates) break;
-        }
-      }
+      console.log({ candidateLists })
+      const selectedCandidates = candidateLists.find((candidate) => candidate.user._id === _candidateID);
+
       const isAlreadyVoted = selectedCandidates?.votedVoterLists?.includes(loggedInAccountAddress) ?? false;
 
       if (isAlreadyVoted) return toast.error("You've already casted vote !");
@@ -119,6 +112,11 @@ export default function Home({ districtName }) {
   }
 
   const navigateTo = () => router.push("/election/district");
+
+
+  // group candidate by positions
+  const candidatesByPositions = _.groupBy(candidateLists, (candidate: any) => candidate.position);
+  const leadingCandidate = _.maxBy(candidateLists, "voteCount");
 
   return (
     <div>
@@ -143,18 +141,49 @@ export default function Home({ districtName }) {
             </div>
 
             {/* candidate lists */}
-            <div className='flex flex-wrap justify-between'>
-              {
-                currentElection[districtName] ?
-                  currentElection[districtName]?.map((candidateDetails: any, i) =>
+            <div className='candidate_row'>
+              <h5 className='text-lg text-dark mt-3 ml-1'>Mayors</h5>
+              <div className='flex flex-wrap justify-between'>
+                {
+                  _.orderBy(candidatesByPositions?.mayor, ["voteCount"], "desc")?.map((candidate: any, i: number) =>
                     <UserCard
-                      details={candidateDetails}
+                      details={candidate}
                       type="candidate"
                       key={i}
-                      currentElection={electionList[electionList.length - 1]}
+                      currentElection={currentElection}
                       casteVote={casteVote}
-                    />) : "No Candidates Available !"
-              }
+                    />
+                  )
+                }
+              </div>
+              <h5 className='text-lg text-dark mt-3 ml-1'>Deputy Mayors</h5>
+              <div className='flex flex-wrap justify-between'>
+                {
+                  _.orderBy(candidatesByPositions?.deput_mayor, ["voteCount"], "desc")?.map((candidate: any, i: number) =>
+                    <UserCard
+                      details={candidate}
+                      type="candidate"
+                      key={i}
+                      currentElection={currentElection}
+                      casteVote={casteVote}
+                    />
+                  )
+                }
+              </div>
+              <h5 className='text-lg text-dark mt-3 ml-1'>Ward Councilor</h5>
+              <div className='flex flex-wrap justify-between'>
+                {
+                  _.orderBy(candidatesByPositions?.ward_councilor, ["voteCount"], "desc")?.map((candidate: any, i: number) =>
+                    <UserCard
+                      details={candidate}
+                      type="candidate"
+                      key={i}
+                      currentElection={currentElection}
+                      casteVote={casteVote}
+                    />
+                  )
+                }
+              </div>
             </div>
 
           </div>

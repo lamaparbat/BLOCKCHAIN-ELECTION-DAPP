@@ -14,7 +14,7 @@ import 'animate.css';
 import { BiFemale, BiGroup, BiMale } from 'react-icons/bi';
 import ElectionUserCard from '../components/ElectionUserCard';
 import { PROVINCE } from '../constants';
-import { getVoterList, getTotalCandidateCount, getTotalElectionCount, getTotalPartiesCount, getTotalVotersCount, getAllBlocks } from '../utils/web3';
+import { getVoterList, getTotalCandidateCount, getTotalElectionCount, getTotalPartiesCount, getTotalVotersCount, getAllBlocks, getCandidateList } from '../utils/web3';
 import { getCurrentElection } from '../utils/common';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
@@ -22,6 +22,7 @@ import { useTranslations } from 'next-intl';
 export default function Home() {
   const homepageTranslate = useTranslations("homepage");
   const navbarTranslate = useTranslations("navbar");
+  const electionGalleryT = useTranslations("election_gallery_card");
 
   const [electionLists, setElectionLists] = useState([]);
   const [allVoters, setAllVoters] = useState([]);
@@ -31,7 +32,8 @@ export default function Home() {
   const [timer, setTimer] = useState({ id: "seconds", play: false });
   const [totalDataCount, setTotalDataCount] = useState({
     candidates: 0, voters: 0, parties: 0, elections: 0,
-    maleVoters: 0, femaleVoters: 0, otherVoters: 0
+    maleVoters: 0, femaleVoters: 0, otherVoters: 0,
+    maleCandidates: 0, femaleCandidate:0, otherCandidates:0
   });
 
 
@@ -40,11 +42,13 @@ export default function Home() {
       const electionList = await getElectionList();
       const totalVoters = await getVoterList();
 
+
       setTranslateProvinceOptions(PROVINCE.map((province: any) => ({ label: homepageTranslate(province.value), value: province.value })))
       setCurrentElection(getCurrentElection(electionList));
       setElectionLists(electionList);
       setAllVoters(totalVoters);
-      await handleOverviewCountSort("province1");
+
+      handleOverviewCountSort("province1");
     })();
 
     const browserZoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
@@ -65,6 +69,7 @@ export default function Home() {
   }, []);
   if (electionLists?.length > 0) {
     const { startDate, endDate } = electionLists?.at(-1);
+    
 
     if (new Date() < new Date(startDate)) {
       const interval = setInterval(() => {
@@ -110,40 +115,38 @@ export default function Home() {
   }, [countDown.seconds]);
 
   const handleOverviewCountSort = async (provinceNo: string) => {
-    const totalCandidatesCount = await getTotalCandidateCount();
     const totalPartiesCount = await getTotalPartiesCount();
     const totalElectionCount = await getTotalElectionCount();
+    const candidates = await getCandidateList();
+    const voters = await getVoterList();
 
-    const voters = allVoters?.filter((d: any) => {
-      return d.user.province === provinceNo
-    });
+    const totalCandidates = candidates.filter((d:any) => d.user.province === provinceNo)?.length;
+    const maleCandidates = candidates.filter((d:any) => d.user.province === provinceNo && d?.user.gender === "MALE")?.length;
+    const femaleCandidate = candidates.filter((d:any) => d.user.province === provinceNo && d?.user.gender === "FEMALE")?.length;
+    const otherCandidates = candidates.filter((d:any) => d.user.province === provinceNo && d?.user.gender !== "MALE" && d?.user.gender !== "FEMALE")?.length;
 
-    const result = _.chain(voters)
-      .map('user')
-      .groupBy('province')
-      .mapValues(arr => {
-        const count = _.countBy(arr, 'gender');
-        if (count.male && count.female) {
-          return count;
-        } else {
-          return { ...count, others: (count.others || 0) + (count.male || 0) + (count.female || 0) };
-        }
-      })
-      .value();
-    const { MALE, FEMALE, others } = result[provinceNo] ?? {};
+    const totalVoters = voters.filter((d:any) => d.user.province === provinceNo)?.length;
+    const maleVoters = voters.filter((d:any) => d.user.province === provinceNo && d?.user.gender === "MALE")?.length;
+    const femaleVoters = voters.filter((d:any) => d.user.province === provinceNo && d?.user.gender === "FEMALE")?.length;
+    const otherVoters = voters.filter((d:any) => d.user.province === provinceNo && d?.user.gender !== "MALE" && d?.user.gender !== "FEMALE")?.length;
+
 
     setTotalDataCount({
       ...totalDataCount,
-      voters: voters?.length,
-      maleVoters: MALE ?? 0,
-      femaleVoters: FEMALE ?? 0,
-      otherVoters: others ?? 0,
-      candidates: totalCandidatesCount ?? 0,
+      voters: totalVoters ?? 0,
+      maleVoters,
+      femaleVoters,
+      otherVoters,
+      candidates: totalCandidates ?? 0,
+      maleCandidates,
+      femaleCandidate,
+      otherCandidates,
       parties: totalPartiesCount ?? 0,
       elections: totalElectionCount ?? 0
     });
   }
 
+console.log({currentElection})
   return (
     <div>
       <Head>
@@ -182,7 +185,7 @@ export default function Home() {
               </Fade>
             </div>
 
-            <div className={`${!currentElection && "hidden"}`}>
+            { currentElection && new Date(currentElection?.endDate) > new Date() && <div>
               <div className='countdown_timer py-4 my-3 min-h-[320px] sm:h-fit bg-[url("https://t4.ftcdn.net/jpg/02/83/57/05/360_F_283570582_3J78GC9E5OesLLgG5lUkQLGEoyN2ijmc.jpg")] rounded-1 text-slate-100 flex flex-column items-center'>
                 <h3 className='my-4 mb-3 text-slate-300 text-md text-center'>{homepageTranslate("countdown_title")}</h3>
                 <div className='flex justify-evenly flex-wrap lg:w-[70vw] mt-3'>
@@ -212,7 +215,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div>}
 
             <div className='my-5 lg:px-0 sm:px-2 xsm:px-2'>
               <h4 className='font-bold text-md'>{homepageTranslate("election_gallery")}</h4>
@@ -248,6 +251,10 @@ export default function Home() {
                 <ElectionUserCard label={homepageTranslate("others")} value={totalDataCount.otherVoters ?? 0} Icon={<FaTransgender className='text-4xl text-blue-900' />} />
                 <ElectionUserCard label={homepageTranslate("total_election")} value={totalDataCount.elections ?? 0} Icon={<FaVoteYea className='text-4xl text-blue-900' />} />
                 <ElectionUserCard label={homepageTranslate("total_parties")} value={totalDataCount.parties ?? 0} Icon={<BiMale className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={electionGalleryT("total_candidate")} value={totalDataCount.candidates ?? 0} Icon={<BiMale className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={homepageTranslate("male_candidate")} value={totalDataCount.maleCandidates ?? 0} Icon={<BiMale className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={homepageTranslate("female_candidate")} value={totalDataCount.femaleCandidate ?? 0} Icon={<BiMale className='text-4xl text-blue-900' />} />
+                <ElectionUserCard label={homepageTranslate("others")} value={totalDataCount.otherCandidates ?? 0} Icon={<BiMale className='text-4xl text-blue-900' />} />
               </div>}
             </div>
 
