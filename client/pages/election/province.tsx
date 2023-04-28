@@ -68,20 +68,23 @@ export default function Home() {
 
   const casteVote = async (_candidateID: string) => {
     try {
+      // restrict voting before electin start and end
+
+
       const voterDetails = await getVoterDetails(loggedInAccountAddress);
-      const electionAddress =  electionList?.at(-1)?.startDate;
+      const electionAddress = electionList?.at(-1)?.startDate;
       let selectedCandidates = null;
 
       // vote limit count
       if (voterDetails.voteLimitCount === "3") return toast.info("You've exceed the vote limit count !");
 
-      for(let i = 0; i <candidateLists.length; i++) {
-        for(let j = 0; j <candidateLists[i][1].length; j++) {
-          if(candidateLists[i][1][j].user._id === _candidateID){
+      for (let i = 0; i < candidateLists.length; i++) {
+        for (let j = 0; j < candidateLists[i][1].length; j++) {
+          if (candidateLists[i][1][j].user._id === _candidateID) {
             selectedCandidates = candidateLists[i][1][j];
             break;
           }
-          if(selectedCandidates) break;
+          if (selectedCandidates) break;
         }
       }
       const isAlreadyVoted = selectedCandidates?.votedVoterLists?.includes(loggedInAccountAddress) ?? false;
@@ -100,7 +103,7 @@ export default function Home() {
       toast.error(`Failed to caste vote !, ${getFormattedErrorMessage(error.message)}`, { toastId: 2 });
     }
   }
-console.log({electionList})
+  console.log({ electionList })
   return (
     <div>
       <Head>

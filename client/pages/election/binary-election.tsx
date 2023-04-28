@@ -76,6 +76,9 @@ export default function Home() {
       const voterDetails = await getVoterDetails(loggedInAccountAddress);
       const electionAddress = electionList?.at(-1)?.startDate;
 
+      // restrict voting before electin start and end
+
+
       // restrict candidate to not vote more than one time
       const isCandidate = candidateLists.find(candidate => {
         return candidate.user._id === loggedInAccountAddress

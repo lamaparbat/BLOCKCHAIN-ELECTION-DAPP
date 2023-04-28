@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import UserCard from '../../../components/UserCard';
 import { getVoterDetails } from '../../../utils/web3';
 
-export default function Home({provinceNo}) {
+export default function Home({ provinceNo }) {
   const [electionStatus, setElectionStatus] = useState(null);
   const [electionList, setElectionList] = useState([]);
   const [candidateLists, setCandidateLists] = useState([]);
@@ -29,7 +29,7 @@ export default function Home({provinceNo}) {
       const electionList = await getElectionList();
       const candidateLists = await getCandidateList();
       const electionStatus = getElectionStatus("Province", electionList);
-      const { currentElection, electionCandidatesArray } = getSortedCandidatesList(electionList, candidateLists); 
+      const { currentElection, electionCandidatesArray } = getSortedCandidatesList(electionList, candidateLists);
 
       setElectionStatus(electionStatus);
       setCandidateLists(electionCandidatesArray);
@@ -64,12 +64,15 @@ export default function Home({provinceNo}) {
   });
 
 
-  const casteVote = async (_candidateID:string) => {
+  const casteVote = async (_candidateID: string) => {
     try {
+      // restrict voting before electin start and end
+
+
       const voterDetails = await getVoterDetails(loggedInAccountAddress);
 
       // vote limit count
-      if(voterDetails.voteLimitCount === "3") return toast.info("You've exceed the vote limit count !");
+      if (voterDetails.voteLimitCount === "3") return toast.info("You've exceed the vote limit count !");
 
       const casteCandidateDetails = _.find(candidateLists, (elections) => {
         elections[1].find(((candidate: any) => candidate.user._id === _candidateID))
@@ -103,26 +106,26 @@ export default function Home({provinceNo}) {
           {/* province level elections */}
           <div className='lg:w-[1100px] w-full lg:px-2 max-[1100px]:px-1'>
 
-          <div className='flex items-center h-fit mt-3 mb-4'>
-            <div className='w-fit py-1 pl-3 pr-10 mr-5 flex items-center bg-red-700 rounded-tr-full text-slate-100'>
-              <span className='text-slate-100 mr-2 cursor-pointer' onClick={navigateTo}>Province</span> /
-              <span className='text-slate-100 ml-2'>{PROVINCE[provinceIndex]?.label}</span>
+            <div className='flex items-center h-fit mt-3 mb-4'>
+              <div className='w-fit py-1 pl-3 pr-10 mr-5 flex items-center bg-red-700 rounded-tr-full text-slate-100'>
+                <span className='text-slate-100 mr-2 cursor-pointer' onClick={navigateTo}>Province</span> /
+                <span className='text-slate-100 ml-2'>{PROVINCE[provinceIndex]?.label}</span>
+              </div>
+              <span className='ml-2 text-lg font-bold text-black'>Total Candidates: {candidateLists[provinceIndex] && (candidateLists[provinceIndex][1]?.length ?? 0)}</span>
             </div>
-            <span className='ml-2 text-lg font-bold text-black'>Total Candidates: {candidateLists[provinceIndex] && (candidateLists[provinceIndex][1]?.length ?? 0)}</span>
-          </div>
 
             {/* candidate lists */}
             <div className='flex flex-wrap justify-between'>
               {
-              candidateLists[provinceIndex] ?
-                candidateLists[provinceIndex][1]?.map((candidateDetails: any, i) =>
-                  <UserCard
-                    details={candidateDetails}
-                    type="candidate"
-                    key={i}
-                    currentElection={electionList[electionList.length - 1]}
-                    casteVote={casteVote}
-                  />) : "No Candidates Available !"
+                candidateLists[provinceIndex] ?
+                  candidateLists[provinceIndex][1]?.map((candidateDetails: any, i) =>
+                    <UserCard
+                      details={candidateDetails}
+                      type="candidate"
+                      key={i}
+                      currentElection={electionList[electionList.length - 1]}
+                      casteVote={casteVote}
+                    />) : "No Candidates Available !"
               }
             </div>
 
@@ -133,20 +136,20 @@ export default function Home({provinceNo}) {
   )
 }
 
-export const getServerSideProps = async ({params}) => {
-  const {slug} = params;
+export const getServerSideProps = async ({ params }) => {
+  const { slug } = params;
   const provinceNo = parseInt(slug);
 
-  if(isNaN(provinceNo)){
+  if (isNaN(provinceNo)) {
     return {
-        redirect: {
-          permanent:false,
-          destination:""
-        }
+      redirect: {
+        permanent: false,
+        destination: ""
+      }
     }
   }
 
   return {
-    props: {provinceNo}
+    props: { provinceNo }
   }
 }

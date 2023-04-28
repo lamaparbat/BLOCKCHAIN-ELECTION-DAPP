@@ -72,6 +72,8 @@ export default function Home({ districtName }) {
 
   const casteVote = async (_candidateID: string, _position?: string) => {
     try {
+      // restrict voting before electin start and end
+
       const voterDetails = await getVoterDetails(loggedInAccountAddress);
       const electionAddress = electionList?.at(-1)?.startDate;
 

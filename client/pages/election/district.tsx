@@ -35,7 +35,7 @@ export default function Home() {
     const electionStatus = getElectionStatus("District", electionList);
     const currentElection: any = getCurrentElection(electionList);
     const groupByCandidates = _.groupBy(currentElection?.candidates, (candidate) => candidate.votingBooth);
-console.log({currentElection})
+    console.log({ currentElection })
     setElectionStatus(electionStatus);
     setCurrentElection(groupByCandidates);
     setVoterLists(voterLists);
@@ -67,6 +67,8 @@ console.log({currentElection})
 
   const casteVote = async (_candidateID: string, _position?: string) => {
     try {
+      // restrict voting before electin start and end
+
       const voterDetails = await getVoterDetails(loggedInAccountAddress);
       const electionAddress = electionList?.at(-1)?.startDate;
       let selectedCandidates = null;

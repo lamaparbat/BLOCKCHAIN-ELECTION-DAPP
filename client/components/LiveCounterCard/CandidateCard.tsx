@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { setCandidateDetails } from '../../redux/reducers/candidateReducer';
@@ -8,10 +8,19 @@ import FilterIcon from '../FilterIcon';
 import _ from 'lodash';
 import { TiLockClosed } from 'react-icons/ti';
 import { getStorage } from '../../services';
+import { getElectionList } from '../../utils';
 
 
 const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
   const { details, border, ishighlighted, casteVote }: any = props;
+  const [currentElection, setCurrentElection] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const currentElection = await getElectionList();
+      setCurrentElection(currentElection.at(-1));
+    })();
+  }, []);
 
   // redux dispatcher
   const dispatch = useDispatch();
@@ -39,18 +48,21 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
         </div>
         <div className='flex items-center'>
           <h3 className='mr-5 mt-2' id='count'>{details?.votedVoterLists?.length ?? 0}</h3>
-          <button
-            className={`relative flex justify-center items-center bg-slate-100 ${!voted && "shadow-md"} pt-2 pb-2 px-4 rounded-pill text-sm ${voted && "text-slate-500 cursor-default"}`}
-            onClick={() => !voted && casteVote(details?.user?._id, details?.position)}
-            disabled={voted}
-          >
-            {
-              voted && <span className='absolute -top-1 -left-2 p-1 rounded-circle bg-slate-200 shadow-md cursor-default'>
-                <TiLockClosed className='text-slate-500' />
-              </span>
-            }
-            Vote
-          </button>
+          {
+            new Date() > new Date(currentElection?.startDate) && new Date() < new Date(currentElection?.endDate) &&
+            <button
+              className={`relative flex justify-center items-center bg-slate-100 ${!voted && "shadow-md"} pt-2 pb-2 px-4 rounded-pill text-sm ${voted && "text-slate-500 cursor-default"}`}
+              onClick={() => !voted && casteVote(details?.user?._id, details?.position)}
+              disabled={voted}
+            >
+              {
+                voted && <span className='absolute -top-1 -left-2 p-1 rounded-circle bg-slate-200 shadow-md cursor-default'>
+                  <TiLockClosed className='text-slate-500' />
+                </span>
+              }
+              Vote
+            </button>
+          }
         </div>
       </div>
     </div>
