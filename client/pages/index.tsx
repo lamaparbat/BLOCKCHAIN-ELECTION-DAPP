@@ -14,7 +14,7 @@ import 'animate.css';
 import { BiFemale, BiGroup, BiMale } from 'react-icons/bi';
 import ElectionUserCard from '../components/ElectionUserCard';
 import { PROVINCE } from '../constants';
-import { getVoterList, getTotalCandidateCount, getTotalElectionCount, getTotalPartiesCount, getTotalVotersCount, getAllBlocks, getCandidateList } from '../utils/web3';
+import { getVoterList, getTotalElectionCount, getTotalPartiesCount, getCandidateList } from '../utils/web3';
 import { getCurrentElection } from '../utils/common';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
@@ -33,7 +33,7 @@ export default function Home() {
   const [totalDataCount, setTotalDataCount] = useState({
     candidates: 0, voters: 0, parties: 0, elections: 0,
     maleVoters: 0, femaleVoters: 0, otherVoters: 0,
-    maleCandidates: 0, femaleCandidate:0, otherCandidates:0
+    maleCandidates: 0, femaleCandidate: 0, otherCandidates: 0
   });
 
 
@@ -48,7 +48,7 @@ export default function Home() {
       setElectionLists(electionList);
       setAllVoters(totalVoters);
 
-      handleOverviewCountSort("province1");
+      handleOverviewCountSort(null);
     })();
 
     const browserZoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
@@ -69,7 +69,7 @@ export default function Home() {
   }, []);
   if (electionLists?.length > 0) {
     const { startDate, endDate } = electionLists?.at(-1);
-    
+
 
     if (new Date() < new Date(startDate)) {
       const interval = setInterval(() => {
@@ -120,15 +120,15 @@ export default function Home() {
     const candidates = await getCandidateList();
     const voters = await getVoterList();
 
-    const totalCandidates = candidates.filter((d:any) => d.user.province === provinceNo)?.length;
-    const maleCandidates = candidates.filter((d:any) => d.user.province === provinceNo && d?.user.gender === "MALE")?.length;
-    const femaleCandidate = candidates.filter((d:any) => d.user.province === provinceNo && d?.user.gender === "FEMALE")?.length;
-    const otherCandidates = candidates.filter((d:any) => d.user.province === provinceNo && d?.user.gender !== "MALE" && d?.user.gender !== "FEMALE")?.length;
+    const totalCandidates = candidates.filter((d: any) => provinceNo ? (d.user.province === provinceNo) : true)?.length;
+    const maleCandidates = candidates.filter((d: any) => provinceNo ? (d.user.province === provinceNo && d?.user.gender === "MALE") : d?.user.gender === "MALE")?.length;
+    const femaleCandidate = candidates.filter((d: any) => provinceNo ? (d.user.province === provinceNo && d?.user.gender === "FEMALE") : d?.user.gender === "FEMALE")?.length;
+    const otherCandidates = candidates.filter((d: any) => provinceNo ? (d.user.province === provinceNo && d?.user.gender !== "MALE" && d?.user.gender !== "FEMALE") : (d?.user.gender !== "MALE" && d?.user.gender !== "FEMALE"))?.length;
 
-    const totalVoters = voters.filter((d:any) => d.user.province === provinceNo)?.length;
-    const maleVoters = voters.filter((d:any) => d.user.province === provinceNo && d?.user.gender === "MALE")?.length;
-    const femaleVoters = voters.filter((d:any) => d.user.province === provinceNo && d?.user.gender === "FEMALE")?.length;
-    const otherVoters = voters.filter((d:any) => d.user.province === provinceNo && d?.user.gender !== "MALE" && d?.user.gender !== "FEMALE")?.length;
+    const totalVoters = voters.filter((d: any) => provinceNo ? (d.user.province === provinceNo) : true)?.length;
+    const maleVoters = voters.filter((d: any) => provinceNo ? d.user.province === provinceNo && d?.user.gender === "MALE" : d?.user.gender === "MALE")?.length;
+    const femaleVoters = voters.filter((d: any) => provinceNo ? d.user.province === provinceNo && d?.user.gender === "FEMALE" : d?.user.gender === "FEMALE")?.length;
+    const otherVoters = voters.filter((d: any) => provinceNo ? d.user.province === provinceNo && d?.user.gender !== "MALE" && d?.user.gender !== "FEMALE" : d?.user.gender !== "MALE" && d?.user.gender !== "FEMALE")?.length;
 
 
     setTotalDataCount({
@@ -146,7 +146,6 @@ export default function Home() {
     });
   }
 
-console.log({currentElection})
   return (
     <div>
       <Head>
@@ -185,7 +184,7 @@ console.log({currentElection})
               </Fade>
             </div>
 
-            { currentElection && new Date(currentElection?.endDate) > new Date() && <div>
+            {currentElection && new Date(currentElection?.endDate) > new Date() && <div>
               <div className='countdown_timer py-4 my-3 min-h-[320px] sm:h-fit bg-[url("https://t4.ftcdn.net/jpg/02/83/57/05/360_F_283570582_3J78GC9E5OesLLgG5lUkQLGEoyN2ijmc.jpg")] rounded-1 text-slate-100 flex flex-column items-center'>
                 <h3 className='my-4 mb-3 text-slate-300 text-md text-center'>{homepageTranslate("countdown_title")}</h3>
                 <div className='flex justify-evenly flex-wrap lg:w-[70vw] mt-3'>
@@ -242,7 +241,8 @@ console.log({currentElection})
                   className='text-md'
                   options={translateProvinceOptions}
                   placeholder={homepageTranslate("selecte_province_placeholder")}
-                  onChange={({ value }) => handleOverviewCountSort(value)} />
+                  onChange={({ value }) => handleOverviewCountSort(value)}
+                />
               </div>
               {totalDataCount && <div className='w-full flex justify-between sm:flex-wrap xsm:flex-wrap'>
                 <ElectionUserCard label={homepageTranslate("total_voters")} value={totalDataCount.voters ?? 0} Icon={<BiGroup className='text-4xl text-blue-900' />} />
