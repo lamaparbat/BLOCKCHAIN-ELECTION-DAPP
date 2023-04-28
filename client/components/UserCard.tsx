@@ -19,6 +19,8 @@ const UserCard: React.FC<UserCardStruct> = (props): React.ReactElement => {
   const isVoted = details?.votedVoterLists?.includes(getStorage("loggedInAccountAddress"));
   const isVoterRole = type === "voter";
 
+  const redirect = (link) => window.open(link, "_blank");
+
   return (
     <div className='user__card h-[180px] w-[350px] px-2 mb-3  max-[500px]:w-[500px] max-[400px]:w-full bg-slate-100 rounded-[12px] hover:bg-red-20'>
       {!casteVote && currentElection &&
@@ -53,9 +55,9 @@ const UserCard: React.FC<UserCardStruct> = (props): React.ReactElement => {
         <div className='col1 flex-col'>
           <Avatar src={details?.user?.profile} className={''} alt={'img'} size={'xl'} border={0} />
           <div className='social__media flex justify-center mt-3'>
-            <BsFacebook className='cursor-pointer hover:text-md hover:text-red-500 hover:animate-bounce' />
-            <BsInstagram className='mx-4 cursor-pointer hover:text-md hover:text-red-500 hover:animate-bounce' />
-            <BsTwitter className='cursor-pointer hover:text-md hover:text-red-500 hover:animate-bounce' />
+            <BsFacebook className='cursor-pointer hover:text-md hover:text-red-500 hover:animate-bounce' onClick={() => redirect(`https://www.facebook.com/${details?.user?.fullName}`)} />
+            <BsInstagram className='mx-4 cursor-pointer hover:text-md hover:text-red-500 hover:animate-bounce' onClick={() => redirect(`https://www.instagram.com/${details?.user?.fullName}`)} />
+            <BsTwitter className='cursor-pointer hover:text-md hover:text-red-500 hover:animate-bounce' onClick={() => redirect(`https://www.twitter.com/${details?.user?.fullName}`)} />
           </div>
         </div>
         <div className='col2 pr-1 h-fit flex-xl-column text-[15px] ml-1'>
@@ -64,7 +66,7 @@ const UserCard: React.FC<UserCardStruct> = (props): React.ReactElement => {
           <div>Citizenship No: {details?.user?.citizenshipNumber}</div>
           <div>Age: {details?.user?.age}</div>
           {!isVoterRole && <div>Party: {details?.partyName}</div>}
-          <div>Email: {formattedEmail}</div>
+          <div>Email: {formattedEmail}@..com</div>
           {/* <div className='text-danger'>Province: {details?.user.province}</div>
           <div className='text-danger'>District: {details?.user?.district}</div>
           <div className='text-danger'>Ward: {details?.user?.ward}</div> */}
