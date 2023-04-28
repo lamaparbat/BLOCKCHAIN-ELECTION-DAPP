@@ -217,7 +217,7 @@ const CandidateRegistration = () => {
                 className="lg:w-[230px] sm:w-[230px] xsm:w-full sm:mt-0 xsm:mt-1"
                 placeholder={<div>{commonT("district_placeholder")}</div>}
                 onChange={(item: any) => {
-                  setSelectDistrict(item);
+                  // setSelectDistrict(item);
                   setCandidateDetails({ ...candidateDetails, district: item.value })
                 }}
                 isDisabled={selectedProvince?.label ? false : true}
