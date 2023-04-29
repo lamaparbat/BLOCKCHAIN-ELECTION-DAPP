@@ -105,15 +105,14 @@ b. Activity diagram of sub-system
 
 
 c. USE CASE DIAGRAM
-<img width="952" alt="USE CASE DIAGRAM" src="https://user-images.githubusercontent.com/64581460/210160720-90486932-fc16-4d41-8d17-d6a68dcdb91a.png">
-
+<img width="1382" alt="UML CLASS DIAGRAM" src="https://user-images.githubusercontent.com/64581460/235317472-730f90d6-5b75-4922-85ef-8116c6a32d34.png">
 
 d. Class Diagram
 ![Dapp Voting Class Diagram](https://user-images.githubusercontent.com/64581460/214637289-67010d57-70de-40f8-9886-404b25803948.png)
 
 
 e. ERD
-![Dapp Voting ERD](https://user-images.githubusercontent.com/64581460/214876029-8bc3aa1f-16d2-47dc-8b7c-4167a7fd1cc1.png)
+<img width="969" alt="ER DIAGRAM" src="https://user-images.githubusercontent.com/64581460/235317459-34dca47d-e710-4826-8aa7-39494c4082ab.png">
 
 
 f. Data Dictionery
