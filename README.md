@@ -104,12 +104,8 @@ b. Activity diagram of sub-system
 <img width="803" alt="Screen Shot 2022-12-29 at 23 39 43" src="https://user-images.githubusercontent.com/64581460/209991017-fb819a23-2f6e-453d-8474-9c9888e16c8b.png">
 
 
-c. USE CASE DIAGRAM
+c. UML CLASS DIAGRAM
 <img width="1382" alt="UML CLASS DIAGRAM" src="https://user-images.githubusercontent.com/64581460/235317472-730f90d6-5b75-4922-85ef-8116c6a32d34.png">
-
-d. Class Diagram
-![Dapp Voting Class Diagram](https://user-images.githubusercontent.com/64581460/214637289-67010d57-70de-40f8-9886-404b25803948.png)
-
 
 e. ERD
 <img width="969" alt="ER DIAGRAM" src="https://user-images.githubusercontent.com/64581460/235317459-34dca47d-e710-4826-8aa7-39494c4082ab.png">
