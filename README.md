@@ -62,7 +62,7 @@
 <img width="1440" alt="Screenshot 2023-03-27 at 20 48 04" src="https://user-images.githubusercontent.com/64581460/227981322-42f6e2e1-668f-48fc-bb2a-bdb99ed52581.png">
 
 
-## Constitutional Provision. [/about/constitutional-provision]
+## Constitutional Provision.
 <img width="1439" alt="Screen Shot 2023-02-03 at 22 22 38" src="https://user-images.githubusercontent.com/64581460/216657904-406efa27-b65f-46f0-bcf0-f4cbf7e32d56.png">
 
 ## FAQs List Page
