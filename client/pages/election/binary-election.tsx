@@ -38,7 +38,9 @@ export default function Home() {
     const electionList = await getElectionList();
     const voterLists = await getVoterList();
     const electionStatus = getElectionStatus("Local", electionList);
-    const currentElection = electionList?.find((d) => d.electionType === "Local");
+    const currentElection = electionList?.at(-1);
+
+    if (currentElection?.electionType !== "Local") return;
 
     setElectionStatus(electionStatus);
     setBinaryElection(currentElection)
