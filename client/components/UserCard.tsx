@@ -19,7 +19,7 @@ const UserCard: React.FC<UserCardStruct> = (props): React.ReactElement => {
   const isVoted = details?.votedVoterLists?.includes(getStorage("loggedInAccountAddress"));
   const isVoterRole = type === "voter";
 
-  const redirect = (link) => window.open(link, "_blank");
+  const redirect = (link: string) => window.open(link, "_blank");
 
   return (
     <div className='user__card h-[180px] w-[350px] px-2 mb-3  max-[500px]:w-[500px] max-[400px]:w-full bg-slate-100 rounded-[12px] hover:bg-red-20'>

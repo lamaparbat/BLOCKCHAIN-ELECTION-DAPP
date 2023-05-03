@@ -41,7 +41,7 @@ const VoterRegistration = () => {
   useEffect(() => {
     (async () => {
       const voterlists = await getVoterList();
-
+      toast.success("New Voter registered successfully");
       setVoterLists(voterlists);
     })();
   }, []);
@@ -147,7 +147,6 @@ const VoterRegistration = () => {
     }
 
   }
-
   return (
     <div className='mb-[50px]'>
       <Head>

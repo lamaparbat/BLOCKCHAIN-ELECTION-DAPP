@@ -101,7 +101,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
 
       fetchData();
       setOpenCandidateModal(true);
-      toast.success("Election created successfully.");
+      toast.success(`New ${election?.electionType?.toLowerCase()} election created successfully.`);
     } catch (error) {
       console.error(error);
       toast.error("Failed to create election !");
@@ -131,7 +131,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
 
   const handleClose = () => {
     setElection(defaultElectionData);
-    setShowCreateElectionModal(!show);  
+    setShowCreateElectionModal(!show);
     setCandidateList([...originalCandidateList]);
     setBoothPlace(null);
   }
@@ -140,14 +140,19 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
     try {
       const electionList = await getElectionList();
       const currentElection: any = getCurrentElection(electionList);
-      const selectedCandidates = election?.selectedCandidates?.map((candidate) => ({ _id: candidate?.user?._id, position: candidate?.position, votingBooth: boothPlace })).filter((candidate) => candidate.position === selectedPosition && candidate.votingBooth === boothPlace);
+      const isLocalElection = election?.electionType === "Local";
 
-      if (election?.electionType === "Local" && election.selectedCandidates?.length > 2) return toast.warning("Only 2 candidates are allow for binary election !!");
-      console.log({ selectedCandidates })
+      const selectedCandidates = election?.selectedCandidates?.map((candidate) => ({
+        _id: candidate?.user?._id,
+        position: isLocalElection ? "" : candidate?.position,
+        votingBooth: isLocalElection ? "" : boothPlace
+      })).filter((candidate) => isLocalElection ? true : (candidate.position === selectedPosition && candidate.votingBooth === boothPlace));
+
+      if (isLocalElection && selectedCandidates?.length > 2) return toast.warning("Only 2 candidates are allow for binary election !!");
 
       await SmartContract.methods.addSelectedCandidates(selectedCandidates, currentElection?.startDate).send({ from: loggedInAccountAddress });
 
-      const filterCandidates =_candidateLists.filter((candidate:any) => !election.selectedCandidates.some((_candidate) => _candidate.user._id === candidate.user._id))
+      const filterCandidates = _candidateLists.filter((candidate: any) => !election.selectedCandidates.some((_candidate) => _candidate.user._id === candidate.user._id))
       setCandidateList([...filterCandidates]);
 
       setBoothPlace(null);

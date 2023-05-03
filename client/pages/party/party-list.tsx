@@ -24,22 +24,21 @@ const Details: React.FC = (): React.ReactElement => {
   const partyT = useTranslations("party");
   const candidateT = useTranslations("candidate_registration");
 
+  const fetchAllData = async () => {
+    const list = await getPartyList();
+
+    originalParties = list ? [...list] : [];
+    dispatch(setParties(list));
+    setPartyLists(list);
+    setSearchResult(list);
+  }
+
   useEffect(() => {
-    (async () => {
-      const list = await getPartyList();
+    fetchAllData();
 
-      originalParties = list ? [...list] : [];
-      dispatch(setParties(list));
-      setPartyLists(list);
-      setSearchResult(list);
-      partyEvent = SmartContract.events?.PartyCreated().on("data", (event: any) => {
-        const tempArray = [...originalParties, event.returnValues[0]]
-
-        originalParties = _.uniqBy(tempArray, "name");
-        setPartyLists(originalParties);
-        dispatch(setParties([...partyList, event.returnValues[0]]));
-      }).on("error", () => console.error("PartyCreated Event Error !"));
-    })();
+    partyEvent = SmartContract.events?.PartyCreated().on("data", (event: any) => {
+      fetchAllData();
+    }).on("error", () => console.error("PartyCreated Event Error !"));
 
     return () => {
       partyEvent && partyEvent?.unsubscribe();

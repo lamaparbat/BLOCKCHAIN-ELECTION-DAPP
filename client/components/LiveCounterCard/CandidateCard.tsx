@@ -49,7 +49,7 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
         <div className='flex items-center'>
           <h3 className='mr-5 mt-2' id='count'>{details?.votedVoterLists?.length ?? 0}</h3>
           {
-            new Date() > new Date(currentElection?.startDate) && new Date() < new Date(currentElection?.endDate) &&
+            true &&
             <button
               className={`relative flex justify-center items-center bg-slate-100 ${!voted && "shadow-md"} pt-2 pb-2 px-4 rounded-pill text-sm ${voted && "text-slate-500 cursor-default"}`}
               onClick={() => !voted && casteVote(details?.user?._id, details?.position)}

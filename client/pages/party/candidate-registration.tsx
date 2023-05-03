@@ -105,7 +105,7 @@ const CandidateRegistration = () => {
 
       // check if candidate already exists
       const isExits = _.includes(candidateLists, (candidate: any) => candidate.user.citizenshipNumber === citizenshipNumber);
-      if (isExits) throw new Error("Candidate already exists on given citizenship nuber !");
+      if (isExits) throw new Error("Candidate already exists on given citizenship number !");
 
       // check if duplicate email
       const isDuplicate = candidateLists?.find((d: any) => d.user?.email?.toLowerCase()?.includes(email?.toLowerCase()));
@@ -159,7 +159,7 @@ const CandidateRegistration = () => {
     }
 
   }
-
+  toast.error("Candidate already exists on given citizenship number !")
   return (
     <div className='mb-[50px]'>
       <Head>
@@ -217,7 +217,7 @@ const CandidateRegistration = () => {
                 className="lg:w-[230px] sm:w-[230px] xsm:w-full sm:mt-0 xsm:mt-1"
                 placeholder={<div>{commonT("district_placeholder")}</div>}
                 onChange={(item: any) => {
-                  // setSelectDistrict(item);
+                  setSelectDistrict(item);
                   setCandidateDetails({ ...candidateDetails, district: item.value })
                 }}
                 isDisabled={selectedProvince?.label ? false : true}

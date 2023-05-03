@@ -146,6 +146,8 @@ export default function Home() {
     });
   }
 
+  console.log(currentElection)
+
   return (
     <div>
       <Head>
