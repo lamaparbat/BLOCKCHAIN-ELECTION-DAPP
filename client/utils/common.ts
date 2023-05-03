@@ -16,12 +16,14 @@ export const getFormattedErrorMessage = (msgObject: string) => {
 
 export const getElectionStatus = (electionType: string, electionArray: Array<ElectionStruct>): string => {
   const currentElection = electionArray?.at(-1);
-
+  console.log(currentElection?.electionType, electionType, currentElection?.electionType !== electionType)
   if (currentElection?.electionType !== electionType) return "No election available !";
 
   const current_date = moment(Date.now());
   const startDate = moment(currentElection?.startDate);
   const endDate = moment(currentElection?.endDate);
+
+  if (current_date < startDate && current_date < endDate) return "Election is starting soon."
 
   if (current_date >= startDate && current_date <= endDate) return "LIVE";
 
