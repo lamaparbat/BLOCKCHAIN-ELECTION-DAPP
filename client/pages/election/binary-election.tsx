@@ -40,6 +40,7 @@ export default function Home() {
     const electionStatus = getElectionStatus("Local", electionList);
     const currentElection = electionList?.at(-1);
 
+    console.log(electionStatus)
     if (currentElection?.electionType !== "Local") return;
 
     setElectionStatus(electionStatus);
@@ -79,6 +80,8 @@ export default function Home() {
       const electionAddress = electionList?.at(-1)?.startDate;
 
       // restrict voting before electin start and end
+      if (electionStatus == "ENDED") return toast.warn("Election is over !")
+      if (electionStatus !== "LIVE") return toast.warn("Cannot vote before election !");
 
 
       // restrict candidate to not vote more than one time
@@ -105,6 +108,10 @@ export default function Home() {
       toast.error(`Failed to caste vote !, ${getFormattedErrorMessage(error.message)}`, { toastId: 2 });
     }
   }
+
+
+  const winnerAddress = candidateLists[0].votedVoterLists?.length > candidateLists[1].votedVoterLists?.length
+    ? candidateLists[0].user._id : candidateLists[1].user._id;
 
   return (
     <div>
@@ -136,7 +143,7 @@ export default function Home() {
 
               return (<div>
                 <div
-                  className={`card__container ${isElectionEnd && 'bg-celebrationGif'} h-fit sm:w-[520px] max-[1140px]:w-full mt-3 border border-1 border-slate-300 rounded-1 overflow-hidden mr-3`}>
+                  className={`card__container ${isElectionEnd && data?.user?._id === winnerAddress && 'bg-celebrationGif'} h-fit sm:w-[520px] max-[1140px]:w-full mt-3 border border-1 border-slate-300 rounded-1 overflow-hidden mr-3`}>
                   <div
                     className='card__title pl-4 pt-2 flex items-center bg-slate-100 border-l-0 border-r-0 border-t-0 border-b-2 border-black-500 cursor-pointer'
                   >
@@ -148,23 +155,25 @@ export default function Home() {
                       <div className='details pt-2 pl-3 mx-3 w-100'>
                         <div className='flex items-center'>
                           <span className='text-xl me-4'>{data?.user?.fullName}</span>
-                          {isElectionEnd && <TickCircleIcon />}
+                          {isElectionEnd && data?.user?._id === winnerAddress && <TickCircleIcon />}
                           {isElectionStart && <FaRegDotCircle className='animate-ping text-danger absolute lg:ml-[200px] max-[1100px]:ml-[100px]' />}
                         </div>
                         <div className='flex justify-content-between'>
                           <h1 id='count'>{data?.votedVoterLists?.length}</h1>
-                          <button
-                            className={`w-[100px] h-[40px] relative flex justify-center items-center bg-slate-100 ${!voted && "shadow-md"} pt-2 pb-2 px-4 rounded-pill text-sm ${voted && "text-slate-500 cursor-default"}`}
-                            onClick={() => !voted && casteVote(data)}
-                            disabled={voted}
-                          >
-                            {
-                              voted && <span className='absolute -top-1 -left-2 p-1 rounded-circle bg-slate-200 shadow-md cursor-default'>
-                                <TiLockClosed className='text-slate-500' />
-                              </span>
-                            }
-                            Vote
-                          </button>
+                          {
+                            !isElectionEnd && <button
+                              className={`w-[100px] h-[40px] relative flex justify-center items-center bg-slate-100 ${!voted && "shadow-md"} pt-2 pb-2 px-4 rounded-pill text-sm ${voted && "text-slate-500 cursor-default"}`}
+                              onClick={() => !voted && casteVote(data)}
+                              disabled={voted}
+                            >
+                              {
+                                voted && <span className='absolute -top-1 -left-2 p-1 rounded-circle bg-slate-200 shadow-md cursor-default'>
+                                  <TiLockClosed className='text-slate-500' />
+                                </span>
+                              }
+                              Vote
+                            </button>
+                          }
                         </div>
                       </div>
                     </div>
