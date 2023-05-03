@@ -62,7 +62,7 @@
 <img width="1440" alt="Screenshot 2023-03-27 at 20 48 04" src="https://user-images.githubusercontent.com/64581460/227981322-42f6e2e1-668f-48fc-bb2a-bdb99ed52581.png">
 
 
-## Constitutional Provision. [/about/constitutional-provision]
+## Constitutional Provision.
 <img width="1439" alt="Screen Shot 2023-02-03 at 22 22 38" src="https://user-images.githubusercontent.com/64581460/216657904-406efa27-b65f-46f0-bcf0-f4cbf7e32d56.png">
 
 ## FAQs List Page
@@ -104,16 +104,11 @@ b. Activity diagram of sub-system
 <img width="803" alt="Screen Shot 2022-12-29 at 23 39 43" src="https://user-images.githubusercontent.com/64581460/209991017-fb819a23-2f6e-453d-8474-9c9888e16c8b.png">
 
 
-c. USE CASE DIAGRAM
-<img width="952" alt="USE CASE DIAGRAM" src="https://user-images.githubusercontent.com/64581460/210160720-90486932-fc16-4d41-8d17-d6a68dcdb91a.png">
-
-
-d. Class Diagram
-![Dapp Voting Class Diagram](https://user-images.githubusercontent.com/64581460/214637289-67010d57-70de-40f8-9886-404b25803948.png)
-
+c. UML CLASS DIAGRAM
+<img width="1382" alt="UML CLASS DIAGRAM" src="https://user-images.githubusercontent.com/64581460/235317472-730f90d6-5b75-4922-85ef-8116c6a32d34.png">
 
 e. ERD
-![Dapp Voting ERD](https://user-images.githubusercontent.com/64581460/214876029-8bc3aa1f-16d2-47dc-8b7c-4167a7fd1cc1.png)
+<img width="969" alt="ER DIAGRAM" src="https://user-images.githubusercontent.com/64581460/235317459-34dca47d-e710-4826-8aa7-39494c4082ab.png">
 
 
 f. Data Dictionery

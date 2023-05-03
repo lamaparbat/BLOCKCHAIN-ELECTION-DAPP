@@ -61,7 +61,7 @@ const UserCard: React.FC<UserCardStruct> = (props): React.ReactElement => {
           </div>
         </div>
         <div className='col2 pr-1 h-fit flex-xl-column text-[15px] ml-1'>
-          <div>Address: {trimAddress(details?.user?._id)}</div>
+          {/* <div>Address: {trimAddress(details?.user?._id)}</div> */}
           <div>Name: {details?.user?.fullName}</div>
           <div>Citizenship No: {details?.user?.citizenshipNumber}</div>
           <div>Age: {details?.user?.age}</div>
