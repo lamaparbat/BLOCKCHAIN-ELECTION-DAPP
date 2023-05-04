@@ -28,8 +28,8 @@ export default function Home({ provinceNo }) {
     (async () => {
       const electionList = await getElectionList();
       const candidateLists = await getCandidateList();
-      const electionStatus = getElectionStatus("Province", electionList);
       const { currentElection, electionCandidatesArray } = getSortedCandidatesList(electionList, candidateLists);
+      const electionStatus = getElectionStatus("Province", currentElection);
 
       setElectionStatus(electionStatus);
       setCandidateLists(electionCandidatesArray);

@@ -3,28 +3,25 @@ import Head from 'next/head';
 import { useDispatch } from 'react-redux';
 import { GoPrimitiveDot } from 'react-icons/go';
 import Navbar from '../../components/Navbar';
-import LiveCounterCard from '../../components/LiveCounterCard/LiveCounterCard';
 import electionChannel from "../../services/pusher-events";
-import { getCandidateList, getElectionList, getElectionStatus, getFormattedErrorMessage, getVoterList, trimAddress } from '../../utils';
+import { getElectionList, getElectionStatus, getFormattedErrorMessage, getVoterList, trimAddress } from '../../utils';
 import _ from 'lodash';
-import { BTM_BORDER_STYLE, SmartContract } from '../../constants';
+import { SmartContract } from '../../constants';
 import { getStorage } from '../../services';
 import { setCandidateList } from '../../redux/reducers/candidateReducer';
 import { toast } from 'react-toastify';
 import { getVoterDetails } from '../../utils/web3';
 import { useTranslations } from 'next-intl';
-import CandidateCard from '../../components/LiveCounterCard/CandidateCard';
 import AnimatedAvatar from '../../components/AnimatedAvatar';
 import TickCircleIcon from '../../components/TickCircleIcon';
 import { FaRegDotCircle } from 'react-icons/fa';
 import { TiLockClosed } from 'react-icons/ti';
+import { BiEqualizer } from 'react-icons/bi';
 
 export default function Home() {
   const [electionStatus, setElectionStatus] = useState(null);
   const [electionList, setElectionList] = useState([]);
-  const [binaryElection, setBinaryElection] = useState(null);
   const [candidateLists, setCandidateLists] = useState([]);
-  const [voterLists, setVoterLists] = useState([]);
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
   let voteCastEvent = null;
 
@@ -37,16 +34,13 @@ export default function Home() {
   const fetchAllData = async () => {
     const electionList = await getElectionList();
     const voterLists = await getVoterList();
-    const electionStatus = getElectionStatus("Local", electionList);
     const currentElection = electionList?.at(-1);
+    const electionStatus = getElectionStatus("Local", currentElection);
 
-    console.log(electionStatus)
     if (currentElection?.electionType !== "Local") return;
 
     setElectionStatus(electionStatus);
-    setBinaryElection(currentElection)
     setCandidateLists(currentElection?.candidates);
-    setVoterLists(voterLists);
     dispatch(setCandidateList(candidateLists));
     setElectionList(electionList);
   }
@@ -110,8 +104,14 @@ export default function Home() {
   }
 
 
-  const winnerAddress = candidateLists[0].votedVoterLists?.length > candidateLists[1].votedVoterLists?.length
-    ? candidateLists[0].user._id : candidateLists[1].user._id;
+  const candidateA = candidateLists[0];
+  const candidateB = candidateLists[1];
+  const candidateAVotes = candidateA?.votedVoterLists?.length;
+  const candidateBVotes = candidateB?.votedVoterLists?.length;
+
+
+  const winnerAddress = candidateAVotes === candidateBVotes ? null : candidateAVotes > candidateBVotes
+    ? candidateA?.user?._id : candidateB?.user?._id;
 
   return (
     <div>
@@ -145,9 +145,14 @@ export default function Home() {
                 <div
                   className={`card__container ${isElectionEnd && data?.user?._id === winnerAddress && 'bg-celebrationGif'} h-fit sm:w-[520px] max-[1140px]:w-full mt-3 border border-1 border-slate-300 rounded-1 overflow-hidden mr-3`}>
                   <div
-                    className='card__title pl-4 pt-2 flex items-center bg-slate-100 border-l-0 border-r-0 border-t-0 border-b-2 border-black-500 cursor-pointer'
+                    className='card__title pl-4 pt-2 flex items-center justify-between bg-slate-100 border-l-0 border-r-0 border-t-0 border-b-2 border-black-500 cursor-pointer'
                   >
                     <h6>{trimAddress(data?.user?._id)}</h6>
+                    {
+                      !winnerAddress && <span className='-mt-2 mr-4 text-red-500 flex items-center'>
+                        <BiEqualizer className='mx-2 animate-ping' /> Equal
+                      </span>
+                    }
                   </div>
                   <div className={`card__body pt-3 pb-2 ${isElectionStart && 'animatedBorder'}`}>
                     <div className='card__body__hot px-4 mb-3 flex'>

@@ -29,7 +29,7 @@ export default function Home({ districtName }) {
   const fetchData = async () => {
     const electionList = await getElectionList();
     const candidateLists = await getCandidateList();
-    const electionStatus = getElectionStatus("Province", electionList);
+    const electionStatus = getElectionStatus("Province", electionList?.at(-1));
     const groupByCandidates = _.groupBy(electionList.at(-1)?.candidates, (candidate) => candidate.votingBooth);
 
     setElectionStatus(electionStatus);

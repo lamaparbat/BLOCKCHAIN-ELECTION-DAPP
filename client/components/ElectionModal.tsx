@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import Select from "react-select";
 import { toast } from 'react-toastify';
@@ -10,6 +10,7 @@ import { BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs';
 import { getCandidateList, getElectionList } from '../utils';
 import { getCurrentElection } from '../utils/common';
 import moment from 'moment';
+import { setCurrentElection } from '../redux/reducers/commonReducer';
 
 const currentDate = new Date();
 const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -31,6 +32,7 @@ let originalCandidateList = [];
 
 const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const [election, setElection] = useState({ ...defaultElectionData });
+  const [electionList, setElectionList] = useState([]);
   const [_candidateLists, setCandidateList] = useState([])
   const [isDisabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -39,6 +41,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const [selectedPosition, setSelectedPosition] = useState(null);
   const [boothPlace, setBoothPlace] = useState(null);
   const [recentlyCreatedElection, setRecentlyCreatedElection] = useState(null);
+  const dispatch = useDispatch();
 
 
   const fetchData = async () => {
@@ -49,6 +52,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
     originalCandidateList = [...candidateLists];
     setRecentlyCreatedElection(currentElection);
     setCandidateList(candidateLists);
+    setElectionList(elections);
   }
 
   useEffect(() => {
@@ -99,8 +103,9 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
         galleryImagesUrl
       ).send({ from: loggedInAccountAddress });
 
-      fetchData();
+      setShowCreateElectionModal(false);
       setOpenCandidateModal(true);
+      dispatch(setCurrentElection({ title, description, startDate, endDate, electionType, galleryImagesUrl }));
       toast.success(`New ${election?.electionType?.toLowerCase()} election created successfully.`);
     } catch (error) {
       console.error(error);
@@ -156,7 +161,11 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
       setCandidateList([...filterCandidates]);
 
       setBoothPlace(null);
-      toast.success("Selected candidates added successfully.")
+      setOpenCandidateModal(false);
+
+      fetchData();
+
+      toast.success("Selected candidates added successfully.");
     } catch (error) {
       console.log(error)
       setBoothPlace(null);
@@ -331,7 +340,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
               />
             </div>
             <button
-              className={`h-fit w-full flex items-center mt-4 rounded-3 border border-1 border-slate-400 bg-slate-200 ${recentlyCreatedElection && election?.electionType && "cursor-pointer hover:bg-slate-100"}`}
+              className={`h-fit w-full flex items-center mt-4 rounded-3 border border-1 border-slate-400 bg-slate-200 ${recentlyCreatedElection ? election?.electionType && "cursor-pointer hover:bg-slate-100" : "hidden"}`}
               onClick={onOpenCandidateModal}
               disabled={!recentlyCreatedElection?.length}
               onMouseOver={() => {

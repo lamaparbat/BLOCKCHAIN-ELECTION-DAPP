@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Select from 'react-select';
 import Navbar from '../../components/Navbar';
 import { PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, GENDER_OPTIONS, CANDIDATE_ELIGIBILITY_AGE } from '../../constants';
@@ -12,8 +12,12 @@ import { useTranslations } from 'next-intl';
 import { isAdmin } from '../../utils/web3';
 import { getStorage } from '../../services';
 
-const defaultOptions = { label: '', value: '' };
 declare const window: any;
+const defaultCandidateDetails = {
+  fullName: "", citizenshipNumber: "", province: { label: "Select Province", value: "" }, district: { label: "Select District", value: "" }, municipality: { label: "Select Municipality", value: "" }, ward: { label: "Select Ward", value: "" },
+  email: "", profile: "", agenda: "", age: 0, dob: "", partyName: { label: "Select Party", value: "" }, address: "", gender: { label: "Select Gender", value: "" }
+};
+const defaultOptions = { label: '', value: '' };
 
 const CandidateRegistration = () => {
   const [translateProvinceOptions, setTranslateProvinceOptions] = useState([]);
@@ -22,13 +26,11 @@ const CandidateRegistration = () => {
   const [selectedProvince, setSelectProvince] = useState(defaultOptions);
   const [selectedDistrict, setSelectDistrict] = useState(defaultOptions);
   const [candidateLists, setCandidateLists] = useState([]);
-  const [candidateDetails, setCandidateDetails] = useState({
-    fullName: null, citizenshipNumber: null, province: null, district: null, municipality: null, ward: null,
-    email: null, profile: null, agenda: null, age: 0, dob: null, partyName: null, address: null, gender: null
-  });
+  const [candidateDetails, setCandidateDetails] = useState({ ...defaultCandidateDetails });
   const [partyList, setPartyList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isSubmitBtnDisabled, setIsSubmitBtnDisabled] = useState(true);
+  const imageRef = useRef(null);
 
   const voterT = useTranslations("voter_registration");
   const candidateT = useTranslations("candidate_registration");
@@ -119,10 +121,10 @@ const CandidateRegistration = () => {
       const formData = new FormData();
       formData.append("fullName", fullName);
       formData.append("citizenshipNumber", citizenshipNumber);
-      formData.append("province", province);
-      formData.append("district", district);
-      formData.append("municipality", municipality);
-      formData.append("ward", ward);
+      formData.append("province", province.value);
+      formData.append("district", district.value);
+      formData.append("municipality", municipality.value);
+      formData.append("ward", ward.value);
       formData.append("email", email);
       formData.append("profile", profile);
 
@@ -133,33 +135,38 @@ const CandidateRegistration = () => {
       if (!profile) throw new Error("Failed to upload image !");
 
       await SmartContract.methods.addCandidate(
-        fullName,
-        citizenshipNumber,
-        age,
-        agenda,
-        dob,
-        email,
-        profileUrl,
-        partyName,
-        province,
-        district,
-        municipality,
-        ward?.toString(), gender
+        fullName.trim(),
+        citizenshipNumber.trim(),
+        age?.toString()?.trim(),
+        agenda.trim(),
+        dob.trim(),
+        email.trim(),
+        profileUrl.trim(),
+        partyName?.value.trim(),
+        province?.value.trim(),
+        district?.value.trim(),
+        municipality?.value.trim(),
+        ward?.value?.toString().trim(), gender?.value?.trim()
       ).send({ from: loggedInAccountAddress });
+
+
+      // reset form
+      setCandidateDetails({ ...defaultCandidateDetails });
+      imageRef.current.value = "";
 
       toast.success("New candidate registered successfully");
       setLoading(false);
     } catch (error) {
       let errorMsg = getFormattedErrorMessage(error.message);
       errorMsg = errorMsg.length > 0 ? errorMsg : error.message;
-      console.error({ errorMsg })
+      console.error({ errorMsg });
 
       setLoading(false);
       toast.error(errorMsg, { toastId: 2 });
     }
 
   }
-  toast.error("Candidate already exists on given citizenship number !")
+
   return (
     <div className='mb-[50px]'>
       <Head>
@@ -177,6 +184,7 @@ const CandidateRegistration = () => {
               <input
                 className='overrideInputStyle form-control px-3 py-[10px] rounded-1 mt-1 shadow-none outline-0 w-30'
                 type="text"
+                value={candidateDetails.fullName}
                 placeholder={commonT("uname_placeholder")}
                 onChange={(e) => setCandidateDetails({ ...candidateDetails, fullName: e.target.value })}
               />
@@ -188,13 +196,14 @@ const CandidateRegistration = () => {
               <input
                 className='overrideInputStyle form-control px-3 py-[10px] rounded-1 mt-1 shadow-none outline-0'
                 type="number"
+                value={candidateDetails.citizenshipNumber}
                 placeholder={commonT("citizenship_placholder")}
                 onChange={(e) => setCandidateDetails({ ...candidateDetails, citizenshipNumber: e.target.value })}
               />
             </div>
             <div className='lg:w-[35%] sm:w-[35%] xsm:w-full sm:mt-0 xsm:mt-3'>
               <span>{voterT("gender_label")}</span>
-              <Select className='mt-1' options={GENDER_OPTIONS.map((d) => ({ label: commonT(d.label.toLocaleLowerCase()), value: d.value }))} onChange={(option) => setCandidateDetails({ ...candidateDetails, gender: option.value })} placeholder={commonT("gender_placeholder")} />
+              <Select className='mt-1' value={candidateDetails.gender} options={GENDER_OPTIONS.map((d) => ({ label: commonT(d.label.toLocaleLowerCase()), value: d.value }))} onChange={(option: any) => setCandidateDetails({ ...candidateDetails, gender: option })} placeholder={commonT("gender_placeholder")} />
             </div>
           </div>
           <div className='flex lg:flex-row sm:flex-row xsm:flex-col justify-between my-4'>
@@ -204,9 +213,10 @@ const CandidateRegistration = () => {
                 options={translateProvinceOptions}
                 className="lg:w-[250px] sm:w-[250px] xsm:w-full mr-2 mt-1"
                 placeholder={<div>{commonT("province_placeholder")}</div>}
-                onChange={(item) => {
+                value={candidateDetails.province}
+                onChange={(item: any) => {
                   setSelectProvince(item);
-                  setCandidateDetails({ ...candidateDetails, province: item.value })
+                  setCandidateDetails({ ...candidateDetails, province: item })
                 }}
               />
             </div>
@@ -216,9 +226,10 @@ const CandidateRegistration = () => {
                 options={districtProvinceOptions}
                 className="lg:w-[230px] sm:w-[230px] xsm:w-full sm:mt-0 xsm:mt-1"
                 placeholder={<div>{commonT("district_placeholder")}</div>}
+                value={candidateDetails.district}
                 onChange={(item: any) => {
                   setSelectDistrict(item);
-                  setCandidateDetails({ ...candidateDetails, district: item.value })
+                  setCandidateDetails({ ...candidateDetails, district: item })
                 }}
                 isDisabled={selectedProvince?.label ? false : true}
               />
@@ -231,8 +242,9 @@ const CandidateRegistration = () => {
                 options={municipalityOptions}
                 className="lg:w-[250px] sm:w-[250px] xsm:w-full mr-2 mt-1"
                 placeholder={<div>{commonT("municipality_placeholder")}</div>}
+                value={candidateDetails.municipality}
                 onChange={(item: any) => {
-                  setCandidateDetails({ ...candidateDetails, municipality: item.value })
+                  setCandidateDetails({ ...candidateDetails, municipality: item })
                 }}
                 isDisabled={candidateDetails?.district ? false : true}
               />
@@ -243,8 +255,9 @@ const CandidateRegistration = () => {
                 options={WARD_NO.map((d) => ({ label: wardT(`w${d.label}`), value: d.value }))}
                 className="lg:w-[250px] sm:w-[250px] xsm:w-full mt-1"
                 placeholder={<div>{commonT("ward_placeholder")}</div>}
+                value={candidateDetails.ward}
                 onChange={(item: any) => {
-                  setCandidateDetails({ ...candidateDetails, ward: item.value })
+                  setCandidateDetails({ ...candidateDetails, ward: item })
                 }}
                 isDisabled={candidateDetails?.municipality ? false : true}
               />
@@ -256,6 +269,7 @@ const CandidateRegistration = () => {
               <input
                 className='overrideInputStyle form-control py-[10px] rounded-1 mt-1 shadow-none outline-0'
                 type="email"
+                value={candidateDetails.email}
                 onChange={(e) => setCandidateDetails({ ...candidateDetails, email: e.target.value })}
               />
             </div>
@@ -266,6 +280,7 @@ const CandidateRegistration = () => {
               <input
                 className='form-control shadow-none outline-0 font-monospace'
                 type="datetime-local"
+                value={candidateDetails.dob}
                 onChange={(e) => setCandidateDetails({ ...candidateDetails, dob: e.target.value })}
               />
             </div>
@@ -275,9 +290,10 @@ const CandidateRegistration = () => {
                 options={partyListOption}
                 className="lg:w-[255px] sm:w-[255px] xsm:w-full"
                 placeholder={<div>{candidateT("party_placeholder")}</div>}
+                value={candidateDetails.partyName}
                 onChange={(item: any) => {
                   setSelectProvince(item);
-                  setCandidateDetails({ ...candidateDetails, partyName: item.value })
+                  setCandidateDetails({ ...candidateDetails, partyName: item })
                 }}
               />
             </div>
@@ -286,6 +302,7 @@ const CandidateRegistration = () => {
             <span>{candidateT("agenda_label")}</span>
             <textarea
               className='form-control shadow-none outline-0 h-[200px]'
+              value={candidateDetails.agenda}
               onChange={(e) => setCandidateDetails({ ...candidateDetails, agenda: e.target.value })}
             ></textarea>
           </div>
@@ -297,7 +314,8 @@ const CandidateRegistration = () => {
                 type="file"
                 name="file"
                 accept='image/*, image/jpeg, image/png, image/gif'
-                onChange={(e) => setCandidateDetails({ ...candidateDetails, profile: e.target.files[0] })}
+                ref={imageRef}
+                onChange={(e: any) => setCandidateDetails({ ...candidateDetails, profile: e.target.files[0] })}
               />
             </div>
           </div>

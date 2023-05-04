@@ -14,9 +14,8 @@ export const getFormattedErrorMessage = (msgObject: string) => {
   return formattedMsg ?? "";
 }
 
-export const getElectionStatus = (electionType: string, electionArray: Array<ElectionStruct>): string => {
-  const currentElection = electionArray?.at(-1);
-  console.log(currentElection?.electionType, electionType, currentElection?.electionType !== electionType)
+export const getElectionStatus = (electionType: string, currentElection: ElectionStruct): string => {
+
   if (currentElection?.electionType !== electionType) return "No election available !";
 
   const current_date = moment(Date.now());
@@ -55,7 +54,7 @@ export const getSortedCandidatesList = (electionList: Array<any>, candidateLists
     })
     return { ...election, candidates: allSelectedCandidates }
   });
-  console.log(filteredElectionsList)
+
   const currentElection = filteredElectionsList?.length > 0 && filteredElectionsList?.at(-1);
   const electionCandidates = currentElection ? _.groupBy(currentElection?.candidates, (candidate) => candidate.user.province) : [];
   const electionCandidatesArray = electionCandidates ? Object.entries(electionCandidates) : [];

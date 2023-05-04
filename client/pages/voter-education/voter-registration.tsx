@@ -41,7 +41,6 @@ const VoterRegistration = () => {
   useEffect(() => {
     (async () => {
       const voterlists = await getVoterList();
-      toast.success("New Voter registered successfully");
       setVoterLists(voterlists);
     })();
   }, []);
@@ -53,7 +52,6 @@ const VoterRegistration = () => {
   }, [selectedProvince, selectedDistrict]);
 
   useEffect(() => {
-    // form validation
     const {
       fullName,
       citizenshipNumber,
@@ -104,7 +102,7 @@ const VoterRegistration = () => {
 
 
       // email format validation
-      if(!(email.indexOf("@") > 0 &&  email.indexOf(".") > 0)){
+      if (!(email.indexOf("@") > 0 && email.indexOf(".") > 0)) {
         setLoading(false);
         return toast.error("Email format is wrong !");
       }

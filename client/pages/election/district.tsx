@@ -32,10 +32,10 @@ export default function Home() {
     const electionList = await getElectionList();
     const candidateLists = await getCandidateList();
     const voterLists = await getVoterList();
-    const electionStatus = getElectionStatus("District", electionList);
     const currentElection: any = getCurrentElection(electionList);
+    const electionStatus = getElectionStatus("District", currentElection);
     const groupByCandidates = _.groupBy(currentElection?.candidates, (candidate) => candidate.votingBooth);
-    console.log({ currentElection })
+
     setElectionStatus(electionStatus);
     setCurrentElection(groupByCandidates);
     setVoterLists(voterLists);

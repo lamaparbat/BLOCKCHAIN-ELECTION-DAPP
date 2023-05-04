@@ -5,15 +5,17 @@ import { Modal } from 'react-bootstrap';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { FcGallery } from 'react-icons/fc';
 import { Fade } from 'react-slideshow-image';
+import { GoPrimitiveDot } from 'react-icons/go';
 
-const ElectionCard = ({ details, src }) => {
+const ElectionCard = ({ details, src, electionStatus }) => {
   const [showIcon, setShowIcon] = useState(false);
-  const { title, startDate, endDate, description, candidates } = details ?? {};
+  const { title, startDate, endDate, candidates, voters } = details ?? {};
   let totalVotes = 0;
   candidates?.forEach((d) => {
     totalVotes += parseInt(d?.voteCount);
   });
   const t = useTranslations("election_gallery_card");
+  const homepageT = useTranslations("homepage");
   const [selectedElections, setSelectedElection] = useState(null);
 
   const mouseOver = () => {
@@ -25,7 +27,7 @@ const ElectionCard = ({ details, src }) => {
   }
 
   return (
-    <div className='relative bg-slate-50 sm:w-[340px] xsm:w-full h-fit rounded-t-[5px] overflow-hidden shadow-md mr-2 mb-3'>
+    <div className={`relative bg-slate-50 sm:w-[340px] xsm:w-full h-fit rounded-t-[5px] overflow-hidden shadow-md mr-2 mb-3 ${electionStatus === "LIVE" && "animatedBorder"}`}>
       <div className='w-full h-[180px] overflow-hidden' onMouseOver={mouseOver} onMouseOut={mouseOut}>
         {
           showIcon &&
@@ -38,13 +40,21 @@ const ElectionCard = ({ details, src }) => {
             </button>
           </div>
         }
-        <img className={`h-100 w-100 object-cover transition ${showIcon && "scale-125"}`} src={src} />
+        {
+          electionStatus === "LIVE" &&
+          <span className='right-0 w-[85px] mr-2 absolute px-4 mt-2 py-1 rounded-pill bg-danger text-light'>
+            <GoPrimitiveDot className={`text-2xl -ml-4 -mt-0 absolute animate-ping`} />
+            <span className='text-light ml-3'>Live</span>
+          </span>
+        }
+        <img className={`h-100 w-100 object-cover transition ${showIcon && "scale-125"} ${electionStatus === "LIVE" && "animatedBorder"}`} src={src} />
       </div>
-      <div className='flex flex-column pt-2 pb-4 px-3'>
+      <div className={`flex flex-column pt-2 pb-4 px-3 ${electionStatus === "LIVE" && "animatedBorder"}`}>
         <span className='text-[18px] mb-1 font-bold text-black select-none'>{title}</span>
         <span className='select-none'><span className='font-bold'>{t("held")}:</span> {moment(startDate).format("lll")}</span>
         <span className='select-none my-1'><span className='font-bold'>{t("ended")}:</span> {moment(endDate).format("lll")}</span>
         <span className='mb-1 select-none'><span className='font-bold select-none'>{t("total_candidate")}:</span> {candidates?.length}</span>
+        <span className='mb-1 select-none'><span className='font-bold select-none'>{homepageT("total_voters")}:</span> {voters}</span>
         <span className='select-none'><span className='font-bold select-none'>{t("total_vote")}:</span> {totalVotes}</span>
       </div>
       <Modal centered={true} show={selectedElections} size='lg' onHide={() => setSelectedElection(null)}>
@@ -61,7 +71,7 @@ const ElectionCard = ({ details, src }) => {
             nextArrow={<BsChevronRight className='absolute text-slate-100 text-4xl' />}
             prevArrow={<BsChevronLeft className='absolute text-slate-100 text-4xl' />}>
             {
-              selectedElections?.galleryImagesUrl?.map((src, i) => <img
+              selectedElections?.galleryImagesUrl?.map((src: string, i: number) => <img
                 className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100'
                 src={src} key={i} />)
             }

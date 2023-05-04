@@ -5,12 +5,12 @@ import { PartyStruct } from '../interfaces';
 
 const UserCard: React.FC<PartyStruct> = (props): React.ReactElement => {
   const {
-    lists: { name, totalMember, agenda, logoUrl },
+    lists: { name, totalMember, logoUrl },
     openAgendaPreview
   } = props;
 
   return (
-    <div className='user__card flex justify-around items-center h-[170px] w-[340px] px-3 mb-3  max-[500px]:w-[500px] max-[400px]:w-full bg-slate-100 rounded-[12px] cursor-pointer hover:drop-shadow-md hover:bg-red-200 transition ease-in-out'>
+    <div className='user__card flex justify-around items-center h-[170px] w-[360px] px-3 mb-3  max-[500px]:w-[500px] max-[400px]:w-full bg-slate-100 rounded-[12px] cursor-pointer hover:drop-shadow-md hover:bg-red-200 transition ease-in-out'>
       <div className='col1 flex-col justify'>
         <Avatar src={logoUrl} className={''} alt={'img'} size={'xl'} border={0} />
         <div className='social__media flex justify-center mt-3'>
@@ -20,6 +20,7 @@ const UserCard: React.FC<PartyStruct> = (props): React.ReactElement => {
         </div>
       </div>
       <div className='col2 h-fit flex-xl-column text-[15px] ml-3'>
+        <div>Leader: {name}</div>
         <div>Party Name: {name}</div>
         <div className='my-2'>Total Members: {totalMember}</div>
         <div className='flex items-center'>

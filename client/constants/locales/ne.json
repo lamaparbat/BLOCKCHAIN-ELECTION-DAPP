@@ -40,8 +40,8 @@
     "total_voters": "कुल मतदाता",
     "male_voters": "पुरुष मतदाता",
     "female_voters": "महिला मतदाता",
-    "male_candidate":"पुरुष उम्मेदवारहरू",
-    "female_candidate":"महिला उम्मेदवारहरू",
+    "male_candidate": "पुरुष उम्मेदवारहरू",
+    "female_candidate": "महिला उम्मेदवारहरू",
     "others": "अन्य मतदाता",
     "total_election": "कुल निर्वाचन",
     "total_parties": "कुल दलहरू",
@@ -671,7 +671,8 @@
     "breadcumb6": "सूची"
   },
   "voter_roll": {
-    "title": "मतदाता नामावली"
+    "title": "मतदाता नामावली",
+    "search_placeholder": "मतदाता खोज्नुहोस्"
   },
   "voter_registration": {
     "title": "मतदाता दर्ता",
@@ -703,6 +704,7 @@
   },
   "party": {
     "title": "पार्टी सूची",
+    "partyName": "पार्टी नाम",
     "search_placeholder": "पार्टी खोज्नुहोस्",
     "party_registration": "पार्टी दर्ता",
     "party_agenda": "पार्टी एजेन्डा",

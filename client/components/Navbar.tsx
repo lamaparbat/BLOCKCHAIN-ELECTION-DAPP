@@ -61,7 +61,7 @@ const Navbar: React.FC = (): ReactElement => {
     }
 
     setTranslateLanguageOptions(translatedOptions.filter((d) => d.label != currentLanguage))
-  }, [])
+  }, [loggedInAccountAddress])
 
   // redirect to gmail
   const navigate = (path: string) => {
@@ -97,13 +97,14 @@ const Navbar: React.FC = (): ReactElement => {
         const loggedInAccountAddress = Web3.utils.toChecksumAddress(accounts[0]);
         const isAdminAddress = await isAdmin(loggedInAccountAddress);
         if (!isAdminAddress) setPoliticalItems(politicalItems.filter((item) => !ADMIN_ROUTES.includes(item.value)));
+        else setPoliticalItems(sub_navbar_items.politicalItems);
 
         setLoggedInAccountAddress(loggedInAccountAddress);
         setIsAdminAddress(isAdminAddress)
         setIsLoggedIn(true);
         setStorage("loggedInAccountAddress", loggedInAccountAddress);
-        setStorage("isAdmin", isAdminAddress);
         setCookie("isAdmin", isAdminAddress);
+        setStorage("isAdmin", isAdminAddress)
       } catch (error) {
         console.error(error);
       }
@@ -216,7 +217,7 @@ const Navbar: React.FC = (): ReactElement => {
 
       <div className='flex justify-center'>
         <div className={`navbar__bottom ${responsive} w-full flex items-center justify-content-between pt-2 md:px-5 sm:px-5 xsm:px-2 sm:p-0`}>
-          <Image className='cursor-pointer -ml-[30px] sm:p-3 sm:h-[90px] sm:w-[100px] xsm:h-[50px] xsm:w-[60px]' src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
+          <Image className='cursor-pointer sm:-ml-[30px] sm:p-3 sm:h-[90px] sm:w-[100px] xsm:h-[50px] xsm:w-[60px]' src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
           <div className='center__content text-center text-red-700 -ml-[15px]'>
             <h4 className='lg:text-[25px] md:text-2xl sm:text-2xl xsm:text-lg position-relative xsm:top-[5px]'>{t("title")}</h4>
             <h6 className='lg:text-[20px] md:text-md xsm:text-md'>{t("location")}</h6>

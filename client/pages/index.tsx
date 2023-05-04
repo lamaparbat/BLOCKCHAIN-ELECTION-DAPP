@@ -15,9 +15,10 @@ import { BiFemale, BiGroup, BiMale } from 'react-icons/bi';
 import ElectionUserCard from '../components/ElectionUserCard';
 import { PROVINCE } from '../constants';
 import { getVoterList, getTotalElectionCount, getTotalPartiesCount, getCandidateList } from '../utils/web3';
-import { getCurrentElection } from '../utils/common';
+import { getCurrentElection, getElectionStatus } from '../utils/common';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
+import { useSelector } from 'react-redux';
 
 export default function Home() {
   const homepageTranslate = useTranslations("homepage");
@@ -25,7 +26,6 @@ export default function Home() {
   const electionGalleryT = useTranslations("election_gallery_card");
 
   const [electionLists, setElectionLists] = useState([]);
-  const [allVoters, setAllVoters] = useState([]);
   const [translateProvinceOptions, setTranslateProvinceOptions] = useState([]);
   const [currentElection, setCurrentElection] = useState(null);
   const [countDown, setCountDown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -35,24 +35,24 @@ export default function Home() {
     maleVoters: 0, femaleVoters: 0, otherVoters: 0,
     maleCandidates: 0, femaleCandidate: 0, otherCandidates: 0
   });
+  const isCurrentElectonLive = currentElection && new Date(currentElection?.endDate) > new Date();
+
+  const electionState = useSelector((state: any) => state.commonReducer.currentElection);
+
+  const fetchAllData = async () => {
+    const electionList = await getElectionList();
+
+    setTranslateProvinceOptions(PROVINCE.map((province: any) => ({ label: homepageTranslate(province.value), value: province.value })))
+    setCurrentElection(getCurrentElection(electionList));
+    setElectionLists(electionList);
+
+    handleOverviewCountSort(null);
+  };
 
 
   useEffect(() => {
-    (async () => {
-      const electionList = await getElectionList();
-      const totalVoters = await getVoterList();
-
-
-      setTranslateProvinceOptions(PROVINCE.map((province: any) => ({ label: homepageTranslate(province.value), value: province.value })))
-      setCurrentElection(getCurrentElection(electionList));
-      setElectionLists(electionList);
-      setAllVoters(totalVoters);
-
-      handleOverviewCountSort(null);
-    })();
-
+    fetchAllData();
     const browserZoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
-
     if (!(browserZoomLevel === 80 || browserZoomLevel === 102) && browserZoomLevel < 170) {
       setTimeout(() => {
         toast.info("Please, Unzoom your browser screen to 80% for better view. Thanks !", {
@@ -67,9 +67,16 @@ export default function Home() {
       window.removeEventListener("resize", null);
     }
   }, []);
+
+
+  useEffect(() => {
+    console.log({ electionState })
+    fetchAllData();
+  }, [electionState]);
+
+
   if (electionLists?.length > 0) {
     const { startDate, endDate } = electionLists?.at(-1);
-
 
     if (new Date() < new Date(startDate)) {
       const interval = setInterval(() => {
@@ -79,7 +86,13 @@ export default function Home() {
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        if (minutes < 0 || diff < 0 || days < 0 || seconds < 0) return clearInterval(interval);
+        if (minutes < 0 || diff < 0 || days < 0 || seconds < 0) {
+          setCountDown((prev) => {
+            return { ...prev }
+          });
+
+          return clearInterval(interval)
+        };
 
         setCountDown({ days, hours, minutes, seconds });
       }, 1000);
@@ -114,6 +127,16 @@ export default function Home() {
     }, 900);
   }, [countDown.seconds]);
 
+
+  useEffect(() => {
+    if (countDown.seconds === 0 && countDown.minutes === 0 && countDown.hours === 0 && isCurrentElectonLive) {
+      setInterval(() => {
+        fetchAllData();
+      }, 4000);
+    }
+  }, [countDown.seconds]);
+
+
   const handleOverviewCountSort = async (provinceNo: string) => {
     const totalPartiesCount = await getTotalPartiesCount();
     const totalElectionCount = await getTotalElectionCount();
@@ -146,7 +169,7 @@ export default function Home() {
     });
   }
 
-  console.log(currentElection)
+  const electionStatus = getElectionStatus(currentElection?.electionType, currentElection);
 
   return (
     <div>
@@ -186,7 +209,7 @@ export default function Home() {
               </Fade>
             </div>
 
-            {currentElection && new Date(currentElection?.endDate) > new Date() && <div>
+            {electionStatus !== "LIVE" && electionStatus !== "ENDED" && <div>
               <div className='countdown_timer py-4 my-3 min-h-[320px] sm:h-fit bg-[url("https://t4.ftcdn.net/jpg/02/83/57/05/360_F_283570582_3J78GC9E5OesLLgG5lUkQLGEoyN2ijmc.jpg")] rounded-1 text-slate-100 flex flex-column items-center'>
                 <h3 className='my-4 mb-3 text-slate-300 text-md text-center'>{homepageTranslate("countdown_title")}</h3>
                 <div className='flex justify-evenly flex-wrap lg:w-[70vw] mt-3'>
@@ -224,11 +247,13 @@ export default function Home() {
                 {electionLists?.length === 0 && <span className='ml-2'>{homepageTranslate("no_election_found")}</span>}
                 {
                   electionLists?.map((election, i) => {
+                    const electionDetails = { ...election, voters: totalDataCount.voters };
                     return (
                       <ElectionCard
                         key={i}
-                        details={election}
+                        details={electionDetails}
                         src={election.galleryImagesUrl[0]}
+                        electionStatus={election.startDate === currentElection.startDate && electionStatus}
                       />
                     )
                   })

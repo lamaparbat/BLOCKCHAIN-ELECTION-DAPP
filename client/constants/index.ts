@@ -31,10 +31,10 @@ const PROVINCE = [
 
 const DISTRICT = {
   province1: [
-    { label: "Bhojpur", value: "Bhojpur" },
-    { label: "Dhankuta", value: "Dhankuta" },
-    { label: "Ilam", value: "Ilam" },
-    { label: "Jhapa", value: "Jhapa" },
+    // { label: "Bhojpur", value: "Bhojpur" },
+    // { label: "Dhankuta", value: "Dhankuta" },
+    // { label: "Ilam", value: "Ilam" },
+    // { label: "Jhapa", value: "Jhapa" },
     { label: "Khotang", value: "Khotang" },
     { label: "Morang", value: "Morang" },
     { label: "Okhaldhunga", value: "Okhaldhunga" },
