@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next';
-import { useRouter } from 'next/router';
 import Navbar from '../../components/Navbar';
 import { registerParty } from '../../utils/action';
 import { SmartContract } from '../../constants';
@@ -12,7 +11,7 @@ import _ from 'lodash';
 import { getFormattedErrorMessage, getPartyList } from '../../utils';
 import { useTranslations } from 'next-intl';
 
-const defaultPartyDetails = { partyName: null, totalMembers: null, agenda: null, partyLogo: null }
+const defaultPartyDetails = { partyName: "", totalMembers: 0, agenda: "", partyLogo: "" }
 declare const window: any;
 
 const VoterRegistration = () => {
@@ -21,6 +20,7 @@ const VoterRegistration = () => {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
+  const fileRef = useRef(null);
 
   const voterT = useTranslations("voter_registration");
   const partyT = useTranslations("party");
@@ -33,7 +33,10 @@ const VoterRegistration = () => {
     })();
   }, [partyDetails]);
 
-  const onChange = (name, value) => {
+  const onChange = (name: string, value: string | number) => {
+    // validate number format
+    if (name === "totalMembers" && value.toString().length > 1 && value.toString()[0] === "0") return toast.info("Number format validation error !");
+
     (!partyDetails.partyName || !partyDetails.totalMembers
       || !partyDetails.agenda) ? setDisabled(true) : setDisabled(false);
     setPartyDetails({ ...partyDetails, [name]: value })
@@ -52,9 +55,9 @@ const VoterRegistration = () => {
       const formData = new FormData();
       const { partyName, totalMembers, agenda, partyLogo } = partyDetails;
 
-      formData.append("partyName", partyName);
-      formData.append("totalMembers", totalMembers);
-      formData.append("agenda", agenda);
+      formData.append("partyName", partyName?.trim());
+      formData.append("totalMembers", totalMembers?.toString());
+      formData.append("agenda", agenda?.trim());
       formData.append("logo", partyLogo);
 
       const res1: any = await registerParty(formData);
@@ -62,17 +65,16 @@ const VoterRegistration = () => {
 
       if (!logo) throw new Error("Failed to upload logo !");
 
-      const res2 = await SmartContract.methods.addParty(
+      await SmartContract.methods.addParty(
         partyName,
         totalMembers,
         agenda,
         logo
       ).send({ from: loggedInAccountAddress });
 
-      if (res1.data.data && res2) {
-        toast.success("New Party Registered successfully.", { toastId: 2 });
-        setPartyDetails(defaultPartyDetails)
-      } else throw new Error();
+      toast.success("New Party Registered successfully.", { toastId: 2 });
+      fileRef.current.value = "";
+      setPartyDetails(defaultPartyDetails);
     } catch (error) {
       const erroMsg = getFormattedErrorMessage(error.message);
       console.error(erroMsg, error);
@@ -80,6 +82,7 @@ const VoterRegistration = () => {
     }
     setLoading(false);
   }
+
 
   return (
     <div className='mb-[50px]'>
@@ -94,10 +97,11 @@ const VoterRegistration = () => {
           <h4 className='mt-2 mb-4'>{voterT("form_title")}</h4>
           <div className='flex justify-between'>
             <div className='w-100 text-[15px]'>
-              <span>{}</span>
+              <span>{partyT("partyName")}</span>
               <input
                 className='overrideInputStyle form-control px-3 py-[10px] rounded-1 mt-1'
                 type="text"
+                value={partyDetails.partyName}
                 onChange={(e) => onChange("partyName", e.target.value)}
               />
             </div>
@@ -109,6 +113,7 @@ const VoterRegistration = () => {
                 className='overrideInputStyle form-control px-3 py-[10px] rounded-1 mt-1'
                 type="number"
                 placeholder='0'
+                value={partyDetails.totalMembers}
                 onChange={(e) => onChange("totalMembers", e.target.value)}
               />
             </div>
@@ -131,7 +136,8 @@ const VoterRegistration = () => {
                 className='overrideInputStyle form-control py-[10px] rounded-1 mt-1'
                 type="file"
                 name="logo"
-                onChange={(e) => onChange("partyLogo", e.target.files[0])}
+                ref={fileRef}
+                onChange={(e: any) => onChange("partyLogo", e.target.files[0])}
               />
             </div>
           </div>
@@ -161,7 +167,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const { cookie } = ctx.req.headers
     const isAdmin = getCookieValue(cookie, "isAdmin");
 
-    if (isAdmin.toString() === "false" || !isAdmin) {
+    if (isAdmin?.toString() === "false" || !isAdmin) {
       return {
         redirect: {
           parmanent: false,
