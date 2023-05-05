@@ -18,6 +18,7 @@ import SearchModal from './SearchModal';
 import { trimAddress } from '../utils';
 import { setLoggedInAddress } from '../redux/reducers/loggedInUserReducer';
 import { useTranslations } from 'next-intl';
+import { getCurrentElection, getElectionStatus } from '../utils/common';
 
 declare var window: any;
 
@@ -38,6 +39,7 @@ const Navbar: React.FC = (): ReactElement => {
   const [translatedLanguageOptions, setTranslateLanguageOptions] = useState([]);
   const [politicalItems, setPoliticalItems] = useState([...sub_navbar_items.politicalItems]);
   const [currentLanguage, setCurrentLanguage] = useState(t(getStorage("lang") ?? "en"));
+  const [isElectionRunning, setIsElectionRunning] = useState(false);
 
 
   const router = useRouter();
@@ -47,7 +49,14 @@ const Navbar: React.FC = (): ReactElement => {
   // on mount
   useEffect(() => {
     const lngCode = getStorage("lang");
-    const translatedOptions = _.uniqBy(LANGUAGES.map((langugage: any) => ({ label: t(langugage.value), value: langugage.value })), "value")
+    const translatedOptions = _.uniqBy(LANGUAGES.map((langugage: any) => ({ label: t(langugage.value), value: langugage.value })), "value");
+
+
+    (async () => {
+      const currentElection: any = await getCurrentElection();
+      let electionStatus: any = getElectionStatus(currentElection.electionType, currentElection);
+      setIsElectionRunning((electionStatus === "LIVE" || electionStatus === "Election is starting soon.") && electionStatus !== "ENDED");
+    })();
 
     if (lngCode) {
       setCurrentLanguage(translatedOptions?.find(option => option.value === lngCode)?.label);
@@ -85,6 +94,8 @@ const Navbar: React.FC = (): ReactElement => {
   };
 
   const onCreateElection = () => {
+    if (isElectionRunning) return;
+
     setShowCreateElectionModal(!showCreateElectionModal);
   }
 
