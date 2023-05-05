@@ -70,7 +70,8 @@ export default function Home() {
 
   const casteVote = async (selectedCandidates: any) => {
     try {
-      const voterDetails = await getVoterDetails(loggedInAccountAddress);
+      const _loggedInAccountAddress = getStorage("loggedInAccountAddress");
+      const voterDetails = await getVoterDetails(_loggedInAccountAddress);
       const electionAddress = electionList?.at(-1)?.startDate;
 
       // restrict voting before electin start and end
@@ -80,22 +81,22 @@ export default function Home() {
 
       // restrict candidate to not vote more than one time
       const isCandidate = candidateLists.find(candidate => {
-        return candidate.user._id === loggedInAccountAddress
+        return candidate.user._id === _loggedInAccountAddress
       })
 
       if (isCandidate) {
-        const isAlreadyVoted = candidateLists.some((candidate: any) => candidate.votedVoterLists.includes(loggedInAccountAddress));
+        const isAlreadyVoted = candidateLists.some((candidate: any) => candidate.votedVoterLists.includes(_loggedInAccountAddress));
         if (isAlreadyVoted) return toast.error("Candidate can only vote once !")
       }
 
       // vote limit count
       if (voterDetails.voteLimitCount === "3") return toast.info("You've exceed the vote limit count !");
 
-      const isAlreadyVoted = selectedCandidates?.votedVoterLists?.includes(loggedInAccountAddress) ?? false;
+      const isAlreadyVoted = selectedCandidates?.votedVoterLists?.includes(_loggedInAccountAddress) ?? false;
 
       if (isAlreadyVoted) return toast.error("You've already casted vote !");
 
-      await SmartContract.methods.vote(selectedCandidates?.user?._id, electionAddress).send({ from: loggedInAccountAddress });
+      await SmartContract.methods.vote(selectedCandidates?.user?._id, electionAddress).send({ from: _loggedInAccountAddress });
       toast.success("Vote caste successfully.");
     } catch (error) {
       console.log(error)
