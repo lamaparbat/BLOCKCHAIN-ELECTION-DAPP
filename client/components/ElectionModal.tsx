@@ -46,7 +46,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
 
   const fetchData = async () => {
     const elections = await getElectionList();
-    const currentElection = getCurrentElection(elections);
+    const currentElection = getCurrentElection();
     const candidateLists = await getCandidateList();
 
     originalCandidateList = [...candidateLists];
@@ -144,7 +144,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const uploadSelectedCandidates = async () => {
     try {
       const electionList = await getElectionList();
-      const currentElection: any = getCurrentElection(electionList);
+      const currentElection: any = getCurrentElection();
       const isLocalElection = election?.electionType === "Local";
 
       const selectedCandidates = election?.selectedCandidates?.map((candidate) => ({
