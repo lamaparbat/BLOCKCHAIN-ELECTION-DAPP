@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbar';
 import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, SmartContract, GENDER_OPTIONS, VOTE_ELIBILITY_AGE } from '../../constants';
 import { registerVoter } from '../../utils/action';
 import { toast } from 'react-toastify';
-import { getConvertedAge, getFormattedErrorMessage, getVoterList } from '../../utils';
+import { getCandidateList, getConvertedAge, getFormattedErrorMessage, getVoterList } from '../../utils';
 import Head from 'next/head';
 import { useTranslations } from 'next-intl';
 import _ from 'lodash';
@@ -17,6 +17,7 @@ declare const window: any;
 
 const VoterRegistration = () => {
   const [voterLists, setVoterLists] = useState([]);
+  const [candidateLists, setCandidateLists] = useState([]);
   const [translateProvinceOptions, setTranslateProvinceOptions] = useState([]);
   const [districtProvinceOptions, setDistrictProvinceOptions] = useState([]);
   const [municipalityOptions, setMunicipalityOptions] = useState([]);
@@ -41,7 +42,10 @@ const VoterRegistration = () => {
   useEffect(() => {
     (async () => {
       const voterlists = await getVoterList();
+      const candidateList = await getCandidateList();
+
       setVoterLists(voterlists);
+      setCandidateLists(candidateList);
     })();
   }, []);
 
@@ -70,7 +74,7 @@ const VoterRegistration = () => {
   // upload voterDetails
   const onSubmit = async () => {
     try {
-      if (!window?.ethereum) return toast.warn("Please install metamask wallet.");
+      if (!window?.ethereum) return toast.warn("Please install metamask wallet.")
 
       setLoading(true);
       setIsSubmitBtnDisabled(true);
@@ -86,6 +90,12 @@ const VoterRegistration = () => {
         profileUrl, dob, gender
       } = voterDetails;
 
+
+      // validation
+      if (candidateLists.find((candidate: any) => candidate.user._id === loggedInAccountAddress)) return new Error('Candidate with given address already exists !');
+      if (candidateLists.find((candidate: any) => candidate.user.email === email)) return new Error('Candidate with given email already exists !');
+      if (candidateLists.find((candidate: any) => candidate.user.citizenshipNumber === citizenshipNumber)) return new Error('Candidate with given citizenshipNumber already exists !');
+
       formData.append("fullName", fullName);
       formData.append("citizenshipNumber", citizenshipNumber);
       formData.append("province", province);
@@ -98,11 +108,11 @@ const VoterRegistration = () => {
       const age = getConvertedAge(dob);
 
       // age eligibility check
-      if (age < VOTE_ELIBILITY_AGE) return toast.error(`Voter age must be greater or equal to ${VOTE_ELIBILITY_AGE}`);
+      if (age < VOTE_ELIBILITY_AGE) throw new Error(`Voter age must be greater or equal to ${VOTE_ELIBILITY_AGE}`);
 
 
       // email format validation
-      if (!(email.indexOf("@") > 0 && email.indexOf(".") > 0)) {
+      if (!(email.indexOf("@") > 0 && email.indexOf(".") > 0 && email.split(".")[1]?.length > 1)) {
         setLoading(false);
         return toast.error("Email format is wrong !");
       }
