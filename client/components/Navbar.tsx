@@ -9,7 +9,7 @@ import _ from 'lodash';
 import Web3 from 'web3';
 import ElectionModal from './ElectionModal';
 import Avatar from './Avatar';
-import { getCandidateList, isAdmin } from '../utils/web3';
+import {  isAdmin } from '../utils/web3';
 import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style, METAMASK_EXT_LINK, ADMIN_ROUTES } from '../constants/index';
 import { getStorage, setStorage, setCookie } from '../services';
 import Dropdown from './Dropdown';
