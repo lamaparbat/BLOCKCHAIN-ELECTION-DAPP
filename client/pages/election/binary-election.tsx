@@ -77,7 +77,8 @@ export default function Home() {
 
   const casteVote = async (selectedCandidates: any) => {
     try {
-      const voterDetails = await getVoterDetails(loggedInAccountAddress);
+      const _loggedInAccountAddress = getStorage("loggedInAccountAddress");
+      const voterDetails = await getVoterDetails(_loggedInAccountAddress);
       const electionAddress = currentElection?.startDate;
 
       // restrict voting before electin start and end
@@ -86,7 +87,7 @@ export default function Home() {
 
 
       // restrict candidate to not vote more than one time
-      const isCandidate = currentElection?.candidates?.find((candidate: any) => candidate?.votedVoterLists?.includes(loggedInAccountAddress))
+      const isCandidate = currentElection?.candidates?.find((candidate: any) => candidate?.votedVoterLists?.includes(_loggedInAccountAddress))
 
       if (isCandidate) {
         const isAlreadyVoted = candidateLists.some((candidate: any) => candidate.votedVoterLists.includes(_loggedInAccountAddress));
@@ -100,9 +101,9 @@ export default function Home() {
 
       if (isAlreadyVoted) return toast.error("You've already casted vote !");
 
-      await SmartContract.methods.vote(selectedCandidates?.user?._id, electionAddress).send({ from: loggedInAccountAddress });
+      await SmartContract.methods.vote(selectedCandidates?.user?._id, electionAddress).send({ from: _loggedInAccountAddress });
 
-      fetchAllData(loggedInAccountAddress);
+      fetchAllData(_loggedInAccountAddress);
 
       toast.success("Vote caste successfully.");
     } catch (error) {
