@@ -89,14 +89,14 @@ export default function Home() {
       const isCandidate = currentElection?.candidates?.find((candidate: any) => candidate?.votedVoterLists?.includes(loggedInAccountAddress))
 
       if (isCandidate) {
-        const isAlreadyVoted = candidateLists.some((candidate: any) => candidate.votedVoterLists.includes(loggedInAccountAddress));
+        const isAlreadyVoted = candidateLists.some((candidate: any) => candidate.votedVoterLists.includes(_loggedInAccountAddress));
         if (isAlreadyVoted) return toast.error("Candidate can only vote once !")
       }
 
       // vote limit count
       if (voterDetails.voteLimitCount === "3") return toast.info("You've exceed the vote limit count !");
 
-      const isAlreadyVoted = selectedCandidates?.votedVoterLists?.includes(loggedInAccountAddress) ?? false;
+      const isAlreadyVoted = selectedCandidates?.votedVoterLists?.includes(_loggedInAccountAddress) ?? false;
 
       if (isAlreadyVoted) return toast.error("You've already casted vote !");
 

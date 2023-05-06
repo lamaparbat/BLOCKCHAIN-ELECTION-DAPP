@@ -110,6 +110,12 @@ const VoterRegistration = () => {
       if (candidateLists.find((candidate: any) => candidate.user.email === email)) return new Error('Candidate with given email already exists !');
       if (candidateLists.find((candidate: any) => candidate.user.citizenshipNumber === citizenshipNumber)) return new Error('Candidate with given citizenshipNumber already exists !');
 
+
+      // validation
+      if (candidateLists.find((candidate: any) => candidate.user._id === loggedInAccountAddress)) return new Error('Candidate with given address already exists !');
+      if (candidateLists.find((candidate: any) => candidate.user.email === email)) return new Error('Candidate with given email already exists !');
+      if (candidateLists.find((candidate: any) => candidate.user.citizenshipNumber === citizenshipNumber)) return new Error('Candidate with given citizenshipNumber already exists !');
+
       formData.append("fullName", fullName);
       formData.append("citizenshipNumber", citizenshipNumber);
       formData.append("province", province);
