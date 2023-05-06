@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { GoPrimitiveDot } from 'react-icons/go';
 import Navbar from '../../components/Navbar';
 import electionChannel from "../../services/pusher-events";
-import { getElectionList, getElectionStatus, getFormattedErrorMessage, getVoterList, trimAddress } from '../../utils';
+import { getElectionList, getElectionStatus, getFormattedErrorMessage, trimAddress } from '../../utils';
 import _ from 'lodash';
 import { SmartContract } from '../../constants';
 import { getStorage } from '../../services';
@@ -18,11 +18,14 @@ import { FaRegDotCircle } from 'react-icons/fa';
 import { TiLockClosed } from 'react-icons/ti';
 import { BiEqualizer } from 'react-icons/bi';
 
+
+declare const window: any;
+
 export default function Home() {
   const [electionStatus, setElectionStatus] = useState(null);
-  const [electionList, setElectionList] = useState([]);
+  const [currentElection, setCurrentElection] = useState(null);
   const [candidateLists, setCandidateLists] = useState([]);
-  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
+  const [loggedInAccountAddress, setLoggedInAccountAddress] = useState(null);
   let voteCastEvent = null;
 
   const dispatch = useDispatch();
@@ -31,27 +34,31 @@ export default function Home() {
   const isElectionEnd = electionStatus === "ENDED";
 
 
-  const fetchAllData = async () => {
+  const fetchAllData = async (address: string) => {
     const electionList = await getElectionList();
-    const voterLists = await getVoterList();
     const currentElection = electionList?.at(-1);
     const electionStatus = getElectionStatus("Local", currentElection);
 
     if (currentElection?.electionType !== "Local") return;
 
+    setLoggedInAccountAddress(address);
     setElectionStatus(electionStatus);
+    setCurrentElection(currentElection);
     setCandidateLists(currentElection?.candidates);
     dispatch(setCandidateList(candidateLists));
-    setElectionList(electionList);
   }
 
   useEffect(() => {
-
-    fetchAllData();
+    const address = getStorage("loggedInAccountAddress");
+    fetchAllData(address);
 
     voteCastEvent = SmartContract.events.VoteCast().on("data", (event: any) => {
-      fetchAllData();
+      fetchAllData(address);
     });
+
+    window.ethereum.on("accountsChanged", (accounts: any) => {
+      fetchAllData(accounts?.[0]);
+    })
 
     return () => {
       voteCastEvent && voteCastEvent?.unsubscribe();
@@ -71,7 +78,7 @@ export default function Home() {
   const casteVote = async (selectedCandidates: any) => {
     try {
       const voterDetails = await getVoterDetails(loggedInAccountAddress);
-      const electionAddress = electionList?.at(-1)?.startDate;
+      const electionAddress = currentElection?.startDate;
 
       // restrict voting before electin start and end
       if (electionStatus == "ENDED") return toast.warn("Election is over !")
@@ -79,9 +86,7 @@ export default function Home() {
 
 
       // restrict candidate to not vote more than one time
-      const isCandidate = candidateLists.find(candidate => {
-        return candidate.user._id === loggedInAccountAddress
-      })
+      const isCandidate = currentElection?.candidates?.find((candidate: any) => candidate?.votedVoterLists?.includes(loggedInAccountAddress))
 
       if (isCandidate) {
         const isAlreadyVoted = candidateLists.some((candidate: any) => candidate.votedVoterLists.includes(loggedInAccountAddress));
@@ -96,6 +101,9 @@ export default function Home() {
       if (isAlreadyVoted) return toast.error("You've already casted vote !");
 
       await SmartContract.methods.vote(selectedCandidates?.user?._id, electionAddress).send({ from: loggedInAccountAddress });
+
+      fetchAllData(loggedInAccountAddress);
+
       toast.success("Vote caste successfully.");
     } catch (error) {
       console.log(error)
@@ -112,7 +120,6 @@ export default function Home() {
 
   const winnerAddress = candidateAVotes === candidateBVotes ? null : candidateAVotes > candidateBVotes
     ? candidateA?.user?._id : candidateB?.user?._id;
-
   return (
     <div>
       <Head>
@@ -139,52 +146,53 @@ export default function Home() {
           </div>
           <div className='lg:w-[1100px] flex justify-around flex-wrap'>
             {candidateLists && candidateLists.length > 0 && candidateLists?.map((data: any) => {
-              const voted = data?.votedVoterLists?.includes(loggedInAccountAddress);
+              const voted = data?.votedVoterLists?.find((address: string) => new RegExp(address, 'i').test(loggedInAccountAddress));
 
-              return (<div>
-                <div
-                  className={`card__container ${isElectionEnd && data?.user?._id === winnerAddress && 'bg-celebrationGif'} h-fit sm:w-[520px] max-[1140px]:w-full mt-3 border border-1 border-slate-300 rounded-1 overflow-hidden mr-3`}>
+              return (
+                <div>
                   <div
-                    className='card__title pl-4 pt-2 flex items-center justify-between bg-slate-100 border-l-0 border-r-0 border-t-0 border-b-2 border-black-500 cursor-pointer'
-                  >
-                    <h6>{trimAddress(data?.user?._id)}</h6>
-                    {
-                      !winnerAddress && <span className='-mt-2 mr-4 text-red-500 flex items-center'>
-                        <BiEqualizer className='mx-2 animate-ping' /> Equal
-                      </span>
-                    }
-                  </div>
-                  <div className={`card__body pt-3 pb-2 ${isElectionStart && 'animatedBorder'}`}>
-                    <div className='card__body__hot px-4 mb-3 flex'>
-                      <AnimatedAvatar src={data?.user?.profile} />
-                      <div className='details pt-2 pl-3 mx-3 w-100'>
-                        <div className='flex items-center'>
-                          <span className='text-xl me-4'>{data?.user?.fullName}</span>
-                          {isElectionEnd && data?.user?._id === winnerAddress && <TickCircleIcon />}
-                          {isElectionStart && <FaRegDotCircle className='animate-ping text-danger absolute lg:ml-[200px] max-[1100px]:ml-[100px]' />}
-                        </div>
-                        <div className='flex justify-content-between'>
-                          <h1 id='count'>{data?.votedVoterLists?.length}</h1>
-                          {
-                            !isElectionEnd && <button
-                              className={`w-[100px] h-[40px] relative flex justify-center items-center bg-slate-100 ${!voted && "shadow-md"} pt-2 pb-2 px-4 rounded-pill text-sm ${voted && "text-slate-500 cursor-default"}`}
-                              onClick={() => !voted && casteVote(data)}
-                              disabled={voted}
-                            >
-                              {
-                                voted && <span className='absolute -top-1 -left-2 p-1 rounded-circle bg-slate-200 shadow-md cursor-default'>
-                                  <TiLockClosed className='text-slate-500' />
-                                </span>
-                              }
-                              Vote
-                            </button>
-                          }
+                    className={`card__container ${isElectionEnd && data?.user?._id === winnerAddress && 'bg-celebrationGif'} h-fit sm:w-[520px] max-[1140px]:w-full mt-3 border border-1 border-slate-300 rounded-1 overflow-hidden mr-3`}>
+                    <div
+                      className='card__title pl-4 pt-2 flex items-center justify-between bg-slate-100 border-l-0 border-r-0 border-t-0 border-b-2 border-black-500 cursor-pointer'
+                    >
+                      <h6>{trimAddress(data?.user?._id)}</h6>
+                      {
+                        !winnerAddress && <span className='-mt-2 mr-4 text-red-500 flex items-center'>
+                          <BiEqualizer className='mx-2 animate-ping' /> Equal
+                        </span>
+                      }
+                    </div>
+                    <div className={`card__body pt-3 pb-2 ${isElectionStart && 'animatedBorder'}`}>
+                      <div className='card__body__hot px-4 mb-3 flex'>
+                        <AnimatedAvatar src={data?.user?.profile} />
+                        <div className='details pt-2 pl-3 mx-3 w-100'>
+                          <div className='flex items-center'>
+                            <span className='text-xl me-4'>{data?.user?.fullName}</span>
+                            {isElectionEnd && data?.user?._id === winnerAddress && <TickCircleIcon />}
+                            {isElectionStart && <FaRegDotCircle className='animate-ping text-danger absolute lg:ml-[200px] max-[1100px]:ml-[100px]' />}
+                          </div>
+                          <div className='flex justify-content-between'>
+                            <h1 id='count'>{data?.votedVoterLists?.length}</h1>
+                            {
+                              !false && <button
+                                className={`w-[100px] h-[40px] relative flex justify-center items-center bg-slate-100 ${!voted && "shadow-md"} pt-2 pb-2 px-4 rounded-pill text-sm ${voted && "text-slate-500 cursor-default"}`}
+                                onClick={() => !voted && casteVote(data)}
+                                disabled={voted}
+                              >
+                                {
+                                  voted && <span className='absolute -top-1 -left-2 p-1 rounded-circle bg-slate-200 shadow-md cursor-default'>
+                                    <TiLockClosed className='text-slate-500' />
+                                  </span>
+                                }
+                                Vote
+                              </button>
+                            }
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>)
+                </div>)
             }
             )}
           </div>

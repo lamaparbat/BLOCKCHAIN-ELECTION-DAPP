@@ -9,7 +9,9 @@ const commonReducer = createSlice({
   },
   reducers: {
     setCurrentLanguage: (state, action) => state.currentLanguage = action.payload,
-    setCurrentElection: (state, action) => state.currentElection = { ...action.payload }
+    setCurrentElection: (state, action) => {
+      state.currentElection = { ...action.payload }
+    }
   }
 });
 

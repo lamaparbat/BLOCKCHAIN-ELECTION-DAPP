@@ -20,7 +20,7 @@ const UserCard: React.FC<UserCardStruct> = (props): React.ReactElement => {
     casteVote
   }: any = props;
 
-  const loggedInAccountAddress = getStorage("loggedInAccountAddress")
+  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
   const formattedEmail = details?.user?.email.split("@")[0];
   const isVoted = details?.votedVoterLists?.includes(loggedInAccountAddress);
   const isVoterRole = type === "voter";

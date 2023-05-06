@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 import { useSelector } from 'react-redux';
 import BreadCrumb from '../../components/BreadCrumb';
@@ -6,28 +6,36 @@ import Navbar from '../../components/Navbar';
 import { responsive, PROVINCE, DISTRICT, MUNICIPALITY, WARD_NO, SmartContract, GENDER_OPTIONS, VOTE_ELIBILITY_AGE } from '../../constants';
 import { registerVoter } from '../../utils/action';
 import { toast } from 'react-toastify';
-import { getConvertedAge, getFormattedErrorMessage, getVoterList } from '../../utils';
+import { getCandidateList, getConvertedAge, getFormattedErrorMessage, getVoterList } from '../../utils';
 import Head from 'next/head';
 import { useTranslations } from 'next-intl';
 import _ from 'lodash';
 import { PulseLoader } from 'react-spinners';
 
 const defaultOptions = { label: '', value: '' };
+const defaultVoterDetails = {
+  fullName: "", citizenshipNumber: "",
+  province: { label: "Select province", value: "" },
+  district: { label: "Select district", value: "" },
+  municipality: { label: "Select municipality", value: "" },
+  ward: { label: "Select ward", value: "" },
+  email: "", profileUrl: null, dob: null, gender: { label: "Select gender", value: "" }
+}
 declare const window: any;
 
 const VoterRegistration = () => {
   const [voterLists, setVoterLists] = useState([]);
+  const [candidateLists, setCandidateLists] = useState([]);
   const [translateProvinceOptions, setTranslateProvinceOptions] = useState([]);
   const [districtProvinceOptions, setDistrictProvinceOptions] = useState([]);
   const [municipalityOptions, setMunicipalityOptions] = useState([]);
   const [selectedProvince, setSelectProvince] = useState(defaultOptions);
   const [selectedDistrict, setSelectDistrict] = useState(defaultOptions);
-  const [voterDetails, setVoterDetails] = useState({
-    fullName: "", citizenshipNumber: "", province: "", district: "", municipality: "", ward: "",
-    email: "", profileUrl: null, dob: null, gender: ""
-  });
+  const [voterDetails, setVoterDetails] = useState(defaultVoterDetails);
   const [loading, setLoading] = useState(false);
   const [isSubmitBtnDisabled, setIsSubmitBtnDisabled] = useState(true);
+  const imgRef = useRef(null);
+  const dobRef = useRef(null);
 
   const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
   const voterT = useTranslations("voter");
@@ -41,7 +49,10 @@ const VoterRegistration = () => {
   useEffect(() => {
     (async () => {
       const voterlists = await getVoterList();
+      const candidateList = await getCandidateList();
+
       setVoterLists(voterlists);
+      setCandidateLists(candidateList);
     })();
   }, []);
 
@@ -70,13 +81,13 @@ const VoterRegistration = () => {
   // upload voterDetails
   const onSubmit = async () => {
     try {
-      if (!window?.ethereum) return toast.warn("Please install metamask wallet.");
+      if (!window?.ethereum) return toast.warn("Please install metamask wallet.")
 
       setLoading(true);
       setIsSubmitBtnDisabled(true);
 
       const formData = new FormData();
-      const {
+      let {
         fullName,
         citizenshipNumber,
         province,
@@ -84,7 +95,20 @@ const VoterRegistration = () => {
         municipality,
         ward, email,
         profileUrl, dob, gender
-      } = voterDetails;
+      }: any = voterDetails;
+
+
+      // filter options value
+      province = province.value;
+      district = district.value;
+      municipality = municipality.value;
+      ward = ward.value;
+      gender = gender.value;
+
+      // validation
+      if (candidateLists.find((candidate: any) => candidate.user._id === loggedInAccountAddress)) return new Error('Candidate with given address already exists !');
+      if (candidateLists.find((candidate: any) => candidate.user.email === email)) return new Error('Candidate with given email already exists !');
+      if (candidateLists.find((candidate: any) => candidate.user.citizenshipNumber === citizenshipNumber)) return new Error('Candidate with given citizenshipNumber already exists !');
 
       formData.append("fullName", fullName);
       formData.append("citizenshipNumber", citizenshipNumber);
@@ -98,22 +122,22 @@ const VoterRegistration = () => {
       const age = getConvertedAge(dob);
 
       // age eligibility check
-      if (age < VOTE_ELIBILITY_AGE) return toast.error(`Voter age must be greater or equal to ${VOTE_ELIBILITY_AGE}`);
+      if (age < VOTE_ELIBILITY_AGE) throw new Error(`Voter age must be greater or equal to ${VOTE_ELIBILITY_AGE}`);
 
 
       // email format validation
-      if (!(email.indexOf("@") > 0 && email.indexOf(".") > 0)) {
+      if (!(email.indexOf("@") > 0 && email.indexOf(".") > 0 && email.split(".")[1]?.length > 1)) {
         setLoading(false);
         return toast.error("Email format is wrong !");
       }
 
       // check if candidate already exists
       const isExits = voterLists?.find((d: any) => d.user?.citizenshipNumber?.includes(citizenshipNumber));
-      if (isExits) throw new Error("Voter already exists on given citizenship nuber !");
+      if (isExits) return new Error("Voter already exists on given citizenship nuber !");
 
       // check if duplicate email
       const isDuplicate = voterLists?.find((d: any) => d.user?.email?.toLowerCase()?.includes(email?.toLowerCase()));
-      if (isDuplicate) throw new Error("Given email address is already registered !");
+      if (isDuplicate) return new Error("Given email address is already registered !");
 
       const { profile }: any = await registerVoter(formData);
 
@@ -131,9 +155,16 @@ const VoterRegistration = () => {
         gender
       ).send({ from: loggedInAccountAddress });
 
+
       toast.success("New Voter registered successfully");
       setLoading(false);
-      setIsSubmitBtnDisabled(true);
+      setIsSubmitBtnDisabled(false);
+
+      // reset form
+      setVoterDetails({ ...defaultVoterDetails });
+      imgRef.current.value = "";
+      dobRef.current.value = "";
+
     } catch (error) {
       let errorMsg = getFormattedErrorMessage(error.message);
       errorMsg = errorMsg.length > 0 ? errorMsg : error.message;
@@ -141,7 +172,7 @@ const VoterRegistration = () => {
 
       toast.error(errorMsg, { toastId: 2 });
       setLoading(false);
-      setIsSubmitBtnDisabled(true);
+      setIsSubmitBtnDisabled(false);
     }
 
   }
@@ -168,6 +199,7 @@ const VoterRegistration = () => {
                 className='overrideInputStyle form-control px-3 py-[10px] rounded-1 mt-1'
                 type="text"
                 placeholder={commonT("uname_placeholder")}
+                value={voterDetails.fullName}
                 onChange={(e) => setVoterDetails({ ...voterDetails, fullName: e.target.value })}
               />
             </div>
@@ -179,6 +211,7 @@ const VoterRegistration = () => {
                 className='overrideInputStyle form-control px-3 py-[10px] rounded-1 mt-1 shadow-none outline-0'
                 type="number"
                 placeholder={commonT("citizenship_placholder")}
+                value={voterDetails.citizenshipNumber}
                 onChange={(e) => setVoterDetails({ ...voterDetails, citizenshipNumber: e.target.value })}
               />
             </div>
@@ -186,8 +219,9 @@ const VoterRegistration = () => {
               <span>{VoterRegistrationT("gender_label")}</span>
               <Select
                 className='mt-1'
+                value={voterDetails.gender}
                 options={GENDER_OPTIONS.map((d) => ({ label: commonT(d.label.toLocaleLowerCase()), value: d.value }))}
-                onChange={(option) => setVoterDetails({ ...voterDetails, gender: option.value })}
+                onChange={(option) => setVoterDetails({ ...voterDetails, gender: option })}
                 placeholder={commonT("gender_placeholder")} />
             </div>
           </div>
@@ -196,11 +230,12 @@ const VoterRegistration = () => {
               <span>{VoterRegistrationT("province_label")}</span>
               <Select
                 options={translateProvinceOptions}
+                value={voterDetails.province}
                 className="lg:w-[220px] sm:w-[220px] xsm:w-full mr-2 mt-1"
                 placeholder={<div>{commonT("province_placeholder")}</div>}
                 onChange={(item) => {
                   setSelectProvince(item);
-                  setVoterDetails({ ...voterDetails, province: item.value })
+                  setVoterDetails({ ...voterDetails, province: item })
                 }}
               />
             </div>
@@ -208,11 +243,12 @@ const VoterRegistration = () => {
               <span>{VoterRegistrationT("district_label")}</span>
               <Select
                 options={districtProvinceOptions}
+                value={voterDetails.district}
                 className="lg:w-[220px] sm:w-[220px] xsm:w-full sm:mt-0 xsm:mt-1"
                 placeholder={<div>{commonT("district_placeholder")}</div>}
                 onChange={(item: any) => {
                   setSelectDistrict(item);
-                  setVoterDetails({ ...voterDetails, district: item.value })
+                  setVoterDetails({ ...voterDetails, district: item })
                 }}
                 isDisabled={selectedProvince?.label ? false : true}
               />
@@ -223,10 +259,11 @@ const VoterRegistration = () => {
               <span>{VoterRegistrationT("municipality_label")}</span>
               <Select
                 options={municipalityOptions}
+                value={voterDetails.municipality}
                 className="lg:w-[220px] sm:w-[220px] xsm:w-full mr-2 mt-1"
                 placeholder={<div>{commonT("municipality_placeholder")}</div>}
                 onChange={(item: any) => {
-                  setVoterDetails({ ...voterDetails, municipality: item.value })
+                  setVoterDetails({ ...voterDetails, municipality: item })
                 }}
                 isDisabled={voterDetails?.district ? false : true}
               />
@@ -235,10 +272,11 @@ const VoterRegistration = () => {
               <span>{VoterRegistrationT("ward_label")}</span>
               <Select
                 options={WARD_NO.map((d) => ({ label: wardT(`w${d.label}`), value: d.value }))}
+                value={voterDetails.ward}
                 className="lg:w-[220px] sm:w-[220px] xsm:w-full xsm:mt-1 sm:mt-0 xsm:mt-1"
                 placeholder={<div>{commonT("ward_placeholder")}</div>}
                 onChange={(item: any) => {
-                  setVoterDetails({ ...voterDetails, ward: item.value })
+                  setVoterDetails({ ...voterDetails, ward: item })
                 }}
                 isDisabled={voterDetails?.municipality ? false : true}
               />
@@ -250,6 +288,7 @@ const VoterRegistration = () => {
               <input
                 className='form-control shadow-none outline-0 font-monospace'
                 type="datetime-local"
+                ref={dobRef}
                 onChange={(e) => setVoterDetails({ ...voterDetails, dob: e.target.value })}
               />
             </div>
@@ -260,6 +299,7 @@ const VoterRegistration = () => {
               <input
                 className='overrideInputStyle form-control py-[10px] rounded-1 mt-1'
                 type="email"
+                value={voterDetails.email}
                 onChange={(e) => setVoterDetails({ ...voterDetails, email: e.target.value })}
               />
             </div>
@@ -272,6 +312,7 @@ const VoterRegistration = () => {
                 type="file"
                 name="file"
                 accept='image/*, image/jpeg, image/png, image/gif'
+                ref={imgRef}
                 onChange={(e) => setVoterDetails({ ...voterDetails, profileUrl: e.target.files[0] })}
               />
             </div>

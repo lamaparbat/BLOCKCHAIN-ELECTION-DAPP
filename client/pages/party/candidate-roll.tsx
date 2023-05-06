@@ -67,7 +67,7 @@ const Details: React.FC = (): React.ReactElement => {
 
   const onHandleSearch = (keyword: string) => {
     if (keyword.length === 0) return setCandidateLists(originalCandidatesList);
-    const filterSearch = candidateLists.filter((candidate) => candidate.user.fullName.toUpperCase().includes(keyword.toUpperCase()));
+    const filterSearch = originalCandidatesList.filter((candidate) => candidate.user.fullName.toUpperCase().includes(keyword.toUpperCase()));
     setCandidateLists(filterSearch);
   }
 

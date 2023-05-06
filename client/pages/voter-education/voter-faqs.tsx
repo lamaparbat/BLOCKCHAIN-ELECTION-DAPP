@@ -21,7 +21,6 @@ const VoterFaqs = () => {
   const [openAddQuestionModal, setOpenAddQuestionModal] = useState(false);
   const [faqList, setFaqList] = useState([]);
   const [newFaq, setNewFaq] = useState({ ...defaultFaqDetails });
-  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
 
   const faqT = useTranslations("faq");
 
@@ -43,7 +42,7 @@ const VoterFaqs = () => {
     try {
       if (!window?.ethereum) return toast.warn("Please install metamask wallet.");
 
-      setFaqList([...faqList, newFaq]);
+      const _loggedInAccountAddress = getStorage("loggedInAccountAddress");
       const formData = new FormData();
       formData.append("images", newFaq.file);
 
@@ -57,8 +56,9 @@ const VoterFaqs = () => {
             newFaq.description,
             url[0],
             new Date()
-          ).send({ from: loggedInAccountAddress })
+          ).send({ from: _loggedInAccountAddress });
         else toast.error("Failed to upload File !");
+
         toast.success("Faq successfully uploaded !");
         resp && await getFaqsList();
       }
@@ -69,8 +69,9 @@ const VoterFaqs = () => {
 
   const postComment = async () => {
     try {
+      const _loggedInAccountAddress = getStorage("loggedInAccountAddress");
       const { userId, replyMsg } = replyComment;
-      const resp = await SmartContract.methods.addFaqComment(userId, replyMsg, new Date().toISOString()).send({ from: loggedInAccountAddress });
+      const resp = await SmartContract.methods.addFaqComment(userId, replyMsg, new Date().toISOString()).send({ from: _loggedInAccountAddress });
       resp && await getFaqsList();
       toast.success("Comment posted successfully.");
     } catch (error) {

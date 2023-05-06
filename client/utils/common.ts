@@ -1,6 +1,7 @@
 import _ from "lodash";
 import moment from "moment";
 import { ElectionStruct } from "../interfaces";
+import { getElectionList } from "./web3";
 
 export const getFormattedErrorMessage = (msgObject: string) => {
   if (!msgObject) return "";
@@ -62,14 +63,11 @@ export const getSortedCandidatesList = (electionList: Array<any>, candidateLists
   return { currentElection, electionCandidatesArray };
 }
 
-export const getCurrentElection = (electionArray: Array<ElectionStruct>): object => {
+export const getCurrentElection = async (): Promise<object> => {
+  const electionArray: Array<any> = await getElectionList();
   if (!electionArray?.length) return null;
 
   const currentElection = electionArray?.at(-1);
-  const current_date = moment(Date.now());
-  const election_start_date = moment(currentElection.startDate);
-
-  // if(current_date.isAfter(election_start_date)) return null;
 
   return currentElection;
 }

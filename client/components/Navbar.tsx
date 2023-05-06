@@ -18,6 +18,7 @@ import SearchModal from './SearchModal';
 import { trimAddress } from '../utils';
 import { setLoggedInAddress } from '../redux/reducers/loggedInUserReducer';
 import { useTranslations } from 'next-intl';
+import { getCurrentElection, getElectionStatus } from '../utils/common';
 
 declare var window: any;
 
@@ -38,6 +39,8 @@ const Navbar: React.FC = (): ReactElement => {
   const [translatedLanguageOptions, setTranslateLanguageOptions] = useState([]);
   const [politicalItems, setPoliticalItems] = useState([...sub_navbar_items.politicalItems]);
   const [currentLanguage, setCurrentLanguage] = useState(t(getStorage("lang") ?? "en"));
+  const [currentElection, setCurrentElection] = useState(null);
+  const [isElectionRunning, setIsElectionRunning] = useState(false);
 
 
   const router = useRouter();
@@ -47,7 +50,16 @@ const Navbar: React.FC = (): ReactElement => {
   // on mount
   useEffect(() => {
     const lngCode = getStorage("lang");
-    const translatedOptions = _.uniqBy(LANGUAGES.map((langugage: any) => ({ label: t(langugage.value), value: langugage.value })), "value")
+    const translatedOptions = _.uniqBy(LANGUAGES.map((langugage: any) => ({ label: t(langugage.value), value: langugage.value })), "value");
+
+
+    (async () => {
+      const currentElection: any = await getCurrentElection();
+      let electionStatus: any = getElectionStatus(currentElection?.electionType, currentElection);
+
+      setCurrentElection(currentElection);
+      setIsElectionRunning((electionStatus === "LIVE" || electionStatus === "Election is starting soon.") && electionStatus !== "ENDED");
+    })();
 
     if (lngCode) {
       setCurrentLanguage(translatedOptions?.find(option => option.value === lngCode)?.label);
@@ -85,6 +97,8 @@ const Navbar: React.FC = (): ReactElement => {
   };
 
   const onCreateElection = () => {
+    if (isElectionRunning && currentElection?.selectedCandidates?.length > 0) return;
+
     setShowCreateElectionModal(!showCreateElectionModal);
   }
 
@@ -148,7 +162,7 @@ const Navbar: React.FC = (): ReactElement => {
         {/*  vertical-top-navbar */}
         <div className={`vertical__navbar absolute left-0 ml-[25px] mt-[40px] shadow-inner z-50 flex lg:hidden ${openTopVerticalNavbar ? 'block' : 'hidden'}`}>
           <div className={`px-4 pt-3 pb-4 w-[220px] h-[240px] bg-slate-100 absolute rounded-b-[5px] text-slate-600 text-[16px]`}>
-            {isAdminAddress && <div onClick={() => navigate("/")}>{t("create_election")}</div>}
+            {isAdminAddress && <div onClick={onCreateElection}>{t("create_election")}</div>}
             <div className="my-[18px]" onClick={() => navigate("/FAQ")}>{t("faq")}</div>
             <select
               className='form-control py-1 cursor-pointer hover:opacity-70 outline-0 '
@@ -217,7 +231,7 @@ const Navbar: React.FC = (): ReactElement => {
 
       <div className='flex justify-center'>
         <div className={`navbar__bottom ${responsive} w-full flex items-center justify-content-between pt-2 md:px-5 sm:px-5 xsm:px-2 sm:p-0`}>
-          <Image className='cursor-pointer sm:-ml-[30px] sm:p-3 sm:h-[90px] sm:w-[100px] xsm:h-[50px] xsm:w-[60px]' src='/images/govLogo.jpeg' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
+          <Image className='cursor-pointer sm:-ml-[30px] sm:p-3 sm:h-[90px] sm:w-[100px] xsm:h-[50px] xsm:w-[60px]' src='/images/logo2.png' height={100} width={100} alt="election-logo" onClick={() => navigate("/")} />
           <div className='center__content text-center text-red-700 -ml-[15px]'>
             <h4 className='lg:text-[25px] md:text-2xl sm:text-2xl xsm:text-lg position-relative xsm:top-[5px]'>{t("title")}</h4>
             <h6 className='lg:text-[20px] md:text-md xsm:text-md'>{t("location")}</h6>

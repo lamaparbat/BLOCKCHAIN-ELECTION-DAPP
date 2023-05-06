@@ -13,14 +13,6 @@ import { getElectionList } from '../../utils';
 
 const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
   const { details, border, ishighlighted, casteVote }: any = props;
-  const [currentElection, setCurrentElection] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      const currentElection = await getElectionList();
-      setCurrentElection(currentElection.at(-1));
-    })();
-  }, []);
 
   // redux dispatcher
   const dispatch = useDispatch();

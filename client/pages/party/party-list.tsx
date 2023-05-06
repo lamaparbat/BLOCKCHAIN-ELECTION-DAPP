@@ -54,7 +54,6 @@ const Details: React.FC = (): React.ReactElement => {
 
   const handleSearch = (event: any) => {
     const keyword = event.target.value;
-
     let temp = [...partyList];
     temp = temp.filter((party) => party?.name?.toLowerCase().includes(keyword?.toLowerCase()));
     setSearchResult([...temp]);

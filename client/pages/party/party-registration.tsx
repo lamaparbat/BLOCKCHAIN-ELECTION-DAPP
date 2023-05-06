@@ -21,26 +21,32 @@ const VoterRegistration = () => {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
-  const isAdminAddress = getStorage("isAdminAddress");
+  const isAdmin = getStorage("isAdmin");
   const fileRef = useRef(null);
   const router = useRouter();
 
   const voterT = useTranslations("voter_registration");
   const partyT = useTranslations("party");
   const candidateT = useTranslations("candidate_registration");
+  let throttleState = false;
 
   useEffect(() => {
+    if (/false/.test(isAdmin)) router.push("/");
     (async () => {
-      if (!isAdminAddress) router.push("/");
-
       const res = await getPartyList();
       setPartyList(res);
     })();
   }, [partyDetails]);
 
   const onChange = (name: string, value: string | number) => {
+    if (throttleState) return;
+
     // validate number format
-    if (name === "totalMembers" && value.toString().length > 1 && value.toString()[0] === "0") return toast.info("Number format validation error !");
+    if (name === "totalMembers" && value.toString().length > 1 && value.toString()[0] === "0") {
+      throttleState = true;
+      setTimeout(() => (throttleState = false), 2000)
+      return toast.info("Number format error !");
+    }
 
     (!partyDetails.partyName || !partyDetails.totalMembers
       || !partyDetails.agenda) ? setDisabled(true) : setDisabled(false);

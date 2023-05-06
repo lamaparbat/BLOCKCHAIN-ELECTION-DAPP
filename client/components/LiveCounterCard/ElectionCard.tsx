@@ -1,15 +1,22 @@
 import moment from 'moment';
 import { useTranslations } from 'next-intl';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { FcGallery } from 'react-icons/fc';
 import { Fade } from 'react-slideshow-image';
 import { GoPrimitiveDot } from 'react-icons/go';
+import _ from 'lodash';
+import { getStorage } from '../../services';
+import { trimAddress } from '../../utils';
+import { BiEqualizer } from 'react-icons/bi';
+import AnimatedAvatar from '../AnimatedAvatar';
+import TickCircleIcon from '../TickCircleIcon';
 
 const ElectionCard = ({ details, src, electionStatus }) => {
   const [showIcon, setShowIcon] = useState(false);
   const { title, startDate, endDate, candidates, voters } = details ?? {};
+
   let totalVotes = 0;
   candidates?.forEach((d) => {
     totalVotes += parseInt(d?.voteCount);
@@ -57,7 +64,7 @@ const ElectionCard = ({ details, src, electionStatus }) => {
         <span className='mb-1 select-none'><span className='font-bold select-none'>{homepageT("total_voters")}:</span> {voters}</span>
         <span className='select-none'><span className='font-bold select-none'>{t("total_vote")}:</span> {totalVotes}</span>
       </div>
-      <Modal centered={true} show={selectedElections} size='lg' onHide={() => setSelectedElection(null)}>
+      <Modal centered={true} show={selectedElections} size='xl' onHide={() => setSelectedElection(null)}>
         <Modal.Body>
           <div className='py-3 px-1'>
             <div className='flex'>
@@ -76,6 +83,52 @@ const ElectionCard = ({ details, src, electionStatus }) => {
                 src={src} key={i} />)
             }
           </Fade>
+          <h5 className='mt-5 font-bold'>Candidates</h5>
+          <div className='flex flex-wrap pb-3'>
+            {candidates && candidates.length > 0 && candidates?.map((data: any) => {
+              const candidateA = candidates[0];
+              const candidateB = candidates[1];
+              const candidateAVotes = candidateA?.votedVoterLists?.length;
+              const candidateBVotes = candidateB?.votedVoterLists?.length;
+
+
+              const winnerAddress = candidateAVotes === candidateBVotes ? null : candidateAVotes > candidateBVotes
+                ? candidateA?.user?._id : candidateB?.user?._id;
+
+              return (
+                <div>
+                  <div
+                    className={`card__container h-fit sm:w-[350px] max-[1140px]:w-full mt-3 border border-1 border-slate-300 rounded-1 overflow-hidden mr-3`}>
+                    <div
+                      className='card__title pl-4 pt-2 flex items-center justify-between bg-slate-100 border-l-0 border-r-0 border-t-0 border-b-2 border-black-500 cursor-pointer'
+                    >
+                      <h6>{trimAddress(data?.user?._id)}</h6>
+                      {
+                        !winnerAddress && <span className='-mt-2 mr-4 text-red-500 flex items-center'>
+                          <BiEqualizer className='mx-2 animate-ping' /> Equal
+                        </span>
+                      }
+                    </div>
+                    <div className={`card__body pt-3 pb-2`}>
+                      <div className='card__body__hot px-4 mb-3 flex'>
+                        <AnimatedAvatar src={data?.user?.profile} />
+                        <div className='details pt-2 pl-3 mx-3 w-100'>
+                          <div className='flex items-center'>
+                            <span className='text-xl me-2'>{data?.user?.fullName}</span>
+                            {data?.user?._id === winnerAddress && <TickCircleIcon />}
+                          </div>
+                          <div className='flex justify-content-between'>
+                            <h1 id='count'>{data?.votedVoterLists?.length}</h1>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            }
+            )}
+          </div>
         </Modal.Body>
       </Modal>
     </div>

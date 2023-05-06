@@ -43,7 +43,7 @@ export default function Home() {
     const electionList = await getElectionList();
 
     setTranslateProvinceOptions(PROVINCE.map((province: any) => ({ label: homepageTranslate(province.value), value: province.value })))
-    setCurrentElection(getCurrentElection(electionList));
+    setCurrentElection(await getCurrentElection());
     setElectionLists(electionList);
 
     handleOverviewCountSort(null);
@@ -52,8 +52,9 @@ export default function Home() {
 
   useEffect(() => {
     fetchAllData();
+
     const browserZoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
-    if (!(browserZoomLevel === 80 || browserZoomLevel === 102) && browserZoomLevel < 170) {
+    if (!(browserZoomLevel === 80 || browserZoomLevel === 102) && browserZoomLevel < 170 && browserZoomLevel < 100) {
       setTimeout(() => {
         toast.info("Please, Unzoom your browser screen to 80% for better view. Thanks !", {
           className: "w-[600px]",
@@ -70,13 +71,12 @@ export default function Home() {
 
 
   useEffect(() => {
-    console.log({ electionState })
     fetchAllData();
   }, [electionState]);
 
 
   if (electionLists?.length > 0) {
-    const { startDate, endDate } = electionLists?.at(-1);
+    const { startDate } = electionLists?.at(-1);
 
     if (new Date() < new Date(startDate)) {
       const interval = setInterval(() => {
@@ -199,8 +199,8 @@ export default function Home() {
                 autoplay={true}
                 nextArrow={<BsChevronRight className='absolute text-slate-100 text-4xl' />}
                 prevArrow={<BsChevronLeft className='absolute text-slate-100 text-4xl' />}>
-                <img className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner1.jpeg" />
-                <img className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner2.jpeg" />
+                {/* <img className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner1.jpeg" /> */}
+                {/* <img className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner2.jpeg" /> */}
                 <img className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner3.jpeg" />
                 <img className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner4.jpeg" />
                 <img className='lg:h-[400px] h-[300px] w-100 object-cover transition ease-in-out delay-[500px] hover:scale-125 hover:opacity-100' src="/images/banner5.jpeg" />
@@ -247,7 +247,7 @@ export default function Home() {
                 {electionLists?.length === 0 && <span className='ml-2'>{homepageTranslate("no_election_found")}</span>}
                 {
                   electionLists?.map((election, i) => {
-                    const electionDetails = { ...election, voters: totalDataCount.voters };
+                    const electionDetails = { ...election, voters: election.electionType === "Local" ? (totalDataCount.voters + totalDataCount.candidates - 2) : totalDataCount.voters };
                     return (
                       <ElectionCard
                         key={i}

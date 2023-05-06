@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import Navbar from '../../components/Navbar';
 import VoterCardSkeleton from "../../components/Skeleton/voter-card-skeleton";
 import BreadCrumb from '../../components/BreadCrumb';
 import { responsive, SmartContract } from '../../constants';
 import UserCard from '../../components/UserCard';
 import { getVoterList } from '../../utils';
-import { setCandidateList } from '../../redux/reducers/candidateReducer';
 import Sortbar from '../../components/Sortbar';
 import { useTranslations } from 'next-intl';
 import _ from 'lodash';
@@ -20,35 +18,34 @@ const Details: React.FC = (): React.ReactElement => {
   const [openSortModal, setOpenSortModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
   const voterT = useTranslations("voter");
   const voterRollT = useTranslations("voter_roll");
 
-  useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-        const res = await getVoterList();
 
-        if (res) {
-          originalVoterList = res;
-          setVoterLists(res);
-        }
+  const fetchAllData = async () => {
+    try {
+      setLoading(true);
+      const res = await getVoterList();
 
-        voterEvent = SmartContract.events?.VoterCreated().on("data", (event: any) => {
-          let tempArray = [...voterLists, event.returnValues[0]];
-
-          tempArray = _.uniqBy(tempArray, (candidate) => {
-            return candidate.user.citizenshipNumber;
-          });
-          setVoterLists(tempArray);
-          dispatch(setCandidateList([...voterLists, event.returnValues[0]]));
-        }).on("error", () => console.error("VoterCreated Event Error !"));
-      } catch (error) {
-        console.error(error);
+      if (res) {
+        originalVoterList = res;
+        setVoterLists(res);
       }
-      setLoading(false);
-    })();
+
+
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
+  }
+
+  useEffect(() => {
+
+    fetchAllData();
+
+    voterEvent = SmartContract.events?.VoterCreated().on("data", (event: any) => {
+      fetchAllData();
+    }).on("error", () => console.error("VoterCreated Event Error !"));
 
     return () => {
       voterEvent && voterEvent?.unsubscribe();
@@ -57,7 +54,7 @@ const Details: React.FC = (): React.ReactElement => {
 
   const onHandleSearch = (keyword: string) => {
     if (keyword.length === 0) return setVoterLists(originalVoterList);
-    const filterSearch = voterLists.filter((candidate) => candidate.user.fullName.toUpperCase().includes(keyword.toUpperCase()));
+    const filterSearch = originalVoterList.filter((candidate) => candidate.user.fullName.toUpperCase().includes(keyword.toUpperCase()));
     setVoterLists(filterSearch);
   }
 

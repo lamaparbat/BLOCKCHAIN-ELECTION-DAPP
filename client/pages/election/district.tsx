@@ -1,50 +1,59 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import { useDispatch } from 'react-redux';
 import { GoPrimitiveDot } from 'react-icons/go';
 import Navbar from '../../components/Navbar';
 import LiveCounterCard from '../../components/LiveCounterCard/LiveCounterCard';
 import electionChannel from "../../services/pusher-events";
-import { getCandidateList, getElectionList, getElectionStatus, getFormattedErrorMessage, getVoterList } from '../../utils';
+import { getElectionList, getElectionStatus, getFormattedErrorMessage } from '../../utils';
 import _ from 'lodash';
 import { SmartContract } from '../../constants';
 import { getStorage } from '../../services';
-import { setCandidateList } from '../../redux/reducers/candidateReducer';
 import { toast } from 'react-toastify';
 import { getVoterDetails } from '../../utils/web3';
 import { useTranslations } from 'next-intl';
-import { getCurrentElection } from '../../utils/common';
+
+
+declare const window: any;
 
 export default function Home() {
   const [electionStatus, setElectionStatus] = useState(null);
-  const [electionList, setElectionList] = useState([]);
-  const [candidateLists, setCandidateLists] = useState([]);
-  const [voterLists, setVoterLists] = useState([]);
   const [currentElection, setCurrentElection] = useState<any>([]);
-  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
+  const [candidateLists, setCandidateLists] = useState([]);
+  const [electionList, setElectionList] = useState([]);
   let voteCastEvent = null;
 
-  const dispatch = useDispatch();
   const districtT = useTranslations("district_result");
 
 
   const fetchData = async () => {
     const electionList = await getElectionList();
-    const candidateLists = await getCandidateList();
-    const voterLists = await getVoterList();
-    const currentElection: any = getCurrentElection(electionList);
+    const currentElection: any = electionList.at(-1);
     const electionStatus = getElectionStatus("District", currentElection);
     const groupByCandidates = _.groupBy(currentElection?.candidates, (candidate) => candidate.votingBooth);
 
+
+    //extract candidate from district
+    const _totalCandidates = [];
+    Object.keys(groupByCandidates).forEach((district: string) => {
+      groupByCandidates[district]?.forEach((candidate) => {
+        _totalCandidates.push(candidate);
+      });
+    });
+
+    setElectionList(electionList);
+    setCandidateLists(_totalCandidates);
     setElectionStatus(electionStatus);
     setCurrentElection(groupByCandidates);
-    setVoterLists(voterLists);
-    dispatch(setCandidateList(candidateLists));
-    setElectionList(electionList);
   }
 
   useEffect(() => {
     fetchData();
+
+    console.log({ currentElection })
+
+    window.ethereum.on("accountsChanged", (accounts: any) => {
+      fetchData();
+    })
 
     return () => {
       voteCastEvent && voteCastEvent?.unsubscribe();
@@ -67,11 +76,24 @@ export default function Home() {
 
   const casteVote = async (_candidateID: string, _position?: string) => {
     try {
-      // restrict voting before electin start and end
+      const _loggedInAccountAddress = getStorage("loggedInAccountAddress");
 
-      const voterDetails = await getVoterDetails(loggedInAccountAddress);
-      const electionAddress = electionList?.at(-1)?.startDate;
-      let selectedCandidates = null;
+      // restrict voting before electin start and end
+      // if (electionStatus == "ENDED") return toast.warn("Election is over !")
+      // if (electionStatus !== "LIVE") return toast.warn("Cannot vote before election !");
+
+
+      const selectedCandidates = candidateLists?.find((candidate) => candidate.user._id === _candidateID);
+
+      // restrict candidate to not vote more than one time
+      const isCandidate = candidateLists.find((candidate: any) => candidate?.votedVoterLists?.includes(_candidateID));
+      if (isCandidate) {
+        const isAlreadyVoted = candidateLists.some((candidate: any) => candidate.votedVoterLists.includes(_loggedInAccountAddress));
+        if (isAlreadyVoted) return toast.error("Candidate can only vote once !")
+      }
+
+      const voterDetails = await getVoterDetails(_loggedInAccountAddress);
+      const electionAddress = electionList.at(-1)?.startDate;
 
       // vote limit count
       if (voterDetails.voteLimitCount === "3") return toast.info("You've exceed the vote limit count !");
@@ -81,33 +103,22 @@ export default function Home() {
       districts.forEach((district) => {
         const candidatesByPositions = _.groupBy(currentElection[district], (candidate: any) => candidate.position);
         const { mayor, deput_mayor, ward_councilor } = candidatesByPositions;
-        const isMayorVoted = _.some(mayor, (candidate: any) => candidate.votedVoterLists.includes(loggedInAccountAddress) && candidate.user._id !== _candidateID);
-        const isDeputyMayorVoted = _.some(deput_mayor, (candidate: any) => candidate.votedVoterLists.includes(loggedInAccountAddress) && candidate.user._id !== _candidateID);
-        const isWardCouncilorVoted = _.some(ward_councilor, (candidate: any) => candidate.votedVoterLists.includes(loggedInAccountAddress) && candidate.user._id !== _candidateID);
+        const isMayorVoted = _.some(mayor, (candidate: any) => candidate.votedVoterLists.includes(_loggedInAccountAddress) && candidate.user._id !== _candidateID);
+        const isDeputyMayorVoted = _.some(deput_mayor, (candidate: any) => candidate.votedVoterLists.includes(_loggedInAccountAddress) && candidate.user._id !== _candidateID);
+        const isWardCouncilorVoted = _.some(ward_councilor, (candidate: any) => candidate.votedVoterLists.includes(_loggedInAccountAddress) && candidate.user._id !== _candidateID);
         if ((isMayorVoted && _position === "mayor") || (isDeputyMayorVoted && _position === "deput_mayor") || (isWardCouncilorVoted && _position === "ward_councilor")) {
           isExit = true;
           return toast.info("Cannot vote multiple of same seats !")
         };
       })
 
-      console.log({ isExit })
-
       if (isExit) return;
 
-      for (let i = 0; i < candidateLists.length; i++) {
-        for (let j = 0; j < candidateLists[i][1].length; j++) {
-          if (candidateLists[i][1][j].user._id === _candidateID) {
-            selectedCandidates = candidateLists[i][1][j];
-            break;
-          }
-          if (selectedCandidates) break;
-        }
-      }
-      const isAlreadyVoted = selectedCandidates?.votedVoterLists?.includes(loggedInAccountAddress) ?? false;
+      const isAlreadyVoted = selectedCandidates?.votedVoterLists?.includes(_loggedInAccountAddress) ?? false;
 
       if (isAlreadyVoted) return toast.error("You've already casted vote !");
 
-      await SmartContract.methods.vote(_candidateID, electionAddress).send({ from: loggedInAccountAddress });
+      await SmartContract.methods.vote(_candidateID, electionAddress).send({ from: _loggedInAccountAddress });
 
       await fetchData();
       toast.success("Vote caste successfully.");

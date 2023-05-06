@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import Select from "react-select";
 import { toast } from 'react-toastify';
 import { DISTRICT, ELECTION_TYPE, SmartContract } from '../constants';
-import { getHostedUrl } from '../utils/action';
+import { createElection, getHostedUrl } from '../utils/action';
 import Avatar from './Avatar';
 import { BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs';
 import { getCandidateList, getElectionList } from '../utils';
-import { getCurrentElection } from '../utils/common';
 import moment from 'moment';
 import { setCurrentElection } from '../redux/reducers/commonReducer';
+import { getStorage } from '../services';
 
 const currentDate = new Date();
 const defaultDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}T${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -36,7 +36,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const [_candidateLists, setCandidateList] = useState([])
   const [isDisabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
-  const loggedInAccountAddress = useSelector((state: any) => state.loggedInUserReducer.address);
+  const loggedInAccountAddress = getStorage("loggedInAccountAddress");
   const [openCandidateModal, setOpenCandidateModal] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState(null);
   const [boothPlace, setBoothPlace] = useState(null);
@@ -46,18 +46,30 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
 
   const fetchData = async () => {
     const elections = await getElectionList();
-    const currentElection = getCurrentElection(elections);
     const candidateLists = await getCandidateList();
+    const currentElection = elections?.at(-1)
 
     originalCandidateList = [...candidateLists];
     setRecentlyCreatedElection(currentElection);
     setCandidateList(candidateLists);
     setElectionList(elections);
+
+    if (!Object.keys(currentElection ?? {})?.length) return;
+    const { title, description, startDate, endDate, electionType }: any = currentElection;
+    dispatch(setCurrentElection({ title, description, startDate, endDate, electionType }));
   }
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (!recentlyCreatedElection?.candidates?.length && moment(recentlyCreatedElection?.endDate).isAfter(new Date())) {
+      setElection({ ...election, electionType: recentlyCreatedElection?.electionType });
+      setShowCreateElectionModal(false);
+      setOpenCandidateModal(true);
+    };
+  }, [recentlyCreatedElection]);
 
   useEffect(() => {
     setDisabled(
@@ -70,8 +82,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
 
     if (name === "electionType") {
       setSelectedPosition(null);
-      defaultElectionData.electionType = value;
-      setElection(defaultElectionData);
+      setElection({ ...defaultElectionData, electionType: value });
     }
   };
 
@@ -91,6 +102,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
         formData.append("images", file);
       })
 
+      await createElection({ title, description, startDate, endDate });
       const { url }: any = await getHostedUrl(formData);
       const galleryImagesUrl = url;
 
@@ -105,7 +117,9 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
 
       setShowCreateElectionModal(false);
       setOpenCandidateModal(true);
-      dispatch(setCurrentElection({ title, description, startDate, endDate, electionType, galleryImagesUrl }));
+
+      fetchData();
+
       toast.success(`New ${election?.electionType?.toLowerCase()} election created successfully.`);
     } catch (error) {
       console.error(error);
@@ -117,6 +131,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const onCandidateSelected = (checked: boolean, details: any) => {
     let temp = [...election.selectedCandidates];
     const _details = { ...details, position: selectedPosition };
+    console.log({ _details })
 
     // only allow one person from specific party 
     if (election?.electionType === "District") {
@@ -127,6 +142,11 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
 
     if (!checked) temp = election.selectedCandidates.filter((candidate: any) => candidate?.user?._id !== details?.user?._id);
     else temp.push(_details);
+
+    temp = temp.map((candidate: any) => ({ ...candidate, votedVoterLists: [] }));
+
+    console.log({ temp })
+
     setElection({ ...election, selectedCandidates: temp });
   }
 
@@ -143,10 +163,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
 
   const uploadSelectedCandidates = async () => {
     try {
-      const electionList = await getElectionList();
-      const currentElection: any = getCurrentElection(electionList);
       const isLocalElection = election?.electionType === "Local";
-
       const selectedCandidates = election?.selectedCandidates?.map((candidate) => ({
         _id: candidate?.user?._id,
         position: isLocalElection ? "" : candidate?.position,
@@ -155,13 +172,13 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
 
       if (isLocalElection && selectedCandidates?.length > 2) return toast.warning("Only 2 candidates are allow for binary election !!");
 
-      await SmartContract.methods.addSelectedCandidates(selectedCandidates, currentElection?.startDate).send({ from: loggedInAccountAddress });
+      await SmartContract.methods.addSelectedCandidates(selectedCandidates, recentlyCreatedElection?.startDate).send({ from: loggedInAccountAddress });
 
       const filterCandidates = _candidateLists.filter((candidate: any) => !election.selectedCandidates.some((_candidate) => _candidate.user._id === candidate.user._id))
       setCandidateList([...filterCandidates]);
 
       setBoothPlace(null);
-      setOpenCandidateModal(false);
+      setOpenCandidateModal(!isLocalElection);
 
       fetchData();
 
