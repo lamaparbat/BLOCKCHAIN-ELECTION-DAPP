@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
 import { useRouter } from "next/router";
 import _ from 'lodash';
 import { FaRegDotCircle } from 'react-icons/fa';
@@ -11,8 +10,10 @@ import TickCircleIcon from '../TickCircleIcon';
 
 const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, electionStatus, casteVote }): ReactElement => {
   const router = useRouter();
+
   const isElectionStart = electionStatus === "LIVE";
   const isElectionEnd = electionStatus === "ENDED";
+
 
   const navigateTo = (route: string) => {
     router.push(`/election/district/${route}`)
@@ -21,6 +22,7 @@ const LiveCounterCard: React.FC<LiveCounterCardStruct> = ({ type, data, election
   // group candidate by positions
   const candidatesByPositions = _.groupBy(data, (candidate: any) => candidate.position);
   const leadingCandidate = _.maxBy(data, "voteCount");
+
 
   return (
     <div
