@@ -1,21 +1,5 @@
 # WEB 3.0 BLOCKCHAIN ELECTION SYSTEM
 
-## Constitutional Provision.
-<img width="1439" alt="Screen Shot 2023-02-03 at 22 22 38" src="https://user-images.githubusercontent.com/64581460/216657904-406efa27-b65f-46f0-bcf0-f4cbf7e32d56.png">
-
-## FAQs List Page
-<img width="1440" alt="Screen Shot 2023-02-03 at 23 47 45" src="https://user-images.githubusercontent.com/64581460/216675055-37ab0a47-1592-4be9-b229-ffc951400c1c.png">
-<img width="993" alt="Screen Shot 2023-03-04 at 23 18 47" src="https://user-images.githubusercontent.com/64581460/222920487-6f45d152-6967-4b74-a78e-2c456ed6e100.png">
-
-## FAQ Form Component [Collapse]
-<img width="1440" alt="Screen Shot 2023-03-22 at 22 47 40" src="https://user-images.githubusercontent.com/64581460/226982213-99504fcb-6d8f-4f3d-90d1-521d98f90a03.png">
-
-## Election Offices Page
-<img width="1440" alt="Screen Shot 2023-02-04 at 12 20 01" src="https://user-images.githubusercontent.com/64581460/216752957-86d7d634-48dc-4563-8218-183e9dcffbe2.png">
-
-## Election data overview
-<img width="1440" alt="Screen Shot 2023-03-06 at 15 55 42" src="https://user-images.githubusercontent.com/64581460/223080647-59152b75-3c0e-4eb6-8f6e-fae0afcd91e2.png">
-
 ### Workflow overview
 ![Blockchain Voting Interaction](https://user-images.githubusercontent.com/64581460/200596235-cba703b8-ac91-4600-9a02-d271a6ad8ed6.png)
 
