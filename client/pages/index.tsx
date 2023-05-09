@@ -54,7 +54,7 @@ export default function Home() {
     fetchAllData();
 
     const browserZoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
-    if (!(browserZoomLevel === 80 || browserZoomLevel === 102) && browserZoomLevel < 170 && browserZoomLevel < 100) {
+    if (!(browserZoomLevel === 80 || browserZoomLevel === 102) && browserZoomLevel < 170 && browserZoomLevel < 110) {
       setTimeout(() => {
         toast.info("Please, Unzoom your browser screen to 80% for better view. Thanks !", {
           className: "w-[600px]",
