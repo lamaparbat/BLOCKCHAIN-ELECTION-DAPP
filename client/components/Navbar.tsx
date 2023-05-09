@@ -9,7 +9,7 @@ import _ from 'lodash';
 import Web3 from 'web3';
 import ElectionModal from './ElectionModal';
 import Avatar from './Avatar';
-import {  isAdmin } from '../utils/web3';
+import { isAdmin } from '../utils/web3';
 import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style, METAMASK_EXT_LINK, ADMIN_ROUTES } from '../constants/index';
 import { getStorage, setStorage, setCookie } from '../services';
 import Dropdown from './Dropdown';
@@ -56,7 +56,10 @@ const Navbar: React.FC = (): ReactElement => {
     (async () => {
       const currentElection: any = await getCurrentElection();
       let electionStatus: any = getElectionStatus(currentElection?.electionType, currentElection);
+      const isAdminAddress = await isAdmin(loggedInAccountAddress);
 
+      if (!isAdminAddress) setPoliticalItems(politicalItems.filter((item) => !ADMIN_ROUTES.includes(item.value)));
+      else setPoliticalItems(sub_navbar_items.politicalItems);
       setCurrentElection(currentElection);
       setIsElectionRunning((electionStatus === "LIVE" || electionStatus === "Election is starting soon.") && electionStatus !== "ENDED");
     })();
