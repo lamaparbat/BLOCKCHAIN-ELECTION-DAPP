@@ -31,7 +31,7 @@ const VoterRegistration = () => {
   let throttleState = false;
 
   useEffect(() => {
-    if (/false/.test(isAdmin)) router.push("/");
+    if (/false|undefined|null/.test(isAdmin)) router.push("/");
     (async () => {
       const res = await getPartyList();
       setPartyList(res);
