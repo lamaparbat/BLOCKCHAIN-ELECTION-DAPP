@@ -53,6 +53,16 @@ const CandidateRegistration = () => {
       const partyList = await getPartyList();
       const candidates = await getCandidateList();
 
+
+      setCandidateDetails({
+        ...candidateDetails,
+        province: { label: commonT("province_placeholder"), value: "" },
+        district: { label: commonT("district_placeholder"), value: "" },
+        municipality: { label: commonT("municipality_placeholder"), value: "" },
+        ward: { label: commonT("ward_placeholder"), value: "" },
+        partyName: { label: candidateT("party_placeholder"), value: "" },
+        gender: { label: commonT("gender_placeholder"), value: "" }
+      })
       setCandidateLists(candidates);
       setPartyList(partyList);
     })();
