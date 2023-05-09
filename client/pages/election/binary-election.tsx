@@ -56,7 +56,7 @@ export default function Home() {
       fetchAllData(address);
     });
 
-    window.ethereum.on("accountsChanged", (accounts: any) => {
+    window?.ethereum?.on("accountsChanged", (accounts: any) => {
       fetchAllData(accounts?.[0]);
     })
 
