@@ -8,11 +8,13 @@ import FilterIcon from '../FilterIcon';
 import _ from 'lodash';
 import { TiLockClosed } from 'react-icons/ti';
 import { getStorage } from '../../services';
-import { getElectionList } from '../../utils';
+import { getElectionList, getVoterList } from '../../utils';
 
+declare const window: any;
 
 const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
   const { details, border, ishighlighted, casteVote }: any = props;
+  const [currentElection, setCurrentElection] = useState(null);
 
   // redux dispatcher
   const dispatch = useDispatch();
@@ -22,6 +24,33 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
     dispatch(setCandidateDetails(details));
     router.push("/party/details");
   }
+
+  const [isDedicatedVoter, setDedicatedVoter] = useState(false);
+
+
+
+  const fetchData = async () => {
+    const voterLists = await getVoterList();
+    const electionLists = await getElectionList();
+    const _currentAccount = electionLists?.at(-1);
+
+    setTimeout(() => {
+      const loggedInAccountAddress = getStorage("loggedInAccountAddress");
+      const loggedInUser = voterLists.find((candidate: any) => candidate.user._id === loggedInAccountAddress);
+
+      setCurrentElection(_currentAccount);
+      setDedicatedVoter(_currentAccount.type !== "Local" ? loggedInUser.user.district === details?.votingBooth : true);
+    }, 100)
+  }
+
+  useEffect(() => {
+    fetchData();
+
+    window.ethereum.on("accountsChanged", (accounts: any) => {
+      fetchData();
+    });
+
+  }, []);
 
   const voted = details?.votedVoterLists?.includes(getStorage("loggedInAccountAddress"));
 
@@ -41,7 +70,7 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
         <div className='flex items-center'>
           <h3 className='mr-5 mt-2' id='count'>{details?.votedVoterLists?.length ?? 0}</h3>
           {
-            true &&
+            new Date() > new Date(currentElection?.startDate) && new Date() < new Date(currentElection?.endDate) && isDedicatedVoter &&
             <button
               className={`relative flex justify-center items-center bg-slate-100 ${!voted && "shadow-md"} pt-2 pb-2 px-4 rounded-pill text-sm ${voted && "text-slate-500 cursor-default"}`}
               onClick={() => !voted && casteVote(details?.user?._id, details?.position)}

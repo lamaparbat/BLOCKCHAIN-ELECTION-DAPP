@@ -31,7 +31,6 @@ export default function Home() {
     const electionStatus = getElectionStatus("District", currentElection);
     const groupByCandidates = _.groupBy(currentElection?.candidates, (candidate) => candidate.votingBooth);
 
-
     //extract candidate from district
     const _totalCandidates = [];
     Object.keys(groupByCandidates).forEach((district: string) => {
@@ -49,9 +48,7 @@ export default function Home() {
   useEffect(() => {
     fetchData();
 
-    console.log({ currentElection })
-
-    window.ethereum.on("accountsChanged", (accounts: any) => {
+    window?.ethereum?.on("accountsChanged", (accounts: any) => {
       fetchData();
     })
 

@@ -95,7 +95,7 @@ const Sortbar = ({
             onChange={(item) => {
               setSelectProvince(item);
             }}
-            value={!selectedProvince.label ? { ...defaultOptions, label: "Select Province" } : selectedProvince}
+            value={!selectedProvince.label ? { ...defaultOptions, label: t("select_province") } : selectedProvince}
           />
           <Select
             options={districtProvinceOptions}
@@ -105,7 +105,7 @@ const Sortbar = ({
               setSelectDistrict(item);
             }}
             isDisabled={selectedProvince?.label ? false : true}
-            value={!selectedDistrict.label ? { ...defaultOptions, label: "Select District" } : selectedDistrict}
+            value={!selectedDistrict.label ? { ...defaultOptions, label: t("select_district") } : selectedDistrict}
           />
         </div>
         <div className='flex my-3 sm:flex-row xsm:flex-col'>
@@ -117,7 +117,7 @@ const Sortbar = ({
               setSelectMunicipality(item);
             }}
             isDisabled={selectedDistrict?.label ? false : true}
-            value={!selectedMunicipality.label ? { ...defaultOptions, label: "Select Muncipality" } : selectedMunicipality}
+            value={!selectedMunicipality.label ? { ...defaultOptions, label: t("select_municipality") } : selectedMunicipality}
           />
           <Select
             options={WARD_NO.map((d) => ({ label: wardT(`w${d.label}`), value: d.value }))}
@@ -127,7 +127,7 @@ const Sortbar = ({
               setSelectWard(item);
             }}
             isDisabled={selectedMunicipality?.label ? false : true}
-            value={!selectedWard.label ? { ...defaultOptions, label: "Select Ward" } : selectedWard}
+            value={!selectedWard.label ? { ...defaultOptions, label: t("select_ward") } : selectedWard}
           />
         </div>
         {showPartyOptions &&
@@ -141,7 +141,7 @@ const Sortbar = ({
                 onChange={(item: any) => {
                   setSelectedParty(item);
                 }}
-                value={!selectedParty.label ? { ...defaultOptions, label: "Select Party" } : selectedParty}
+                value={!selectedParty.label ? { ...defaultOptions, label: sortCompT("select_party") } : selectedParty}
               />
             </div>
           </>}

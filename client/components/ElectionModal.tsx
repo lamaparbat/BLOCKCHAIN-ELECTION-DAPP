@@ -43,7 +43,6 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const [recentlyCreatedElection, setRecentlyCreatedElection] = useState(null);
   const dispatch = useDispatch();
 
-
   const fetchData = async () => {
     const elections = await getElectionList();
     const candidateLists = await getCandidateList();
@@ -131,7 +130,6 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
   const onCandidateSelected = (checked: boolean, details: any) => {
     let temp = [...election.selectedCandidates];
     const _details = { ...details, position: selectedPosition };
-    console.log({ _details })
 
     // only allow one person from specific party 
     if (election?.electionType === "District") {
@@ -144,8 +142,6 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
     else temp.push(_details);
 
     temp = temp.map((candidate: any) => ({ ...candidate, votedVoterLists: [] }));
-
-    console.log({ temp })
 
     setElection({ ...election, selectedCandidates: temp });
   }

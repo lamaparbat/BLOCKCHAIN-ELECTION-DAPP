@@ -67,10 +67,10 @@ const Details: React.FC = (): React.ReactElement => {
         <link rel="icon" href="/images/logo.png" />
       </Head>
       <Navbar /><br />
-      <div className='w-full flex justify-center px-5'>
-        <div className={`${responsive} flex-col justify-start rounded-1`}>
-          <div className='flex items-center justify-between'>
-            <p className='text-2xl text-black mt-4'>{partyT("title")}</p>
+      <div className='w-full flex justify-center sm:px-5'>
+        <div className={`${responsive} flex-col justify-start rounded-1 w-full`}>
+          <div className='w-full flex items-center justify-between sm:px-3 xsm:px-2'>
+            <p className='text-2xl text-black mt-3'>{partyT("title")}</p>
             <div className='flex justify-between my-4'>
               <input type='search' className='form-control' placeholder={partyT("search_placeholder")} onKeyUp={handleSearch} />
             </div>

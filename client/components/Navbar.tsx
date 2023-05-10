@@ -9,7 +9,7 @@ import _ from 'lodash';
 import Web3 from 'web3';
 import ElectionModal from './ElectionModal';
 import Avatar from './Avatar';
-import { getCandidateList, isAdmin } from '../utils/web3';
+import { isAdmin } from '../utils/web3';
 import { LANGUAGES, responsive, sub_navbar_items, sub_navbar_style, sub_navbar_items_style, METAMASK_EXT_LINK, ADMIN_ROUTES } from '../constants/index';
 import { getStorage, setStorage, setCookie } from '../services';
 import Dropdown from './Dropdown';
@@ -56,7 +56,10 @@ const Navbar: React.FC = (): ReactElement => {
     (async () => {
       const currentElection: any = await getCurrentElection();
       let electionStatus: any = getElectionStatus(currentElection?.electionType, currentElection);
+      const isAdminAddress = await isAdmin(loggedInAccountAddress);
 
+      if (!isAdminAddress) setPoliticalItems(politicalItems.filter((item) => !ADMIN_ROUTES.includes(item.value)));
+      else setPoliticalItems(sub_navbar_items.politicalItems);
       setCurrentElection(currentElection);
       setIsElectionRunning((electionStatus === "LIVE" || electionStatus === "Election is starting soon.") && electionStatus !== "ENDED");
     })();
@@ -162,8 +165,37 @@ const Navbar: React.FC = (): ReactElement => {
         {/*  vertical-top-navbar */}
         <div className={`vertical__navbar absolute left-0 ml-[25px] mt-[40px] shadow-inner z-50 flex lg:hidden ${openTopVerticalNavbar ? 'block' : 'hidden'}`}>
           <div className={`px-4 pt-3 pb-4 w-[220px] h-[240px] bg-slate-100 absolute rounded-b-[5px] text-slate-600 text-[16px]`}>
+            {
+              isLoggedIn ?
+                <div className='flex items-center cursor-pointer hover:opacity-60' onClick={openProfile}>
+                  {/* <Avatar className='avatar' src="/images/parbat.png" alt="profile" size='sm' border={1} /> */}
+                  <span className=''>{trimAddress(loggedInAccountAddress)}</span>
+                </div> :
+                <button
+                  className='mx-4 py-[3px] rounded-1 border-light flex items-center bg-blue-900 text-light text-sm'
+                  onClick={handleLogin}
+                >
+                  <img className='mx-1' src={"/images/metamask.png"} height="20" width="20" />
+                  <a
+                    href={!isEthereumEnabled ? METAMASK_EXT_LINK : ""}
+                    className='no-underline mr-2 text-light text-[14px] mt-[1px]'
+                    target={!isEthereumEnabled ? "_blank" : "nul"}
+                  >
+                    {loading ? "Connecting" : isEthereumEnabled ? "Connect Wallet" : t("install_metamsk")}
+                  </a>
+                </button>
+            }
+            {
+              openProfileDropdown && isLoggedIn &&
+              <div className='profile__dropdown position-absolute bg-slate-100 py-2 px-2 mr-4 right-0 mt-1 bg-white shadow-sm'>
+                <div className='profile__dropdown__items flex flex-column'>
+                  <span className='flex items-center' onClick={handleAccountSwitch}><AiOutlineUserSwitch className='mr-3' /> Switch Account</span>
+                  <span className={`flex items-center ${isAddressCopied && "bg-red-100 hover:bg-red-100"}`} onClick={copyToClipboard}><BiCopy className='mr-3' />{isAddressCopied ? "Copied" : "Copy Address"}</span>
+                </div>
+              </div>
+            }
             {isAdminAddress && <div onClick={onCreateElection}>{t("create_election")}</div>}
-            <div className="my-[18px]" onClick={() => navigate("/FAQ")}>{t("faq")}</div>
+            <div className="my-[18px]" onClick={() => navigate("/voter-education/voter-faqs")}>{t("faq")}</div>
             <select
               className='form-control py-1 cursor-pointer hover:opacity-70 outline-0 '
               onChange={(e: any) => onLanguageChange(e.target.value)}

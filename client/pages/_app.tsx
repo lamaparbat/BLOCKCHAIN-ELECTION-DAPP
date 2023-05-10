@@ -40,7 +40,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <NextIntlProvider messages={langFiles}>
               <Component {...pageProps} />
             </NextIntlProvider>
-            <Analytics />
+            <Analytics mode={'production'} />
           </>
         )
       }
