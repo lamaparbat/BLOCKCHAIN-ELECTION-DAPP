@@ -2,7 +2,8 @@
 const cluster = require("cluster");
 const totalCpus = require("os").cpus();
 
-if (cluster.isPrimary) {
+// if (cluster.isPrimary) {
+if(false){
   console.log(`Master node:${process.pid} is running.`);
 
   // fork worker nodes
