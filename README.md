@@ -1,83 +1,5 @@
 # WEB 3.0 BLOCKCHAIN ELECTION SYSTEM
 
-### Landing page UI
-<img width="1440" alt="Screen Shot 2023-03-02 at 22 57 10" src="https://user-images.githubusercontent.com/64581460/222502200-97d92d19-3219-4c51-8681-c3f3bd719d5e.png">
-
-### Unzoom to 80% screen for better view , info toaster
-<img width="1440" alt="Screenshot 2023-03-27 at 23 10 37" src="https://user-images.githubusercontent.com/64581460/228019290-d332d0a0-1f2c-4ce9-8ba2-8901061f0d5c.png">
-
-### If metamask is not installed, then homepage will look like this
-
-<img width="1440" alt="Screen Shot 2023-03-10 at 22 24 00" src="https://user-images.githubusercontent.com/64581460/224372616-8faaec90-ec62-46aa-b8bf-b9b1ffc989e5.png">
-
-
-### If metamask is installed, then homepage will look like this
-<img width="1440" alt="Screen Shot 2023-03-02 at 22 57 10" src="https://user-images.githubusercontent.com/64581460/222502200-97d92d19-3219-4c51-8681-c3f3bd719d5e.png">
-
-### Internationlization [Supported languages: English, Nepali]
-<img width="1440" alt="Screenshot 2023-03-30 at 23 09 52" src="https://user-images.githubusercontent.com/64581460/228916420-f71cada2-830f-477d-84af-f5cba890c162.png">
-
-### Live Election Starting CountDown Timer
-<img width="1440" alt="Screen Shot 2023-02-20 at 21 31 26" src="https://user-images.githubusercontent.com/64581460/220151007-c36e57fb-9bda-4baa-9e9a-21faf6b0aad9.png">
-
-### Before Connecting Metamask wallet
-<img width="1440" alt="Screen Shot 2023-02-13 at 22 32 24" src="https://user-images.githubusercontent.com/64581460/218519876-a822631a-b9c5-464c-871d-82b6a31eaf00.png">
-
-### After connecting Metamask wallet 
-<img width="1440" alt="Screen Shot 2023-02-28 at 23 03 08" src="https://user-images.githubusercontent.com/64581460/221928980-59c57dfa-8681-472f-ba87-ee06f5589bef.png">
-
-### Candidate selection for particular election [Provisional | District | Municipality | Ward ]
-<img width="1440" alt="Screen Shot 2023-02-11 at 11 26 44" src="https://user-images.githubusercontent.com/64581460/218242586-dec98d95-081c-4553-81ea-2e74bc8b5e22.png">
-
-### Canadidate search and sorting UI designed
-<img width="1440" alt="Screen Shot 2023-02-12 at 08 37 35" src="https://user-images.githubusercontent.com/64581460/218290265-4daea1e2-9f9b-4a24-904a-3b6138bf367d.png">
-
-### HOT Candidate Live Vote Count
-<img width="1440" alt="Screen Shot 2023-02-13 at 22 32 24" src="https://user-images.githubusercontent.com/64581460/218519657-0c37e0bf-a37b-4302-b234-71ce969060a8.png">
-
-### Voter Poll Card List UI
-<img width="1440" alt="Screen Shot 2023-03-03 at 15 41 14" src="https://user-images.githubusercontent.com/64581460/222690006-361f61f3-28b6-400b-bbcb-225bdbeeaf9d.png">
-
-### Create election
-<img width="1440" alt="Screen Shot 2023-02-06 at 23 12 09" src="https://user-images.githubusercontent.com/64581460/217041926-12feba4c-ad8f-428b-b96e-ae63ed3b9812.png">
-
-### After election timeout, the result celebration UI
-<img width="1440" alt="Screen Shot 2022-12-27 at 23 20 14" src="https://user-images.githubusercontent.com/64581460/209701990-32222a93-bfb5-421e-a143-9ce8f15ed926.png">
-
-## Election start date time counter bar.  [Similar to upcoming event time counter]
-<img width="1440" alt="Screen Shot 2023-01-07 at 00 05 28" src="https://user-images.githubusercontent.com/64581460/211074297-a1e9c1f8-9f88-4c1d-9663-83851c5e7e7b.png">
-
-## Party Registration page
-<img width="1440" alt="Screen Shot 2023-02-05 at 22 03 00" src="https://user-images.githubusercontent.com/64581460/216831144-ddc64de4-4e43-43eb-8e3e-66319a837e37.png">
-
-## Party list page
-<img width="1440" alt="Screen Shot 2023-02-05 at 22 02 46" src="https://user-images.githubusercontent.com/64581460/216831164-62cde638-e8a3-49ed-b1ee-f10b14d871b4.png">
-
-## Preview party agenda popup model
-<img width="1440" alt="Screen Shot 2023-02-07 at 21 08 33" src="https://user-images.githubusercontent.com/64581460/217287277-03c367f9-d33d-471e-a9dd-602d2b18809a.png">
-
-## Global Search modal with skeleton loading features
-<img width="1440" alt="Screen Shot 2023-01-29 at 19 40 04" src="https://user-images.githubusercontent.com/64581460/215330847-0ddc9131-e55e-4a7c-b274-6c64114d83ae.png">
-
-<img width="1440" alt="Screenshot 2023-03-27 at 20 48 04" src="https://user-images.githubusercontent.com/64581460/227981322-42f6e2e1-668f-48fc-bb2a-bdb99ed52581.png">
-
-
-## Constitutional Provision.
-<img width="1439" alt="Screen Shot 2023-02-03 at 22 22 38" src="https://user-images.githubusercontent.com/64581460/216657904-406efa27-b65f-46f0-bcf0-f4cbf7e32d56.png">
-
-## FAQs List Page
-<img width="1440" alt="Screen Shot 2023-02-03 at 23 47 45" src="https://user-images.githubusercontent.com/64581460/216675055-37ab0a47-1592-4be9-b229-ffc951400c1c.png">
-<img width="993" alt="Screen Shot 2023-03-04 at 23 18 47" src="https://user-images.githubusercontent.com/64581460/222920487-6f45d152-6967-4b74-a78e-2c456ed6e100.png">
-
-## FAQ Form Component [Collapse]
-<img width="1440" alt="Screen Shot 2023-03-22 at 22 47 40" src="https://user-images.githubusercontent.com/64581460/226982213-99504fcb-6d8f-4f3d-90d1-521d98f90a03.png">
-
-## Election Offices Page
-<img width="1440" alt="Screen Shot 2023-02-04 at 12 20 01" src="https://user-images.githubusercontent.com/64581460/216752957-86d7d634-48dc-4563-8218-183e9dcffbe2.png">
-
-## Election data overview
-<img width="1440" alt="Screen Shot 2023-03-06 at 15 55 42" src="https://user-images.githubusercontent.com/64581460/223080647-59152b75-3c0e-4eb6-8f6e-fae0afcd91e2.png">
-
 ### Workflow overview
 ![Blockchain Voting Interaction](https://user-images.githubusercontent.com/64581460/200596235-cba703b8-ac91-4600-9a02-d271a6ad8ed6.png)
 
@@ -150,9 +72,8 @@ Blockchain technology was developed to address these problems, and it now provid
 ### System Features
 - User centered Design
 - Realtime voting updates & counts
-- Data Visualization
-- Web 3.0
-- Smart Contract
+- Decentralized Database server
+
 
 ### Problems with traditional voting system.
 - First and foremost, privacy and unfairity risk
@@ -160,12 +81,6 @@ Blockchain technology was developed to address these problems, and it now provid
 - Citizen outside the country cannot vote their favourite ones.
 - Voter might be stand on the queue for long time and very difficulty for the old age citizens
 - Voting result might takes long time to publish
-
-### Advantages of decentralized voting system
--> All above traditional voting system drawbacks can overcome with blockchain technology.
-
-### Disadvantages of decentralized voting system
-- The reason blockchain is a highly secure system is the ledger is public. All past transactions can be seen by anyone who works the system, and they can’t be changed because everyone will notice. That doesn’t work in a voting system where secret ballot is mandated. Every transaction is identifiable.
 
 
 Author: Parbat Lama

@@ -12,8 +12,16 @@ if (cluster.isPrimary) {
   cluster.on("exit", (worker: any, code: any, signal: any) => cluster.fork());
 
 } else {
+<<<<<<< HEAD
   const app = require("./app");
   const PORT = process.env.PORT || 8088;
   // listening to the port
   app.listen(PORT, () => console.log(`Listening to the port ${PORT}`));
 };
+=======
+ const app = require("./app");
+ const PORT = process.env.PORT || 8088;
+ // listening to the port
+ app.listen(PORT, () => console.log(`Listening to the port ${PORT}`));
+};
+>>>>>>> 8197785666c01b3442bae7d3d4ffa643bdb153b5
