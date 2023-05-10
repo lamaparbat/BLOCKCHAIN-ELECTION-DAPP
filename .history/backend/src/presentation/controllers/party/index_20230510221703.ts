@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-const { UPLOAD_FOLDER_PATH } = require("../../../constants/index.ts");
+const { UPLOAD_FOLDER_PATH } = require("../../../constants/index.js");
 const { uploadFileToFirebaseStorage } = require("../../../domain/services/index");
 
 const { candidateModal, partyModel } = require("../../../infrastructure/models/index.model");
