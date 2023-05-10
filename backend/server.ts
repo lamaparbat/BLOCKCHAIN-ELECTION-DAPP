@@ -1,4 +1,4 @@
-require("./scripts/switch-node-version");
+// require("./scripts/switch-node-version");
 const cluster = require("cluster");
 const totalCpus = require("os").cpus();
 
