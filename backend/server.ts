@@ -20,6 +20,6 @@ const totalCpus = require("os").cpus();
 
 
 const _app = require("./app");
-const PORT = process.env.PORT || 8088;
+const PORT = process.env.PORT || 9999;
 // listening to the port
 _app.listen(PORT, () => console.log(`Listening to the port ${PORT}`));
