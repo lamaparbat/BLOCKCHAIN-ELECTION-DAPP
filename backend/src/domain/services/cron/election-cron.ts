@@ -1,5 +1,5 @@
 const cron = require("node-cron");
-require("../../../../configs/index.ts");
+require("../../../../configs/index");
 
 
 const startJob = (startDate: string, endDate: string) => {

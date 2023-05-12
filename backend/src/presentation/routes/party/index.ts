@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 const router = Router();
-const { uploader } = require("../../../../configs/index.ts");
+const { uploader } = require("../../../../configs/index");
 const { candidateController } = require("../../controllers/index");
 
 router.post('/candidate/signup', uploader.single("profile"), candidateController.candidateSignup);
