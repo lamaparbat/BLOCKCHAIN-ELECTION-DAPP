@@ -35,8 +35,6 @@
 
   2. Setup scalable project structute [Eg. Clean Arch.]
     <img width="789" alt="Screen Shot 2022-12-05 at 22 28 46" src="https://user-images.githubusercontent.com/64581460/205693485-16e2a57b-e5d4-4f8a-8c16-4f237ac3d80b.png">
-
-  4.
   
   
 Author: Parbat Lama
