@@ -57,11 +57,6 @@ g. Sequence Diagram
 ### For wireframe:
      open folder ``` /mockup/wireframes/ ```
 
-
-### Project Architecture
-<img width="789" alt="Screen Shot 2022-12-05 at 22 28 46" src="https://user-images.githubusercontent.com/64581460/205693485-16e2a57b-e5d4-4f8a-8c16-4f237ac3d80b.png">
-
-
 ### Introduction
 Before diving into the agenda, lets know what is blockchain. In general, Blockchain is a system of recording information in a way that makes it difficult or impossible to change, hack, or cheat the system. It is a decentralized, distributed and public digital ledger that is used to record transactions across many computers so that the record cannot be altered retroactively without the alteration of all subsequent blocks and the consensus of the network.
 
