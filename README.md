@@ -1,4 +1,4 @@
-# WEB 3.0 BLOCKCHAIN ELECTION SYSTEM
+# WEB 3.0 BLOCKCHAIN ELECTION SYSTEM (Ethereum)
 
 ### Blockchain overview
 ![Blockchain Voting Interaction](https://user-images.githubusercontent.com/64581460/200596235-cba703b8-ac91-4600-9a02-d271a6ad8ed6.png)
