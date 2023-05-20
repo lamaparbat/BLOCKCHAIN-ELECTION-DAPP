@@ -25,7 +25,8 @@ export const getPartyList = async () => {
 
 export const getElectionList = async () => {
   if (!window.ethereum) return [];
-  return await SmartContract.methods.getAllElections().call();
+  const list = await SmartContract.methods.getAllElections().call();
+  return list?.slice(1);
 }
 
 export const getFaqs = async () => {

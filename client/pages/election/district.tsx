@@ -76,8 +76,8 @@ export default function Home() {
       const _loggedInAccountAddress = getStorage("loggedInAccountAddress");
 
       // restrict voting before electin start and end
-      // if (electionStatus == "ENDED") return toast.warn("Election is over !")
-      // if (electionStatus !== "LIVE") return toast.warn("Cannot vote before election !");
+      if (electionStatus == "ENDED") return toast.warn("Election is over !")
+      if (electionStatus !== "LIVE") return toast.warn("Cannot vote before election !");
 
 
       const selectedCandidates = candidateLists?.find((candidate) => candidate.user._id === _candidateID);

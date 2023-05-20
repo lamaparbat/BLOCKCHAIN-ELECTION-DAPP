@@ -39,7 +39,7 @@ const CandidateCard: React.FC<CandidateCardStruct> = (props) => {
       const loggedInUser = voterLists.find((candidate: any) => candidate.user._id === loggedInAccountAddress);
 
       setCurrentElection(_currentAccount);
-      setDedicatedVoter(_currentAccount.type !== "Local" ? loggedInUser.user.district === details?.votingBooth : true);
+      setDedicatedVoter(_currentAccount.type !== "Local" ? loggedInUser?.user?.district === details?.votingBooth : true);
     }, 100)
   }
 

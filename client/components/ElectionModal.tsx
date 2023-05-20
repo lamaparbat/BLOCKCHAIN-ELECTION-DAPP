@@ -159,6 +159,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
 
   const uploadSelectedCandidates = async () => {
     try {
+      setLoading(true);
       const isLocalElection = election?.electionType === "Local";
       const selectedCandidates = election?.selectedCandidates?.map((candidate) => ({
         _id: candidate?.user?._id,
@@ -173,6 +174,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
       const filterCandidates = _candidateLists.filter((candidate: any) => !election.selectedCandidates.some((_candidate) => _candidate.user._id === candidate.user._id))
       setCandidateList([...filterCandidates]);
 
+      setLoading(false);
       setBoothPlace(null);
       setOpenCandidateModal(!isLocalElection);
 
@@ -181,6 +183,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
       toast.success("Selected candidates added successfully.");
     } catch (error) {
       console.log(error)
+      setLoading(false);
       setBoothPlace(null);
       toast.error("Fail to add selected candidates !");
     }
@@ -290,7 +293,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
             onClick={() => {
               uploadSelectedCandidates();
             }}
-          >Upload Selected Candidates</button>
+          >{loading ? "Uploading..." : "Upload Selected Candidates"}</button>
         </Modal.Footer >
       </Modal >
       <Modal show={show} centered>
