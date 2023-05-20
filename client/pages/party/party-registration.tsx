@@ -72,7 +72,7 @@ const VoterRegistration = () => {
       formData.append("logo", partyLogo);
 
       const res1: any = await registerParty(formData);
-      const { logo } = res1.data.data;
+      const { logo } = res1?.data?.data || {};
 
       if (!logo) throw new Error("Failed to upload logo !");
 
