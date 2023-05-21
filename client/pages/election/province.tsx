@@ -103,7 +103,7 @@ export default function Home() {
       toast.error(`Failed to caste vote !, ${getFormattedErrorMessage(error.message)}`, { toastId: 2 });
     }
   }
-  console.log({ electionList })
+
   return (
     <div>
       <Head>

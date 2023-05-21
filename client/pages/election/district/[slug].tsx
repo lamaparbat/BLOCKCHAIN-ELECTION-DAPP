@@ -96,7 +96,6 @@ export default function Home({ districtName }) {
 
       if (isExit) return;
 
-      console.log({ candidateLists })
       const selectedCandidates = candidateLists.find((candidate) => candidate.user._id === _candidateID);
 
       const isAlreadyVoted = selectedCandidates?.votedVoterLists?.includes(loggedInAccountAddress) ?? false;

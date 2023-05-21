@@ -152,7 +152,6 @@ export default function Home() {
     const femaleVoters = voters.filter((d: any) => provinceNo ? d.user.province === provinceNo && d?.user.gender === "FEMALE" : d?.user.gender === "FEMALE")?.length;
     const otherVoters = voters.filter((d: any) => provinceNo ? d.user.province === provinceNo && d?.user.gender !== "MALE" && d?.user.gender !== "FEMALE" : d?.user.gender !== "MALE" && d?.user.gender !== "FEMALE")?.length;
 
-    console.log(electionLists.length)
     setTotalDataCount({
       ...totalDataCount,
       voters: totalVoters ?? 0,
