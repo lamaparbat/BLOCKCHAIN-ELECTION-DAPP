@@ -175,7 +175,7 @@ export default function Home() {
                           <div className='flex justify-content-between'>
                             <h1 id='count'>{data?.votedVoterLists?.length}</h1>
                             {
-                              !false && <button
+                              !isElectionEnd && <button
                                 className={`w-[100px] h-[40px] relative flex justify-center items-center bg-slate-100 ${!voted && "shadow-md"} pt-2 pb-2 px-4 rounded-pill text-sm ${voted && "text-slate-500 cursor-default"}`}
                                 onClick={() => !voted && casteVote(data)}
                                 disabled={voted}

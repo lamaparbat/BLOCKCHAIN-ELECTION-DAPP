@@ -92,7 +92,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
       let { title, description, startDate, endDate, electionType, electionImages } = election;
       const formData = new FormData();
 
-      if (!moment(startDate).isBefore(endDate)) {
+      if (!moment(startDate).isAfter(new Date()) || !moment(startDate).isBefore(endDate)) {
         setLoading(false);
         return toast.error("Please give correct datetime !")
       }
@@ -168,7 +168,7 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
       }))?.filter((candidate) => isLocalElection ? true : (candidate?.position === selectedPosition && candidate?.votingBooth === boothPlace));
 
       if (isLocalElection && selectedCandidates?.length > 2) return toast.warning("Only 2 candidates are allow for binary election !!");
-
+      console.log(selectedCandidates, recentlyCreatedElection?.startDate)
       await SmartContract.methods.addSelectedCandidates(selectedCandidates, recentlyCreatedElection?.startDate).send({ from: loggedInAccountAddress });
 
       const filterCandidates = _candidateLists?.filter((candidate: any) => !election.selectedCandidates.some((_candidate) => _candidate.user._id === candidate.user._id))

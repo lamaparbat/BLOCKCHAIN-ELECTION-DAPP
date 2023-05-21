@@ -14,11 +14,12 @@ import 'animate.css';
 import { BiFemale, BiGroup, BiMale } from 'react-icons/bi';
 import ElectionUserCard from '../components/ElectionUserCard';
 import { PROVINCE } from '../constants';
-import { getVoterList, getTotalElectionCount, getTotalPartiesCount, getCandidateList } from '../utils/web3';
+import { getVoterList, getTotalPartiesCount, getCandidateList } from '../utils/web3';
 import { getCurrentElection, getElectionStatus } from '../utils/common';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
 import { useSelector } from 'react-redux';
+import electionChannel from '../services/pusher-events';
 
 export default function Home() {
   const homepageTranslate = useTranslations("homepage");
@@ -28,6 +29,7 @@ export default function Home() {
   const [electionLists, setElectionLists] = useState([]);
   const [translateProvinceOptions, setTranslateProvinceOptions] = useState([]);
   const [currentElection, setCurrentElection] = useState(null);
+  const [electionStatus, setElectionStatus] = useState(null);
   const [countDown, setCountDown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [timer, setTimer] = useState({ id: "seconds", play: false });
   const [totalDataCount, setTotalDataCount] = useState({
@@ -167,7 +169,16 @@ export default function Home() {
     });
   }
 
-  const electionStatus = getElectionStatus(currentElection?.electionType, currentElection);
+
+  electionChannel.bind("start-election-event", () => {
+    console.log("election started-----> binary election");
+    setElectionStatus("LIVE");
+  });
+
+  electionChannel.bind("end-election-event", () => {
+    console.log("election ended-----> binary election");
+    setElectionStatus("ENDED")
+  });
 
   return (
     <div>

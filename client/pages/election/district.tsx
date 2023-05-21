@@ -28,6 +28,9 @@ export default function Home() {
   const fetchData = async () => {
     const electionList = await getElectionList();
     const currentElection: any = electionList.at(-1);
+
+    if (currentElection.electionType !== "District") return;
+
     const electionStatus = getElectionStatus("District", currentElection);
     const groupByCandidates = _.groupBy(currentElection?.candidates, (candidate) => candidate.votingBooth);
 
@@ -97,7 +100,7 @@ export default function Home() {
 
       // verify one time vote on same party
       let isExit = false;
-      districts.forEach((district) => {
+      districts?.forEach((district) => {
         const candidatesByPositions = _.groupBy(currentElection[district], (candidate: any) => candidate.position);
         const { mayor, deput_mayor, ward_councilor } = candidatesByPositions;
         const isMayorVoted = _.some(mayor, (candidate: any) => candidate.votedVoterLists.includes(_loggedInAccountAddress) && candidate.user._id !== _candidateID);

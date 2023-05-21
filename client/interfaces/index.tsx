@@ -78,6 +78,7 @@ interface UserCardStruct {
   currentElection?: Array<Object>,
   isElected?: boolean,
   casteVote?: CasteVoteInterface,
+  electionStatus?: string
 }
 interface ElectionStruct {
   title: string;

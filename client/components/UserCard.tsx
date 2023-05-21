@@ -17,7 +17,8 @@ const UserCard: React.FC<UserCardStruct> = (props): React.ReactElement => {
     onCandidateSelected,
     currentElection,
     isElected,
-    casteVote
+    casteVote,
+    electionStatus
   }: any = props;
 
   const loggedInAccountAddress = getStorage("loggedInAccountAddress");
@@ -55,7 +56,7 @@ const UserCard: React.FC<UserCardStruct> = (props): React.ReactElement => {
         </div>
       }
 
-      {casteVote &&
+      {casteVote && electionStatus === "LIVE" &&
         <button
           className={`absolute flex justify-center items-center bg-white  ${!isVoted && "shadow-md"} m-2 py-2 px-4 rounded-pill text-sm ${isVoted && "text-slate-500 cursor-default"} border-[1px] border-slate-500 `}
           onClick={() => !isVoted && casteVote(details?.user?._id)}

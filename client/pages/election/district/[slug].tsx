@@ -153,6 +153,7 @@ export default function Home({ districtName }) {
                       key={i}
                       currentElection={currentElection}
                       casteVote={casteVote}
+                      electionStatus={electionStatus}
                     />
                   )
                 }
