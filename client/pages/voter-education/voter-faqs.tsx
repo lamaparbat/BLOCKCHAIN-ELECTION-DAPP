@@ -21,6 +21,7 @@ const VoterFaqs = () => {
   const [openAddQuestionModal, setOpenAddQuestionModal] = useState(false);
   const [faqList, setFaqList] = useState([]);
   const [newFaq, setNewFaq] = useState({ ...defaultFaqDetails });
+  const [loading, setLoading] = useState(false);
 
   const faqT = useTranslations("faq");
 
@@ -42,6 +43,8 @@ const VoterFaqs = () => {
     try {
       if (!window?.ethereum) return toast.warn("Please install metamask wallet.");
 
+      setLoading(true);
+
       const _loggedInAccountAddress = getStorage("loggedInAccountAddress");
       const formData = new FormData();
       formData.append("images", newFaq.file);
@@ -60,9 +63,11 @@ const VoterFaqs = () => {
         else toast.error("Failed to upload File !");
 
         toast.success("Faq successfully uploaded !");
+        setLoading(false);
         resp && await getFaqsList();
       }
     } catch (error) {
+      setLoading(false);
       console.error(error)
     }
   }
@@ -117,9 +122,9 @@ const VoterFaqs = () => {
                     <input type="file" name="file" className='form-control my-3' onChange={(e) => setNewFaq({ ...newFaq, file: e.target.files[0] })} />
                     <button
                       className='btn btn-primary rounded-1 px-3 my-3'
-                      disabled={!newFaq.title || !newFaq.description || !newFaq.file}
+                      disabled={!newFaq.title || !newFaq.description || !newFaq.file || loading}
                       onClick={handleSubmit}
-                    >{faqT("submit_btn")}</button>
+                    >{loading ? "Posting..." : faqT("submit_btn")}</button>
                   </div>
                 }
               </div>

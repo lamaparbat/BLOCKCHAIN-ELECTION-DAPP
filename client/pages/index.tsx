@@ -139,7 +139,6 @@ export default function Home() {
 
   const handleOverviewCountSort = async (provinceNo: string) => {
     const totalPartiesCount = await getTotalPartiesCount();
-    const totalElectionCount = await getTotalElectionCount();
     const candidates = await getCandidateList();
     const voters = await getVoterList();
 
@@ -153,7 +152,7 @@ export default function Home() {
     const femaleVoters = voters.filter((d: any) => provinceNo ? d.user.province === provinceNo && d?.user.gender === "FEMALE" : d?.user.gender === "FEMALE")?.length;
     const otherVoters = voters.filter((d: any) => provinceNo ? d.user.province === provinceNo && d?.user.gender !== "MALE" && d?.user.gender !== "FEMALE" : d?.user.gender !== "MALE" && d?.user.gender !== "FEMALE")?.length;
 
-
+    console.log(electionLists.length)
     setTotalDataCount({
       ...totalDataCount,
       voters: totalVoters ?? 0,
@@ -165,7 +164,7 @@ export default function Home() {
       femaleCandidate,
       otherCandidates,
       parties: totalPartiesCount ?? 0,
-      elections: totalElectionCount ?? 0
+      elections: electionLists?.length ?? 0
     });
   }
 
@@ -246,7 +245,7 @@ export default function Home() {
               <div className='flex lg:justify-between md:justify-between flex-wrap sm:justify-center'>
                 {electionLists?.length === 0 && <span className='ml-2'>{homepageTranslate("no_election_found")}</span>}
                 {
-                  electionLists?.map((election, i) => {
+                  _.orderBy(electionLists, "startDate", "desc")?.map((election, i) => {
                     const electionDetails = { ...election, voters: election.electionType === "Local" ? (totalDataCount.voters + totalDataCount.candidates - 2) : totalDataCount.voters };
                     return (
                       <ElectionCard

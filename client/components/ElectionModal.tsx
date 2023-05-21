@@ -165,13 +165,14 @@ const ElectionModal = ({ show, setShowCreateElectionModal }) => {
         _id: candidate?.user?._id,
         position: isLocalElection ? "" : candidate?.position,
         votingBooth: isLocalElection ? "" : boothPlace
-      })).filter((candidate) => isLocalElection ? true : (candidate.position === selectedPosition && candidate.votingBooth === boothPlace));
+      }))?.filter((candidate) => isLocalElection ? true : (candidate?.position === selectedPosition && candidate?.votingBooth === boothPlace));
 
       if (isLocalElection && selectedCandidates?.length > 2) return toast.warning("Only 2 candidates are allow for binary election !!");
 
+      console.log(selectedCandidates)
       await SmartContract.methods.addSelectedCandidates(selectedCandidates, recentlyCreatedElection?.startDate).send({ from: loggedInAccountAddress });
 
-      const filterCandidates = _candidateLists.filter((candidate: any) => !election.selectedCandidates.some((_candidate) => _candidate.user._id === candidate.user._id))
+      const filterCandidates = _candidateLists?.filter((candidate: any) => !election.selectedCandidates.some((_candidate) => _candidate.user._id === candidate.user._id))
       setCandidateList([...filterCandidates]);
 
       setLoading(false);

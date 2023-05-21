@@ -66,12 +66,12 @@ export default function Home() {
   }, []);
 
   electionChannel.bind("start-election-event", () => {
-    console.log("election started");
+    console.log("election started-----> binary election");
     setElectionStatus("LIVE");
   });
 
   electionChannel.bind("end-election-event", () => {
-    console.log("election ended");
+    console.log("election ended-----> binary election");
     setElectionStatus("ENDED")
   });
 

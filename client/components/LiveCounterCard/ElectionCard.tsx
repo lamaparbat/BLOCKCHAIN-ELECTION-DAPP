@@ -1,13 +1,12 @@
 import moment from 'moment';
 import { useTranslations } from 'next-intl';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { FcGallery } from 'react-icons/fc';
 import { Fade } from 'react-slideshow-image';
 import { GoPrimitiveDot } from 'react-icons/go';
 import _ from 'lodash';
-import { getStorage } from '../../services';
 import { trimAddress } from '../../utils';
 import { BiEqualizer } from 'react-icons/bi';
 import AnimatedAvatar from '../AnimatedAvatar';
@@ -19,7 +18,7 @@ const ElectionCard = ({ details, src, electionStatus }) => {
 
   let totalVotes = 0;
   candidates?.forEach((d) => {
-    totalVotes += parseInt(d?.voteCount);
+    totalVotes += parseInt(d?.votedVoterLists?.length);
   });
   const t = useTranslations("election_gallery_card");
   const homepageT = useTranslations("homepage");
