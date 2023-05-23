@@ -1,4 +1,4 @@
-## Documentation 🚀🚀 [Installation guide]
+## Documentation 🚀🚀 
 
    ### Frontend setup
    1. Download and install NodeJS [Link: https://nodejs.org/en/download/]
