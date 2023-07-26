@@ -6,6 +6,9 @@
 
 <img width="581" alt="Screen Shot 2022-12-21 at 23 20 58" src="https://user-images.githubusercontent.com/64581460/208968847-c6feb4f7-1729-4bc5-8a87-f562c653f43b.png">
 
+## Folder Structure Of Repository Pattern With DDD , DTO
+<img width="588" alt="Screenshot 2023-07-26 at 16 12 00" src="https://github.com/lamaparbat/BLOCKCHAIN-ELECTION-DAPP/assets/64581460/b74ba04f-2a41-470c-92be-ae4bcd2e8b79">
+
 
 ## Backend API Docs
   1. Installation
